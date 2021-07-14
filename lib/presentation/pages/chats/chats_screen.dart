@@ -2,7 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
-import 'package:owl_chat/presentation/theme/constant.dart';
+import 'package:owl_chat/presentation/widgets/friend_card.dart';
 
 class ChatsScreen extends StatelessWidget {
   static const String id = 'ChatsScreen';
@@ -72,71 +72,30 @@ class ChatsScreen extends StatelessWidget {
 }
 
 class MessagesData {
-  var messages;
-}
+  List<Message> messages = [];
+  final faker = Faker();
 
-class FriendCard extends StatelessWidget {
-  final Message message;
-  final VoidCallback onTap;
+  MessagesData() {
+    getMessages();
+  }
 
-  FriendCard({required this.onTap, required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      child: InkWell(
-        onTap: onTap,
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            CircleAvatar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              backgroundImage: AssetImage(''),
-              radius: 28,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      //message.sender,
-                      '',
-                      style: kfriendCardText,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Opacity(
-                      opacity: 0.64,
-                      child: Text(
-                        //message.text,
-                        '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Opacity(
-              opacity: 0.64,
-              child: Text(Faker().date.time()),
-            ),
-          ],
-        ),
-      ),
-    );
+  void getMessages() {
+    for (int i = 0; i < 10; i++) {
+      final message = Message(
+          sender: faker.person.name(),
+          text: faker.food.restaurant(),
+          time: faker.date.time());
+      messages.add(message);
+    }
   }
 }
 
-class Message {}
+class Message {
+  final String sender;
+
+  final String text;
+
+  final String time;
+
+  Message({required this.sender, required this.text, required this.time});
+}

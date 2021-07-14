@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "280692793807",
+    "project_id": "owl-chat-486ce",
+    "storage_bucket": "owl-chat-486ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280692793807:android:663993506f19b4e4a0f2ba",
+        "android_client_info": {
+          "package_name": "com.example.owl_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280692793807-k6f781uv8vh08r896qnqk68s16s7p9qj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO7Mvu10SkIFrfau_tEbWJps_Fam7WpYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280692793807-k6f781uv8vh08r896qnqk68s16s7p9qj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280692793807:android:3998589b0d493bf2a0f2ba",
+        "android_client_info": {
+          "package_name": "com.example.owlchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280692793807-k6f781uv8vh08r896qnqk68s16s7p9qj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO7Mvu10SkIFrfau_tEbWJps_Fam7WpYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280692793807-k6f781uv8vh08r896qnqk68s16s7p9qj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
