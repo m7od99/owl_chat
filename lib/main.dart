@@ -55,6 +55,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
