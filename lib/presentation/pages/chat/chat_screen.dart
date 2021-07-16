@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
+import 'package:owl_chat/presentation/widgets/message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
   static String id = 'ChatScreen';
@@ -12,7 +13,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).splashColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -23,9 +24,15 @@ class ChatScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            MessageBubble(text: 'hello', sender: 'cal', isMe: true),
+            MessageBubble(text: 'hello', sender: 'jin', isMe: false),
+            MessageBubble(text: 'how are you', sender: 'cal', isMe: true),
+            MessageBubble(text: 'good and you', sender: 'jin', isMe: false),
+            MessageBubble(text: 'not bad', sender: 'cal', isMe: true),
             Spacer(),
-            SendMessage(),
+            SendMessageField(),
           ],
         ),
       ),
@@ -33,7 +40,7 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-class SendMessage extends StatelessWidget {
+class SendMessageField extends StatelessWidget {
   final editControl = TextEditingController();
 
   @override
@@ -83,12 +90,19 @@ class SendMessage extends StatelessWidget {
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.send,
+            SizedBox(width: 5),
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).backgroundColor.withOpacity(0.15),
+              ),
+              child: IconButton(
+                onPressed: () {},
+                iconSize: 30,
                 color: Colors.blueGrey,
-                size: 30,
+                icon: Icon(
+                  Icons.arrow_upward,
+                ),
               ),
             ),
           ],

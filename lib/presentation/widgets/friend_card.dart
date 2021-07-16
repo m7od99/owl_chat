@@ -38,7 +38,7 @@ class FriendCard extends StatelessWidget {
                     Text(
                       message.sender,
                       // Faker().person.name(),
-                      style: kfriendCardText,
+                      style: kFriendCardText,
                     ),
                     SizedBox(
                       height: 10,

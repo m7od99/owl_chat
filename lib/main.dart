@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 
 import 'presentation/pages/chat/chat_screen.dart';
 import 'presentation/pages/chats/chats_screen.dart';
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         SignUpScreen.id: (context) => SignUpScreen(),
         ChatsScreen.id: (context) => ChatsScreen(),
         ChatScreen.id: (context) => ChatScreen(),
+        SettingsScreen.id: (context) => SettingsScreen(),
       },
       themeMode: ThemeMode.system,
       theme: lightThemeData(context),

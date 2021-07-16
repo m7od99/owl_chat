@@ -5,6 +5,7 @@ import 'constant.dart';
 
 ThemeData lightThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
+    backgroundColor: kBackgroundColor,
     primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarLightTheme(),

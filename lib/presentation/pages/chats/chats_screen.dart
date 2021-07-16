@@ -2,6 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/widgets/friend_card.dart';
 
 class ChatsScreen extends StatelessWidget {
@@ -13,27 +14,24 @@ class ChatsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Theme.of(context).splashColor,
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Edit',
-              style: TextStyle(color: Colors.white),
-            ),
-            Text(
-              'Chats',
-              style: TextStyle(color: Colors.white),
-            ),
-            Icon(
-              Icons.create,
-              color: Colors.white,
-            ),
+            Text('Edit'),
+            Text('Chats'),
+            Icon(Icons.create),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          if (index == 2) {
+            Navigator.pushNamed(context, SettingsScreen.id);
+          }
+        },
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
               icon: Icon(
@@ -56,17 +54,31 @@ class ChatsScreen extends StatelessWidget {
         ],
         currentIndex: 1,
       ),
-      body: ListView.separated(
-        itemCount: messages.length,
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        itemBuilder: (BuildContext context, int index) => FriendCard(
-          message: messages[index],
-          onTap: () {
-            Navigator.pushNamed(context, ChatScreen.id);
-          },
-        ),
-        separatorBuilder: (BuildContext context, int index) => Divider(),
+      body: Body(messages: messages),
+    );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({
+    Key? key,
+    required this.messages,
+  }) : super(key: key);
+
+  final List<Message> messages;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: messages.length,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      itemBuilder: (BuildContext context, int index) => FriendCard(
+        message: messages[index],
+        onTap: () {
+          Navigator.pushNamed(context, ChatScreen.id);
+        },
       ),
+      separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
 }
