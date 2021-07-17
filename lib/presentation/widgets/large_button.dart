@@ -15,8 +15,8 @@ class LargeButton extends StatelessWidget {
         shadowColor: Colors.orangeAccent,
         elevation: 5,
         color: Colors.orange,
-        child: GestureDetector(
-          onTap: onTap,
+        child: TextButton(
+          onPressed: onTap,
           child: Center(
             child: Text(
               title,
