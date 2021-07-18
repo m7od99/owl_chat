@@ -1,0 +1,23 @@
+{
+  "login": "تسجيل الدخول",
+  "sign_up": "تسجيل",
+  "chats": "المحداثات",
+  "settings": "الاعدادات",
+  "contacts": "جهات الاتصال",
+  "edit": "تعديل",
+  "sign_out": "تسجيل الخروج",
+  "email": "البريد الالكتروني",
+  "password": "كلمة السر",
+  "type_message": "اكتب هنا",
+  "add": "اضافه",
+  "remove": "حذف",
+  "dont_have_account": "لا تمتلك حساب ؟",
+  "register": "سجل الان",
+  "enter_your_email": "ادخل البريد الالكترني",
+  "enter_your_password": "ادخل كلمة السر ",
+  "forgot_password": "نسيت كلمة السر",
+  "user_name": "اسم المستخدم",
+  "confirm_password": "تاكيد كلمة السر",
+  "re_enter_your_password": "اكتب كلمة السر مجددا ",
+  "continue": "استمر"
+}

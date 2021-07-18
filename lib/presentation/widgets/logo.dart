@@ -15,7 +15,7 @@ class Logo extends StatelessWidget {
           height: photoSize,
           child: Image(
             color: Colors.orange,
-            image: AssetImage('images/logo.png'),
+            image: AssetImage('assets/images/logo.png'),
           ),
         ),
         SizedBox(

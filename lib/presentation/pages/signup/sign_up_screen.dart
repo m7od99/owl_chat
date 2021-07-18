@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
+import 'package:owl_chat/translations/locale_keys.g.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String id = 'SignUpScreen';
@@ -11,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Sign up',
+          LocaleKeys.sign_up.tr(),
         ),
       ),
       body: Body(),
@@ -36,7 +38,7 @@ class Body extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Text(
-                  'Register Account',
+                  LocaleKeys.register.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 28,
@@ -47,8 +49,8 @@ class Body extends StatelessWidget {
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: inputDecoration(
-                    hint: 'Enter your Email',
-                    labelText: 'Email',
+                    hint: LocaleKeys.enter_your_email.tr(),
+                    labelText: LocaleKeys.email.tr(),
                     icon: Icons.mail,
                   ),
                 ),
@@ -56,8 +58,8 @@ class Body extends StatelessWidget {
                 TextField(
                   obscureText: true,
                   decoration: inputDecoration(
-                    hint: 'Enter your Password',
-                    labelText: 'Password',
+                    hint: LocaleKeys.enter_your_password.tr(),
+                    labelText: LocaleKeys.password.tr(),
                     icon: Icons.lock,
                   ),
                 ),
@@ -65,13 +67,13 @@ class Body extends StatelessWidget {
                 TextField(
                   obscureText: true,
                   decoration: inputDecoration(
-                    hint: 'Re-enter your Password',
-                    labelText: 'Confirm Password',
+                    hint: LocaleKeys.re_enter_your_password.tr(),
+                    labelText: LocaleKeys.confirm_password.tr(),
                     icon: Icons.lock,
                   ),
                 ),
                 SizedBox(height: 40),
-                LargeButton(title: 'Register', onTap: () {}),
+                LargeButton(title: LocaleKeys.register.tr(), onTap: () {}),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               ],
             ),

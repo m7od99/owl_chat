@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/login/login_screen.dart';
+import 'package:owl_chat/presentation/widgets/language.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/logo.dart';
+import 'package:owl_chat/translations/locale_keys.g.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'WelcomeScreen';
@@ -14,6 +17,7 @@ class WelcomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Column(
             children: [
+              Language(),
               Spacer(),
               Center(
                 child: Logo(fontSize: 50, photoSize: 140),
@@ -32,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, LoginScreen.id);
                 },
-                title: 'Continue',
+                title: LocaleKeys.continue_.tr(),
               ),
               Spacer(),
             ],

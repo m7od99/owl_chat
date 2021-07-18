@@ -1,0 +1,24 @@
+{
+  "login": "log in",
+  "sign_up": "Sign up",
+  "chats": "Chats",
+  "settings": "Settings",
+  "contacts": "Contacts",
+  "edit": "Edit",
+  "sign_out": "Sign out",
+  "email": "Email",
+  "password": "Password",
+  "type_message": "Type message",
+  "add": "Add",
+  "remove": "Remove",
+  "dont_have_account": "Don't have an account?",
+  "register": "Register",
+  "enter_your_email": "Enter your email",
+  "enter_your_password": "Enter your password",
+  "forgot_password": "Forgot password",
+  "user_name": "User Name",
+  "confirm_password": "Confirm Password",
+  "re_enter_your_password": "Re-enter your Password ",
+  "continue": "Continue"
+
+}

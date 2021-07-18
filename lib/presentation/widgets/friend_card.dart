@@ -22,7 +22,7 @@ class FriendCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              backgroundImage: AssetImage('images/user.png'),
+              backgroundImage: AssetImage('assets/images/user.png'),
               radius: 28,
             ),
             SizedBox(

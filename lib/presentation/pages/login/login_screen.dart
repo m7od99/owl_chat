@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/translations/locale_keys.g.dart';
 
-import '../chats/chats_screen.dart';
-import '../signup/sign_up_screen.dart';
 import '../../widgets/components.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
+import '../chats/chats_screen.dart';
+import '../signup/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = 'LoginScreen';
@@ -31,8 +33,8 @@ class LoginScreen extends StatelessWidget {
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: inputDecoration(
-                  hint: 'Enter your Email',
-                  labelText: 'Email',
+                  hint: LocaleKeys.enter_your_email.tr(),
+                  labelText: LocaleKeys.email.tr(),
                   icon: Icons.mail,
                 ),
               ),
@@ -42,15 +44,15 @@ class LoginScreen extends StatelessWidget {
               TextField(
                 obscureText: true,
                 decoration: inputDecoration(
-                  hint: 'Enter your Password',
-                  labelText: 'Password',
+                  hint: LocaleKeys.enter_your_password.tr(),
+                  labelText: LocaleKeys.password.tr(),
                   icon: Icons.lock,
                 ),
               ),
               ForgotPassword(),
               Spacer(),
               LargeButton(
-                title: 'Log in',
+                title: LocaleKeys.login.tr(),
                 onTap: () {
                   Navigator.pushNamed(context, ChatsScreen.id);
                 },
@@ -59,13 +61,13 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?"),
+                  Text(LocaleKeys.dont_have_account.tr()),
                   SizedBox(width: 5),
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, SignUpScreen.id);
                     },
-                    child: Text('Register'),
+                    child: Text(LocaleKeys.register.tr()),
                   ),
                 ],
               ),
@@ -88,7 +90,7 @@ class ForgotPassword extends StatelessWidget {
       alignment: Alignment(1, 0),
       child: TextButton(
         child: Text(
-          'Forgot Password',
+          LocaleKeys.forgot_password.tr(),
           style: TextStyle(
             color: Colors.orange,
             decoration: TextDecoration.underline,

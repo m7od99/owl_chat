@@ -1,13 +1,28 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'presentation/pages/welcome/welcome_screen.dart';
 import 'presentation/roots/roots.dart';
 import 'presentation/theme/themes.dart';
+import 'translations/codegen_loader.g.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: [
+        Locale('en'),
+        Locale('ar'),
+      ],
+      fallbackLocale: Locale('en'),
+      path: 'assets/translations',
+      assetLoader: CodegenLoader(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -52,6 +67,9 @@ class _MyAppState extends State<MyApp> {
     }
 
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       routes: routes(),
       themeMode: ThemeMode.system,

@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
+import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ProfileWidget extends StatelessWidget {
   @override
@@ -20,7 +22,7 @@ class ProfileWidget extends StatelessWidget {
                   CircleAvatar(
                     radius: 40,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    backgroundImage: AssetImage('images/user.png'),
+                    backgroundImage: AssetImage('assets/images/user.png'),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -35,7 +37,7 @@ class ProfileWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                'Edit',
+                LocaleKeys.edit.tr(),
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ],

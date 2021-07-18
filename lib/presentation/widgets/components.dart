@@ -17,7 +17,7 @@ InputDecoration inputDecoration({
     contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
     suffixIcon: Padding(
       padding: EdgeInsets.fromLTRB(
-        0,
+        (20),
         (20),
         (20),
         (20),
