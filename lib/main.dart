@@ -1,9 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 
+import 'presentation/pages/chat/chat_screen.dart';
+import 'presentation/pages/chats/chats_screen.dart';
+import 'presentation/pages/login/login_screen.dart';
+import 'presentation/pages/signup/sign_up_screen.dart';
 import 'presentation/pages/welcome/welcome_screen.dart';
-import 'presentation/roots/roots.dart';
 import 'presentation/theme/themes.dart';
 import 'translations/codegen_loader.g.dart';
 
@@ -71,7 +75,14 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      routes: routes(),
+      routes: {
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
+        ChatsScreen.id: (context) => ChatsScreen(),
+        ChatScreen.id: (context) => ChatScreen(),
+        SettingsScreen.id: (context) => SettingsScreen(),
+      },
       themeMode: ThemeMode.system,
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),

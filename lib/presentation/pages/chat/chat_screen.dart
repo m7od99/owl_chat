@@ -23,41 +23,25 @@ class ChatScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            FocusScopeNode currentFocus = FocusScope.of(context);
-
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MessageBubble(text: 'hello', sender: 'cal', isMe: true),
-              MessageBubble(text: 'hello', sender: 'jin', isMe: false),
-              MessageBubble(text: 'how are you', sender: 'cal', isMe: true),
-              MessageBubble(text: 'good and you', sender: 'jin', isMe: false),
-              MessageBubble(text: 'not bad', sender: 'cal', isMe: true),
-              Spacer(),
-              SendMessageField(),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            MessageBubble(text: 'hello', sender: 'cal', isMe: true),
+            MessageBubble(text: 'hello', sender: 'jin', isMe: false),
+            MessageBubble(text: 'how are you', sender: 'cal', isMe: true),
+            MessageBubble(text: 'good and you', sender: 'jin', isMe: false),
+            MessageBubble(text: 'not bad', sender: 'cal', isMe: true),
+            Spacer(),
+            SendMessageField(),
+          ],
         ),
       ),
     );
   }
 }
 
-class SendMessageField extends StatefulWidget {
-  @override
-  _SendMessageFieldState createState() => _SendMessageFieldState();
-}
-
-class _SendMessageFieldState extends State<SendMessageField> {
+class SendMessageField extends StatelessWidget {
   final editControl = TextEditingController();
-
-  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +78,6 @@ class _SendMessageFieldState extends State<SendMessageField> {
                     Expanded(
                       child: TextField(
                         controller: editControl,
-                        focusNode: _focusNode,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration(
@@ -114,9 +97,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 color: Theme.of(context).backgroundColor.withOpacity(0.15),
               ),
               child: IconButton(
-                onPressed: () {
-                  editControl.clear();
-                },
+                onPressed: () {},
                 iconSize: 30,
                 color: Colors.blueGrey,
                 icon: Icon(

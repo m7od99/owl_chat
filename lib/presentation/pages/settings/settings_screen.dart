@@ -1,14 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:owl_chat/presentation/widgets/language.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/profile_widget.dart';
+=======
+>>>>>>> parent of d5a373b ( adding settings screen and fix text field)
 
 class SettingsScreen extends StatelessWidget {
   static const String id = "SettingsScreen";
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return SafeArea(
       child: Container(
         child: Column(
@@ -26,6 +29,10 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
+=======
+    return Scaffold(
+      appBar: AppBar(),
+>>>>>>> parent of d5a373b ( adding settings screen and fix text field)
     );
   }
 }

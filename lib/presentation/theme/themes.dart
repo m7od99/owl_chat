@@ -54,7 +54,7 @@ final appBarTheme = AppBarTheme(centerTitle: false, elevation: 0);
 
 AppBarTheme appBarLightTheme() {
   return AppBarTheme(
-    centerTitle: false,
+    centerTitle: true,
     color: Colors.white,
     elevation: 0,
     brightness: Brightness.light,

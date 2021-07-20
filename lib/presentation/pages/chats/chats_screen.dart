@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/widgets/friend_card.dart';
-import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ChatsScreen extends StatefulWidget {
   static const String id = 'ChatsScreen';
@@ -39,23 +37,20 @@ class _ChatsScreenState extends State<ChatsScreen> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
-            ),
-            label: LocaleKeys.contacts.tr(),
-          ),
+              icon: Icon(
+                Icons.account_circle,
+              ),
+              label: 'contacts'),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.forum,
-            ),
-            label: LocaleKeys.chats.tr(),
-          ),
+              icon: Icon(
+                Icons.forum,
+              ),
+              label: 'Chats'),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-            ),
-            label: LocaleKeys.settings.tr(),
-          ),
+              icon: Icon(
+                Icons.settings,
+              ),
+              label: 'setting'),
         ],
         currentIndex: currentIndex,
       ),
@@ -67,21 +62,21 @@ class _ChatsScreenState extends State<ChatsScreen> {
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(LocaleKeys.contacts.tr()),
+        Text('Contacts'),
         Icon(Icons.add),
       ],
     ),
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(LocaleKeys.edit.tr()),
-        Text(LocaleKeys.chats.tr()),
+        Text('Edit'),
+        Text('Chats'),
         Icon(Icons.create),
       ],
     ),
     Row(
       children: [
-        Text(LocaleKeys.settings.tr()),
+        Text('Settings'),
       ],
     ),
   ];
