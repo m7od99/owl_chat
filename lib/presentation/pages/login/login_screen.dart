@@ -6,7 +6,7 @@ import 'package:owl_chat/translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
-import '../chats/chats_screen.dart';
+import '../chats/bottom_navigation_bar.dart';
 import '../signup/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {

@@ -1,17 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:owl_chat/presentation/widgets/language.dart';
-import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/profile_widget.dart';
-=======
->>>>>>> parent of d5a373b ( adding settings screen and fix text field)
+import 'package:owl_chat/presentation/widgets/theme_sw.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const String id = "SettingsScreen";
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return SafeArea(
       child: Container(
         child: Column(
@@ -19,20 +15,59 @@ class SettingsScreen extends StatelessWidget {
           children: [
             ProfileWidget(),
             SizedBox(height: 50),
-            Language(),
-            SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
-              //todo sign out
-              child: LargeButton(title: 'Sign out', onTap: () {}),
+            Card(
+              child: ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.all(5),
+                itemBuilder: (BuildContext context, int index) => SettingsMenu(
+                  title: settings[index],
+                  onTap: () {
+                    if (index == 0) {}
+                    if (index == 1) {
+                      Navigator.pushNamed(context, ThemePage.id);
+                    }
+                    if (index == 2) {}
+                  },
+                ),
+                itemCount: settings.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
+              ),
             ),
           ],
         ),
       ),
-=======
-    return Scaffold(
-      appBar: AppBar(),
->>>>>>> parent of d5a373b ( adding settings screen and fix text field)
+    );
+  }
+}
+
+List<String> settings = ["Language", "Theme", "Sign out"];
+
+class SettingsMenu extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const SettingsMenu({required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 20),
+            ),
+            Icon(
+              Icons.keyboard_arrow_right,
+              size: 30,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

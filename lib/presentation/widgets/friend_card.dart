@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
+import 'package:owl_chat/presentation/pages/chats/chats.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 
 class FriendCard extends StatelessWidget {
