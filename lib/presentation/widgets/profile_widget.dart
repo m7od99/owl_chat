@@ -8,8 +8,8 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Material(
-        elevation: 3,
-        shadowColor: Colors.orangeAccent,
+        elevation: 2,
+        color: Theme.of(context).splashColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -21,7 +21,6 @@ class ProfileWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     backgroundImage: AssetImage('assets/images/user.png'),
                   ),
                   SizedBox(height: 8),

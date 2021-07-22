@@ -10,31 +10,36 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ProfileWidget(),
-            SizedBox(height: 50),
-            Card(
-              child: ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.all(5),
-                itemBuilder: (BuildContext context, int index) => SettingsMenu(
-                  title: settings[index],
-                  onTap: () {
-                    if (index == 0) {}
-                    if (index == 1) {
-                      Navigator.pushNamed(context, ThemePage.id);
-                    }
-                    if (index == 2) {}
-                  },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ProfileWidget(),
+              SizedBox(height: 50),
+              Card(
+                color: Theme.of(context).splashColor,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(5),
+                  itemBuilder: (BuildContext context, int index) =>
+                      SettingsMenu(
+                    title: settings[index],
+                    onTap: () {
+                      if (index == 0) {}
+                      if (index == 1) {
+                        Navigator.pushNamed(context, ThemePage.id);
+                      }
+                      if (index == 2) {}
+                    },
+                  ),
+                  itemCount: settings.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(),
                 ),
-                itemCount: settings.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
