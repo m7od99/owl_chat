@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/pages/login/login_screen.dart';
 import 'package:owl_chat/presentation/widgets/profile_widget.dart';
 import 'package:owl_chat/presentation/widgets/theme_sw.dart';
 
@@ -30,7 +31,9 @@ class SettingsScreen extends StatelessWidget {
                       if (index == 1) {
                         Navigator.pushNamed(context, ThemePage.id);
                       }
-                      if (index == 2) {}
+                      if (index == 2) {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      }
                     },
                   ),
                   itemCount: settings.length,

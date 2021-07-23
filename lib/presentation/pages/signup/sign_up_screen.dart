@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
+import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String id = 'SignUpScreen';
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -21,10 +21,14 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +50,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: inputDecoration(
-                    hint: LocaleKeys.enter_your_email.tr(),
-                    labelText: LocaleKeys.email.tr(),
-                    icon: Icons.mail,
-                  ),
-                ),
+                emailTextField(),
                 SizedBox(height: 30),
                 TextField(
                   obscureText: true,
@@ -73,13 +70,29 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 40),
-                LargeButton(title: LocaleKeys.register.tr(), onTap: () {}),
+                LargeButton(
+                    title: LocaleKeys.register.tr(),
+                    onTap: () {
+                      Navigator.pushNamed(context, SuccessPage.id);
+                    }),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  TextFormField emailTextField() {
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: inputDecoration(
+        hint: LocaleKeys.enter_your_email.tr(),
+        labelText: LocaleKeys.email.tr(),
+        icon: Icons.mail,
+      ),
+      onSaved: (newValue) => email = newValue!,
     );
   }
 }
