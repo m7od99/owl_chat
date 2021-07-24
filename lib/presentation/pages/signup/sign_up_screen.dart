@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
@@ -27,8 +28,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  late String email;
-  late String password;
+  final userControl = UserControl();
+
+  String? email;
+
+  String? confirmPassword;
+
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +58,20 @@ class _BodyState extends State<Body> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                 emailTextField(),
                 SizedBox(height: 30),
-                TextField(
-                  obscureText: true,
-                  decoration: inputDecoration(
-                    hint: LocaleKeys.enter_your_password.tr(),
-                    labelText: LocaleKeys.password.tr(),
-                    icon: Icons.lock,
-                  ),
-                ),
+                passwordTextField(),
                 SizedBox(height: 30),
-                TextField(
-                  obscureText: true,
-                  decoration: inputDecoration(
-                    hint: LocaleKeys.re_enter_your_password.tr(),
-                    labelText: LocaleKeys.confirm_password.tr(),
-                    icon: Icons.lock,
-                  ),
-                ),
+                confirmPasswordTextField(),
                 SizedBox(height: 40),
                 LargeButton(
                     title: LocaleKeys.register.tr(),
-                    onTap: () {
-                      Navigator.pushNamed(context, SuccessPage.id);
+                    onTap: () async {
+                      if (email != null && password != null) {
+                        await userControl.signUp(email!, password!);
+                      }
+                      if (userControl.hasUser()) {
+                        print(email);
+                        Navigator.pushNamed(context, SuccessPage.id);
+                      }
                     }),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               ],
@@ -84,15 +82,53 @@ class _BodyState extends State<Body> {
     );
   }
 
+  TextFormField passwordTextField() {
+    return TextFormField(
+      obscureText: true,
+      decoration: inputDecoration(
+        hint: LocaleKeys.enter_your_password.tr(),
+        labelText: LocaleKeys.password.tr(),
+        icon: Icons.lock,
+      ),
+      onChanged: (value) {
+        setState(() {
+          password = value;
+        });
+      },
+    );
+  }
+
+  TextFormField confirmPasswordTextField() {
+    return TextFormField(
+        obscureText: true,
+        decoration: inputDecoration(
+          hint: LocaleKeys.re_enter_your_password.tr(),
+          labelText: LocaleKeys.confirm_password.tr(),
+          icon: Icons.lock,
+        ),
+        onSaved: (newValue) => confirmPassword = newValue!,
+        onChanged: (pass) {
+          setState(() {
+            confirmPassword = pass;
+            print(pass);
+          });
+        });
+  }
+
   TextFormField emailTextField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: inputDecoration(
-        hint: LocaleKeys.enter_your_email.tr(),
-        labelText: LocaleKeys.email.tr(),
-        icon: Icons.mail,
-      ),
-      onSaved: (newValue) => email = newValue!,
-    );
+        keyboardType: TextInputType.emailAddress,
+        decoration: inputDecoration(
+          hint: LocaleKeys.enter_your_email.tr(),
+          labelText: LocaleKeys.email.tr(),
+          icon: Icons.mail,
+        ),
+        onSaved: (newValue) => email = newValue!,
+        onChanged: (value) {
+          setState(() {
+            print(value);
+            email = value;
+          });
+        });
   }
 }

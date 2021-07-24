@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/message_control.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
+import 'package:provider/provider.dart';
 
 class SendMessageField extends StatefulWidget {
   @override
@@ -12,8 +17,13 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
   final _focusNode = FocusNode();
 
+  String? text;
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserControl>(context);
+    final control = Provider.of<MessageControl>(context);
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: kDefaultPadding,
@@ -50,6 +60,11 @@ class _SendMessageFieldState extends State<SendMessageField> {
                         focusNode: _focusNode,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
+                        onChanged: (value) {
+                          setState(() {
+                            text = value;
+                          });
+                        },
                         decoration: InputDecoration(
                           hintText: "Type message",
                           border: InputBorder.none,
@@ -67,7 +82,16 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 color: Theme.of(context).backgroundColor.withOpacity(0.15),
               ),
               child: IconButton(
-                onPressed: () {
+                onPressed: () async {
+                  final message = Message(
+                      sender: user.userEmail,
+                      receiver: 'no one',
+                      text: text!,
+                      time: Timestamp.now(),
+                      isMe: true);
+
+                  await control.sendMessage(message);
+
                   editControl.clear();
                 },
                 iconSize: 30,

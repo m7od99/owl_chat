@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/models/message.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({required this.text, required this.sender, required this.isMe});
+  final Message message;
 
-  final String text;
-  final String sender;
-  final bool isMe;
+  const MessageBubble({required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +12,21 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment:
-            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isMe) TimeWidget(time: '1:30'),
+          if (!message.isMe) TimeWidget(time: '1:30'),
           SizedBox(width: 6),
           Column(
-            crossAxisAlignment:
-                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            crossAxisAlignment: message.isMe
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
             children: <Widget>[
               Material(
-                color: isMe ? Theme.of(context).primaryColor : Colors.white,
+                color: message.isMe
+                    ? Theme.of(context).primaryColor
+                    : Colors.white,
                 elevation: 15,
-                borderRadius: isMe
+                borderRadius: message.isMe
                     ? BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
@@ -38,9 +40,9 @@ class MessageBubble extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    text,
+                    message.text,
                     style: TextStyle(
-                      color: isMe ? Colors.white : Colors.black,
+                      color: message.isMe ? Colors.white : Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -49,7 +51,7 @@ class MessageBubble extends StatelessWidget {
             ],
           ),
           SizedBox(width: 6),
-          if (isMe) TimeWidget(time: '1:30'),
+          if (message.isMe) TimeWidget(time: '1:30'),
         ],
       ),
     );

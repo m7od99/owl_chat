@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/pages/login/login_screen.dart';
 import 'presentation/roots/roots.dart';
-import 'presentation/theme/themes.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -16,10 +16,10 @@ class _MyAppState extends State<MyApp> {
   bool _initialized = false;
 
   bool _error = false;
+  final userControl = UserControl();
 
   void initializeFlutterFire() async {
     try {
-      await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });
