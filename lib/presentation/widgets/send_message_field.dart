@@ -17,12 +17,11 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
   final _focusNode = FocusNode();
 
-  String? text;
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserControl>(context);
     final control = Provider.of<MessageControl>(context);
+    String? text;
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -61,9 +60,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         onChanged: (value) {
-                          setState(() {
-                            text = value;
-                          });
+                          text = value;
                         },
                         decoration: InputDecoration(
                           hintText: "Type message",
@@ -82,17 +79,21 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 color: Theme.of(context).backgroundColor.withOpacity(0.15),
               ),
               child: IconButton(
-                onPressed: () async {
-                  final message = Message(
-                      sender: user.userEmail,
-                      receiver: 'no one',
-                      text: text!,
-                      time: Timestamp.now(),
-                      isMe: true);
-
-                  await control.sendMessage(message);
-
-                  editControl.clear();
+                onPressed: () {
+                  if (text != null) {
+                    control.sendMessage(
+                        Message(
+                          sender: user.email,
+                          receiver: 'no one',
+                          text: text!,
+                          time: Timestamp.now(),
+                          isMe: true,
+                        ),
+                        '1');
+                  }
+                  setState(() {
+                    editControl.clear();
+                  });
                 },
                 iconSize: 30,
                 color: Colors.blueGrey,

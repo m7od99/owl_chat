@@ -16,13 +16,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _firestore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
     final user = Provider.of<UserControl>(context);
-    List<Message> messages = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -31,35 +28,72 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('sender'),
-            Icon(Icons.account_circle, size: 30),
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/images/user.png'),
+            ),
           ],
         ),
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
+      body: Column(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
 
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: StreamBuilder<QuerySnapshot>(
-          stream: control.getMessages('no one', user.userEmail),
-          builder: (context, snapshot) => snapshot.hasData
-              ? ListView.builder(itemBuilder: (context, index) {
-                  dynamic data = snapshot.data!.docs.reversed;
-                  for (var message in data) {
-                    messages.add(Message.fromMap(message));
-                  }
-
-                  return MessageBubble(
-                    message: messages[index],
-                  );
-                })
-              : Container(),
-        ),
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: ChatStream(control: control, user: user),
+            ),
+          ),
+          SendMessageField(),
+        ],
       ),
-      bottomSheet: SendMessageField(),
+    );
+  }
+}
+
+class ChatStream extends StatelessWidget {
+  const ChatStream({
+    Key? key,
+    required this.control,
+    required this.user,
+  }) : super(key: key);
+
+  final MessageControl control;
+  final UserControl user;
+
+  @override
+  Widget build(BuildContext context) {
+    final stream = control.getMessages('1');
+
+    return SafeArea(
+      child: StreamBuilder<QuerySnapshot>(
+          stream: stream,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Container();
+            }
+            final data = snapshot.data!.docs.reversed;
+            List<MessageBubble> messages = [];
+
+            for (var mess in data) {
+              dynamic message = mess.data();
+              messages.add(
+                MessageBubble(
+                  key: GlobalKey(),
+                  message: Message.fromMap(message),
+                ),
+              );
+            }
+            return ListView(
+              children: messages,
+              padding: EdgeInsets.all(2),
+              reverse: true,
+            );
+          }),
     );
   }
 }

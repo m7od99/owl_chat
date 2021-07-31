@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:owl_chat/data/models/message.dart';
 
 class MessageBubble extends StatelessWidget {
   final Message message;
 
-  const MessageBubble({required this.message});
+  const MessageBubble({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +41,31 @@ class MessageBubble extends StatelessWidget {
                       ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Text(
-                    message.text,
-                    style: TextStyle(
-                      color: message.isMe ? Colors.white : Colors.black,
-                      fontSize: 16,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        message.text,
+                        style: TextStyle(
+                          color: message.isMe ? Colors.white : Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
           SizedBox(width: 6),
-          if (message.isMe) TimeWidget(time: '1:30'),
+          if (message.isMe) TimeWidget(time: format(message.time)),
         ],
       ),
     );
   }
+}
+
+String format(Timestamp time) {
+  return DateFormat('hh:mm a').format(time.toDate());
 }
 
 class TimeWidget extends StatelessWidget {
@@ -71,17 +81,9 @@ class TimeWidget extends StatelessWidget {
         time,
         style: TextStyle(
           color: Theme.of(context).iconTheme.color,
-          fontSize: 13,
+          fontSize: 11,
         ),
       ),
     );
   }
 }
-
-// Text(
-// sender,
-// style: TextStyle(
-// fontSize: 12,
-// color: Colors.black45,
-// ),
-// ),

@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:provider/provider.dart';
 
@@ -60,14 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
               LargeButton(
                 title: LocaleKeys.login.tr(),
                 onTap: () async {
-                  final message = Message(
-                      sender: user.userEmail,
-                      receiver: 'no one',
-                      text: "hello",
-                      time: Timestamp.now(),
-                      isMe: true);
-
-                  await control.sendMessage(message);
                   Navigator.pushNamed(context, ChatsScreen.id);
                 },
               ),

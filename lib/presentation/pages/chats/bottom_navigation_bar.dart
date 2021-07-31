@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/chats/chats.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
+import 'package:owl_chat/presentation/widgets/add_friend.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ChatsScreen extends StatefulWidget {
@@ -13,12 +14,45 @@ class ChatsScreen extends StatefulWidget {
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
-  int currentIndex = 1;
+int currentIndex = 1;
 
+class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     final messages = MessagesData().messages;
+
+    void onTaped(index) {
+      setState(() {
+        currentIndex = index;
+      });
+    }
+
+    List<Widget> title = [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(LocaleKeys.contacts.tr()),
+          Icon(Icons.add),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(LocaleKeys.edit.tr()),
+          Text(LocaleKeys.chats.tr()),
+          IconButton(
+              icon: Icon(Icons.create),
+              onPressed: () {
+                Navigator.pushNamed(context, AddFriend.id);
+              }),
+        ],
+      ),
+      Row(
+        children: [
+          Text(LocaleKeys.settings.tr()),
+        ],
+      ),
+    ];
 
     List<Widget> _pages = [
       ContactsScreen(),
@@ -59,34 +93,5 @@ class _ChatsScreenState extends State<ChatsScreen> {
       ),
       body: _pages.elementAt(currentIndex),
     );
-  }
-
-  List<Widget> title = [
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(LocaleKeys.contacts.tr()),
-        Icon(Icons.add),
-      ],
-    ),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(LocaleKeys.edit.tr()),
-        Text(LocaleKeys.chats.tr()),
-        Icon(Icons.create),
-      ],
-    ),
-    Row(
-      children: [
-        Text(LocaleKeys.settings.tr()),
-      ],
-    ),
-  ];
-
-  void onTaped(index) {
-    setState(() {
-      currentIndex = index;
-    });
   }
 }

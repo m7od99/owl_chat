@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/data/models/user.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
@@ -19,9 +21,10 @@ class UserControl extends ChangeNotifier {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    await _firestore.collection('users').doc(email).set({
-      'email': email,
-    });
+    final user = OwlUser(email: email, userName: '');
+    user.id = _auth.currentUser!.uid;
+
+    await _firestore.collection('users').doc(email).set(user.toMap());
   }
 
   getUsers() async {
@@ -37,5 +40,18 @@ class UserControl extends ChangeNotifier {
     return false;
   }
 
-  get userEmail => _auth.currentUser!.email;
+  addFriend(Chats chats) async {
+    final user = OwlUser(email: email, userName: '');
+    user.id = _auth.currentUser!.uid;
+    user.friends!.add(chats);
+
+    await _firestore.collection('users').doc(email).update(user.toMap());
+  }
+
+  getContact() async {
+    return await _firestore.collection('users').doc('contact').get();
+  }
+
+  get email => _auth.currentUser!.email;
+  get isLogin => hasUser();
 }
