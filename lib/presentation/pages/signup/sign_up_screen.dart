@@ -36,6 +36,8 @@ class _BodyState extends State<Body> {
 
   String? password;
 
+  String? userName;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,6 +58,14 @@ class _BodyState extends State<Body> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                TextFormField(
+                  decoration: inputDecoration(
+                    hint: LocaleKeys.user_name.tr(),
+                    labelText: LocaleKeys.user_name.tr(),
+                    icon: Icons.account_balance_outlined,
+                  ),
+                ),
+                SizedBox(height: 30),
                 emailTextField(),
                 SizedBox(height: 30),
                 passwordTextField(),
@@ -66,9 +76,9 @@ class _BodyState extends State<Body> {
                     title: LocaleKeys.register.tr(),
                     onTap: () async {
                       if (email != null && password != null) {
-                        await userControl.signUp(email!, password!);
+                        await userControl.signUp(email!, password!, userName!);
                       }
-                      if (userControl.hasUser()) {
+                      if (userControl.isLogin) {
                         print(email);
                         Navigator.pushNamed(context, SuccessPage.id);
                       }

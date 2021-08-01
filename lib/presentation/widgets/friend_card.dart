@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/presentation/pages/chats/chats.dart';
+import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 
 class FriendCard extends StatelessWidget {
-  final Message message;
+  final Chat chat;
   final VoidCallback onTap;
 
-  FriendCard({required this.onTap, required this.message});
+  FriendCard({required this.onTap, required this.chat});
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +30,23 @@ class FriendCard extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      message.sender,
+                      chat.name,
                       // Faker().person.name(),
                       style: kFriendCardText,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                     Opacity(
                       opacity: 0.64,
                       child: Text(
-                        message.text,
-                        // Faker().food.toString(),
+                        chat.lastMessage,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -58,7 +57,7 @@ class FriendCard extends StatelessWidget {
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(message.time),
+              child: Text(chat.time),
             ),
           ],
         ),

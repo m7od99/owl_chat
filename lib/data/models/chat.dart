@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class Chats extends Equatable {
+class Chat extends Equatable {
   final String id;
   final String lastMessage;
   final String name;
   final String photoUri;
   final String time;
 
-  Chats({
+  Chat({
     required this.id,
     required this.lastMessage,
     required this.name,
@@ -17,14 +17,14 @@ class Chats extends Equatable {
     required this.time,
   });
 
-  Chats copyWith({
+  Chat copyWith({
     String? id,
     String? lastMessage,
     String? name,
     String? photoUri,
     String? time,
   }) {
-    return Chats(
+    return Chat(
       id: id ?? this.id,
       lastMessage: lastMessage ?? this.lastMessage,
       name: name ?? this.name,
@@ -43,8 +43,8 @@ class Chats extends Equatable {
     };
   }
 
-  factory Chats.fromMap(Map<String, dynamic> map) {
-    return Chats(
+  factory Chat.fromMap(Map<String, dynamic> map) {
+    return Chat(
       id: map['id'],
       lastMessage: map['lastMessage'],
       name: map['name'],
@@ -55,7 +55,7 @@ class Chats extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Chats.fromJson(String source) => Chats.fromMap(json.decode(source));
+  factory Chat.fromJson(String source) => Chat.fromMap(json.decode(source));
 
   @override
   bool get stringify => true;

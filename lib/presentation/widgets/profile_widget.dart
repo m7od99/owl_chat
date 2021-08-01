@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
+import 'package:provider/provider.dart';
 
 class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserControl>(context);
+
     return Container(
       child: Material(
         elevation: 2,
@@ -25,11 +29,11 @@ class ProfileWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'User Name',
+                    user.userName,
                     style: kProfileCardText,
                   ),
                   Text(
-                    'Cal@Example.com',
+                    user.email,
                     style: kProfileCardText,
                   ),
                 ],

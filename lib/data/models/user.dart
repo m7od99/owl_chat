@@ -7,7 +7,7 @@ class OwlUser {
   late String userName;
   String? id;
   bool? isOnline;
-  List<Chats>? friends;
+  List<Chat>? chats;
   String? photoUri;
 
   OwlUser({
@@ -15,7 +15,7 @@ class OwlUser {
     required this.userName,
     this.id,
     this.isOnline,
-    this.friends,
+    this.chats,
     this.photoUri,
   });
 
@@ -24,7 +24,7 @@ class OwlUser {
     String? userName,
     String? id,
     bool? isOnline,
-    List<Chats>? friends,
+    List<Chat>? friends,
     String? photoUri,
   }) {
     return OwlUser(
@@ -32,7 +32,7 @@ class OwlUser {
       userName: userName ?? this.userName,
       id: id ?? this.id,
       isOnline: isOnline ?? this.isOnline,
-      friends: friends ?? this.friends,
+      chats: friends ?? this.chats,
       photoUri: photoUri ?? this.photoUri,
     );
   }
@@ -43,7 +43,7 @@ class OwlUser {
       'userName': userName,
       'id': id,
       'isOnline': isOnline,
-      'friends': friends?.map((x) => x.toMap()).toList(),
+      'friends': chats?.map((x) => x.toMap()).toList(),
       'photoUri': photoUri,
     };
   }

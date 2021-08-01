@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/presentation/pages/chats/chats.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import 'package:owl_chat/presentation/widgets/add_friend.dart';
+import 'package:owl_chat/presentation/widgets/add_chat.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ChatsScreen extends StatefulWidget {
@@ -19,8 +20,6 @@ int currentIndex = 1;
 class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
-    final messages = MessagesData().messages;
-
     void onTaped(index) {
       setState(() {
         currentIndex = index;
@@ -43,7 +42,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           IconButton(
               icon: Icon(Icons.create),
               onPressed: () {
-                Navigator.pushNamed(context, AddFriend.id);
+                Navigator.pushNamed(context, AddChat.id);
               }),
         ],
       ),
@@ -56,7 +55,16 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
     List<Widget> _pages = [
       ContactsScreen(),
-      Chats(messages: messages),
+      Chats(
+        chats: [
+          Chat(
+              photoUri: '',
+              id: '1',
+              time: '11:15',
+              lastMessage: 'not',
+              name: 'cal')
+        ],
+      ),
       SettingsScreen(),
     ];
 
