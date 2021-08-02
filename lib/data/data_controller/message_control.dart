@@ -24,7 +24,7 @@ class MessageControl extends ChangeNotifier {
   }
 
   ///create a new chat room with unique id
-  Future<void> createChat(Message message) async {
+  Future<void> createChat(Message message, String id) async {
     final id = message.receiver + message.sender;
   }
 }

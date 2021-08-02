@@ -28,10 +28,11 @@ class ProfileWidget extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/user.png'),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    user.userName,
-                    style: kProfileCardText,
-                  ),
+                  if (user.userName != null)
+                    Text(
+                      user.userName,
+                      style: kProfileCardText,
+                    ),
                   Text(
                     user.email,
                     style: kProfileCardText,

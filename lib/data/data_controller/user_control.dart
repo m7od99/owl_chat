@@ -12,23 +12,43 @@ class UserControl extends ChangeNotifier {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-  Future<void> logout() async {
-    await _auth.signOut();
+  Future<void> signOut() async {
+    await _auth.signOut().catchError((e) {
+      print(e.toString());
+    });
   }
 
   Future<void> signUp(String email, String password, String userName) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    final user = OwlUser(email: email, userName: userName);
-    user.id = _auth.currentUser!.uid;
     await _auth.currentUser!.updateDisplayName(userName);
-
-    await _firestore.collection('users').doc(email).set(user.toMap());
   }
 
   Stream<QuerySnapshot> getUsers() {
     return _firestore.collection('users').snapshots();
+  }
+
+  Future<void> saveUser(OwlUser user) async {
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .set(user.toMap())
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  Future<OwlUser> getUserInfo(String userId) async {
+    QuerySnapshot<Map<String, dynamic>> data = await _firestore
+        .collection('users')
+        .where('id', isEqualTo: userId)
+        .snapshots()
+        .single;
+
+    print(data);
+
+    return data.docs.map((e) => OwlUser.fromMap(e.data())).single;
   }
 
   bool _hasUser() {
@@ -41,4 +61,5 @@ class UserControl extends ChangeNotifier {
   get email => _auth.currentUser!.email;
   get isLogin => _hasUser();
   get userName => _auth.currentUser!.displayName;
+  get userId => _auth.currentUser!.uid;
 }

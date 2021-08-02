@@ -4,7 +4,7 @@ import 'package:owl_chat/data/models/chat.dart';
 
 class OwlUser {
   String email;
-  late String userName;
+  String userName;
   String? id;
   bool? isOnline;
   List<Chat>? chats;
@@ -43,10 +43,24 @@ class OwlUser {
       'userName': userName,
       'id': id,
       'isOnline': isOnline,
-      'friends': chats?.map((x) => x.toMap()).toList(),
+      'chats': chats?.map((x) => x.toMap()).toList(),
       'photoUri': photoUri,
     };
   }
 
   String toJson() => json.encode(toMap());
+
+  factory OwlUser.fromMap(Map<String, dynamic> map) {
+    return OwlUser(
+      email: map['email'],
+      userName: map['userName'],
+      id: map['id'],
+      isOnline: map['isOnline'],
+      chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
+      photoUri: map['photoUri'],
+    );
+  }
+
+  factory OwlUser.fromJson(String source) =>
+      OwlUser.fromMap(json.decode(source));
 }

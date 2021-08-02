@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/pages/login/login_screen.dart';
 import 'package:owl_chat/presentation/widgets/profile_widget.dart';
 import 'package:owl_chat/presentation/widgets/theme_sw.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const String id = "SettingsScreen";
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserControl>(context);
+
     return SafeArea(
       child: Container(
         child: Padding(
@@ -26,12 +30,13 @@ class SettingsScreen extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) =>
                       SettingsMenu(
                     title: settings[index],
-                    onTap: () {
+                    onTap: () async {
                       if (index == 0) {}
                       if (index == 1) {
                         Navigator.pushNamed(context, ThemePage.id);
                       }
                       if (index == 2) {
+                        user.signOut();
                         Navigator.pushNamed(context, LoginScreen.id);
                       }
                     },

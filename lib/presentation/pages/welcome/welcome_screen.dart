@@ -4,12 +4,15 @@ import 'package:owl_chat/presentation/pages/login/login_screen.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/logo.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'WelcomeScreen';
 
   @override
   Widget build(BuildContext context) {
+    final _load = RoundedLoadingButtonController();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -36,6 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                   Navigator.pushNamed(context, LoginScreen.id);
                 },
                 title: LocaleKeys.continue_.tr(),
+                controller: _load,
               ),
               Spacer(),
             ],

@@ -6,6 +6,7 @@ import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String id = 'SignUpScreen';
@@ -37,6 +38,8 @@ class _BodyState extends State<Body> {
   String? password;
 
   String? userName;
+
+  final _load = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +76,18 @@ class _BodyState extends State<Body> {
                 confirmPasswordTextField(),
                 SizedBox(height: 40),
                 LargeButton(
-                    title: LocaleKeys.register.tr(),
-                    onTap: () async {
-                      if (email != null && password != null) {
-                        await userControl.signUp(email!, password!, userName!);
-                      }
-                      if (userControl.isLogin) {
-                        print(email);
-                        Navigator.pushNamed(context, SuccessPage.id);
-                      }
-                    }),
+                  title: LocaleKeys.register.tr(),
+                  onTap: () async {
+                    if (email != null && password != null) {
+                      await userControl.signUp(email!, password!, userName!);
+                    }
+                    if (userControl.isLogin) {
+                      print(email);
+                      Navigator.pushNamed(context, SuccessPage.id);
+                    }
+                  },
+                  controller: _load,
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               ],
             ),
