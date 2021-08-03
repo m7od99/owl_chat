@@ -5,7 +5,7 @@ import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/presentation/pages/chats/chats.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import 'package:owl_chat/presentation/widgets/add_chat.dart';
+import 'package:owl_chat/presentation/widgets/search_for users.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ChatsScreen extends StatefulWidget {
@@ -40,10 +40,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
           Text(LocaleKeys.edit.tr()),
           Text(LocaleKeys.chats.tr()),
           IconButton(
-              icon: Icon(Icons.create),
-              onPressed: () {
-                Navigator.pushNamed(context, AddChat.id);
-              }),
+            icon: Icon(Icons.create),
+            onPressed: () {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.bottom),
+                  child: Search(),
+                ),
+              );
+            },
+          ),
         ],
       ),
       Row(

@@ -19,11 +19,12 @@ class UserState {
 
       final user = OwlUser(email: email, userName: userName);
       user.id = _control.userId;
+      user.isOnline = true;
 
       await _control.saveUser(user);
 
       return user;
     } else
-      throw 'not sign up';
+      throw 'some things go wrong';
   }
 }

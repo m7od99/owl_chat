@@ -29,6 +29,10 @@ class UserControl extends ChangeNotifier {
     return _firestore.collection('users').snapshots();
   }
 
+  getUsersEmail() async {
+    return await _firestore.collection('users').where('email').get();
+  }
+
   Future<void> saveUser(OwlUser user) async {
     await _firestore
         .collection('users')
@@ -39,16 +43,24 @@ class UserControl extends ChangeNotifier {
     });
   }
 
-  Future<OwlUser> getUserInfo(String userId) async {
-    QuerySnapshot<Map<String, dynamic>> data = await _firestore
+  getUserInfo(String userId) async {
+    return await _firestore
         .collection('users')
         .where('id', isEqualTo: userId)
-        .snapshots()
-        .single;
+        .get()
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
 
-    print(data);
-
-    return data.docs.map((e) => OwlUser.fromMap(e.data())).single;
+  getUserByEmail(String email) async {
+    return await _firestore
+        .collection('users')
+        .where('email', isEqualTo: userId)
+        .get()
+        .catchError((e) {
+      print(e.toString());
+    });
   }
 
   bool _hasUser() {
