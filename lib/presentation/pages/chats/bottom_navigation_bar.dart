@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/presentation/pages/chats/chats.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
@@ -42,15 +41,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           IconButton(
             icon: Icon(Icons.create),
             onPressed: () {
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).padding.bottom),
-                  child: Search(),
-                ),
-              );
+              Navigator.pushNamed(context, Search.id);
             },
           ),
         ],
@@ -64,16 +55,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
     List<Widget> _pages = [
       ContactsScreen(),
-      Chats(
-        chats: [
-          Chat(
-              photoUri: '',
-              id: '1',
-              time: '11:15',
-              lastMessage: 'not',
-              name: 'cal')
-        ],
-      ),
+      Chats(),
       SettingsScreen(),
     ];
 

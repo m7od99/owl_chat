@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
 
 class MessageControl extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
+  final _user = FirebaseAuth.instance;
 
   ///get messages from specific chat room
   Stream<QuerySnapshot> getMessages(String chatId) {
@@ -33,5 +35,17 @@ class MessageControl extends ChangeNotifier {
         .catchError((e) {
       print(e);
     }).then((value) => print('chat room is created'));
+  }
+
+  ///get user chats
+  getChats(String userId) async {
+    return await _firestore
+        .collection('messages')
+        .where(userId, arrayContains: _user.currentUser!.uid)
+        .orderBy('time', descending: true)
+        .get()
+        .catchError((e) {
+      print(e);
+    }).then((value) => print('found chats'));
   }
 }

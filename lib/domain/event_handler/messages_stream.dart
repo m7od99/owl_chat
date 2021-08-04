@@ -15,7 +15,8 @@ class ChatStream extends StatelessWidget {
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
     final user = Provider.of<UserControl>(context);
-    final stream = control.getMessages('1');
+
+    final stream = control.getMessages(chat.id);
 
     return SafeArea(
       child: StreamBuilder<QuerySnapshot>(

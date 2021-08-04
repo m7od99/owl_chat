@@ -25,8 +25,8 @@ class UserControl extends ChangeNotifier {
     await _auth.currentUser!.updateDisplayName(userName);
   }
 
-  Stream<QuerySnapshot> getUsers() {
-    return _firestore.collection('users').snapshots();
+  getUsers() {
+    return _firestore.collection('users').get();
   }
 
   getUsersEmail() async {

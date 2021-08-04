@@ -5,10 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/domain/controller/search.dart';
+import 'package:owl_chat/domain/event_handler/messages_state.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
+
+  static const String id = 'Search';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,18 @@ class Search extends StatelessWidget {
   }
 }
 
-class BuildFloatingSearchBar extends StatelessWidget {
+class BuildFloatingSearchBar extends StatefulWidget {
+  @override
+  _BuildFloatingSearchBarState createState() => _BuildFloatingSearchBarState();
+}
+
+OwlUser otherUser = OwlUser(email: '', userName: '', id: '');
+
+bool found = false;
+
+class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
+  final SearchLogic _search = SearchLogic();
+
   @override
   Widget build(BuildContext context) {
     final isPortrait =
@@ -41,14 +56,30 @@ class BuildFloatingSearchBar extends StatelessWidget {
         axisAlignment: isPortrait ? 0.0 : -1.0,
         isScrollControlled: true,
         openAxisAlignment: 0.0,
+        onSubmitted: (text) async {
+          final user = await _search.getUserByEmail(text);
+          setState(
+            () {
+              otherUser.userName = user.userName;
+              otherUser.id = user.id;
+              otherUser.email = user.email;
+              otherUser.isOnline = user.isOnline;
+
+              print(otherUser.userName);
+
+              if (otherUser.isOnline != null) {
+                found = true;
+              }
+            },
+          );
+        },
         width: isPortrait ? 600 : 500,
         debounceDelay: const Duration(milliseconds: 500),
-        onQueryChanged: (query) {
-          // Call your model, bloc, controller here.
-        },
+        onQueryChanged: (query) {},
         // Specify a custom transition to be used for
         // animating between opened and closed stated.
         transition: CircularFloatingSearchBarTransition(),
+        // body: found ? ChatSearchCard(user: otherUser!) : Container(),
         actions: [
           FloatingSearchBarAction(
             showIfOpened: false,
@@ -68,6 +99,7 @@ class BuildFloatingSearchBar extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if (found == true) ChatSearchCard(user: otherUser),
                   // ShowUsersStream(),
                 ],
               ),
@@ -94,7 +126,7 @@ class ShowUsersStream extends StatelessWidget {
         List<OwlUser> users = [];
         for (var user in data) {
           dynamic _user = user.data();
-          users.add(OwlUser(email: _user['email'], userName: ''));
+          users.add(OwlUser(email: _user['email'], userName: '', id: ''));
         }
         return Expanded(
           child: ListView.builder(
@@ -118,6 +150,8 @@ class ChatSearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MessagesState control = MessagesState();
+
     return ListTile(
       title: Text(
         user.userName,
@@ -128,8 +162,17 @@ class ChatSearchCard extends StatelessWidget {
         backgroundImage: AssetImage('assets/images/user.png'),
       ),
       trailing: Icon(Icons.chat_bubble_outlined),
-      onTap: () {
-        Navigator.pushNamed(context, ChatScreen.id);
+      onTap: () async {
+        final chat = await control.createChatRoom(otherUser);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              chat: chat,
+            ),
+          ),
+        );
       },
     );
   }

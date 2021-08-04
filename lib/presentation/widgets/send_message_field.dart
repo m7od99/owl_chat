@@ -3,11 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import 'package:provider/provider.dart';
 
 class SendMessageField extends StatefulWidget {
+  final Chat chat;
+
+  const SendMessageField({Key? key, required this.chat}) : super(key: key);
+
   @override
   _SendMessageFieldState createState() => _SendMessageFieldState();
 }
@@ -84,12 +89,12 @@ class _SendMessageFieldState extends State<SendMessageField> {
                     control.sendMessage(
                         Message(
                           sender: user.email,
-                          receiver: 'no one',
+                          receiver: widget.chat.name,
                           text: text!,
                           time: Timestamp.now(),
                           isMe: true,
                         ),
-                        '1');
+                        widget.chat.id);
                   }
                   setState(() {
                     editControl.clear();

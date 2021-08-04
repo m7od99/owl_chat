@@ -5,7 +5,7 @@ import 'package:owl_chat/data/models/chat.dart';
 class OwlUser {
   String email;
   String userName;
-  String? id;
+  String id;
   bool? isOnline;
   List<Chat>? chats;
   String? photoUri;
@@ -13,7 +13,7 @@ class OwlUser {
   OwlUser({
     required this.email,
     required this.userName,
-    this.id,
+    required this.id,
     this.isOnline,
     this.chats,
     this.photoUri,
@@ -56,7 +56,7 @@ class OwlUser {
       userName: map['userName'],
       id: map['id'],
       isOnline: map['isOnline'],
-      chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
+      // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
       photoUri: map['photoUri'],
     );
   }

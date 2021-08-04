@@ -2,10 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/domain/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
+import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -43,6 +45,8 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserState>(context);
+
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -62,6 +66,9 @@ class _BodyState extends State<Body> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                 TextFormField(
+                  onChanged: (value) {
+                    userName = value;
+                  },
                   decoration: inputDecoration(
                     hint: LocaleKeys.user_name.tr(),
                     labelText: LocaleKeys.user_name.tr(),
@@ -79,7 +86,7 @@ class _BodyState extends State<Body> {
                   title: LocaleKeys.register.tr(),
                   onTap: () async {
                     if (email != null && password != null) {
-                      await userControl.signUp(email!, password!, userName!);
+                      await user.signUp(email!, password!, userName!);
                     }
                     if (userControl.isLogin) {
                       print(email);
@@ -115,35 +122,37 @@ class _BodyState extends State<Body> {
 
   TextFormField confirmPasswordTextField() {
     return TextFormField(
-        obscureText: true,
-        decoration: inputDecoration(
-          hint: LocaleKeys.re_enter_your_password.tr(),
-          labelText: LocaleKeys.confirm_password.tr(),
-          icon: Icons.lock,
-        ),
-        onSaved: (newValue) => confirmPassword = newValue!,
-        onChanged: (pass) {
-          setState(() {
-            confirmPassword = pass;
-            print(pass);
-          });
+      obscureText: true,
+      decoration: inputDecoration(
+        hint: LocaleKeys.re_enter_your_password.tr(),
+        labelText: LocaleKeys.confirm_password.tr(),
+        icon: Icons.lock,
+      ),
+      onSaved: (newValue) => confirmPassword = newValue!,
+      onChanged: (pass) {
+        setState(() {
+          confirmPassword = pass;
+          print(pass);
         });
+      },
+    );
   }
 
   TextFormField emailTextField() {
     return TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: inputDecoration(
-          hint: LocaleKeys.enter_your_email.tr(),
-          labelText: LocaleKeys.email.tr(),
-          icon: Icons.mail,
-        ),
-        onSaved: (newValue) => email = newValue!,
-        onChanged: (value) {
-          setState(() {
-            print(value);
-            email = value;
-          });
+      keyboardType: TextInputType.emailAddress,
+      decoration: inputDecoration(
+        hint: LocaleKeys.enter_your_email.tr(),
+        labelText: LocaleKeys.email.tr(),
+        icon: Icons.mail,
+      ),
+      onSaved: (newValue) => email = newValue!,
+      onChanged: (value) {
+        setState(() {
+          print(value);
+          email = value;
         });
+      },
+    );
   }
 }

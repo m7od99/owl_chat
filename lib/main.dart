@@ -6,6 +6,7 @@ import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
 
+import 'domain/event_handler/user_state.dart';
 import 'my_app.dart';
 import 'translations/codegen_loader.g.dart';
 
@@ -27,6 +28,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => MessageControl()),
         ChangeNotifierProvider(create: (context) => UserControl()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => UserState()),
       ], child: MyApp()),
     ),
   );

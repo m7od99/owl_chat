@@ -4,14 +4,13 @@ import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/domain/event_handler/messages_stream.dart';
 import 'package:owl_chat/presentation/widgets/send_message_field.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   static String id = 'ChatScreen';
 
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
-}
+  final Chat chat;
 
-class _ChatScreenState extends State<ChatScreen> {
+  const ChatScreen({Key? key, required this.chat}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +42,11 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          SendMessageField(),
+          SendMessageField(
+            chat: chat,
+          ),
         ],
       ),
     );
   }
 }
-
-Chat chat = Chat(photoUri: '', id: '', time: '', lastMessage: '', name: '');
