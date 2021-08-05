@@ -7,7 +7,7 @@ import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:owl_chat/presentation/widgets/friend_card.dart';
 import 'package:provider/provider.dart';
 
-class Chats extends StatelessWidget {
+class HomeChats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
@@ -15,6 +15,7 @@ class Chats extends StatelessWidget {
     final stream = control.getChats(user.userId);
 
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
           stream: stream,
@@ -27,9 +28,7 @@ class Chats extends StatelessWidget {
 
             for (var chat in data) {
               dynamic doc = chat.data();
-              chats.add(Chat.fromMap(doc));
               print(doc['id']);
-              print(doc);
             }
 
             return Padding(
@@ -40,14 +39,7 @@ class Chats extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) => FriendCard(
                   chat: chats[index],
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChatScreen(
-                          chat: chats[index],
-                        ),
-                      ),
-                    );
+                    Navigator.pushNamed(context, ChatScreen.id);
                   },
                 ),
                 separatorBuilder: (BuildContext context, int index) =>

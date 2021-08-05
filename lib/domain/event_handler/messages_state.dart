@@ -15,21 +15,10 @@ class MessagesState {
         : otherUserId + _user.userId;
   }
 
-  Future<List<Chat>> getChats() async {
-    QuerySnapshot snap = await _control.getChats(_user.userId);
+  getChats() {
+    Stream<QuerySnapshot> snap = _control.getChats(_user.userId);
 
-    dynamic data = snap.docs;
-    List<Chat> chats = [];
-
-    for (var chat in data) {
-      chats.add(
-        Chat.fromMap(
-          chat.data(),
-        ),
-      );
-    }
-
-    return chats;
+    print(snap.isEmpty);
   }
 
   createChatRoom(OwlUser otherUser) async {

@@ -8,7 +8,7 @@ class Message extends Equatable {
   final String receiver;
   final String text;
   final Timestamp time;
-  final bool isMe;
+  bool isMe;
 
   Message({
     required this.sender,

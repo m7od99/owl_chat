@@ -29,11 +29,14 @@ class ChatStream extends StatelessWidget {
             List<MessageBubble> messages = [];
 
             for (var mess in data) {
-              dynamic message = mess.data();
+              dynamic doc = mess.data();
+              final message = Message.fromMap(doc);
+              message.isMe = control.isMe(message.sender);
+
               messages.add(
                 MessageBubble(
                   key: GlobalKey(),
-                  message: Message.fromMap(message),
+                  message: message,
                 ),
               );
             }

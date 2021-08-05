@@ -31,7 +31,12 @@ class SettingsScreen extends StatelessWidget {
                       SettingsMenu(
                     title: settings[index],
                     onTap: () async {
-                      if (index == 0) {}
+                      if (index == 0) {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => HomeChats()),
+                        // );
+                      }
                       if (index == 1) {
                         Navigator.pushNamed(context, ThemePage.id);
                       }

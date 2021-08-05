@@ -28,6 +28,14 @@ class _SendMessageFieldState extends State<SendMessageField> {
     final control = Provider.of<MessageControl>(context);
     String? text;
 
+    bool isMe(String messageSender) {
+      if (messageSender == user.email) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: kDefaultPadding,
@@ -92,7 +100,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                           receiver: widget.chat.name,
                           text: text!,
                           time: Timestamp.now(),
-                          isMe: true,
+                          isMe: isMe(user.email),
                         ),
                         widget.chat.id);
                   }

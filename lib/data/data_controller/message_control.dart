@@ -11,7 +11,9 @@ class MessageControl extends ChangeNotifier {
   ///get messages from specific chat room
   Stream<QuerySnapshot> getMessages(String chatId) {
     return _firestore
-        .collection('messages/$chatId/messages')
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
         .orderBy('time')
         .snapshots();
   }
@@ -19,7 +21,9 @@ class MessageControl extends ChangeNotifier {
   ///send message to specific chat room
   Future<void> sendMessage(Message message, String chatId) async {
     await _firestore
-        .collection('messages/$chatId/messages')
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
         .add(message.toMap())
         .catchError((e) {
       print(e);
@@ -38,14 +42,21 @@ class MessageControl extends ChangeNotifier {
   }
 
   ///get user chats
-  getChats(String userId) async {
-    return await _firestore
+  getChats(String userId) {
+    print('id is ' + _firestore.collection('messages').id);
+
+    return _firestore
         .collection('messages')
-        .where(userId, arrayContains: _user.currentUser!.uid)
+        // .where('id', arrayContains: _user.currentUser!.uid)
         .orderBy('time', descending: true)
-        .get()
-        .catchError((e) {
-      print(e);
-    }).then((value) => print('found chats'));
+        .snapshots();
+  }
+
+  bool isMe(String messageSender) {
+    if (messageSender == _user.currentUser!.email) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
