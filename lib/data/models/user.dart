@@ -7,14 +7,26 @@ class OwlUser {
   String userName;
   String id;
   bool? isOnline;
-  List<Chat>? chats;
+  List<OwlUser>? friends = [];
+  List<Chat>? chats = [];
   String? photoUri;
+
+  void addFriend(OwlUser user) {
+    friends = [];
+    friends!.add(user);
+  }
+
+  void addChat(Chat chat) {
+    chats = [];
+    chats!.add(chat);
+  }
 
   OwlUser({
     required this.email,
     required this.userName,
     required this.id,
     this.isOnline,
+    this.friends,
     this.chats,
     this.photoUri,
   });
@@ -24,7 +36,8 @@ class OwlUser {
     String? userName,
     String? id,
     bool? isOnline,
-    List<Chat>? friends,
+    List<OwlUser>? friends,
+    List<Chat>? chats,
     String? photoUri,
   }) {
     return OwlUser(
@@ -32,7 +45,8 @@ class OwlUser {
       userName: userName ?? this.userName,
       id: id ?? this.id,
       isOnline: isOnline ?? this.isOnline,
-      chats: friends ?? this.chats,
+      friends: friends ?? this.friends,
+      chats: chats ?? this.chats,
       photoUri: photoUri ?? this.photoUri,
     );
   }
@@ -43,6 +57,7 @@ class OwlUser {
       'userName': userName,
       'id': id,
       'isOnline': isOnline,
+      'friends': friends?.map((x) => x.toMap()).toList(),
       'chats': chats?.map((x) => x.toMap()).toList(),
       'photoUri': photoUri,
     };
@@ -56,6 +71,9 @@ class OwlUser {
       userName: map['userName'],
       id: map['id'],
       isOnline: map['isOnline'],
+      // friends: List<OwlUser>.from(
+      //   map['friends']?.map((x) => OwlUser.fromMap(x)),
+      // ),
       // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
       photoUri: map['photoUri'],
     );

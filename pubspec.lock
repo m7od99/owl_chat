@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
+  awesome_notifications:
+    dependency: "direct main"
+    description:
+      name: awesome_notifications
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6+10"
   boolean_selector:
     dependency: transitive
     description:
@@ -190,6 +197,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "10.0.4"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -532,4 +560,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=2.0.4"

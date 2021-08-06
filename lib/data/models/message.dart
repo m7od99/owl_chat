@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 class Message extends Equatable {
   final String sender;
   final String receiver;
-  final String text;
+  String text;
   final Timestamp time;
   bool isMe;
 

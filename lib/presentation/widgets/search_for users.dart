@@ -1,13 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/user.dart';
 import 'package:owl_chat/domain/controller/search.dart';
-import 'package:owl_chat/domain/event_handler/messages_state.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/presentation/widgets/search_card.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -17,7 +13,6 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // This is handled by the search bar itself.
       resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
@@ -111,69 +106,31 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
   }
 }
 
-class ShowUsersStream extends StatelessWidget {
-  final UserControl user = UserControl();
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: user.getUsers(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Container();
-        }
-        final data = snapshot.data!.docs;
-        List<OwlUser> users = [];
-        for (var user in data) {
-          dynamic _user = user.data();
-          users.add(OwlUser(email: _user['email'], userName: '', id: ''));
-        }
-        return Expanded(
-          child: ListView.builder(
-            itemCount: users.length,
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-            itemBuilder: (context, index) => ChatSearchCard(user: users[index]),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class ChatSearchCard extends StatelessWidget {
-  const ChatSearchCard({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
-
-  final OwlUser user;
-
-  @override
-  Widget build(BuildContext context) {
-    final MessagesState control = MessagesState();
-
-    return ListTile(
-      title: Text(
-        user.userName,
-        style: GoogleFonts.cherrySwash(fontSize: 18),
-      ),
-      // subtitle: Text('last seen'),
-      leading: CircleAvatar(
-        backgroundImage: AssetImage('assets/images/user.png'),
-      ),
-      trailing: Icon(Icons.chat_bubble_outlined),
-      onTap: () async {
-        final chat = await control.createChatRoom(otherUser);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(
-              chat: chat,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+// class ShowUsersStream extends StatelessWidget {
+//   final UserControl user = UserControl();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(
+//       stream: user.getUsers(),
+//       builder: (context, snapshot) {
+//         if (!snapshot.hasData) {
+//           return Container();
+//         }
+//         final data = snapshot.data!.docs;
+//         List<OwlUser> users = [];
+//         for (var user in data) {
+//           dynamic _user = user.data();
+//           users.add(OwlUser(email: _user['email'], userName: '', id: ''));
+//         }
+//         return Expanded(
+//           child: ListView.builder(
+//             itemCount: users.length,
+//             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+//             itemBuilder: (context, index) => ChatSearchCard(user: users[index]),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

@@ -35,7 +35,6 @@ class UserState extends ChangeNotifier {
     final docs = data.docs;
 
     List<OwlUser> users = [];
-
     for (var user in docs) {
       dynamic data = user.data();
       users.add(OwlUser.fromMap(data));

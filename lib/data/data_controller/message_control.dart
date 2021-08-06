@@ -41,6 +41,22 @@ class MessageControl extends ChangeNotifier {
     }).then((value) => print('chat room is created'));
   }
 
+  addNewChatToUser(String userId, Chat chat) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('chats')
+        .add(chat.toMap());
+  }
+
+  getUserChats(userId) async {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('chats')
+        .snapshots();
+  }
+
   ///get user chats
   getChats(String userId) {
     print('id is ' + _firestore.collection('messages').id);

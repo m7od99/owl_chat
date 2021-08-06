@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/domain/event_handler/chats_logic.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:owl_chat/presentation/widgets/friend_card.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ class Chats extends StatelessWidget {
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
     final user = Provider.of<UserControl>(context);
+    final _chats = ChatsController();
     final stream = control.getChats(user.userId);
 
     return Scaffold(
@@ -22,16 +24,9 @@ class Chats extends StatelessWidget {
             print(snapshot.hasData);
             if (!snapshot.hasData) return Container();
 
-            List<Chat> chats = [];
-            final data = snapshot.data!.docs;
-
-            for (var chat in data) {
-              dynamic doc = chat.data();
-              chats.add(Chat.fromMap(doc));
-              print(doc['id']);
-              print(doc);
-            }
-
+            final snap = snapshot.data!.docs;
+            final data = _chats.getMyChats(snap);
+            List<Chat> chats = _chats.getChats(data);
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.separated(

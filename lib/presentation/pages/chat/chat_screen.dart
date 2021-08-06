@@ -19,7 +19,7 @@ class ChatScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('sender'),
+            Text(chat.name),
             CircleAvatar(
               backgroundImage: AssetImage('assets/images/user.png'),
             ),

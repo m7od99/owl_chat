@@ -7,6 +7,7 @@ import 'package:owl_chat/data/models/user.dart';
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final _search = SearchLogic();
 
   Future<void> login(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -41,6 +42,18 @@ class UserControl extends ChangeNotifier {
         .catchError((e) {
       print(e.toString());
     });
+  }
+
+  addFriend(String userId, OwlUser otherUser) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('friends')
+        .add(otherUser.toMap());
+  }
+
+  Future<void> updateUser(OwlUser user) async {
+    await _firestore.collection('users').doc(user.id).update(user.toMap());
   }
 
   getUserInfo(String userId) async {

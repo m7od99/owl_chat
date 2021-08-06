@@ -17,7 +17,7 @@ class SearchLogic {
     List<OwlUser> users = await _user.getUsers();
 
     for (var user in users) {
-      if (user.email == email) {
+      if (user.email == email.trim()) {
         return user;
       }
     }

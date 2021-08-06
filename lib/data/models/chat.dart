@@ -4,10 +4,10 @@ import 'package:equatable/equatable.dart';
 
 class Chat extends Equatable {
   final String id;
-  final String lastMessage;
-  final String name;
-  final String photoUri;
-  final String time;
+  String lastMessage;
+  String name;
+  String photoUri;
+  String time;
 
   Chat({
     required this.id,
