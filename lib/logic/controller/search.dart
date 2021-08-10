@@ -1,5 +1,6 @@
-import 'package:owl_chat/data/models/user.dart';
-import 'package:owl_chat/domain/event_handler/user_state.dart';
+import '../event_handler/user_state.dart';
+
+import '../../data/models/user.dart';
 
 class SearchLogic {
   final UserState _user = UserState();

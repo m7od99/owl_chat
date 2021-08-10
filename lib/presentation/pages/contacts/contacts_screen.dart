@@ -8,12 +8,18 @@ class ContactsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final users = Users();
-    return ListView.separated(
-        itemBuilder: (BuildContext context, int index) => ContactsCard(
-              name: users.names[index],
-            ),
-        separatorBuilder: (BuildContext context, int index) => Divider(),
-        itemCount: users.names.length);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).splashColor,
+        automaticallyImplyLeading: false,
+      ),
+      body: ListView.separated(
+          itemBuilder: (BuildContext context, int index) => ContactsCard(
+                name: users.names[index],
+              ),
+          separatorBuilder: (BuildContext context, int index) => Divider(),
+          itemCount: users.names.length),
+    );
   }
 }
 

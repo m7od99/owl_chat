@@ -20,8 +20,7 @@ class UserControl extends ChangeNotifier {
   }
 
   Future<void> signUp(String email, String password, String userName) async {
-    await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
     await _auth.currentUser!.updateDisplayName(userName);
   }
@@ -35,21 +34,13 @@ class UserControl extends ChangeNotifier {
   }
 
   Future<void> saveUser(OwlUser user) async {
-    await _firestore
-        .collection('users')
-        .doc(user.id)
-        .set(user.toMap())
-        .catchError((e) {
+    await _firestore.collection('users').doc(user.id).set(user.toMap()).catchError((e) {
       print(e.toString());
     });
   }
 
   addFriend(String userId, OwlUser otherUser) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('friends')
-        .add(otherUser.toMap());
+    await _firestore.collection('users').doc(userId).collection('friends').add(otherUser.toMap());
   }
 
   Future<void> updateUser(OwlUser user) async {
@@ -57,21 +48,13 @@ class UserControl extends ChangeNotifier {
   }
 
   getUserInfo(String userId) async {
-    return await _firestore
-        .collection('users')
-        .where('id', isEqualTo: userId)
-        .get()
-        .catchError((e) {
+    return await _firestore.collection('users').where('id', isEqualTo: userId).get().catchError((e) {
       print(e.toString());
     });
   }
 
   getUserByEmail(String email) async {
-    return await _firestore
-        .collection('users')
-        .where('email', isEqualTo: userId)
-        .get()
-        .catchError((e) {
+    return await _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
       print(e.toString());
     });
   }
@@ -81,6 +64,10 @@ class UserControl extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  getUserToken() async {
+    _firestore.collection('users').doc(userId);
   }
 
   get email => _auth.currentUser!.email;

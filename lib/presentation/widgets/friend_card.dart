@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/helper/helper.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
+import 'package:provider/provider.dart';
 
 class FriendCard extends StatelessWidget {
   final Chat chat;
@@ -9,8 +12,15 @@ class FriendCard extends StatelessWidget {
 
   FriendCard({required this.onTap, required this.chat});
 
+  String name(String myId) {
+    if (chat.me!.id == myId) return chat.other!.userName;
+    return chat.me!.userName;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserControl>(context);
+
     return Container(
       height: 60,
       child: InkWell(
@@ -36,19 +46,21 @@ class FriendCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      chat.name,
-                      // Faker().person.name(),
+                      name(user.userId),
                       style: kFriendCardText,
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
+                    //  SizedBox(
+                    //  height: 4,
+                    //  ),
                     Opacity(
                       opacity: 0.64,
                       child: Text(
                         chat.lastMessage,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -57,7 +69,7 @@ class FriendCard extends StatelessWidget {
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(chat.time),
+              child: Text(Helper.format(chat.time)),
             ),
           ],
         ),

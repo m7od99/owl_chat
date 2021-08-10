@@ -42,8 +42,7 @@ class HomeChats extends StatelessWidget {
                     Navigator.pushNamed(context, ChatScreen.id);
                   },
                 ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(),
+                separatorBuilder: (BuildContext context, int index) => Divider(),
               ),
             );
           },

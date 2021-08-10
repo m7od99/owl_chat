@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:owl_chat/data/models/user.dart';
-import 'package:owl_chat/domain/controller/search.dart';
+import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/presentation/widgets/search_card.dart';
 
 class Search extends StatelessWidget {
@@ -14,12 +14,28 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          BuildFloatingSearchBar(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            //  SearchAppBar(),
+            BuildFloatingSearchBar(),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class SearchAppBar extends StatelessWidget {
+  const SearchAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingSearchAppBar(
+      transitionDuration: const Duration(milliseconds: 800),
+      title: Text('Search'),
+      body: Container(),
     );
   }
 }
@@ -32,15 +48,14 @@ class BuildFloatingSearchBar extends StatefulWidget {
 OwlUser otherUser = OwlUser(email: '', userName: '', id: '');
 
 bool found = false;
+bool load = false;
 
 class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
   final SearchLogic _search = SearchLogic();
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return SafeArea(
       child: FloatingSearchBar(
         hint: 'Search...',
@@ -48,13 +63,19 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
         transitionDuration: const Duration(milliseconds: 800),
         transitionCurve: Curves.easeInOut,
         physics: const BouncingScrollPhysics(),
+        clearQueryOnClose: true,
         axisAlignment: isPortrait ? 0.0 : -1.0,
         isScrollControlled: true,
         openAxisAlignment: 0.0,
+        progress: load,
         onSubmitted: (text) async {
+          setState(() {
+            load = true;
+          });
           final user = await _search.getUserByEmail(text);
           setState(
             () {
+              load = false;
               otherUser.userName = user.userName;
               otherUser.id = user.id;
               otherUser.email = user.email;

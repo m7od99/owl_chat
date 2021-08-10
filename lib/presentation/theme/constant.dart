@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const kFriendCardText = TextStyle(
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: FontWeight.bold,
 );
 

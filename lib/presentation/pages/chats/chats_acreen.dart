@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/message_control.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/domain/event_handler/chats_logic.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
-import 'package:owl_chat/presentation/widgets/friend_card.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:owl_chat/presentation/widgets/search_for%20users.dart';
+import '../../../data/data_controller/message_control.dart';
+import '../../../data/data_controller/user_control.dart';
+import '../../../data/models/chat.dart';
+import '../../../logic/event_handler/chats_logic.dart';
+import '../chat/chat_screen.dart';
+import '../../widgets/friend_card.dart';
 import 'package:provider/provider.dart';
 
 class Chats extends StatelessWidget {
@@ -17,6 +19,23 @@ class Chats extends StatelessWidget {
     final stream = control.getChats(user.userId);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).splashColor,
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('edits'),
+            Text('Chats'),
+            IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: () {
+                Navigator.pushNamed(context, Search.id);
+              },
+            )
+          ],
+        ),
+      ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
           stream: stream,
@@ -45,8 +64,7 @@ class Chats extends StatelessWidget {
                     );
                   },
                 ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(),
+                separatorBuilder: (BuildContext context, int index) => Divider(),
               ),
             );
           },

@@ -1,13 +1,16 @@
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:owl_chat/data/models/user.dart';
 
-class Chat extends Equatable {
+class Chat {
   final String id;
+  OwlUser? me;
+  OwlUser? other;
   String lastMessage;
   String name;
   String photoUri;
-  String time;
+  Timestamp time;
 
   Chat({
     required this.id,
@@ -15,27 +18,15 @@ class Chat extends Equatable {
     required this.name,
     required this.photoUri,
     required this.time,
+    this.other,
+    this.me,
   });
-
-  Chat copyWith({
-    String? id,
-    String? lastMessage,
-    String? name,
-    String? photoUri,
-    String? time,
-  }) {
-    return Chat(
-      id: id ?? this.id,
-      lastMessage: lastMessage ?? this.lastMessage,
-      name: name ?? this.name,
-      photoUri: photoUri ?? this.photoUri,
-      time: time ?? this.time,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'me': me?.toMap(),
+      'other': other?.toMap(),
       'lastMessage': lastMessage,
       'name': name,
       'photoUri': photoUri,
@@ -46,6 +37,8 @@ class Chat extends Equatable {
   factory Chat.fromMap(Map<String, dynamic> map) {
     return Chat(
       id: map['id'],
+      me: OwlUser.fromMap(map['me']),
+      other: OwlUser.fromMap(map['other']),
       lastMessage: map['lastMessage'],
       name: map['name'],
       photoUri: map['photoUri'],
@@ -56,18 +49,4 @@ class Chat extends Equatable {
   String toJson() => json.encode(toMap());
 
   factory Chat.fromJson(String source) => Chat.fromMap(json.decode(source));
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props {
-    return [
-      id,
-      lastMessage,
-      name,
-      photoUri,
-      time,
-    ];
-  }
 }

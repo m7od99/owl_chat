@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/domain/event_handler/user_state.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
@@ -32,13 +32,9 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final userControl = UserControl();
-
   String? email;
-
   String? confirmPassword;
-
   String? password;
-
   String? userName;
 
   final _load = RoundedLoadingButtonController();

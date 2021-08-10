@@ -103,6 +103,9 @@ class _SendMessageFieldState extends State<SendMessageField> {
                           isMe: isMe(user.email),
                         ),
                         widget.chat.id);
+                    widget.chat.lastMessage = text!;
+                    widget.chat.time = Timestamp.now();
+                    control.createChat(widget.chat);
                   }
                   setState(() {
                     editControl.clear();

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/presentation/widgets/message_bubble.dart';
@@ -14,7 +13,6 @@ class ChatStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
-    final user = Provider.of<UserControl>(context);
 
     final stream = control.getMessages(chat.id);
 

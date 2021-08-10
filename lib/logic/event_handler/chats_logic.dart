@@ -3,16 +3,13 @@ import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/user.dart';
-import 'package:owl_chat/helper/helper.dart';
 
 class ChatsController {
   final MessageControl _control = MessageControl();
   final UserControl _user = UserControl();
 
   String createChatId(String otherUserId) {
-    return _user.userId.length >= otherUserId.length
-        ? _user.userId + otherUserId
-        : otherUserId + _user.userId;
+    return _user.userId.length >= otherUserId.length ? _user.userId + otherUserId : otherUserId + _user.userId;
   }
 
   getMyChats(List<QueryDocumentSnapshot> snap) {
@@ -21,25 +18,35 @@ class ChatsController {
     );
   }
 
+  bool isChatd(List<QueryDocumentSnapshot> snap, otherId) {
+    return snap.where((element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId)).isNotEmpty;
+  }
+
   getChats(Iterable<QueryDocumentSnapshot> data) {
     List<Chat> chats = [];
     for (var chat in data) {
       dynamic doc = chat.data();
       chats.add(Chat.fromMap(doc));
-      print(doc['id']);
-      print(doc);
     }
 
     return chats;
   }
+
+  hasChat(String otherId) {}
 
   createChatRoom(OwlUser otherUser) async {
     String otherUserId = otherUser.id;
     String id = createChatId(otherUserId);
 
     final chat = Chat(
-      time: Helper.format(Timestamp.now()),
+      time: Timestamp.now(),
       name: otherUser.userName,
+      me: OwlUser(
+        email: _user.email,
+        userName: _user.userName,
+        id: _user.userId,
+      ),
+      other: otherUser,
       photoUri: '',
       lastMessage: '',
       id: id,

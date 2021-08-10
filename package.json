@@ -1,0 +1,27 @@
+{
+  "name": "owlchat",
+  "version": "1.0.0",
+  "description": "A new Flutter project.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib"
+  },
+  "dependencies": {
+    "firebase-admin": "^9.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m7od99/owl_chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m7od99/owl_chat/issues"
+  },
+  "homepage": "https://github.com/m7od99/owl_chat#readme"
+}

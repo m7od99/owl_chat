@@ -13,45 +13,49 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserControl>(context);
 
-    return SafeArea(
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ProfileWidget(),
-              SizedBox(height: 50),
-              Card(
-                color: Theme.of(context).splashColor,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(5),
-                  itemBuilder: (BuildContext context, int index) =>
-                      SettingsMenu(
-                    title: settings[index],
-                    onTap: () async {
-                      if (index == 0) {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => HomeChats()),
-                        // );
-                      }
-                      if (index == 1) {
-                        Navigator.pushNamed(context, ThemePage.id);
-                      }
-                      if (index == 2) {
-                        user.signOut();
-                        Navigator.pushNamed(context, LoginScreen.id);
-                      }
-                    },
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).splashColor,
+        automaticallyImplyLeading: false,
+      ),
+      body: SafeArea(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ProfileWidget(),
+                SizedBox(height: 50),
+                Card(
+                  color: Theme.of(context).splashColor,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(5),
+                    itemBuilder: (BuildContext context, int index) => SettingsMenu(
+                      title: settings[index],
+                      onTap: () async {
+                        if (index == 0) {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => HomeChats()),
+                          // );
+                        }
+                        if (index == 1) {
+                          Navigator.pushNamed(context, ThemePage.id);
+                        }
+                        if (index == 2) {
+                          user.signOut();
+                          Navigator.pushNamed(context, LoginScreen.id);
+                        }
+                      },
+                    ),
+                    itemCount: settings.length,
+                    separatorBuilder: (BuildContext context, int index) => Divider(),
                   ),
-                  itemCount: settings.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

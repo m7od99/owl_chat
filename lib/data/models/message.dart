@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 
-class Message extends Equatable {
+class Message {
   final String sender;
   final String receiver;
   String text;
@@ -56,20 +55,5 @@ class Message extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) =>
-      Message.fromMap(json.decode(source));
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props {
-    return [
-      sender,
-      receiver,
-      text,
-      time,
-      isMe,
-    ];
-  }
+  factory Message.fromJson(String source) => Message.fromMap(json.decode(source));
 }

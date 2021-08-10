@@ -24,7 +24,10 @@ dependencies:
   material_floating_search_bar: ^0.3.4
   cloud_firestore: ^2.4.0
   firebase_messaging: ^10.0.4
-  awesome_notifications: any # Any attribute updates automatically your source to the last version
+  awesome_notifications: any
+  googleapis: ^4.0.0
+  flutter_local_notifications: any
+  fluttertoast: any
 
 dev_dependencies:
   flutter_test:
