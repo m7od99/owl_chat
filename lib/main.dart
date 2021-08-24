@@ -3,14 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:owl_chat/presentation/theme/themes.dart';
 
 import 'data/data_controller/message_control.dart';
 import 'data/data_controller/user_control.dart';
-import 'logic/controller/notifications.dart';
 import 'logic/event_handler/user_state.dart';
 import 'my_app.dart';
 import 'translations/codegen_loader.g.dart';
@@ -48,6 +46,7 @@ void main() async {
       print(notification.body);
     }
   });
+
   runApp(
     EasyLocalization(
       supportedLocales: [

@@ -20,7 +20,6 @@ void initMessaging() async {
     playSound: true,
     importance: Importance.max,
     priority: Priority.high,
-    showWhen: false,
   );
 
   var iosDetails = IOSNotificationDetails();
@@ -33,3 +32,4 @@ void initMessaging() async {
     fltNotification.show(notification.hashCode, notification.title, notification.body, generalNotificationDetails);
   });
 }
+

@@ -66,8 +66,24 @@ class UserControl extends ChangeNotifier {
     return false;
   }
 
-  getUserToken() async {
-    _firestore.collection('users').doc(userId);
+  Future<void> saveTokenToDatabase(String token) async {
+    // Assume user is logged in for this example
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    _firestore.collection('users').doc(userId).update({
+      'tokens': FieldValue.arrayUnion([token]),
+    });
+  }
+
+  getUserToken(String id) async {
+    _firestore.collection('users').doc(id).get().then((documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        final data = documentSnapshot.data();
+        print(data!['tokens']);
+        return data['tokens'];
+      }
+    });
   }
 
   get email => _auth.currentUser!.email;

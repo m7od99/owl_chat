@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/user.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/presentation/widgets/search_card.dart';
@@ -55,6 +56,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final _user = UserControl();
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return SafeArea(
       child: FloatingSearchBar(
@@ -73,6 +75,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
             load = true;
           });
           final user = await _search.getUserByEmail(text);
+          final tokens = await _user.getUserToken(user.id);
           setState(
             () {
               load = false;
@@ -80,6 +83,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
               otherUser.id = user.id;
               otherUser.email = user.email;
               otherUser.isOnline = user.isOnline;
+              otherUser.tokens = tokens;
 
               print(otherUser.userName);
 

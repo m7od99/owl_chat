@@ -10,6 +10,11 @@
 .svn/
 .json
 node_modules
+public
+functions
+.github
+.firebase
+
 
 # IntelliJ related
 *.iml

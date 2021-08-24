@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:provider/provider.dart';
 
 class SearchForChat extends StatelessWidget {
   const SearchForChat({
@@ -10,8 +8,6 @@ class SearchForChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserControl>(context);
-
     final _edit = TextEditingController();
     String? email;
 

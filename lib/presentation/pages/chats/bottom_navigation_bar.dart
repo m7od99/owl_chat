@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/logic/controller/notifications.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
 import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import 'package:owl_chat/presentation/widgets/search_for users.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 
 class ChatsScreen extends StatefulWidget {
@@ -24,6 +21,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   void initState() {
     token();
+    UserControl().getUserToken(_control.userId);
     super.initState();
   }
 
@@ -34,34 +32,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
         currentIndex = index;
       });
     }
-
-    List<Widget> title = [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(LocaleKeys.contacts.tr()),
-          Icon(Icons.add),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(LocaleKeys.edit.tr()),
-          Text(LocaleKeys.chats.tr()),
-          IconButton(
-            icon: Icon(Icons.create),
-            onPressed: () {
-              Navigator.pushNamed(context, Search.id);
-            },
-          ),
-        ],
-      ),
-      Row(
-        children: [
-          Text(LocaleKeys.settings.tr()),
-        ],
-      ),
-    ];
 
     List<Widget> _pages = [
       ContactsScreen(),
@@ -105,14 +75,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 }
 
-Future<void> saveTokenToDatabase(String token) async {
-  // Assume user is logged in for this example
-  String userId = FirebaseAuth.instance.currentUser!.uid;
-
-  await FirebaseFirestore.instance.collection('users').doc(userId).update({
-    'tokens': FieldValue.arrayUnion([token]),
-  });
-}
+UserControl _control = UserControl();
 
 Future<String?> getToken() async {
   return await FirebaseMessaging.instance.getToken();
@@ -121,7 +84,7 @@ Future<String?> getToken() async {
 void token() async {
   var token = await getToken();
   print(token);
-  await saveTokenToDatabase(token!);
+  await _control.saveTokenToDatabase(token!);
 
-  FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
+  FirebaseMessaging.instance.onTokenRefresh.listen(_control.saveTokenToDatabase);
 }

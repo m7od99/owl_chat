@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
@@ -45,6 +46,7 @@ class ChatsController {
         email: _user.email,
         userName: _user.userName,
         id: _user.userId,
+        tokens: await FirebaseMessaging.instance.getToken(),
       ),
       other: otherUser,
       photoUri: '',

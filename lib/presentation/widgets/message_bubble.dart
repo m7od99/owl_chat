@@ -11,23 +11,18 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(4),
       child: Row(
-        mainAxisAlignment:
-            message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!message.isMe) TimeWidget(time: '1:30'),
           SizedBox(width: 6),
           Column(
-            crossAxisAlignment: message.isMe
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start,
+            crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: <Widget>[
               Material(
-                color: message.isMe
-                    ? Theme.of(context).primaryColor
-                    : Colors.white,
-                elevation: 15,
+                color: message.isMe ? Theme.of(context).primaryColor : Colors.white,
+                elevation: 1,
                 borderRadius: message.isMe
                     ? BorderRadius.only(
                         topLeft: Radius.circular(25),

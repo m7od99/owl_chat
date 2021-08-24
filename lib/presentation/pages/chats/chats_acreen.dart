@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:owl_chat/presentation/widgets/search_for%20users.dart';
+import 'package:provider/provider.dart';
+
 import '../../../data/data_controller/message_control.dart';
 import '../../../data/data_controller/user_control.dart';
 import '../../../data/models/chat.dart';
 import '../../../logic/event_handler/chats_logic.dart';
-import '../chat/chat_screen.dart';
 import '../../widgets/friend_card.dart';
-import 'package:provider/provider.dart';
+import '../../widgets/search_for%20users.dart';
+import '../chat/chat_screen.dart';
 
 class Chats extends StatelessWidget {
   @override
@@ -28,7 +28,7 @@ class Chats extends StatelessWidget {
             Text('edits'),
             Text('Chats'),
             IconButton(
-              icon: Icon(Icons.add_circle_outline),
+              icon: Icon(Icons.create),
               onPressed: () {
                 Navigator.pushNamed(context, Search.id);
               },
