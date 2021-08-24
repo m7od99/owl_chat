@@ -35,7 +35,7 @@ exports.sendNotification = functions.firestore
                                     console.log(`Found user from: ${userFrom.data().userName}`)
                                     const payload = {
                                         notification: {
-                                            title: `You have a message from "${userFrom.data().nickname}"`,
+                                            title: `You have a message from "${userFrom.data().userName}"`,
                                             body: contentMessage,
                                             badge: '1',
                                             sound: 'default'

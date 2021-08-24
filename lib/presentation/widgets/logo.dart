@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
         Container(
           height: photoSize,
           child: Image(
-            color: Colors.orange,
+            //  color: Colors.orange[700],
             image: AssetImage('assets/images/logo.png'),
           ),
         ),
@@ -22,16 +22,16 @@ class Logo extends StatelessWidget {
           height: 10,
         ),
         Text(
-          'Owl Chat',
-          style: GoogleFonts.kaushanScript(
+          'Owlers Night',
+          style: GoogleFonts.margarine(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
-            color: Colors.orange,
+            color: Colors.orange[400],
             shadows: [
               Shadow(
                 color: Colors.orangeAccent,
-                offset: Offset(3, 4),
-                blurRadius: 13,
+                offset: Offset(2, 5),
+                blurRadius: 14,
               ),
             ],
           ),

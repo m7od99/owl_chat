@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/presentation/widgets/error_form.dart';
 import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -11,6 +12,7 @@ import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
 import '../chats/bottom_navigation_bar.dart';
 import '../signup/sign_up_screen.dart';
+import 'package:owl_chat/presentation/theme/error_list.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'LoginScreen';
@@ -20,7 +22,60 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _load = RoundedLoadingButtonController();
+  final _formKey = GlobalKey<FormState>();
+
+  List<String> errors = [];
+  var _load = RoundedLoadingButtonController();
+
+  void addError({String? error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error!);
+      });
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
+
+  void emailValidator(value) {
+    if (value.isNotEmpty) {
+      removeError(error: kEmailNullError);
+    } else if (emailValidatorRegExp.hasMatch(value)) {
+      removeError(error: kInvalidEmailError);
+    }
+    return null;
+  }
+
+  void emailNotValidator(value) {
+    if (value.isEmpty) {
+      addError(error: kEmailNullError);
+    } else if (!emailValidatorRegExp.hasMatch(value)) {
+      addError(error: kInvalidEmailError);
+    }
+    return null;
+  }
+
+  void passwordValidator(value) {
+    if (value.isNotEmpty) {
+      removeError(error: kPassNullError);
+    } else if (value.length >= 6) {
+      removeError(error: kShortPassError);
+    }
+    return null;
+  }
+
+  void passwordNotValid(value) {
+    if (value.isEmpty) {
+      addError(error: kPassNullError);
+    } else if (value.length < 6) {
+      addError(error: kShortPassError);
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,88 +83,106 @@ class _LoginScreenState extends State<LoginScreen> {
     String? email;
     String? password;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Spacer(),
-              Logo(
-                fontSize: 30,
-                photoSize: 100,
-              ),
-              Spacer(
-                flex: 2,
-              ),
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        body: SafeArea(
+          child: SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Logo(
+                      fontSize: 40,
+                      photoSize: 100,
+                    ),
+                    SizedBox(height: 40),
+                    //email
+                    TextFormField(
+                      onChanged: (value) {
+                        emailValidator(value);
+                        email = value;
+                        return null;
+                      },
+                      onSaved: (newValue) => email = newValue,
+                      validator: (value) {
+                        emailNotValidator(value);
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: inputDecoration(
+                        hint: LocaleKeys.enter_your_email.tr(),
+                        labelText: LocaleKeys.email.tr(),
+                        icon: Icons.mail,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-              //email
-              TextFormField(
-                onChanged: (value) {
-                  email = value;
-                  print(email);
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: inputDecoration(
-                  hint: LocaleKeys.enter_your_email.tr(),
-                  labelText: LocaleKeys.email.tr(),
-                  icon: Icons.mail,
+                    //password
+                    TextFormField(
+                      obscureText: true,
+                      onChanged: (value) {
+                        passwordValidator(value);
+                        password = value;
+                        print(password);
+                      },
+                      validator: (value) {
+                        passwordNotValid(value);
+                      },
+                      decoration: inputDecoration(
+                        hint: LocaleKeys.enter_your_password.tr(),
+                        labelText: LocaleKeys.password.tr(),
+                        icon: Icons.lock,
+                      ),
+                    ),
+                    ForgotPassword(),
+                    FormError(errors: errors),
+                    SizedBox(height: 80),
+                    LargeButton(
+                        title: LocaleKeys.login.tr(),
+                        controller: _load,
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            try {
+                              _load.start();
+                              await user.login(email!, password!);
+                              if (user.isLogin) {
+                                _load.success();
+                                Navigator.pushNamed(context, ChatsScreen.id);
+                              } else
+                                _load.error();
+                              _load.stop();
+                              _load.reset();
+                            } catch (e) {
+                              _load.reset();
+                              print(e);
+                            }
+                          }
+                        }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(LocaleKeys.dont_have_account.tr()),
+                        SizedBox(width: 5),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, SignUpScreen.id);
+                          },
+                          child: Text(LocaleKeys.register.tr()),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-
-              //password
-              TextFormField(
-                obscureText: true,
-                onChanged: (value) {
-                  password = value;
-                  print(password);
-                },
-                decoration: inputDecoration(
-                  hint: LocaleKeys.enter_your_password.tr(),
-                  labelText: LocaleKeys.password.tr(),
-                  icon: Icons.lock,
-                ),
-              ),
-              ForgotPassword(),
-              Spacer(),
-              LargeButton(
-                  title: LocaleKeys.login.tr(),
-                  controller: _load,
-                  onTap: () async {
-                    _load.start();
-                    try {
-                      await user.login(email!, password!);
-                      if (user.isLogin) {
-                        _load.success();
-                        Navigator.pushNamed(context, ChatsScreen.id);
-                      } else
-                        _load.stop();
-                      _load.reset();
-                    } catch (e) {
-                      _load.reset();
-                      print(e);
-                    }
-                  }),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(LocaleKeys.dont_have_account.tr()),
-                  SizedBox(width: 5),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, SignUpScreen.id);
-                    },
-                    child: Text(LocaleKeys.register.tr()),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),

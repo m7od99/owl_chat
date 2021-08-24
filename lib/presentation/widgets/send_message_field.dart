@@ -1,15 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/admin/directory_v1.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
-import 'package:owl_chat/data/models/notifications.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
-import 'package:owl_chat/presentation/widgets/search_for%20users.dart';
 import 'package:provider/provider.dart';
 
 class SendMessageField extends StatefulWidget {

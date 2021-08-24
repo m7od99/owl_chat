@@ -11,18 +11,18 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(4),
+      padding: EdgeInsets.all(2),
       child: Row(
         mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!message.isMe) TimeWidget(time: '1:30'),
+          //  if (!message.isMe) TimeWidget(time: '1:30'),
           SizedBox(width: 6),
           Column(
             crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: <Widget>[
               Material(
-                color: message.isMe ? Theme.of(context).primaryColor : Colors.white,
-                elevation: 1,
+                color: Theme.of(context).primaryColor,
+                elevation: 0.5,
                 borderRadius: message.isMe
                     ? BorderRadius.only(
                         topLeft: Radius.circular(25),
@@ -35,15 +35,19 @@ class MessageBubble extends StatelessWidget {
                         bottomRight: Radius.circular(25),
                       ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                   child: Row(
                     children: [
                       Text(
-                        message.text,
+                        "${message.text}",
                         style: TextStyle(
-                          color: message.isMe ? Colors.white : Colors.black,
-                          fontSize: 16,
+                          color: Colors.white,
+                          fontSize: 17,
                         ),
+                      ),
+                      SizedBox(width: 10),
+                      TimeWidget(
+                        time: format(message.time),
                       ),
                     ],
                   ),
@@ -52,7 +56,7 @@ class MessageBubble extends StatelessWidget {
             ],
           ),
           SizedBox(width: 6),
-          if (message.isMe) TimeWidget(time: format(message.time)),
+          //  if (message.isMe) TimeWidget(time: format(message.time)),
         ],
       ),
     );
@@ -71,12 +75,12 @@ class TimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+      padding: const EdgeInsets.only(top: 5),
       child: Text(
         time,
         style: TextStyle(
-          color: Theme.of(context).iconTheme.color,
-          fontSize: 11,
+          color: Colors.white,
+          fontSize: 12,
         ),
       ),
     );

@@ -25,6 +25,7 @@ class ChatSearchCard extends StatelessWidget {
       ),
       // subtitle: Text('last seen'),
       leading: CircleAvatar(
+        //todo add user photo
         backgroundImage: AssetImage('assets/images/user.png'),
       ),
       trailing: Icon(Icons.chat_bubble_outlined),

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
-import 'package:owl_chat/presentation/pages/contacts/contacts_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 
@@ -15,7 +14,7 @@ class ChatsScreen extends StatefulWidget {
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-int currentIndex = 1;
+int currentIndex = 0;
 
 class _ChatsScreenState extends State<ChatsScreen> {
   @override
@@ -34,27 +33,22 @@ class _ChatsScreenState extends State<ChatsScreen> {
     }
 
     List<Widget> _pages = [
-      ContactsScreen(),
+      //  ContactsScreen(),
       Chats(),
       SettingsScreen(),
     ];
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).splashColor,
-      //   automaticallyImplyLeading: false,
-      //   title: title.elementAt(currentIndex),
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTaped,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
-            ),
-            label: LocaleKeys.contacts.tr(),
-          ),
+          //  BottomNavigationBarItem(
+          //    icon: Icon(
+          //    Icons.account_circle,
+          //),
+          //label: LocaleKeys.contacts.tr(),
+          //),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.forum,

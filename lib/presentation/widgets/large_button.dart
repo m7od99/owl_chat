@@ -6,23 +6,21 @@ class LargeButton extends StatelessWidget {
   final VoidCallback onTap;
   final RoundedLoadingButtonController controller;
 
-  const LargeButton(
-      {required this.title, required this.onTap, required this.controller});
+  const LargeButton({required this.title, required this.onTap, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 62,
       child: RoundedLoadingButton(
-        color: Colors.orangeAccent,
+        color: Colors.orange,
         elevation: 5,
         onPressed: onTap,
         controller: controller,
         child: Center(
           child: Text(
             title,
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
       ),
