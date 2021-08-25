@@ -36,6 +36,7 @@ class ChatsController {
   hasChat(String otherId) {}
 
   createChatRoom(OwlUser otherUser) async {
+    if (otherUser.id.isEmpty) return;
     String otherUserId = otherUser.id;
     String id = createChatId(otherUserId);
 

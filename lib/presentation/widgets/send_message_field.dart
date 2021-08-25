@@ -7,6 +7,7 @@ import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import 'package:provider/provider.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 
 class SendMessageField extends StatefulWidget {
   final Chat chat;
@@ -39,7 +40,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
+        horizontal: kDefaultPadding / 2,
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
@@ -47,8 +48,8 @@ class _SendMessageFieldState extends State<SendMessageField> {
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
-            blurRadius: 32,
-            color: Colors.grey.withOpacity(0.08),
+            blurRadius: 12,
+            color: Colors.grey.withOpacity(0.10),
           ),
         ],
       ),
@@ -61,8 +62,8 @@ class _SendMessageFieldState extends State<SendMessageField> {
                   horizontal: kDefaultPadding * 0.75,
                 ),
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(30),
+                  color: kPrimaryColor.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(25),
                 ),
                 child: Row(
                   children: [
@@ -73,6 +74,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                         focusNode: _focusNode,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
+                        style: TextStyle(fontSize: 16),
                         onChanged: (value) {
                           text = value;
                         },
@@ -112,10 +114,10 @@ class _SendMessageFieldState extends State<SendMessageField> {
                     editControl.clear();
                   });
                 },
-                iconSize: 30,
+                iconSize: 25,
                 color: Colors.blueGrey,
                 icon: Icon(
-                  Icons.arrow_upward,
+                  fl.FluentIcons.send,
                 ),
               ),
             ),

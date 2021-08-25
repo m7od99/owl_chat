@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'data/data_controller/user_control.dart';
-import 'logic/controller/notifications.dart';
 import 'presentation/pages/chats/bottom_navigation_bar.dart';
 import 'presentation/pages/login/login_screen.dart';
 import 'presentation/roots/roots.dart';
@@ -17,7 +16,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    initMessaging();
     super.initState();
   }
 

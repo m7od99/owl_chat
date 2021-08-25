@@ -29,6 +29,7 @@ dependencies:
   flutter_local_notifications: any
   fluttertoast: any
   http: ^0.13.3
+  fluent_ui: ^3.0.0
 
 dev_dependencies:
   flutter_test:

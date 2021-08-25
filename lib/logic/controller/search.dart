@@ -22,7 +22,7 @@ class SearchLogic {
         return user;
       }
     }
-    throw 'cant found';
+    return OwlUser(email: '', id: '', userName: '');
   }
 
   Future<OwlUser> getUserByUserName(String userName) async {

@@ -21,7 +21,7 @@ class MessageBubble extends StatelessWidget {
             crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: <Widget>[
               Material(
-                color: Theme.of(context).primaryColor,
+                color: Colors.indigo[400],
                 elevation: 0.5,
                 borderRadius: message.isMe
                     ? BorderRadius.only(

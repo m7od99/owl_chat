@@ -76,14 +76,16 @@ class UserControl extends ChangeNotifier {
   }
 
   getUserToken(String id) async {
-    _firestore.collection('users').doc(id).get().then((documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document exists on the database');
-        final data = documentSnapshot.data();
-        print(data!['tokens']);
-        return data['tokens'];
-      }
-    });
+    if (id.isNotEmpty) {
+      _firestore.collection('users').doc(id).get().then((documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print('Document exists on the database');
+          final data = documentSnapshot.data();
+          print(data!['tokens']);
+          return data['tokens'];
+        }
+      });
+    }
   }
 
   get email => _auth.currentUser!.email;

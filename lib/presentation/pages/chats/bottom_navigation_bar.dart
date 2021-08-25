@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/controller/notifications.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 
 class ChatsScreen extends StatefulWidget {
   static const String id = 'ChatsScreen';
@@ -15,12 +16,15 @@ class ChatsScreen extends StatefulWidget {
 }
 
 int currentIndex = 0;
+var notifications = Notifications();
+UserControl _control = UserControl();
 
 class _ChatsScreenState extends State<ChatsScreen> {
   @override
   void initState() {
-    token();
+    notifications.token();
     UserControl().getUserToken(_control.userId);
+    notifications.initMessaging();
     super.initState();
   }
 
@@ -33,6 +37,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     }
 
     List<Widget> _pages = [
+      //todo contacts page..
       //  ContactsScreen(),
       Chats(),
       SettingsScreen(),
@@ -51,7 +56,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           //),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.forum,
+              fl.FluentIcons.chat_solid,
             ),
             label: LocaleKeys.chats.tr(),
           ),
@@ -67,18 +72,4 @@ class _ChatsScreenState extends State<ChatsScreen> {
       body: _pages.elementAt(currentIndex),
     );
   }
-}
-
-UserControl _control = UserControl();
-
-Future<String?> getToken() async {
-  return await FirebaseMessaging.instance.getToken();
-}
-
-void token() async {
-  var token = await getToken();
-  print(token);
-  await _control.saveTokenToDatabase(token!);
-
-  FirebaseMessaging.instance.onTokenRefresh.listen(_control.saveTokenToDatabase);
 }

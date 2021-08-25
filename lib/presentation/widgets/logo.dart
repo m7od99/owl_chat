@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
         Container(
           height: photoSize,
           child: Image(
-            //  color: Colors.orange[700],
+            color: Colors.orange[700],
             image: AssetImage('assets/images/logo.png'),
           ),
         ),
@@ -22,7 +22,7 @@ class Logo extends StatelessWidget {
           height: 10,
         ),
         Text(
-          'Owlers Night',
+          'Owlers',
           style: GoogleFonts.margarine(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,

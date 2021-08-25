@@ -9,6 +9,7 @@ import '../../../logic/event_handler/chats_logic.dart';
 import '../../widgets/friend_card.dart';
 import '../../widgets/search_for%20users.dart';
 import '../chat/chat_screen.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 
 class Chats extends StatelessWidget {
   @override
@@ -28,7 +29,7 @@ class Chats extends StatelessWidget {
             Text('edits'),
             Text('Chats'),
             IconButton(
-              icon: Icon(Icons.create),
+              icon: Icon(fl.FluentIcons.profile_search),
               onPressed: () {
                 Navigator.pushNamed(context, Search.id);
               },
