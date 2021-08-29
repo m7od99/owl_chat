@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:owl_chat/data/models/message.dart';
@@ -12,51 +13,48 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(2),
-      child: Row(
-        mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          //  if (!message.isMe) TimeWidget(time: '1:30'),
-          SizedBox(width: 6),
-          Column(
-            crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: <Widget>[
-              Material(
-                color: Colors.indigo[400],
-                elevation: 0.5,
-                borderRadius: message.isMe
-                    ? BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                        bottomLeft: Radius.circular(25),
-                      )
-                    : BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                      ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  child: Row(
-                    children: [
-                      Text(
-                        "${message.text}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      TimeWidget(
-                        time: format(message.time),
-                      ),
-                    ],
+          Material(
+            color: Colors.indigo[400],
+            elevation: 0.5,
+            borderRadius: message.isMe
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  )
+                : BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    topLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
                   ),
-                ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              child: Row(
+                textBaseline: TextBaseline.ideographic,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Text(
+                      "${message.text}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  TimeWidget(
+                    time: format(message.time),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          SizedBox(width: 6),
-          //  if (message.isMe) TimeWidget(time: format(message.time)),
         ],
       ),
     );
@@ -75,7 +73,7 @@ class TimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.only(top: 6),
       child: Text(
         time,
         style: TextStyle(

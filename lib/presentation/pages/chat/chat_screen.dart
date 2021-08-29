@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/chat.dart';
-import '../../../logic/event_handler/messages_stream.dart';
+import '../../widgets/messages_stream.dart';
 import '../../widgets/send_message_field.dart';
 
 class ChatScreen extends StatelessWidget {
