@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/user.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
-import 'package:owl_chat/presentation/widgets/search_for%20users.dart';
 
 class ChatSearchCard extends StatelessWidget {
-  const ChatSearchCard({
+  ChatSearchCard({
     Key? key,
     required this.user,
   }) : super(key: key);
@@ -30,7 +30,10 @@ class ChatSearchCard extends StatelessWidget {
       ),
       trailing: Icon(Icons.chat_bubble_outlined),
       onTap: () async {
-        final chat = await control.createChatRoom(otherUser);
+        print(user.id);
+
+        Chat chat = await control.createChatRoom(user);
+        print(chat.id);
 
         Navigator.push(
           context,

@@ -3,35 +3,36 @@ import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/user.dart';
 
 class UserState extends ChangeNotifier {
-  final _control = UserControl();
+  final _userControl = UserControl();
+  List<OwlUser> users = [];
 
   Future<void> login(String email, String password) async {
-    await _control.login(email, password);
-    if (_control.isLogin) {
+    await _userControl.login(email, password);
+    if (_userControl.isLogin) {
       print('login');
     }
   }
 
   Future<OwlUser> signUp(String email, String password, String userName) async {
-    await _control.signUp(email, password, userName);
+    await _userControl.signUp(email, password, userName);
 
-    if (_control.isLogin) {
+    if (_userControl.isLogin) {
       print("sign up");
 
-      String id = _control.userId;
+      String id = _userControl.userId;
       final user = OwlUser(email: email, userName: userName, id: id);
 
       user.isOnline = true;
 
-      await _control.saveUser(user);
+      await _userControl.saveUser(user);
 
       return user;
     } else
       throw 'some things go wrong';
   }
 
-  getUsers() async {
-    dynamic data = await _control.getUsers();
+  Future<List<OwlUser>> getUsers() async {
+    dynamic data = await _userControl.getUsers();
     final docs = data.docs;
 
     List<OwlUser> users = [];
@@ -39,7 +40,10 @@ class UserState extends ChangeNotifier {
       dynamic data = user.data();
       users.add(OwlUser.fromMap(data));
     }
+    this.users = users;
 
     return users;
   }
+
+  void updateUser() {}
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
@@ -10,7 +9,12 @@ class ChatsController {
   final UserControl _user = UserControl();
 
   String createChatId(String otherUserId) {
-    return _user.userId.length >= otherUserId.length ? _user.userId + otherUserId : otherUserId + _user.userId;
+    if (_user.userId.substring(0, 1).codeUnitAt(0) >
+        otherUserId.substring(0, 1).codeUnitAt(0)) {
+      return "$otherUserId${_user.userId}";
+    } else {
+      return "${_user.userId}$otherUserId";
+    }
   }
 
   getMyChats(List<QueryDocumentSnapshot> snap) {
@@ -19,8 +23,12 @@ class ChatsController {
     );
   }
 
-  bool isChatd(List<QueryDocumentSnapshot> snap, otherId) {
-    return snap.where((element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId)).isNotEmpty;
+  bool isChatting(List<QueryDocumentSnapshot> snap, otherId) {
+    return snap
+        .where((element) =>
+            element['id'].toString().contains(_user.userId) &&
+            element['id'].toString().contains(otherId))
+        .isNotEmpty;
   }
 
   getChats(Iterable<QueryDocumentSnapshot> data) {
@@ -47,7 +55,6 @@ class ChatsController {
         email: _user.email,
         userName: _user.userName,
         id: _user.userId,
-        tokens: await FirebaseMessaging.instance.getToken(),
       ),
       other: otherUser,
       photoUri: '',

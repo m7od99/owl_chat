@@ -11,6 +11,7 @@ class OwlUser {
   List<Chat>? chats = [];
   String? photoUri;
   String? tokens;
+  String? onChat;
 
   void addFriend(OwlUser user) {
     friends = [];
@@ -31,6 +32,7 @@ class OwlUser {
     this.chats,
     this.photoUri,
     this.tokens,
+    this.onChat,
   });
 
   OwlUser copyWith({
@@ -63,6 +65,7 @@ class OwlUser {
       'chats': chats?.map((x) => x.toMap()).toList(),
       'photoUri': photoUri,
       'tokens': tokens,
+      'onChat': onChat,
     };
   }
 
@@ -79,6 +82,7 @@ class OwlUser {
       // ),
       // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
       photoUri: map['photoUri'],
+      onChat: map['onChat'],
       //  tokens: map['tokens'],
     );
   }

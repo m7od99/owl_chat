@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/user.dart';
 import 'package:provider/provider.dart';
+
 import '../../../data/models/chat.dart';
 import '../../widgets/messages_stream.dart';
 import '../../widgets/send_message_field.dart';
@@ -15,6 +17,7 @@ class ChatScreen extends StatelessWidget {
 
   String name(String myId) {
     if (chat.me!.id == myId) return chat.other!.userName;
+    print(chat.id);
     return chat.me!.userName;
   }
 
@@ -25,6 +28,18 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_sharp),
+          onPressed: () {
+            user.saveUser(OwlUser(
+              id: user.userId,
+              userName: user.userName,
+              email: user.email,
+              onChat: 'null',
+            ));
+            Navigator.pop(context);
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

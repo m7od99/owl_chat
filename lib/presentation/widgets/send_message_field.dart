@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/message_control.dart';
@@ -7,7 +8,6 @@ import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/message.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import 'package:provider/provider.dart';
-import 'package:fluent_ui/fluent_ui.dart' as fl;
 
 class SendMessageField extends StatefulWidget {
   final Chat chat;
@@ -58,9 +58,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 0.75,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                   color: kPrimaryColor.withOpacity(0.10),
                   borderRadius: BorderRadius.circular(25),
@@ -101,6 +99,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                       sender: user.userId,
                       receiver: chat.other!.id,
                       text: text!,
+                      isSend: true,
                       time: Timestamp.now(),
                       isMe: isMe(user.email),
                     );

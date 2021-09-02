@@ -57,7 +57,8 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
   @override
   Widget build(BuildContext context) {
     final _user = UserControl();
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return SafeArea(
       child: FloatingSearchBar(
         hint: 'Search...',
@@ -74,8 +75,8 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
           setState(() {
             load = true;
           });
-          final user = await _search.getUserByEmail(text);
-          final tokens = await _user.getUserToken(user.id);
+          final user = await _search.getUserByUserName(text);
+
           setState(
             () {
               load = false;
@@ -83,7 +84,6 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
               otherUser.id = user.id;
               otherUser.email = user.email;
               otherUser.isOnline = user.isOnline;
-              otherUser.tokens = tokens;
 
               print(otherUser.userName);
 

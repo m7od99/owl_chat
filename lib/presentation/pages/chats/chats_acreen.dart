@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/data_controller/message_control.dart';
@@ -7,17 +11,29 @@ import '../../../data/data_controller/user_control.dart';
 import '../../../data/models/chat.dart';
 import '../../../logic/event_handler/chats_logic.dart';
 import '../../widgets/friend_card.dart';
-import '../../widgets/search_for%20users.dart';
 import '../chat/chat_screen.dart';
-import 'package:fluent_ui/fluent_ui.dart' as fl;
 
-class Chats extends StatelessWidget {
+class Chats extends fl.StatefulWidget {
+  @override
+  _ChatsState createState() => _ChatsState();
+}
+
+class _ChatsState extends fl.State<Chats> {
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
     final user = Provider.of<UserControl>(context);
     final _chats = ChatsController();
     final stream = control.getChats(user.userId);
+    final users = UserState();
+    TextEditingController textController = TextEditingController();
+
+    String otherId(Chat chat) {
+      if (user.userId == chat.other!.id) {
+        return chat.me!.id;
+      }
+      return chat.other!.id;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -31,7 +47,7 @@ class Chats extends StatelessWidget {
             IconButton(
               icon: Icon(fl.FluentIcons.profile_search),
               onPressed: () {
-                Navigator.pushNamed(context, Search.id);
+                Navigator.pushNamed(context, SearchByName.id);
               },
             )
           ],
@@ -54,7 +70,13 @@ class Chats extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                 itemBuilder: (BuildContext context, int index) => FriendCard(
                   chat: chats[index],
-                  onTap: () {
+                  onTap: () async {
+                    user.updateUser(OwlUser(
+                      email: user.email,
+                      id: user.userId,
+                      userName: user.userName,
+                      onChat: otherId(chats[index]),
+                    ));
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -65,7 +87,8 @@ class Chats extends StatelessWidget {
                     );
                   },
                 ),
-                separatorBuilder: (BuildContext context, int index) => Divider(),
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
               ),
             );
           },

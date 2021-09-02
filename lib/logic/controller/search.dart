@@ -1,24 +1,14 @@
-import '../event_handler/user_state.dart';
-
 import '../../data/models/user.dart';
+import '../event_handler/user_state.dart';
 
 class SearchLogic {
   final UserState _user = UserState();
-
-  static T search<T>(List<T> list, T item) {
-    for (T i in list) {
-      if (i == item) {
-        return i;
-      }
-    }
-    throw 'not found';
-  }
 
   Future<OwlUser> getUserByEmail(String email) async {
     List<OwlUser> users = await _user.getUsers();
 
     for (var user in users) {
-      if (user.email == email.trim()) {
+      if (user.email.toLowerCase() == email.trim().toLowerCase()) {
         return user;
       }
     }
@@ -29,10 +19,11 @@ class SearchLogic {
     List<OwlUser> users = await _user.getUsers();
 
     for (var user in users) {
-      if (user.userName == userName) {
+      if (user.userName.toLowerCase().trim() == userName.toLowerCase().trim()) {
+        print(user.id);
         return user;
       }
     }
-    throw 'cant found';
+    return OwlUser(email: '', id: '', userName: '');
   }
 }

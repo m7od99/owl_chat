@@ -43,33 +43,44 @@ class _ChatsScreenState extends State<ChatsScreen> {
       SettingsScreen(),
     ];
 
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTaped,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          //  BottomNavigationBarItem(
-          //    icon: Icon(
-          //    Icons.account_circle,
-          //),
-          //label: LocaleKeys.contacts.tr(),
-          //),
-          BottomNavigationBarItem(
-            icon: Icon(
-              fl.FluentIcons.chat_solid,
+    return WillPopScope(
+      onWillPop: () async {
+        if (currentIndex == 0) {
+          return false;
+        }
+        setState(() {
+          currentIndex = 0;
+        });
+        return true;
+      },
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTaped,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            //  BottomNavigationBarItem(
+            //    icon: Icon(
+            //    Icons.account_circle,
+            //),
+            //label: LocaleKeys.contacts.tr(),
+            //),
+            BottomNavigationBarItem(
+              icon: Icon(
+                fl.FluentIcons.chat_solid,
+              ),
+              label: LocaleKeys.chats.tr(),
             ),
-            label: LocaleKeys.chats.tr(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+              ),
+              label: LocaleKeys.settings.tr(),
             ),
-            label: LocaleKeys.settings.tr(),
-          ),
-        ],
-        currentIndex: currentIndex,
+          ],
+          currentIndex: currentIndex,
+        ),
+        body: _pages.elementAt(currentIndex),
       ),
-      body: _pages.elementAt(currentIndex),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
+
 import '../pages/chats/bottom_navigation_bar.dart';
 import '../pages/login/login_screen.dart';
 import '../pages/settings/settings_screen.dart';
@@ -19,5 +21,6 @@ Map<String, WidgetBuilder> routes() {
     ThemePage.id: (context) => ThemePage(),
     SuccessPage.id: (context) => SuccessPage(),
     Search.id: (context) => Search(),
+    SearchByName.id: (context) => SearchByName(),
   };
 }

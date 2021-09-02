@@ -8,6 +8,8 @@ class Message {
   String text;
   final Timestamp time;
   bool isMe;
+  bool? isRead;
+  bool? isSend;
 
   Message({
     required this.sender,
@@ -15,6 +17,8 @@ class Message {
     required this.text,
     required this.time,
     required this.isMe,
+    this.isRead,
+    this.isSend,
   });
 
   Message copyWith({
@@ -40,6 +44,8 @@ class Message {
       'text': text,
       'time': time,
       'isMe': isMe,
+      'isRead': isRead,
+      'isSend': isSend,
     };
   }
 
@@ -50,6 +56,8 @@ class Message {
       text: map['text'],
       time: map['time'],
       isMe: map['isMe'],
+      isSend: map['isSend'],
+      isRead: map['isRead'],
     );
   }
 
