@@ -19,12 +19,13 @@ class UserControl extends ChangeNotifier {
   }
 
   Future<void> signUp(String email, String password, String userName) async {
-    await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
 
     await _auth.currentUser!.updateDisplayName(userName);
   }
 
-  getUsers() {
+  Future<QuerySnapshot<Map<String, dynamic>>> getUsers() {
     return _firestore.collection('users').get();
   }
 
@@ -33,29 +34,49 @@ class UserControl extends ChangeNotifier {
   }
 
   Future<void> saveUser(OwlUser user) async {
-    await _firestore.collection('users').doc(user.id).set(user.toMap()).catchError((e) {
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .set(user.toMap())
+        .catchError((e) {
       print(e.toString());
     });
   }
 
   addFriend(String userId, OwlUser otherUser) async {
-    await _firestore.collection('users').doc(userId).collection('friends').add(otherUser.toMap());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('friends')
+        .add(otherUser.toMap());
   }
 
   Future<void> updateUser(OwlUser user) async {
-    await _firestore.collection('users').doc(user.id).update(user.toMap()).catchError((e) {
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .update(user.toMap())
+        .catchError((e) {
       print(e.toString());
     }).then((value) => print('updated'));
   }
 
   getUserInfo(String userId) async {
-    return await _firestore.collection('users').where('id', isEqualTo: userId).get().catchError((e) {
+    return await _firestore
+        .collection('users')
+        .where('id', isEqualTo: userId)
+        .get()
+        .catchError((e) {
       print(e.toString());
     });
   }
 
   getUserByEmail(String email) async {
-    return await _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
+    return await _firestore
+        .collection('users')
+        .where('email', isEqualTo: userId)
+        .get()
+        .catchError((e) {
       print(e.toString());
     });
   }
@@ -89,8 +110,17 @@ class UserControl extends ChangeNotifier {
     }
   }
 
+  updatePhoto(String uri) async {
+    await _auth.currentUser!.updatePhotoURL(uri);
+  }
+
+  updateUserName(String newName) async {
+    await _auth.currentUser!.updateDisplayName(newName);
+  }
+
   get email => _auth.currentUser!.email;
   get isLogin => _hasUser();
   get userName => _auth.currentUser!.displayName;
   get userId => _auth.currentUser!.uid;
+  get userUriPhoto => _auth.currentUser!.photoURL;
 }

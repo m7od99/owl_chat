@@ -22,7 +22,7 @@ class FriendCard extends StatelessWidget {
     final user = Provider.of<UserControl>(context);
 
     return Container(
-      height: 60,
+      height: 55,
       child: InkWell(
         onTap: onTap,
         child: Row(

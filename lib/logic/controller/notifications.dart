@@ -7,7 +7,8 @@ class Notifications {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   void initMessaging() async {
-    FlutterLocalNotificationsPlugin fltNotification = FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin fltNotification =
+        FlutterLocalNotificationsPlugin();
 
     var androiInit = AndroidInitializationSettings('app_icon'); //for logo
     var iosInit = IOSInitializationSettings();
@@ -26,19 +27,21 @@ class Notifications {
     );
 
     var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    var generalNotificationDetails =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification!;
       //AndroidNotification? android = message.notification!.android;
 
-      fltNotification.show(notification.hashCode, notification.title, notification.body, generalNotificationDetails);
+      fltNotification.show(notification.hashCode, notification.title,
+          notification.body, generalNotificationDetails);
     });
   }
 
   UserControl _control = UserControl();
 
-  //get tokens form firebase nessaging
+  //get tokens form firebase messaging
   Future<String?> getToken() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     return await messaging.getToken();
@@ -46,10 +49,11 @@ class Notifications {
 
   // get tokens then safe it in firestor
   void token() async {
-    var token = await getToken();
+    final token = await getToken();
     print(token);
     await _control.saveTokenToDatabase(token!);
 
-    FirebaseMessaging.instance.onTokenRefresh.listen(_control.saveTokenToDatabase);
+    FirebaseMessaging.instance.onTokenRefresh
+        .listen(_control.saveTokenToDatabase);
   }
 }

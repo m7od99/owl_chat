@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  flutter_localizations:
+    sdk: flutter
   equatable: ^2.0.3
   firebase: ^9.0.1
   firebase_auth: ^3.1.0
@@ -32,6 +34,19 @@ dependencies:
   fluent_ui: ^3.0.0
   anim_search_bar: ^2.0.2
   searchfield: ^0.5.2
+  shared_preferences: ^2.0.7
+  package_info: ^2.0.2
+  in_app_update: ^2.0.0
+  firebase_remote_config: ^0.10.0+5
+  flutter_svg: ^0.22.0
+  font_awesome_flutter: ^9.1.0
+  image_picker: ^0.8.4
+  emoji_picker_flutter: ^1.0.7
+  auto_direction: ^0.0.5
+  upgrader: ^3.5.1
+  r_upgrade: ^0.3.5
+  version: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:

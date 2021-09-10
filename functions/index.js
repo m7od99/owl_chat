@@ -10,15 +10,15 @@ exports.sendNotification = functions.firestore
         const doc = snap.data()
         console.log(doc)
 
-        const idFrom = doc.sender
-        const idTo = doc.receiver
+        const sender = doc.sender
+        const receiver = doc.receiver
         const contentMessage = doc.text
 
         // Get push token user to (receive)
         admin
             .firestore()
             .collection('users')
-            .where('id', '==', idTo)
+            .where('id', '==', receiver)
             .get()
             .then(querySnapshot => {
                 querySnapshot.forEach(userTo => {
@@ -35,7 +35,7 @@ exports.sendNotification = functions.firestore
                                     console.log(`Found user from: ${userFrom.data().userName}`)
                                     const payload = {
                                         notification: {
-                                            title: `You have a message from "${userFrom.data().userName}"`,
+                                            title: "${userFrom.data().userName}",
                                             body: contentMessage,
                                             badge: '1',
                                             sound: 'default'

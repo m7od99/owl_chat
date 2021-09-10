@@ -20,6 +20,10 @@ class ProfileWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              TextButton(
+                child: Text(''),
+                onPressed: null,
+              ),
               Spacer(),
               Column(
                 children: [
@@ -40,9 +44,17 @@ class ProfileWidget extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              Text(
-                LocaleKeys.edit.tr(),
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              TextButton(
+                child: Text(
+                  LocaleKeys.edit.tr(),
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                onPressed: () {
+                  // Navigator.pushNamed(context, ChangePhoto.id);
+                },
               ),
             ],
           ),

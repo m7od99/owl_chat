@@ -45,5 +45,17 @@ class UserState extends ChangeNotifier {
     return users;
   }
 
+  logOut() async {
+    await _userControl.updateUser(OwlUser(
+      email: _userControl.email,
+      userName: _userControl.userName,
+      id: _userControl.userId,
+      isOnline: false,
+    ));
+    await _userControl.signOut();
+  }
+
   void updateUser() {}
+
+  updatePhoto(String uri) {}
 }

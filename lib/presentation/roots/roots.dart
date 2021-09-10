@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/widgets/change_photo.dart';
 import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
 
 import '../pages/chats/bottom_navigation_bar.dart';
@@ -22,5 +23,6 @@ Map<String, WidgetBuilder> routes() {
     SuccessPage.id: (context) => SuccessPage(),
     Search.id: (context) => Search(),
     SearchByName.id: (context) => SearchByName(),
+    ChangePhoto.id: (context) => ChangePhoto(),
   };
 }

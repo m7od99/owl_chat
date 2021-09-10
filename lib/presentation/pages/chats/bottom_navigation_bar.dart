@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fluent_ui/fluent_ui.dart' as fl;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
@@ -6,7 +7,7 @@ import 'package:owl_chat/logic/controller/notifications.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
-import 'package:fluent_ui/fluent_ui.dart' as fl;
+import 'package:owl_chat/update/check_update.dart';
 
 class ChatsScreen extends StatefulWidget {
   static const String id = 'ChatsScreen';
@@ -18,10 +19,13 @@ class ChatsScreen extends StatefulWidget {
 int currentIndex = 0;
 var notifications = Notifications();
 UserControl _control = UserControl();
+var update = CheckUpdate();
 
 class _ChatsScreenState extends State<ChatsScreen> {
   @override
   void initState() {
+    currentIndex = 0;
+    update.isNewUpdate();
     notifications.token();
     UserControl().getUserToken(_control.userId);
     notifications.initMessaging();
@@ -45,13 +49,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        if (currentIndex == 0) {
-          return false;
-        }
-        setState(() {
-          currentIndex = 0;
-        });
-        return true;
+        return false;
       },
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(

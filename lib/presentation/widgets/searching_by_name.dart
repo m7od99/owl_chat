@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/user.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
@@ -22,7 +21,6 @@ class _SearchByNameState extends State<SearchByName> {
   final _searchController = TextEditingController();
   final _search = SearchLogic();
   final _userControl = UserState();
-  final _user = UserControl();
   bool found = false;
 
   @override

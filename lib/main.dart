@@ -3,9 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:owl_chat/presentation/theme/themes.dart';
+import 'package:provider/provider.dart';
 
 import 'data/data_controller/message_control.dart';
 import 'data/data_controller/user_control.dart';
@@ -33,8 +32,6 @@ void main() async {
   );
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-  FirebaseMessaging.onMessage;
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message whilst in the foreground!');

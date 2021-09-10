@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluent_ui/fluent_ui.dart' as fl;
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/user.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +24,6 @@ class _ChatsState extends fl.State<Chats> {
     final user = Provider.of<UserControl>(context);
     final _chats = ChatsController();
     final stream = control.getChats(user.userId);
-    final users = UserState();
-    TextEditingController textController = TextEditingController();
 
     String otherId(Chat chat) {
       if (user.userId == chat.other!.id) {
@@ -58,7 +55,8 @@ class _ChatsState extends fl.State<Chats> {
           stream: stream,
           builder: (context, snapshot) {
             print(snapshot.hasData);
-            if (!snapshot.hasData) return Container();
+            if (!snapshot.hasData)
+              return fl.Center(child: CircularProgressIndicator());
 
             final snap = snapshot.data!.docs;
             final data = _chats.getMyChats(snap);
