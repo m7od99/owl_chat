@@ -29,7 +29,7 @@ class _SearchByNameState extends State<SearchByName> {
     getUsers();
   }
 
-  void getUsers() async {
+  Future getUsers() async {
     users = await _userControl.getUsers();
   }
 
@@ -42,7 +42,7 @@ class _SearchByNameState extends State<SearchByName> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: const Text('Search'),
       ),
       body: Container(
         child: Column(
@@ -63,7 +63,7 @@ class _SearchByNameState extends State<SearchByName> {
                     _searchController.clear();
 
                     setState(() {
-                      other.userName = user.userName;
+                      other.userName = user!.userName;
                       other.id = user.id;
                       print(other.id);
                       other.email = user.email;
@@ -74,11 +74,12 @@ class _SearchByNameState extends State<SearchByName> {
 
                       if (other.id != '') {
                         found = true;
-                      } else
+                      } else {
                         found = false;
+                      }
                     });
                   },
-                  searchInputDecoration: InputDecoration(
+                  searchInputDecoration: const InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     border: OutlineInputBorder(
@@ -96,7 +97,7 @@ class _SearchByNameState extends State<SearchByName> {
                 ),
               ),
             ),
-            if (found == true) new ChatSearchCard(user: other),
+            if (found == true) ChatSearchCard(user: other),
           ],
         ),
       ),

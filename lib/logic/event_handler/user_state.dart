@@ -4,31 +4,40 @@ import 'package:owl_chat/data/models/user.dart';
 
 class UserState extends ChangeNotifier {
   final _userControl = UserControl();
-  List<OwlUser> users = [];
+  OwlUser user = OwlUser(id: '', userName: '', email: '');
 
   Future<void> login(String email, String password) async {
     await _userControl.login(email, password);
     if (_userControl.isLogin) {
       print('login');
+      await updateOwlUser();
     }
   }
 
-  Future<OwlUser> signUp(String email, String password, String userName) async {
+  Future<void> updateOwlUser() async {
+    if (_userControl.isLogin) {
+      user.id = _userControl.userId;
+      user.userName = userName;
+      user.email = email;
+      user.photoUri = photoUri;
+      user.isOnline = true;
+      user.tokens = await _userControl.getToken();
+      await _userControl.updateUser(user);
+
+      notifyListeners();
+    }
+  }
+
+  Future updateOnChat(String chatId) async {
+    user.onChat = chatId;
+    notifyListeners();
+    await updateOwlUser();
+  }
+
+  Future<void> signUp(String email, String password, String userName) async {
     await _userControl.signUp(email, password, userName);
 
-    if (_userControl.isLogin) {
-      print("sign up");
-
-      String id = _userControl.userId;
-      final user = OwlUser(email: email, userName: userName, id: id);
-
-      user.isOnline = true;
-
-      await _userControl.saveUser(user);
-
-      return user;
-    } else
-      throw 'some things go wrong';
+    await updateOwlUser();
   }
 
   Future<List<OwlUser>> getUsers() async {
@@ -36,26 +45,52 @@ class UserState extends ChangeNotifier {
     final docs = data.docs;
 
     List<OwlUser> users = [];
-    for (var user in docs) {
-      dynamic data = user.data();
+    for (final user in docs) {
+      final data = user.data();
       users.add(OwlUser.fromMap(data));
     }
-    this.users = users;
 
     return users;
   }
 
-  logOut() async {
-    await _userControl.updateUser(OwlUser(
-      email: _userControl.email,
-      userName: _userControl.userName,
-      id: _userControl.userId,
-      isOnline: false,
-    ));
+  Future getUserInfo(String id) async {
+    await _userControl.getUserInfo(id);
+  }
+
+  Future logOut() async {
+    user.isOnline = false;
+    await _userControl.updateUser(user);
     await _userControl.signOut();
   }
 
-  void updateUser() {}
+  Future saveToken(String token) async {
+    await _userControl.saveTokenToDatabase(token);
+  }
 
-  updatePhoto(String uri) {}
+  Future updatePhoto(String uri) async {
+    user.photoUri = uri;
+    await _userControl.updatePhoto(uri);
+  }
+
+  Future updateUser(OwlUser user) async {
+    await _userControl.updateUser(user);
+  }
+
+  Future updateUserName(String newUserName) async {
+    await _userControl.updateUserName(newUserName);
+  }
+
+  Future<String?> getToken() async {
+    return await _userControl.getToken();
+  }
+
+  getUserToken(String id) async {
+    await _userControl.getUserToken(id);
+  }
+
+  String get email => _userControl.email;
+  String get userName => _userControl.userName;
+  String get userId => _userControl.userId;
+  bool get isLogin => _userControl.isLogin;
+  String? get photoUri => _userControl.userUriPhoto;
 }

@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/user.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> login(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -29,8 +30,13 @@ class UserControl extends ChangeNotifier {
     return _firestore.collection('users').get();
   }
 
-  getUsersEmail() async {
-    return await _firestore.collection('users').where('email').get();
+  Future<QuerySnapshot<Map<String, dynamic>>> getUsersEmail() async {
+    return _firestore.collection('users').where('email').get();
+  }
+
+  Future<String?> getToken() async {
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+    return messaging.getToken();
   }
 
   Future<void> saveUser(OwlUser user) async {
@@ -43,7 +49,7 @@ class UserControl extends ChangeNotifier {
     });
   }
 
-  addFriend(String userId, OwlUser otherUser) async {
+  Future addFriend(String userId, OwlUser otherUser) async {
     await _firestore
         .collection('users')
         .doc(userId)
@@ -61,8 +67,8 @@ class UserControl extends ChangeNotifier {
     }).then((value) => print('updated'));
   }
 
-  getUserInfo(String userId) async {
-    return await _firestore
+  Future getUserInfo(String userId) async {
+    return _firestore
         .collection('users')
         .where('id', isEqualTo: userId)
         .get()
@@ -71,8 +77,8 @@ class UserControl extends ChangeNotifier {
     });
   }
 
-  getUserByEmail(String email) async {
-    return await _firestore
+  Future getUserByEmail(String email) async {
+    return _firestore
         .collection('users')
         .where('email', isEqualTo: userId)
         .get()
@@ -90,14 +96,14 @@ class UserControl extends ChangeNotifier {
 
   Future<void> saveTokenToDatabase(String token) async {
     // Assume user is logged in for this example
-    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     _firestore.collection('users').doc(userId).update({
       'tokens': FieldValue.arrayUnion([token]),
     });
   }
 
-  getUserToken(String id) async {
+  Future getUserToken(String id) async {
     if (id.isNotEmpty) {
       _firestore.collection('users').doc(id).get().then((documentSnapshot) {
         if (documentSnapshot.exists) {
@@ -110,17 +116,17 @@ class UserControl extends ChangeNotifier {
     }
   }
 
-  updatePhoto(String uri) async {
+  Future updatePhoto(String uri) async {
     await _auth.currentUser!.updatePhotoURL(uri);
   }
 
-  updateUserName(String newName) async {
+  Future updateUserName(String newName) async {
     await _auth.currentUser!.updateDisplayName(newName);
   }
 
-  get email => _auth.currentUser!.email;
-  get isLogin => _hasUser();
-  get userName => _auth.currentUser!.displayName;
-  get userId => _auth.currentUser!.uid;
-  get userUriPhoto => _auth.currentUser!.photoURL;
+  String get email => _auth.currentUser!.email!;
+  bool get isLogin => _hasUser();
+  String get userName => _auth.currentUser!.displayName!;
+  String get userId => _auth.currentUser!.uid;
+  String? get userUriPhoto => _auth.currentUser!.photoURL;
 }

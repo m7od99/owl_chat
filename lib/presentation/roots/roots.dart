@@ -20,9 +20,9 @@ Map<String, WidgetBuilder> routes() {
     // ChatScreen.id: (context) => ChatScreen(),
     SettingsScreen.id: (context) => SettingsScreen(),
     ThemePage.id: (context) => ThemePage(),
-    SuccessPage.id: (context) => SuccessPage(),
-    Search.id: (context) => Search(),
-    SearchByName.id: (context) => SearchByName(),
+    SuccessPage.id: (context) => const SuccessPage(),
+    Search.id: (context) => const Search(),
+    SearchByName.id: (context) => const SearchByName(),
     ChangePhoto.id: (context) => ChangePhoto(),
   };
 }

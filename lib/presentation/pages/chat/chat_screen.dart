@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chat.dart';
@@ -30,51 +29,45 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future _jumpToEnd() async {
-    var end = controller.position.minScrollExtent;
-    await controller.animateTo(end,
-        duration: Duration(seconds: 1), curve: Curves.ease);
+    final end = controller.position.minScrollExtent;
+    await controller.animateTo(end, duration: const Duration(milliseconds: 1000), curve: Curves.easeInOut);
   }
 
-  Stream _showArrow() async* {
-    if (controller.hasClients) {
-      while (controller.offset != controller.position.minScrollExtent) {
-        setState(() {
-          _offstage = false;
-        });
+  void _showArrow() {
+    controller.addListener(() {
+      if (controller.hasClients) {
+        if (controller.offset != controller.position.minScrollExtent) {
+          setState(() {
+            _offstage = false;
+          });
+        }
       }
-    }
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     controller.dispose();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _showArrow();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserControl>(context);
+    final user = Provider.of<UserState>(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_sharp),
-          onPressed: () {
-            user.saveUser(OwlUser(
-              id: user.userId,
-              userName: user.userName,
-              email: user.email,
-              onChat: 'null',
-            ));
+          icon: const Icon(Icons.arrow_back_ios_sharp),
+          onPressed: () async {
+            user.updateOnChat('null');
             Navigator.pop(context);
           },
         ),
@@ -82,7 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(name(user.userId)),
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: AssetImage('assets/images/user.png'),
             ),
           ],
@@ -93,12 +86,11 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
+                final FocusScopeNode currentFocus = FocusScope.of(context);
 
                 if (!currentFocus.hasPrimaryFocus) {
                   currentFocus.unfocus();
                 }
-                _showArrow();
               },
               child: ChatStream(
                 chat: widget.chat,
@@ -124,15 +116,15 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () async {
                 await _jumpToEnd();
                 setState(() {
-                  if (controller.offset ==
-                      controller.position.minScrollExtent) {
+                  if (controller.offset == controller.position.minScrollExtent) {
                     _offstage = true;
                   }
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_downward,
-                size: 30,
+                color: Colors.white,
+                size: 20,
               ),
             ),
           ),

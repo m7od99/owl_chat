@@ -10,6 +10,7 @@ class Message {
   bool isMe;
   bool? isRead;
   bool? isSend;
+  bool? isGif;
 
   Message({
     required this.sender,
@@ -19,6 +20,7 @@ class Message {
     required this.isMe,
     this.isRead,
     this.isSend,
+    this.isGif,
   });
 
   Message copyWith({
@@ -46,6 +48,7 @@ class Message {
       'isMe': isMe,
       'isRead': isRead,
       'isSend': isSend,
+      'isGif': isGif,
     };
   }
 
@@ -58,10 +61,12 @@ class Message {
       isMe: map['isMe'],
       isSend: map['isSend'],
       isRead: map['isRead'],
+      isGif: map['isGif'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source));
+  factory Message.fromJson(String source) =>
+      Message.fromMap(json.decode(source));
 }

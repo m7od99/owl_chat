@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/helper/helper.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +19,9 @@ class FriendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserControl>(context);
+    final user = Provider.of<UserState>(context);
 
-    return Container(
+    return SizedBox(
       height: 55,
       child: InkWell(
         onTap: onTap,
@@ -32,10 +32,10 @@ class FriendCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              backgroundImage: AssetImage('assets/images/user.png'),
+              backgroundImage: const AssetImage('assets/images/user.png'),
               radius: 28,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
@@ -58,7 +58,7 @@ class FriendCard extends StatelessWidget {
                         chat.lastMessage,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),

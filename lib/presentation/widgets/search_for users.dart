@@ -78,7 +78,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
           setState(
             () {
               load = false;
-              otherUser.userName = user.userName;
+              otherUser.userName = user!.userName;
               otherUser.id = user.id;
               otherUser.email = user.email;
               otherUser.isOnline = user.isOnline;

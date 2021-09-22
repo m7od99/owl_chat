@@ -19,14 +19,14 @@ class _ThemePageState extends State<ThemePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
-        title: Text('Theme'),
+        title: const Text('Theme'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'Dark mode',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),

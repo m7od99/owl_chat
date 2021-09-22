@@ -24,18 +24,18 @@ class ChatSearchCard extends StatelessWidget {
         style: GoogleFonts.cherrySwash(fontSize: 18),
       ),
       // subtitle: Text('last seen'),
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         //todo add user photo
         backgroundImage: AssetImage('assets/images/user.png'),
       ),
-      trailing: Icon(Icons.chat_bubble_outlined),
+      trailing: const Icon(Icons.chat_bubble_outlined),
       onTap: () async {
         print(user.id);
 
-        Chat chat = await control.createChatRoom(user);
+        final Chat chat = await control.createChatRoom(user);
         print(chat.id);
 
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(

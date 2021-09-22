@@ -147,9 +147,10 @@ class SearchField extends StatefulWidget {
     this.maxSuggestionsInViewPort = 5,
     this.onTap,
   })  : assert(
-            (initialValue != null && suggestions.contains(initialValue)) ||
-                initialValue == null,
-            'Initial Value should either be null or should be present in suggestions list.'),
+          (initialValue != null && suggestions.contains(initialValue)) ||
+              initialValue == null,
+          'Initial Value should either be null or should be present in suggestions list.',
+        ),
         super(key: key);
 
   @override
@@ -236,7 +237,7 @@ class _SearchFieldState extends State<SearchField> {
             height = snapshot.data!.length * widget.itemHeight;
           }
           return AnimatedContainer(
-            duration: isUp ? Duration.zero : Duration(milliseconds: 300),
+            duration: isUp ? Duration.zero : const Duration(milliseconds: 300),
             height: height,
             alignment: Alignment.centerLeft,
             decoration: widget.suggestionsDecoration ??
@@ -248,11 +249,11 @@ class _SearchFieldState extends State<SearchField> {
                       blurRadius: 8.0, // soften the shadow
                       spreadRadius: 2.0, // extend the shadow
                       offset: widget.hasOverlay
-                          ? Offset(
+                          ? const Offset(
                               2.0,
                               5.0,
                             )
-                          : Offset(1.0, 0.5),
+                          : const Offset(1.0, 0.5),
                     ),
                   ],
                 ),
@@ -260,8 +261,8 @@ class _SearchFieldState extends State<SearchField> {
               reverse: isUp,
               itemCount: snapshot.data!.length,
               physics: snapshot.data!.length == 1
-                  ? NeverScrollableScrollPhysics()
-                  : ScrollPhysics(),
+                  ? const NeverScrollableScrollPhysics()
+                  : const ScrollPhysics(),
               itemBuilder: (_focus, index) => GestureDetector(
                 onTap: () {
                   sourceController!.text = snapshot.data![index]!;
@@ -278,8 +279,8 @@ class _SearchFieldState extends State<SearchField> {
                 },
                 child: Container(
                   height: widget.itemHeight,
-                  padding: EdgeInsets.symmetric(horizontal: 5) +
-                      EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 5) +
+                      const EdgeInsets.only(left: 8),
                   width: double.infinity,
                   alignment: Alignment.centerLeft,
                   decoration: widget.suggestionItemDecoration?.copyWith(
@@ -315,7 +316,7 @@ class _SearchFieldState extends State<SearchField> {
 
   Offset getYOffset(Offset widgetOffset, int resultCount) {
     final size = MediaQuery.of(context).size;
-    double position = widgetOffset.dy;
+    final double position = widgetOffset.dy;
     if ((position + height) < (size.height - widget.itemHeight * 2)) {
       return Offset(0, widget.itemHeight + 10.0);
     } else {

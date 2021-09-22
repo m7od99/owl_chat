@@ -20,11 +20,11 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             children: [
               // Language(),
-              Spacer(),
+              const Spacer(),
               Center(
                 child: Logo(fontSize: 50, photoSize: 140),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               // Text(
               //   'Welcome to OwlChat family',
               //   textAlign: TextAlign.center,
@@ -33,7 +33,7 @@ class WelcomeScreen extends StatelessWidget {
               //     fontWeight: FontWeight.bold,
               //   ),
               // ),
-              Spacer(),
+              const Spacer(),
               LargeButton(
                 onTap: () {
                   Navigator.pushNamed(context, LoginScreen.id);
@@ -41,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
                 title: LocaleKeys.continue_.tr(),
                 controller: _load,
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

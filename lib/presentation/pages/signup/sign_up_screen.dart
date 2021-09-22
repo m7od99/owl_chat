@@ -35,7 +35,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
   final userControl = UserControl();
-  var _load = RoundedLoadingButtonController();
+  final _load = RoundedLoadingButtonController();
 
   String? email;
   String? conformPassword;
@@ -45,56 +45,58 @@ class _BodyState extends State<Body> {
   List<String> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error!);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
-  void emailValidator(value) {
+  void emailValidator(String value) {
     if (value.isNotEmpty) {
       removeError(error: kEmailNullError);
     } else if (emailValidatorRegExp.hasMatch(value)) {
       removeError(error: kInvalidEmailError);
     }
-    return null;
+    return;
   }
 
-  void emailNotValidator(value) {
+  void emailNotValidator(String value) {
     if (value.isEmpty) {
       addError(error: kEmailNullError);
     } else if (!emailValidatorRegExp.hasMatch(value)) {
       addError(error: kInvalidEmailError);
     }
-    return null;
+    return;
   }
 
-  void passwordValidator(value) {
+  void passwordValidator(String value) {
     if (value.isNotEmpty) {
       removeError(error: kPassNullError);
     } else if (value.length >= 6) {
       removeError(error: kShortPassError);
     }
-    return null;
+    return;
   }
 
-  void passwordNotValid(value) {
+  void passwordNotValid(String value) {
     if (value.isEmpty) {
       addError(error: kPassNullError);
     } else if (value.length < 6) {
       addError(error: kShortPassError);
     }
-    return null;
+    return;
   }
 
-  void passwordConfirmValid(value) {
+  void passwordConfirmValid(String value) {
     if (value.isNotEmpty) {
       removeError(error: kPassNullError);
     } else if (value.isNotEmpty && password == conformPassword) {
@@ -103,7 +105,7 @@ class _BodyState extends State<Body> {
     conformPassword = value;
   }
 
-  void passwordConfirmNotValid(value) {
+  void passwordConfirmNotValid(String value) {
     if (value.isEmpty) {
       addError(error: kPassNullError);
       return;
@@ -111,10 +113,10 @@ class _BodyState extends State<Body> {
       addError(error: kMatchPassError);
       return;
     }
-    return null;
+    return;
   }
 
-  void userNameValid(value) {
+  void userNameValid(String value) {
     if (value.isNotEmpty) {
       removeError(error: "Enter your user name");
     } else if (value.length >= 3) {
@@ -122,7 +124,7 @@ class _BodyState extends State<Body> {
     }
   }
 
-  void userNameNotValid(value) {
+  void userNameNotValid(String value) {
     if (value.isEmpty) {
       addError(error: "Enter your user name");
       return;
@@ -130,7 +132,7 @@ class _BodyState extends State<Body> {
       addError(error: "Your user name is too short");
       return;
     }
-    return null;
+    return;
   }
 
   @override
@@ -151,7 +153,7 @@ class _BodyState extends State<Body> {
                   Text(
                     LocaleKeys.register.tr(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
@@ -209,7 +211,7 @@ class _BodyState extends State<Body> {
         userName = value;
       },
       validator: (value) {
-        userNameNotValid(value);
+        userNameNotValid(value!);
       },
       onSaved: (newValue) => userName = newValue,
       decoration: inputDecoration(
@@ -233,7 +235,7 @@ class _BodyState extends State<Body> {
         password = value;
       },
       validator: (value) {
-        passwordNotValid(value);
+        passwordNotValid(value!);
       },
       onSaved: (newValue) => password = newValue,
     );
@@ -254,7 +256,7 @@ class _BodyState extends State<Body> {
         print(pass);
       },
       validator: (value) {
-        passwordConfirmNotValid(value);
+        passwordConfirmNotValid(value!);
       },
     );
   }
@@ -267,13 +269,13 @@ class _BodyState extends State<Body> {
         labelText: LocaleKeys.email.tr(),
         icon: Icons.mail,
       ),
-      onSaved: (newValue) => email = newValue!,
+      onSaved: (newValue) => email = newValue,
       onChanged: (value) {
         emailValidator(value);
         print(value);
       },
       validator: (value) {
-        emailNotValidator(value);
+        emailNotValidator(value!);
       },
     );
   }

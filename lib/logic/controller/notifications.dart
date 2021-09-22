@@ -1,59 +1,37 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 
 class Notifications {
   //to handle remote notifications
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  void initMessaging() async {
-    FlutterLocalNotificationsPlugin fltNotification =
-        FlutterLocalNotificationsPlugin();
-
-    var androiInit = AndroidInitializationSettings('app_icon'); //for logo
-    var iosInit = IOSInitializationSettings();
-
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-
-    fltNotification = FlutterLocalNotificationsPlugin();
-    await fltNotification.initialize(initSetting);
-    var androidDetails = AndroidNotificationDetails(
-      '1',
-      'channelName',
-      'channelDescription',
-      playSound: true,
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-
-    var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
-
+  Future initMessaging() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification!;
-      //AndroidNotification? android = message.notification!.android;
+      print('Got a message whilst in the foreground!');
+      print("Message data: ${message.data}");
+      final notification = message.notification;
 
-      fltNotification.show(notification.hashCode, notification.title,
-          notification.body, generalNotificationDetails);
+      if (notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+        print(notification.title);
+        print(notification.body);
+        AwesomeNotifications().createNotificationFromJsonData(message.data);
+      }
     });
   }
 
-  UserControl _control = UserControl();
+  final UserControl _control = UserControl();
 
   //get tokens form firebase messaging
-  Future<String?> getToken() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    return await messaging.getToken();
-  }
 
-  // get tokens then safe it in firestor
-  void token() async {
-    final token = await getToken();
+  // get tokens then safe it in firestore
+  Future token() async {
+    final token = await _control.getToken();
     print(token);
     await _control.saveTokenToDatabase(token!);
 
     FirebaseMessaging.instance.onTokenRefresh
-        .listen(_control.saveTokenToDatabase);
+        .listen(await _control.saveTokenToDatabase);
   }
 }

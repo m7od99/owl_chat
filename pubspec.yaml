@@ -31,7 +31,6 @@ dependencies:
   flutter_local_notifications: any
   fluttertoast: any
   http: ^0.13.3
-  fluent_ui: ^3.0.0
   anim_search_bar: ^2.0.2
   searchfield: ^0.5.2
   shared_preferences: ^2.0.7
@@ -46,12 +45,18 @@ dependencies:
   upgrader: ^3.5.1
   r_upgrade: ^0.3.5
   version: ^2.0.0
+  giphy_get: ^2.0.3
+  flutter_zoom_drawer: ^2.1.1
+  getwidget: ^2.0.4
+  cached_network_image: ^3.1.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^1.2.0
+  lint: ^1.0.0
+
 
 flutter:
   uses-material-design: true

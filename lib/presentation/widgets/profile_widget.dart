@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/theme/constant.dart';
 import "package:owl_chat/translations/locale_keys.g.dart";
 import 'package:provider/provider.dart';
@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserControl>(context);
+    final user = Provider.of<UserState>(context);
 
     return Container(
       child: Material(
@@ -32,11 +32,10 @@ class ProfileWidget extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/user.png'),
                   ),
                   SizedBox(height: 8),
-                  if (user.userName != null)
-                    Text(
-                      user.userName,
-                      style: kProfileCardText,
-                    ),
+                  Text(
+                    user.userName,
+                    style: kProfileCardText,
+                  ),
                   Text(
                     user.email,
                     style: kProfileCardText,
@@ -47,10 +46,7 @@ class ProfileWidget extends StatelessWidget {
               TextButton(
                 child: Text(
                   LocaleKeys.edit.tr(),
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 onPressed: () {
                   // Navigator.pushNamed(context, ChangePhoto.id);

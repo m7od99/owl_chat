@@ -21,7 +21,7 @@ class _ChangePhotoState extends State<ChangePhoto> {
       body: SafeArea(
         child: Center(
           child: Column(
-            children: [
+            children: const [
               CircleAvatar(),
             ],
           ),

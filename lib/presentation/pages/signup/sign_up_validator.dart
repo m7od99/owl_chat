@@ -7,7 +7,7 @@ class SignUpValidator {
 
   void removeError({required String error}) {}
 
-  void emailValidator(value) {
+  void emailValidator(String value) {
     if (value.isNotEmpty) {
       removeError(error: kEmailNullError);
     } else if (emailValidatorRegExp.hasMatch(value)) {
@@ -16,8 +16,8 @@ class SignUpValidator {
     return null;
   }
 
-  void emailNotValidator(value) {
-    if (value!.isEmpty) {
+  void emailNotValidator(String value) {
+    if (value.isEmpty) {
       addError(error: kEmailNullError);
       return;
     } else if (!emailValidatorRegExp.hasMatch(value)) {

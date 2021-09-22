@@ -28,7 +28,7 @@ exports.sendNotification = functions.firestore
                         admin
                             .firestore()
                             .collection('users')
-                            .where('id', '==', idFrom)
+                            .where('id', '==', sender)
                             .get()
                             .then(querySnapshot2 => {
                                 querySnapshot2.forEach(userFrom => {

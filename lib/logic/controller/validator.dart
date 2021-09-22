@@ -18,7 +18,7 @@ class Validator extends ChangeNotifier {
     }
   }
 
-  void emailValidator(value) {
+  void emailValidator(String value) {
     if (value.isNotEmpty) {
       removeError(error: kEmailNullError);
     } else if (emailValidatorRegExp.hasMatch(value)) {
@@ -27,7 +27,7 @@ class Validator extends ChangeNotifier {
     return null;
   }
 
-  void emailNotValidator(value) {
+  void emailNotValidator(String value) {
     if (value.isEmpty) {
       addError(error: kEmailNullError);
     } else if (!emailValidatorRegExp.hasMatch(value)) {
@@ -36,7 +36,7 @@ class Validator extends ChangeNotifier {
     return null;
   }
 
-  void passwordValidator(value) {
+  void passwordValidator(String value) {
     if (value.isNotEmpty) {
       removeError(error: kPassNullError);
     } else if (value.length >= 6) {
@@ -45,7 +45,7 @@ class Validator extends ChangeNotifier {
     return null;
   }
 
-  void passwordNotValid(value) {
+  void passwordNotValid(String value) {
     if (value.isEmpty) {
       addError(error: kPassNullError);
     } else if (value.length < 6) {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/login/login_screen.dart';
 import 'package:owl_chat/presentation/widgets/profile_widget.dart';
 import 'package:owl_chat/presentation/widgets/theme_sw.dart';
@@ -11,7 +11,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserControl>(context);
+    final user = Provider.of<UserState>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -34,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
                         Navigator.pushNamed(context, ThemePage.id);
                       }
                       if (index == 2) {
-                        user.signOut();
+                        user.logOut();
                         Navigator.pushNamed(context, LoginScreen.id);
                       }
                     },

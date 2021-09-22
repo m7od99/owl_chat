@@ -5,7 +5,7 @@ InputDecoration inputDecoration({
   required String labelText,
   required IconData icon,
 }) {
-  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+  final OutlineInputBorder outlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(28),
     // borderSide: BorderSide(color: ),
     gapPadding: 10,
@@ -14,13 +14,13 @@ InputDecoration inputDecoration({
   return InputDecoration(
     labelText: labelText,
     floatingLabelBehavior: FloatingLabelBehavior.always,
-    contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 42, vertical: 20),
     suffixIcon: Padding(
-      padding: EdgeInsets.fromLTRB(
-        (20),
-        (20),
-        (20),
-        (20),
+      padding: const EdgeInsets.fromLTRB(
+        20,
+        20,
+        20,
+        20,
       ),
       child: Icon(
         icon,

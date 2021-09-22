@@ -11,18 +11,21 @@ class FormError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(errors.length, (index) => formErrorText(error: errors[index])),
+      children: List.generate(
+        errors.length,
+        (index) => formErrorText(error: errors[index]),
+      ),
     );
   }
 
   Row formErrorText({required String error}) {
     return Row(
       children: [
-        Icon(Icons.error, color: Colors.red),
-        SizedBox(width: 4),
+        const Icon(Icons.error, color: Colors.red),
+        const SizedBox(width: 4),
         Text(
           error,
-          style: TextStyle(color: Colors.red),
+          style: const TextStyle(color: Colors.red),
         ),
       ],
     );

@@ -5,9 +5,9 @@ class SearchLogic {
   final UserState _user = UserState();
 
   Future<OwlUser> getUserByEmail(String email) async {
-    List<OwlUser> users = await _user.getUsers();
+    final List<OwlUser> users = await _user.getUsers();
 
-    for (var user in users) {
+    for (final user in users) {
       if (user.email.toLowerCase() == email.trim().toLowerCase()) {
         return user;
       }
@@ -15,15 +15,14 @@ class SearchLogic {
     return OwlUser(email: '', id: '', userName: '');
   }
 
-  Future<OwlUser> getUserByUserName(String userName) async {
-    List<OwlUser> users = await _user.getUsers();
+  Future<OwlUser?> getUserByUserName(String userName) async {
+    final List<OwlUser> users = await _user.getUsers();
 
-    for (var user in users) {
+    for (final user in users) {
       if (user.userName.toLowerCase().trim() == userName.toLowerCase().trim()) {
         print(user.id);
         return user;
       }
     }
-    return OwlUser(email: '', id: '', userName: '');
   }
 }

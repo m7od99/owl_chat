@@ -41,7 +41,7 @@ class MessageControl extends ChangeNotifier {
     }).then((value) => print('chat room is created'));
   }
 
-  addNewChatToUser(String userId, Chat chat) async {
+  Future addNewChatToUser(String userId, Chat chat) async {
     await _firestore
         .collection('users')
         .doc(userId)
@@ -50,7 +50,8 @@ class MessageControl extends ChangeNotifier {
   }
 
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getUserChats(
-      String userId) async {
+    String userId,
+  ) async {
     return _firestore
         .collection('users')
         .doc(userId)
@@ -59,8 +60,8 @@ class MessageControl extends ChangeNotifier {
   }
 
   ///get user chats
-  getChats(String userId) {
-    print('id is ' + _firestore.collection('messages').id);
+  Stream<QuerySnapshot<Map<String, dynamic>>> getChats(String userId) {
+    print('id is ${_firestore.collection('messages').id}');
 
     return _firestore
         .collection('messages')

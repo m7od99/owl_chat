@@ -8,13 +8,13 @@ class CheckUpdate {
   isNewUpdate() async {
     var _info = await PackageInfo.fromPlatform();
 
-    var currentVersion = Version.parse(_info.version);
+    final currentVersion = Version.parse(_info.version);
     Version? latestVersion; // from server
 
-    UpdateControl control = UpdateControl();
+    final UpdateControl control = UpdateControl();
 
-    Update status = await control.getUpdateStatus();
-    latestVersion = Version.parse(status.newVersions);
+    final Update? status = await control.getUpdateStatus();
+    latestVersion = Version.parse(status!.newVersions);
 
     print(latestVersion.toString());
 

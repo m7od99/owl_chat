@@ -1,12 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:fluent_ui/fluent_ui.dart' as fl;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/logic/controller/notifications.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import "package:owl_chat/translations/locale_keys.g.dart";
+import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:owl_chat/update/check_update.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -17,19 +15,38 @@ class ChatsScreen extends StatefulWidget {
 }
 
 int currentIndex = 0;
-var notifications = Notifications();
-UserControl _control = UserControl();
-var update = CheckUpdate();
+Notifications notifications = Notifications();
+CheckUpdate update = CheckUpdate();
+final user = UserState();
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
+    WidgetsBinding.instance!.addObserver(this);
     currentIndex = 0;
     update.isNewUpdate();
     notifications.token();
-    UserControl().getUserToken(_control.userId);
+    user.updateOwlUser();
+    user.getUserToken(user.userId);
     notifications.initMessaging();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
+      user.updateOnChat('null');
+    }
   }
 
   @override
@@ -41,38 +58,31 @@ class _ChatsScreenState extends State<ChatsScreen> {
     }
 
     List<Widget> _pages = [
-      //todo contacts page..
-      //  ContactsScreen(),
       Chats(),
       SettingsScreen(),
     ];
 
     return WillPopScope(
       onWillPop: () async {
+        //todo ask if want to exite from app
         return false;
       },
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           onTap: onTaped,
           type: BottomNavigationBarType.fixed,
-          items: [
-            //  BottomNavigationBarItem(
-            //    icon: Icon(
-            //    Icons.account_circle,
-            //),
-            //label: LocaleKeys.contacts.tr(),
-            //),
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                fl.FluentIcons.chat_solid,
+                Icons.chat,
               ),
-              label: LocaleKeys.chats.tr(),
+              label: LocaleKeys.chats,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings,
               ),
-              label: LocaleKeys.settings.tr(),
+              label: LocaleKeys.settings,
             ),
           ],
           currentIndex: currentIndex,
