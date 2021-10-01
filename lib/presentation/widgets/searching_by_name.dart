@@ -43,61 +43,52 @@ class _SearchByNameState extends State<SearchByName> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
+        backgroundColor: Theme.of(context).splashColor,
       ),
       body: Container(
         child: Column(
           children: [
             Container(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: SearchField(
                   controller: _searchController,
                   suggestions: users.map((e) => e.userName).toList(),
                   hint: 'Search',
-                  maxSuggestionsInViewPort: 4,
+                  maxSuggestionsInViewPort: 5,
                   onSubmitted: (text) async {
-                    var user =
-                        await _search.getUserByUserName(_searchController.text);
+                    var user = await _search.getUserByUserName(_searchController.text);
                     //  final tokens = await _user.getUserToken(user.id);
                     _searchController.clear();
 
-                    setState(() {
-                      other.userName = user!.userName;
-                      other.id = user.id;
-                      print(other.id);
-                      other.email = user.email;
-                      other.isOnline = user.isOnline;
-                      // other.tokens = tokens;
-
-                      print(other.userName);
-
-                      if (other.id != '') {
-                        found = true;
-                      } else {
-                        found = false;
-                      }
-                    });
+                    if (user != null) {
+                      Navigator.push(
+                        context,
+                        DialogRoute(
+                          builder: (context) {
+                            return ChatSearchCard(user: user);
+                          },
+                          context: context,
+                        ),
+                      );
+                    }
                   },
                   searchInputDecoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
-                  itemHeight: 40,
+                  itemHeight: 35,
                   suggestionsDecoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   suggestionItemDecoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .scaffoldBackgroundColor
-                          .withOpacity(0.75)),
+                    color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.75),
+                  ),
                 ),
               ),
             ),
-            if (found == true) ChatSearchCard(user: other),
           ],
         ),
       ),

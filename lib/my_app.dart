@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 import "package:provider/provider.dart";
 
-import 'presentation/pages/chats/bottom_navigation_bar.dart';
+import 'presentation/pages/chats/loading.dart';
 import 'presentation/pages/login/login_screen.dart';
 import 'presentation/roots/roots.dart';
 import 'presentation/theme/themes.dart';

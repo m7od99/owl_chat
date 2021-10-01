@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:owl_chat/logic/controller/notifications.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/pages/chats/chats_acreen.dart';
-import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import 'package:owl_chat/translations/locale_keys.g.dart';
+import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
 import 'package:owl_chat/update/check_update.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -14,7 +13,6 @@ class ChatsScreen extends StatefulWidget {
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-int currentIndex = 0;
 Notifications notifications = Notifications();
 CheckUpdate update = CheckUpdate();
 final user = UserState();
@@ -23,12 +21,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
-    currentIndex = 0;
     update.isNewUpdate();
     notifications.token();
     user.updateOwlUser();
     user.getUserToken(user.userId);
     notifications.initMessaging();
+
     super.initState();
   }
 
@@ -41,7 +39,6 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
@@ -51,43 +48,37 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    void onTaped(index) {
-      setState(() {
-        currentIndex = index;
-      });
-    }
-
-    List<Widget> _pages = [
-      Chats(),
-      SettingsScreen(),
-    ];
-
     return WillPopScope(
       onWillPop: () async {
-        //todo ask if want to exite from app
-        return false;
+        showDialog(
+            builder: (context) => AlertDialog(
+                  title: Text('Do you want exits from app?'),
+                  actions: [
+                    GestureDetector(
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      onTap: () {
+                        SystemNavigator.pop();
+                      },
+                    ),
+                    GestureDetector(
+                      child: Text(
+                        'No',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+            context: context);
+        return true;
       },
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: onTaped,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.chat,
-              ),
-              label: LocaleKeys.chats,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-              ),
-              label: LocaleKeys.settings,
-            ),
-          ],
-          currentIndex: currentIndex,
-        ),
-        body: _pages.elementAt(currentIndex),
+        body: Chats(),
       ),
     );
   }

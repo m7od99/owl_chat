@@ -18,32 +18,40 @@ class ChatSearchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChatsController control = ChatsController();
 
-    return ListTile(
-      title: Text(
-        user.userName,
-        style: GoogleFonts.cherrySwash(fontSize: 18),
-      ),
-      // subtitle: Text('last seen'),
-      leading: const CircleAvatar(
-        //todo add user photo
-        backgroundImage: AssetImage('assets/images/user.png'),
-      ),
-      trailing: const Icon(Icons.chat_bubble_outlined),
-      onTap: () async {
-        print(user.id);
-
-        final Chat chat = await control.createChatRoom(user);
-        print(chat.id);
-
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(
-              chat: chat,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 200),
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: ListTile(
+            title: Text(
+              user.userName,
+              style: GoogleFonts.cherrySwash(fontSize: 18),
             ),
+            // subtitle: Text('last seen'),
+            leading: const CircleAvatar(
+              //todo add user photo
+              backgroundImage: AssetImage('assets/images/user.png'),
+            ),
+            trailing: const Icon(Icons.chat_bubble_outlined),
+            onTap: () async {
+              print(user.id);
+
+              final Chat chat = await control.createChatRoom(user);
+              print(chat.id);
+
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    chat: chat,
+                  ),
+                ),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

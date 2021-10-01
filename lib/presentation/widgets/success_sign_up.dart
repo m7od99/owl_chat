@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:owl_chat/presentation/pages/chats/bottom_navigation_bar.dart';
+import 'package:owl_chat/presentation/pages/chats/loading.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -44,16 +44,14 @@ class SuccessPage extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
                 child: Column(
                   children: [
                     Spacer(),
                     Text(
                       "Congratulations! your account has been successfully created",
                       textAlign: TextAlign.center,
-                      style:
-                          GoogleFonts.radley(fontSize: 25, color: Colors.black),
+                      style: GoogleFonts.radley(fontSize: 25, color: Colors.black),
                     ),
                     const Spacer(),
                     LargeButton(

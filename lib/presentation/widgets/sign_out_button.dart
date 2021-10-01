@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../logic/event_handler/user_state.dart';
+import '../pages/login/login_screen.dart';
+
+class LogoutButton extends StatelessWidget {
+  const LogoutButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 100),
+      child: Center(
+        child: GestureDetector(
+          onTap: () async {
+            await Provider.of<UserState>(context, listen: false).logOut();
+
+            await Navigator.pushNamed(context, LoginScreen.id);
+          },
+          child: Material(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.indigo[600],
+            elevation: 1,
+            shadowColor: Colors.indigo[300],
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

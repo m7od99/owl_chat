@@ -9,8 +9,7 @@ class ChatsController {
   final UserControl _user = UserControl();
 
   String createChatId(String otherUserId) {
-    if (_user.userId.substring(0, 1).codeUnitAt(0) >
-        otherUserId.substring(0, 1).codeUnitAt(0)) {
+    if (_user.userId.substring(0, 1).codeUnitAt(0) > otherUserId.substring(0, 1).codeUnitAt(0)) {
       return "$otherUserId${_user.userId}";
     } else {
       return "${_user.userId}$otherUserId";
@@ -24,11 +23,7 @@ class ChatsController {
   }
 
   bool isChatting(List<QueryDocumentSnapshot> snap, otherId) {
-    return snap
-        .where((element) =>
-            element['id'].toString().contains(_user.userId) &&
-            element['id'].toString().contains(otherId))
-        .isNotEmpty;
+    return snap.where((element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId)).isNotEmpty;
   }
 
   getChats(Iterable<QueryDocumentSnapshot> data) {
@@ -63,10 +58,10 @@ class ChatsController {
     );
 
     await _control.createChat(chat);
-    await _control.addNewChatToUser(_user.userId, chat);
-    print('add chat to user is done');
-    await _user.addFriend(_user.userId, otherUser);
-    print('add friend to user is done');
+    // await _control.addNewChatToUser(_user.userId, chat);
+    // print('add chat to user is done');
+    // await _user.addFriend(_user.userId, otherUser);
+    // print('add friend to user is done');
 
     return chat;
   }

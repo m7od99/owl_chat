@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/widgets/change_photo.dart';
 import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
 
-import '../pages/chats/bottom_navigation_bar.dart';
+import '../pages/chats/loading.dart';
 import '../pages/login/login_screen.dart';
 import '../pages/settings/settings_screen.dart';
 import '../pages/signup/sign_up_screen.dart';

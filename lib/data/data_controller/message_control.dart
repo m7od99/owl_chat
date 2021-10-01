@@ -10,53 +10,35 @@ class MessageControl extends ChangeNotifier {
 
   ///get messages from specific chat room
   Stream<QuerySnapshot> getMessages(String chatId) {
-    return _firestore
-        .collection('messages')
-        .doc(chatId)
-        .collection('messages')
-        .orderBy('time')
-        .snapshots();
+    return _firestore.collection('messages').doc(chatId).collection('messages').orderBy('time').snapshots();
   }
 
   ///send message to specific chat room
   Future<void> sendMessage(Message message, String chatId) async {
-    await _firestore
-        .collection('messages')
-        .doc(chatId)
-        .collection('messages')
-        .add(message.toMap())
-        .catchError((e) {
+    await _firestore.collection('messages').doc(chatId).collection('messages').add(message.toMap()).catchError((e) {
       print(e);
     }).then((value) => print('message send $value'));
   }
 
   ///create a new chat room with unique id
   Future<void> createChat(Chat chat) async {
-    await _firestore
-        .collection('messages')
-        .doc(chat.id)
-        .set(chat.toMap())
-        .catchError((e) {
+    await _firestore.collection('messages').doc(chat.id).set(chat.toMap()).catchError((e) {
       print(e);
     }).then((value) => print('chat room is created'));
   }
 
+  Future<void> updateChatState(Chat chat) async {
+    await _firestore.collection('messages').doc(chat.id).update(chat.toMap()).then((value) => print('chat room is updated'));
+  }
+
   Future addNewChatToUser(String userId, Chat chat) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('chats')
-        .add(chat.toMap());
+    await _firestore.collection('users').doc(userId).collection('chats').add(chat.toMap());
   }
 
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getUserChats(
     String userId,
   ) async {
-    return _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('chats')
-        .snapshots();
+    return _firestore.collection('users').doc(userId).collection('chats').snapshots();
   }
 
   ///get user chats

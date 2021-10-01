@@ -25,7 +25,7 @@ class CheckUpdate {
   }
 
   Future upgrade(String uri) async {
-    int? id = await RUpgrade.upgrade(
+    await RUpgrade.upgrade(
       uri,
       fileName: 'app-release.apk',
       isAutoRequestInstall: true,

@@ -1,16 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/widgets/searching_by_name.dart';
+import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../../logic/event_handler/user_state.dart';
+import '../../widgets/chats_stream.dart';
+import '../../widgets/language.dart';
+import '../../widgets/searching_by_name.dart';
+import '../../widgets/sign_out_button.dart';
+import '../../widgets/theme_sw.dart';
+
 import '../../../data/data_controller/message_control.dart';
-import '../../../data/models/chat.dart';
 import '../../../logic/event_handler/chats_logic.dart';
-import '../../widgets/friend_card.dart';
-import '../chat/chat_screen.dart';
 
 class Chats extends StatefulWidget {
   @override
@@ -41,7 +44,7 @@ class _ChatsState extends State<Chats> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Chats'),
+            Text('Chats'),
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
@@ -53,6 +56,7 @@ class _ChatsState extends State<Chats> {
       ),
       body: ChatsStream(stream: stream, chats: _chats, user: user),
       drawer: GFDrawer(
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -63,7 +67,7 @@ class _ChatsState extends State<Chats> {
               closeButton: Container(),
               currentAccountPicture: const GFAvatar(
                 radius: 80.0,
-                backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg"),
+                backgroundImage: AssetImage('assets/images/user.png'),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,79 +83,43 @@ class _ChatsState extends State<Chats> {
                 ],
               ),
             ),
-            const ListTile(
+            ListTile(
               title: Text('Theme'),
-              onTap: null,
+              enabled: true,
+              trailing: Icon(Icons.color_lens_outlined),
+              onTap: () {
+                Navigator.pushNamed(context, ThemePage.id);
+              },
             ),
-            const ListTile(
+            ListTile(
               title: Text('Language'),
-              onTap: null,
-            ),
-            const ListTile(
-              title: Text('Settings'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ChatsStream extends StatelessWidget {
-  const ChatsStream({
-    Key? key,
-    required this.stream,
-    required ChatsController chats,
-    required this.user,
-  })  : _chats = chats,
-        super(key: key);
-
-  final stream;
-  final ChatsController _chats;
-  final UserState user;
-
-  String otherId(Chat chat) {
-    if (user.userId == chat.other!.id) {
-      return chat.me!.id;
-    }
-    return chat.other!.id;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: stream,
-        builder: (context, snapshot) {
-          print(snapshot.hasData);
-          if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-
-          final snap = snapshot.data!.docs;
-          final data = _chats.getMyChats(snap);
-          List<Chat> chats = _chats.getChats(data);
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.separated(
-              itemCount: chats.length,
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              itemBuilder: (BuildContext context, int index) => FriendCard(
-                chat: chats[index],
-                onTap: () async {
-                  user.updateOnChat(chats[index].other!.id);
-                  Navigator.push(
+              trailing: Icon(Icons.language),
+              onTap: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                        chat: chats[index],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              separatorBuilder: (BuildContext context, int index) => Divider(),
+                      builder: (context) => Language(),
+                    ));
+              },
             ),
-          );
-        },
+            ListTile(
+              title: Text('Notifications'),
+              trailing: Icon(Icons.notifications),
+            ),
+            ListTile(
+              title: Text('Settings'),
+              trailing: Icon(Icons.settings),
+              onTap: () {
+                Navigator.pushNamed(context, SettingsScreen.id);
+              },
+            ),
+            ListTile(
+              title: Text('About'),
+              trailing: Icon(Icons.info_outline),
+            ),
+            LogoutButton()
+          ],
+        ),
       ),
     );
   }

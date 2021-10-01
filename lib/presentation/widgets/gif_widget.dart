@@ -15,8 +15,7 @@ class GifWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: message.isMe ? 60 : 0, right: message.isMe ? 0 : 60, top: 10),
+      padding: EdgeInsets.only(left: message.isMe ? 60 : 0, right: message.isMe ? 0 : 60, top: 10),
       child: Stack(
         children: [
           ClipRRect(

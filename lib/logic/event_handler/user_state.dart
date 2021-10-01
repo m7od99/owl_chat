@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/user.dart';
 
 class UserState extends ChangeNotifier {
@@ -59,7 +60,7 @@ class UserState extends ChangeNotifier {
 
   Future logOut() async {
     user.isOnline = false;
-    await _userControl.updateUser(user);
+    //  await _userControl.updateUser(user);
     await _userControl.signOut();
   }
 
@@ -93,4 +94,11 @@ class UserState extends ChangeNotifier {
   String get userId => _userControl.userId;
   bool get isLogin => _userControl.isLogin;
   String? get photoUri => _userControl.userUriPhoto;
+
+  String otherName(Chat chat) {
+    if (chat.me!.id == userId) {
+      return chat.other!.userName;
+    }
+    return chat.me!.userName;
+  }
 }

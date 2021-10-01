@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:owl_chat/data/models/message.dart';
+import 'package:owl_chat/logic/event_handler/settings.dart';
+import 'package:provider/provider.dart';
 
 import 'gif_widget.dart';
 
@@ -44,6 +46,7 @@ class Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = Provider.of<AppSettings>(context);
     return Material(
       color: message.isMe ? Colors.indigo[300] : Colors.indigo[400],
       elevation: 0.5,
@@ -76,7 +79,7 @@ class Bubble extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: settings.chatFontSize,
                   height: 1.05,
                 ),
               ),

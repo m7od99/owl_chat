@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/controller/validator.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/theme/error_list.dart';
 import 'package:owl_chat/presentation/widgets/components.dart';
 import 'package:owl_chat/presentation/widgets/error_form.dart';
 import 'package:owl_chat/presentation/widgets/large_button.dart';
@@ -33,8 +32,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final _formKey = GlobalKey<FormState>();
-  final userControl = UserControl();
   final _load = RoundedLoadingButtonController();
 
   String? email;
@@ -42,102 +39,11 @@ class _BodyState extends State<Body> {
   String? password;
   String? userName;
 
-  List<String> errors = [];
-
-  void addError({String? error}) {
-    if (!errors.contains(error)) {
-      setState(() {
-        errors.add(error!);
-      });
-    }
-  }
-
-  void removeError({String? error}) {
-    if (errors.contains(error)) {
-      setState(() {
-        errors.remove(error);
-      });
-    }
-  }
-
-  void emailValidator(String value) {
-    if (value.isNotEmpty) {
-      removeError(error: kEmailNullError);
-    } else if (emailValidatorRegExp.hasMatch(value)) {
-      removeError(error: kInvalidEmailError);
-    }
-    return;
-  }
-
-  void emailNotValidator(String value) {
-    if (value.isEmpty) {
-      addError(error: kEmailNullError);
-    } else if (!emailValidatorRegExp.hasMatch(value)) {
-      addError(error: kInvalidEmailError);
-    }
-    return;
-  }
-
-  void passwordValidator(String value) {
-    if (value.isNotEmpty) {
-      removeError(error: kPassNullError);
-    } else if (value.length >= 6) {
-      removeError(error: kShortPassError);
-    }
-    return;
-  }
-
-  void passwordNotValid(String value) {
-    if (value.isEmpty) {
-      addError(error: kPassNullError);
-    } else if (value.length < 6) {
-      addError(error: kShortPassError);
-    }
-    return;
-  }
-
-  void passwordConfirmValid(String value) {
-    if (value.isNotEmpty) {
-      removeError(error: kPassNullError);
-    } else if (value.isNotEmpty && password == conformPassword) {
-      removeError(error: kMatchPassError);
-    }
-    conformPassword = value;
-  }
-
-  void passwordConfirmNotValid(String value) {
-    if (value.isEmpty) {
-      addError(error: kPassNullError);
-      return;
-    } else if ((password != value)) {
-      addError(error: kMatchPassError);
-      return;
-    }
-    return;
-  }
-
-  void userNameValid(String value) {
-    if (value.isNotEmpty) {
-      removeError(error: "Enter your user name");
-    } else if (value.length >= 3) {
-      removeError(error: "Your user name is too short");
-    }
-  }
-
-  void userNameNotValid(String value) {
-    if (value.isEmpty) {
-      addError(error: "Enter your user name");
-      return;
-    } else if (value.length < 3) {
-      addError(error: "Your user name is too short");
-      return;
-    }
-    return;
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
+    final validator = Provider.of<Validator>(context);
+    final _formKey = GlobalKey<FormState>();
 
     return Form(
       key: _formKey,
@@ -159,15 +65,75 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-                  userNameField(),
+                  TextFormField(
+                    onChanged: (value) {
+                      validator.userNameValid(value);
+                      userName = value;
+                    },
+                    validator: (value) {
+                      validator.userNameNotValid(value!);
+                    },
+                    onSaved: (newValue) => userName = newValue,
+                    decoration: inputDecoration(
+                      hint: LocaleKeys.user_name.tr(),
+                      labelText: LocaleKeys.user_name.tr(),
+                      icon: Icons.account_balance_outlined,
+                    ),
+                  ),
                   SizedBox(height: 30),
-                  emailTextField(),
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: inputDecoration(
+                      hint: LocaleKeys.enter_your_email.tr(),
+                      labelText: LocaleKeys.email.tr(),
+                      icon: Icons.mail,
+                    ),
+                    onSaved: (newValue) => email = newValue,
+                    onChanged: (value) {
+                      validator.emailValidator(value);
+                      print(value);
+                    },
+                    validator: (value) {
+                      validator.emailNotValidator(value!);
+                    },
+                  ),
                   SizedBox(height: 30),
-                  passwordTextField(),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: inputDecoration(
+                      hint: LocaleKeys.enter_your_password.tr(),
+                      labelText: LocaleKeys.password.tr(),
+                      icon: Icons.lock,
+                    ),
+                    onChanged: (value) {
+                      validator.passwordValidator(value);
+                      password = value;
+                    },
+                    validator: (value) {
+                      validator.passwordNotValid(value!);
+                    },
+                    onSaved: (newValue) => password = newValue,
+                  ),
                   SizedBox(height: 30),
-                  confirmPasswordTextField(),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: inputDecoration(
+                      hint: LocaleKeys.re_enter_your_password.tr(),
+                      labelText: LocaleKeys.confirm_password.tr(),
+                      icon: Icons.lock,
+                    ),
+                    onSaved: (newValue) => conformPassword = newValue!,
+                    onChanged: (pass) {
+                      validator.passwordConfirmValid(password!, pass);
+                      conformPassword = pass;
+                      print(pass);
+                    },
+                    validator: (value) {
+                      validator.passwordConfirmNotValid(value!, password!);
+                    },
+                  ),
                   SizedBox(height: 20),
-                  FormError(errors: errors),
+                  FormError(errors: validator.errors),
                   SizedBox(height: 40),
                   LargeButton(
                     title: LocaleKeys.register.tr(),
@@ -179,8 +145,9 @@ class _BodyState extends State<Body> {
                             _load.start();
                             await user.signUp(email!, password!, userName!);
                           }
-                          if (userControl.isLogin) {
+                          if (user.isLogin) {
                             print(email);
+                            validator.clearErrors();
                             Navigator.pushNamed(context, SuccessPage.id);
                           }
                           _load.stop();
@@ -201,82 +168,6 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-    );
-  }
-
-  TextFormField userNameField() {
-    return TextFormField(
-      onChanged: (value) {
-        userNameValid(value);
-        userName = value;
-      },
-      validator: (value) {
-        userNameNotValid(value!);
-      },
-      onSaved: (newValue) => userName = newValue,
-      decoration: inputDecoration(
-        hint: LocaleKeys.user_name.tr(),
-        labelText: LocaleKeys.user_name.tr(),
-        icon: Icons.account_balance_outlined,
-      ),
-    );
-  }
-
-  TextFormField passwordTextField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: inputDecoration(
-        hint: LocaleKeys.enter_your_password.tr(),
-        labelText: LocaleKeys.password.tr(),
-        icon: Icons.lock,
-      ),
-      onChanged: (value) {
-        passwordValidator(value);
-        password = value;
-      },
-      validator: (value) {
-        passwordNotValid(value!);
-      },
-      onSaved: (newValue) => password = newValue,
-    );
-  }
-
-  TextFormField confirmPasswordTextField() {
-    return TextFormField(
-      obscureText: true,
-      decoration: inputDecoration(
-        hint: LocaleKeys.re_enter_your_password.tr(),
-        labelText: LocaleKeys.confirm_password.tr(),
-        icon: Icons.lock,
-      ),
-      onSaved: (newValue) => conformPassword = newValue!,
-      onChanged: (pass) {
-        passwordConfirmValid(pass);
-        conformPassword = pass;
-        print(pass);
-      },
-      validator: (value) {
-        passwordConfirmNotValid(value!);
-      },
-    );
-  }
-
-  TextFormField emailTextField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: inputDecoration(
-        hint: LocaleKeys.enter_your_email.tr(),
-        labelText: LocaleKeys.email.tr(),
-        icon: Icons.mail,
-      ),
-      onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        emailValidator(value);
-        print(value);
-      },
-      validator: (value) {
-        emailNotValidator(value!);
-      },
     );
   }
 }

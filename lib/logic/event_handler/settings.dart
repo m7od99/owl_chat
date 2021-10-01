@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-enum Theme { dark, light }
+enum AppTheme { dark, light }
 
 enum Language { ar, en }
 
 enum BackgroundChatType { color, photo }
 
-class Settings extends ChangeNotifier {
-  double chatFontSize = 16;
-  Theme theme = Theme.dark;
-  Language language = Language.en;
+class AppSettings extends ChangeNotifier {
   bool allowNotifications = true;
   bool allowSoundNotifications = true;
   Color backgroundChatColor = Colors.black;
   String backgroundPhotoUrl = '';
+  double chatFontSize = 18;
+  Language language = Language.en;
+  AppTheme theme = AppTheme.dark;
 
   void changeChatFontSize(double newSize) {
     chatFontSize = newSize;
@@ -25,7 +25,7 @@ class Settings extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeTheme(Theme newTheme) {
+  void changeTheme(AppTheme newTheme) {
     theme = newTheme;
     notifyListeners();
   }

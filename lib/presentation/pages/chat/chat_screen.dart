@@ -22,12 +22,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final controller = ScrollController();
   bool _offstage = true;
 
-  String name(String myId) {
-    if (widget.chat.me!.id == myId) return widget.chat.other!.userName;
-    print(widget.chat.id);
-    return widget.chat.me!.userName;
-  }
-
   Future _jumpToEnd() async {
     final end = controller.position.minScrollExtent;
     await controller.animateTo(end, duration: const Duration(milliseconds: 1000), curve: Curves.easeInOut);
@@ -74,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(name(user.userId)),
+            Text(user.otherName(widget.chat)),
             const CircleAvatar(
               backgroundImage: AssetImage('assets/images/user.png'),
             ),

@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../data/models/user.dart';
 import '../event_handler/user_state.dart';
 
-class SearchLogic {
+class SearchLogic extends ChangeNotifier {
   final UserState _user = UserState();
 
-  Future<OwlUser> getUserByEmail(String email) async {
+  Future<OwlUser?> getUserByEmail(String email) async {
     final List<OwlUser> users = await _user.getUsers();
 
     for (final user in users) {
@@ -12,7 +14,6 @@ class SearchLogic {
         return user;
       }
     }
-    return OwlUser(email: '', id: '', userName: '');
   }
 
   Future<OwlUser?> getUserByUserName(String userName) async {
