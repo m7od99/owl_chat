@@ -12,12 +12,13 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 100),
+      margin: const EdgeInsets.only(top: 100),
       child: Center(
         child: GestureDetector(
           onTap: () async {
             await Provider.of<UserState>(context, listen: false).logOut();
 
+            // ignore: use_build_context_synchronously
             await Navigator.pushNamed(context, LoginScreen.id);
           },
           child: Material(
@@ -25,7 +26,7 @@ class LogoutButton extends StatelessWidget {
             color: Colors.indigo[600],
             elevation: 1,
             shadowColor: Colors.indigo[300],
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
               child: Text(
                 'Logout',

@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:owl_chat/data/data_controller/message_control.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/data/models/user.dart';
+
+import '../../data/data_controller/message_control.dart';
+import '../../data/data_controller/user_control.dart';
+import '../../data/models/chat.dart';
+import '../../data/models/user.dart';
 
 class ChatsController {
   final MessageControl _control = MessageControl();
   final UserControl _user = UserControl();
 
+  ///create uniq id for chat room
   String createChatId(String otherUserId) {
     if (_user.userId.substring(0, 1).codeUnitAt(0) > otherUserId.substring(0, 1).codeUnitAt(0)) {
       return "$otherUserId${_user.userId}";
@@ -16,32 +18,39 @@ class ChatsController {
     }
   }
 
-  getMyChats(List<QueryDocumentSnapshot> snap) {
+  Iterable<QueryDocumentSnapshot<Object?>> getMyChats(List<QueryDocumentSnapshot> snap) {
     return snap.where(
       (element) => element['id'].toString().contains(_user.userId),
     );
   }
 
+  // ignore: type_annotate_public_apis
   bool isChatting(List<QueryDocumentSnapshot> snap, otherId) {
-    return snap.where((element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId)).isNotEmpty;
+    return snap
+        .where(
+          (element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId),
+        )
+        .isNotEmpty;
   }
 
-  getChats(Iterable<QueryDocumentSnapshot> data) {
-    List<Chat> chats = [];
-    for (var chat in data) {
-      dynamic doc = chat.data();
+  List<Chat> getChats(Iterable<QueryDocumentSnapshot> data) {
+    final List<Chat> chats = [];
+    for (final chat in data) {
+      final dynamic doc = chat.data();
       chats.add(Chat.fromMap(doc));
     }
 
     return chats;
   }
 
-  hasChat(String otherId) {}
+  //hasChat(String otherId) {}
 
-  createChatRoom(OwlUser otherUser) async {
-    if (otherUser.id.isEmpty) return;
-    String otherUserId = otherUser.id;
-    String id = createChatId(otherUserId);
+  Future<Chat?>? createChatRoom(OwlUser otherUser) async {
+    if (otherUser.id.isEmpty) {
+      return null;
+    }
+    final String otherUserId = otherUser.id;
+    final String id = createChatId(otherUserId);
 
     final chat = Chat(
       time: Timestamp.now(),

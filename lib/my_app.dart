@@ -1,8 +1,13 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/presentation/pages/chat/chat_screen_arg.dart';
 import "package:provider/provider.dart";
 
+import 'data/models/chat.dart';
 import 'presentation/pages/chats/loading.dart';
 import 'presentation/pages/login/login_screen.dart';
 import 'presentation/roots/roots.dart';
@@ -24,12 +29,25 @@ class _MyAppState extends State<MyApp> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final user = Provider.of<UserState>(context);
 
-    return MaterialApp(
+    return GetMaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       routes: routes(),
+      onGenerateRoute: (settings) {
+        if (settings.name == ChatScreen.id) {
+          // ignore: cast_nullable_to_non_nullable
+          final chat = settings.arguments as Chat;
+          return MaterialPageRoute(
+            builder: (context) {
+              return ChatScreenArg(
+                chat: chat,
+              );
+            },
+          );
+        }
+      },
       themeMode: themeProvider.themeMode,
       theme: themeProvider.lightThemeData(context),
       darkTheme: themeProvider.darkThemeData(context),

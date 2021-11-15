@@ -5,7 +5,7 @@ class Giphy {
   final GiphyClient client = GiphyClient(apiKey: 'OhchXW2GJnCabq2ge2fBHYQAoqYgtOFJ', randomId: '');
 
   static Future<GiphyGif?> pickGif(BuildContext context) async {
-    return await GiphyGet.getGif(
+    return GiphyGet.getGif(
       context: context,
       searchText: 'Search',
       apiKey: 'OhchXW2GJnCabq2ge2fBHYQAoqYgtOFJ',

@@ -13,6 +13,7 @@ class Message {
   bool? isRead;
   bool? isSend;
   bool? isGif;
+  double? id;
 
   Message({
     required this.sender,
@@ -20,13 +21,21 @@ class Message {
     required this.text,
     required this.time,
     required this.isMe,
+    this.id,
     this.type,
     this.isRead,
     this.isSend,
     this.isGif,
   });
 
-  Message copyWith({String? sender, String? receiver, String? text, Timestamp? time, bool? isMe, MessageType? type}) {
+  Message copyWith({
+    String? sender,
+    String? receiver,
+    String? text,
+    Timestamp? time,
+    bool? isMe,
+    MessageType? type,
+  }) {
     return Message(
       sender: sender ?? this.sender,
       receiver: receiver ?? this.receiver,
@@ -48,6 +57,7 @@ class Message {
       'isSend': isSend,
       'isGif': isGif,
       'type': type.toString(),
+      'id': id,
     };
   }
 
@@ -62,6 +72,7 @@ class Message {
       isSend: map['isSend'],
       isRead: map['isRead'],
       isGif: map['isGif'],
+      id: map['id'],
     );
   }
 

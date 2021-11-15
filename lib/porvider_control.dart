@@ -16,13 +16,16 @@ class ProviderControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => MessageControl()),
-      ChangeNotifierProvider(create: (context) => ThemeProvider()),
-      ChangeNotifierProvider(create: (context) => UserState()),
-      ChangeNotifierProvider(create: (context) => Validator()),
-      ChangeNotifierProvider(create: (context) => SendMessageState()),
-      ChangeNotifierProvider(create: (context) => AppSettings())
-    ], child: MyApp());
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MessageControl()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => UserState()),
+        ChangeNotifierProvider(create: (context) => Validator()),
+        ChangeNotifierProvider(create: (context) => SendMessageState()),
+        ChangeNotifierProvider(create: (context) => AppSettings())
+      ],
+      child: MyApp(),
+    );
   }
 }

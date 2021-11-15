@@ -3,10 +3,12 @@
         "codegen",
         "cupertino",
         "Gifs",
+        "mipmap",
         "porvider",
         "Recents",
         "riverpod",
         "signup",
+        "vsync",
         "webp"
     ]
 }

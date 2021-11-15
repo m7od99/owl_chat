@@ -47,7 +47,7 @@ class SuccessPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
                 child: Column(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       "Congratulations! your account has been successfully created",
                       textAlign: TextAlign.center,

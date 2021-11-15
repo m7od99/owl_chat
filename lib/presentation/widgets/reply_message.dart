@@ -5,9 +5,11 @@ class ReplyMessage extends StatelessWidget {
   final Message message;
   final VoidCallback cancelReply;
 
-  const ReplyMessage(
-      {Key? key, required this.message, required this.cancelReply})
-      : super(key: key);
+  const ReplyMessage({
+    Key? key,
+    required this.message,
+    required this.cancelReply,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

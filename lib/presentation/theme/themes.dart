@@ -27,6 +27,7 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
+  // ignore: avoid_positional_boolean_parameters
   void toggleTheme(bool isOn) {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();

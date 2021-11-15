@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/message.dart';
+import '../../data/models/message.dart';
 
-class PopopCard extends StatelessWidget {
+class PopupCard extends StatelessWidget {
   final Message message;
-  const PopopCard({
+  const PopupCard({
     Key? key,
     required this.message,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: message.text.runes,
-      createRectTween: (begin, end) => RectTween(begin: begin, end: end),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 68),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 68),
+        child: Hero(
+          tag: message.text.runes,
           child: Material(
             borderRadius: BorderRadius.circular(25),
             color: Theme.of(context).scaffoldBackgroundColor,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MenuCard(
-                  icon: Icons.restore,
-                  onTap: () {},
-                  title: 'reply',
+            child: SizedBox(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Material(
+                        child: Text(message.text),
+                      ),
+                    ),
+                    MenuCard(
+                      icon: Icons.restore,
+                      onTap: () {},
+                      title: 'reply',
+                    ),
+                    const Divider(),
+                    MenuCard(
+                      icon: Icons.copy,
+                      onTap: () {},
+                      title: 'copy',
+                    ),
+                    const Divider(),
+                    MenuCard(
+                      icon: Icons.edit,
+                      onTap: () {},
+                      title: 'edit',
+                    ),
+                  ],
                 ),
-                Divider(),
-                MenuCard(
-                  icon: Icons.copy,
-                  onTap: () {},
-                  title: 'copy',
-                ),
-                Divider(),
-                MenuCard(
-                  icon: Icons.edit,
-                  onTap: () {},
-                  title: 'edit',
-                ),
-              ],
+              ),
             ),
           ),
         ),

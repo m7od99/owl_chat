@@ -23,7 +23,7 @@ exports.sendNotification = functions.firestore
             .then(querySnapshot => {
                 querySnapshot.forEach(userTo => {
                     console.log(`Found user to: ${userTo.data().userName}`)
-                    if (userTo.data().tokens != null && idFrom !== userTo.data().onChat) {
+                    if (userTo.data().tokens != null && idFrom != userTo.data().onChat) {
                         // Get info user from (sent)
                         admin
                             .firestore()

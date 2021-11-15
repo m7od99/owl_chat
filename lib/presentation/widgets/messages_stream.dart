@@ -24,17 +24,15 @@ class ChatStream extends StatelessWidget {
       stream: stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
         final data = snapshot.data!.docs.reversed;
-        List<MessageBubble> messages = [];
+        final List<MessageBubble> messages = [];
 
-        for (var mess in data) {
-          dynamic doc = mess.data();
+        for (final mess in data) {
+          final dynamic doc = mess.data();
           final message = Message.fromMap(doc);
           message.isMe = control.isMe(message.sender);
 
@@ -45,11 +43,13 @@ class ChatStream extends StatelessWidget {
               onDoubleTap: () async {
                 await Navigator.push(
                   context,
-                  HeroDialogRoute(builder: (BuildContext context) {
-                    return PopopCard(
-                      message: message,
-                    );
-                  }),
+                  HeroDialogRoute(
+                    builder: (BuildContext context) {
+                      return PopupCard(
+                        message: message,
+                      );
+                    },
+                  ),
                 );
               },
             ),
@@ -57,7 +57,7 @@ class ChatStream extends StatelessWidget {
         }
         return ListView.builder(
           controller: controller,
-          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
           reverse: true,
           itemCount: messages.length,
           itemBuilder: (context, index) => messages[index],

@@ -1,10 +1,15 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:owl_chat/logic/controller/notifications.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
-import 'package:owl_chat/update/check_update.dart';
+import 'package:get/get.dart';
+import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+
+import '../../../logic/controller/notifications.dart';
+import '../../../logic/event_handler/user_state.dart';
+import '../../../update/check_update.dart';
+import 'chats_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   static const String id = 'ChatsScreen';
@@ -22,10 +27,11 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
     update.isNewUpdate();
-    notifications.token();
+    notifications.getTokenThenSaveItToDataBase();
     user.updateOwlUser();
     user.getUserToken(user.userId);
-    notifications.initMessaging();
+    notifications.foregroundMessagingHandler();
+    notifications.setupInteractedMessage();
 
     super.initState();
   }
@@ -51,30 +57,31 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     return WillPopScope(
       onWillPop: () async {
         showDialog(
-            builder: (context) => AlertDialog(
-                  title: Text('Do you want exits from app?'),
-                  actions: [
-                    GestureDetector(
-                      child: Text(
-                        'Yes',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      onTap: () {
-                        SystemNavigator.pop();
-                      },
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'No',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+          builder: (context) => AlertDialog(
+            title: const Text('Do you want exits from app?'),
+            actions: [
+              GestureDetector(
+                child: const Text(
+                  'Yes',
+                  style: TextStyle(fontSize: 16),
                 ),
-            context: context);
+                onTap: () {
+                  SystemNavigator.pop();
+                },
+              ),
+              GestureDetector(
+                child: const Text(
+                  'No',
+                  style: TextStyle(fontSize: 16),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          context: context,
+        );
         return true;
       },
       child: Scaffold(

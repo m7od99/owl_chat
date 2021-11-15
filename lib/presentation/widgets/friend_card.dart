@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/helper/helper.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/theme/constant.dart';
 import 'package:provider/provider.dart';
+
+import '../../data/models/chat.dart';
+import '../../helper/helper.dart';
+import '../../logic/event_handler/user_state.dart';
+import '../theme/constant.dart';
 
 class FriendCard extends StatelessWidget {
   final Chat chat;
   final VoidCallback onTap;
 
-  FriendCard({required this.onTap, required this.chat});
+  const FriendCard({required this.onTap, required this.chat});
 
   String name(String myId) {
     if (chat.me!.id == myId) return chat.other!.userName;

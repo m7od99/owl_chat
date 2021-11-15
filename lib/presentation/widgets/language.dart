@@ -18,15 +18,15 @@ class Language extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () async {
-              await context.setLocale(Locale('en'));
+              await context.setLocale(const Locale('en'));
             },
-            child: Text('English'),
+            child: const Text('English'),
           ),
           ElevatedButton(
             onPressed: () async {
-              await context.setLocale(Locale('ar'));
+              await context.setLocale(const Locale('ar'));
             },
-            child: Text('العربية'),
+            child: const Text('العربية'),
           )
         ],
       ),

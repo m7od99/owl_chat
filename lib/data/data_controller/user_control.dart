@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,7 +17,7 @@ class UserControl extends ChangeNotifier {
 
   Future<void> signOut() async {
     await _auth.signOut().catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
@@ -40,7 +42,7 @@ class UserControl extends ChangeNotifier {
 
   Future<void> saveUser(OwlUser user) async {
     await _firestore.collection('users').doc(user.id).set(user.toMap()).catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
@@ -50,22 +52,23 @@ class UserControl extends ChangeNotifier {
 
   Future<void> updateUser(OwlUser user) async {
     await _firestore.collection('users').doc(user.id).update(user.toMap()).catchError((e) {
-      print(e.toString());
-    }).then((value) => print('updated'));
+      log(e.toString());
+    }).then((value) => log('updated'));
   }
 
   Future getUserInfo(String userId) async {
     return _firestore.collection('users').where('id', isEqualTo: userId).get().catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
   Future getUserByEmail(String email) async {
     return _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
+  /// check if user is login
   bool _hasUser() {
     if (_auth.currentUser != null) {
       return true;
@@ -73,8 +76,8 @@ class UserControl extends ChangeNotifier {
     return false;
   }
 
+  ///
   Future<void> saveTokenToDatabase(String token) async {
-    // Assume user is logged in for this example
     final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     _firestore.collection('users').doc(userId).update({
@@ -82,16 +85,16 @@ class UserControl extends ChangeNotifier {
     });
   }
 
-  Future getUserToken(String id) async {
-    if (id.isNotEmpty) {
-      _firestore.collection('users').doc(id).get().then((documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document exists on the database');
-          final data = documentSnapshot.data();
-          print(data!['tokens']);
-          return data['tokens'];
-        }
-      });
+  Future<String?> getUserToken(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+      final String? token = data!['tokens'];
+
+      return token;
     }
   }
 
@@ -103,6 +106,7 @@ class UserControl extends ChangeNotifier {
     await _auth.currentUser!.updateDisplayName(newName);
   }
 
+  // return info about user
   String get email => _auth.currentUser!.email!;
   bool get isLogin => _hasUser();
   String get userName => _auth.currentUser!.displayName!;

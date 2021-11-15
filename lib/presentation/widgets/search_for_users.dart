@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -34,7 +36,7 @@ class SearchAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingSearchAppBar(
       transitionDuration: const Duration(milliseconds: 800),
-      title: Text('Search'),
+      title: const Text('Search'),
       body: Container(),
     );
   }
@@ -55,18 +57,14 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return SafeArea(
       child: FloatingSearchBar(
-        hint: 'Search...',
         scrollPadding: const EdgeInsets.only(top: 16, bottom: 30),
         transitionDuration: const Duration(milliseconds: 800),
         transitionCurve: Curves.easeInOut,
         physics: const BouncingScrollPhysics(),
-        clearQueryOnClose: true,
         axisAlignment: isPortrait ? 0.0 : -1.0,
-        isScrollControlled: true,
         openAxisAlignment: 0.0,
         progress: load,
         onSubmitted: (text) async {
@@ -83,7 +81,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
               otherUser.email = user.email;
               otherUser.isOnline = user.isOnline;
 
-              print(otherUser.userName);
+              log(otherUser.userName);
 
               if (otherUser.isOnline != null) {
                 found = true;
@@ -100,7 +98,6 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
         // body: found ? ChatSearchCard(user: otherUser!) : Container(),
         actions: [
           FloatingSearchBarAction(
-            showIfOpened: false,
             child: CircularButton(
               icon: const Icon(Icons.person),
               onPressed: () {},
@@ -113,14 +110,12 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
         builder: (context, transition) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (found == true) ChatSearchCard(user: otherUser),
-                  // ShowUsersStream(),
-                ],
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (found == true) ChatSearchCard(user: otherUser),
+                // ShowUsersStream(),
+              ],
             ),
           );
         },

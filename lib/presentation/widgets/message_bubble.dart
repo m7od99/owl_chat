@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
-import 'package:owl_chat/data/models/message.dart';
-import 'package:owl_chat/logic/event_handler/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/models/message.dart';
+import '../../logic/event_handler/settings.dart';
 import 'gif_widget.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -23,11 +23,16 @@ class MessageBubble extends StatelessWidget {
         createRectTween: (begin, end) => RectTween(begin: begin, end: end),
         tag: message.text.runes,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
           child: Column(
             crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              message.isGif != null && message.isGif == true ? GifWidget(message: message) : Bubble(message: message),
+              if (message.isGif != null && message.isGif == true)
+                GifWidget(message: message)
+              else
+                Bubble(
+                  message: message,
+                ),
             ],
           ),
         ),
@@ -50,19 +55,9 @@ class Bubble extends StatelessWidget {
     return Material(
       color: message.isMe ? Colors.indigo[300] : Colors.indigo[400],
       elevation: 0.5,
-      borderRadius: message.isMe
-          ? BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-            )
-          : BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
+      borderRadius: message.isMe ? meBorder : otherBorder,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
         child: Row(
           textBaseline: TextBaseline.alphabetic,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -73,7 +68,7 @@ class Bubble extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   text: rtlFormat(message.text),
-                  children: [],
+                  children: const [],
                 ),
                 softWrap: true,
                 textAlign: TextAlign.justify,
@@ -85,7 +80,7 @@ class Bubble extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4, left: 6),
+              padding: const EdgeInsets.only(top: 6, left: 10),
               child: TimeWidget(
                 time: format(message.time),
               ),
@@ -111,7 +106,7 @@ String rtlFormat(String text) {
 class TimeWidget extends StatelessWidget {
   final String time;
 
-  const TimeWidget({Key? key, required this.time});
+  const TimeWidget({required this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +114,7 @@ class TimeWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 6),
       child: Text(
         time,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
           fontSize: 12,
         ),
@@ -127,3 +122,15 @@ class TimeWidget extends StatelessWidget {
     );
   }
 }
+
+const meBorder = BorderRadius.only(
+  topLeft: Radius.circular(20),
+  topRight: Radius.circular(20),
+  bottomLeft: Radius.circular(20),
+);
+
+const otherBorder = BorderRadius.only(
+  topRight: Radius.circular(20),
+  topLeft: Radius.circular(20),
+  bottomRight: Radius.circular(20),
+);

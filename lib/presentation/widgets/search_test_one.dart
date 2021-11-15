@@ -12,9 +12,9 @@ class SearchForChat extends StatelessWidget {
     String? email;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextField(
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
         controller: _edit,
         onEditingComplete: () async {
           if (email != null) {
@@ -28,7 +28,7 @@ class SearchForChat extends StatelessWidget {
         },
         decoration: InputDecoration(
           hintText: 'Search',
-          contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),

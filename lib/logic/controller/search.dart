@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../data/models/user.dart';
@@ -21,7 +23,7 @@ class SearchLogic extends ChangeNotifier {
 
     for (final user in users) {
       if (user.userName.toLowerCase().trim() == userName.toLowerCase().trim()) {
-        print(user.id);
+        log(user.id);
         return user;
       }
     }

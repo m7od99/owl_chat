@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/data/models/user.dart';
+
+import '../../data/data_controller/user_control.dart';
+import '../../data/models/chat.dart';
+import '../../data/models/user.dart';
 
 class UserState extends ChangeNotifier {
   final _userControl = UserControl();
@@ -10,7 +13,7 @@ class UserState extends ChangeNotifier {
   Future<void> login(String email, String password) async {
     await _userControl.login(email, password);
     if (_userControl.isLogin) {
-      print('login');
+      log('login');
       await updateOwlUser();
     }
   }
@@ -42,10 +45,10 @@ class UserState extends ChangeNotifier {
   }
 
   Future<List<OwlUser>> getUsers() async {
-    dynamic data = await _userControl.getUsers();
+    final dynamic data = await _userControl.getUsers();
     final docs = data.docs;
 
-    List<OwlUser> users = [];
+    final List<OwlUser> users = [];
     for (final user in docs) {
       final data = user.data();
       users.add(OwlUser.fromMap(data));
@@ -82,11 +85,13 @@ class UserState extends ChangeNotifier {
   }
 
   Future<String?> getToken() async {
-    return await _userControl.getToken();
+    return _userControl.getToken();
   }
 
-  getUserToken(String id) async {
-    await _userControl.getUserToken(id);
+  Future<String?> getUserToken(String id) async {
+    final String? token = await _userControl.getUserToken(id);
+
+    return token;
   }
 
   String get email => _userControl.email;

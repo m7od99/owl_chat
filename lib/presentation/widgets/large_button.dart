@@ -10,7 +10,7 @@ class LargeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 62,
       child: RoundedLoadingButton(
         color: Colors.orange,
@@ -20,7 +20,7 @@ class LargeButton extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
       ),

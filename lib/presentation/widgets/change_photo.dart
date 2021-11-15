@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChangePhoto extends StatefulWidget {
-  ChangePhoto({Key? key}) : super(key: key);
+  const ChangePhoto({Key? key}) : super(key: key);
   static const String id = "ChangePhoto";
 
   @override

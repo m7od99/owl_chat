@@ -87,5 +87,6 @@ class OwlUser {
     );
   }
 
-  factory OwlUser.fromJson(String source) => OwlUser.fromMap(json.decode(source));
+  factory OwlUser.fromJson(String source) =>
+      OwlUser.fromMap(json.decode(source));
 }

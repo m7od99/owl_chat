@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/presentation/pages/login/login_screen.dart';
-import 'package:owl_chat/presentation/widgets/large_button.dart';
-import 'package:owl_chat/presentation/widgets/logo.dart';
-import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../../../translations/locale_keys.g.dart';
+import '../../widgets/large_button.dart';
+import '../../widgets/logo.dart';
+import '../login/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'WelcomeScreen';
@@ -21,7 +22,7 @@ class WelcomeScreen extends StatelessWidget {
             children: [
               // Language(),
               const Spacer(),
-              Center(
+              const Center(
                 child: Logo(fontSize: 50, photoSize: 140),
               ),
               const SizedBox(height: 30),

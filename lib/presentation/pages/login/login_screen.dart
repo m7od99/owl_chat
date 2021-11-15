@@ -1,15 +1,17 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/logic/controller/validator.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/widgets/error_form.dart';
-import 'package:owl_chat/presentation/widgets/forgot_password.dart';
-import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
+import '../../../logic/controller/validator.dart';
+import '../../../logic/event_handler/user_state.dart';
+import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
+import '../../widgets/error_form.dart';
+import '../../widgets/forgot_password.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
 import '../chats/loading.dart';
@@ -23,7 +25,7 @@ class LoginScreen extends StatelessWidget {
     final user = Provider.of<UserState>(context);
     final validator = Provider.of<Validator>(context);
     final _formKey = GlobalKey<FormState>();
-    var _load = RoundedLoadingButtonController();
+    final _load = RoundedLoadingButtonController();
 
     String? email;
     String? password;
@@ -45,7 +47,7 @@ class LoginScreen extends StatelessWidget {
           _load.reset();
         } catch (e) {
           _load.reset();
-          print(e);
+          log(e.toString());
         }
       }
     }
@@ -62,11 +64,11 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    Logo(
+                    const Logo(
                       fontSize: 40,
                       photoSize: 100,
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     //email
                     TextFormField(
                       onChanged: (value) {

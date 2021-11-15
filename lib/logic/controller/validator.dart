@@ -61,7 +61,7 @@ class Validator extends ChangeNotifier {
   void passwordConfirmNotValid(String conformPassword, String password) {
     if (conformPassword.isEmpty) {
       addError(error: kPassNullError);
-    } else if ((password != conformPassword)) {
+    } else if (password != conformPassword) {
       addError(error: kMatchPassError);
     }
   }

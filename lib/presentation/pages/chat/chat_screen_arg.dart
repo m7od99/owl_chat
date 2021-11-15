@@ -8,20 +8,21 @@ import '../../../logic/event_handler/user_state.dart';
 import '../../widgets/messages_stream.dart';
 import '../../widgets/send_message_field.dart';
 
-class ChatScreen extends StatefulWidget {
-  static String id = 'ChatScreen';
+class ChatScreenArg extends StatefulWidget {
+  final Chat chat;
 
   //final Chat chat;
 
-  const ChatScreen({
+  const ChatScreenArg({
     Key? key,
+    required this.chat,
   }) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateMixin {
+class _ChatScreenState extends State<ChatScreenArg> with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   late final AnimationController animationControl;
 
@@ -72,7 +73,6 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
     // ignore: cast_nullable_to_non_nullable
-    final chat = ModalRoute.of(context)!.settings.arguments as Chat;
 
     return Scaffold(
       appBar: AppBar(
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(user.otherName(chat)),
+            Text(user.otherName(widget.chat)),
             const CircleAvatar(
               backgroundImage: AssetImage('assets/images/user.png'),
             ),
@@ -106,13 +106,13 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                 }
               },
               child: ChatStream(
-                chat: chat,
+                chat: widget.chat,
                 controller: _scrollController,
               ),
             ),
           ),
           SendMessageField(
-            chat: chat,
+            chat: widget.chat,
           ),
         ],
       ),

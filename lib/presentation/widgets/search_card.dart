@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/data/models/user.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
 class ChatSearchCard extends StatelessWidget {
-  ChatSearchCard({
+  const ChatSearchCard({
     Key? key,
     required this.user,
   }) : super(key: key);
@@ -35,19 +36,13 @@ class ChatSearchCard extends StatelessWidget {
             ),
             trailing: const Icon(Icons.chat_bubble_outlined),
             onTap: () async {
-              print(user.id);
+              log(user.id);
 
-              final Chat chat = await control.createChatRoom(user);
-              print(chat.id);
+              final chat = await control.createChatRoom(user);
+              log(chat!.id);
 
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatScreen(
-                    chat: chat,
-                  ),
-                ),
-              );
+              // ignore: use_build_context_synchronously
+              await Navigator.pushNamed(context, ChatScreen.id, arguments: chat);
             },
           ),
         ),

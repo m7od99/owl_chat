@@ -1,19 +1,23 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/logic/controller/validator.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/widgets/components.dart';
-import 'package:owl_chat/presentation/widgets/error_form.dart';
-import 'package:owl_chat/presentation/widgets/large_button.dart';
-import 'package:owl_chat/presentation/widgets/success_sign_up.dart';
-import 'package:owl_chat/translations/locale_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../../../logic/controller/validator.dart';
+import '../../../logic/event_handler/user_state.dart';
+import '../../../translations/locale_keys.g.dart';
+import '../../widgets/components.dart';
+import '../../widgets/error_form.dart';
+import '../../widgets/large_button.dart';
+import '../../widgets/success_sign_up.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String id = 'SignUpScreen';
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -80,7 +84,7 @@ class _BodyState extends State<Body> {
                       icon: Icons.account_balance_outlined,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: inputDecoration(
@@ -91,13 +95,13 @@ class _BodyState extends State<Body> {
                     onSaved: (newValue) => email = newValue,
                     onChanged: (value) {
                       validator.emailValidator(value);
-                      print(value);
+                      log(value);
                     },
                     validator: (value) {
                       validator.emailNotValidator(value!);
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     obscureText: true,
                     decoration: inputDecoration(
@@ -114,7 +118,7 @@ class _BodyState extends State<Body> {
                     },
                     onSaved: (newValue) => password = newValue,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     obscureText: true,
                     decoration: inputDecoration(
@@ -122,19 +126,19 @@ class _BodyState extends State<Body> {
                       labelText: LocaleKeys.confirm_password.tr(),
                       icon: Icons.lock,
                     ),
-                    onSaved: (newValue) => conformPassword = newValue!,
+                    onSaved: (newValue) => conformPassword = newValue,
                     onChanged: (pass) {
                       validator.passwordConfirmValid(password!, pass);
                       conformPassword = pass;
-                      print(pass);
+                      log(pass);
                     },
                     validator: (value) {
                       validator.passwordConfirmNotValid(value!, password!);
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   FormError(errors: validator.errors),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   LargeButton(
                     title: LocaleKeys.register.tr(),
                     onTap: () async {
@@ -146,8 +150,9 @@ class _BodyState extends State<Body> {
                             await user.signUp(email!, password!, userName!);
                           }
                           if (user.isLogin) {
-                            print(email);
+                            log(email.toString());
                             validator.clearErrors();
+                            // ignore: use_build_context_synchronously
                             Navigator.pushNamed(context, SuccessPage.id);
                           }
                           _load.stop();
@@ -155,7 +160,7 @@ class _BodyState extends State<Body> {
                         } catch (e) {
                           _load.stop();
                           _load.reset();
-                          print(e);
+                          log(e.toString());
                         }
                       }
                     },

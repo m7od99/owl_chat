@@ -1,19 +1,19 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
+import 'package:owl_chat/presentation/widgets/search_for_users.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/data_controller/message_control.dart';
+import '../../../logic/event_handler/chats_logic.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../widgets/chats_stream.dart';
 import '../../widgets/language.dart';
 import '../../widgets/searching_by_name.dart';
 import '../../widgets/sign_out_button.dart';
 import '../../widgets/theme_sw.dart';
-
-import '../../../data/data_controller/message_control.dart';
-import '../../../logic/event_handler/chats_logic.dart';
+import '../settings/settings_screen.dart';
 
 class Chats extends StatefulWidget {
   @override
@@ -32,19 +32,21 @@ class _ChatsState extends State<Chats> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
         automaticallyImplyLeading: false,
-        leading: Builder(builder: (context) {
-          return IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          );
-        }),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Chats'),
+            const Text('Chats'),
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
@@ -61,7 +63,7 @@ class _ChatsState extends State<Chats> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             GFDrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black26,
               ),
               closeButton: Container(),
@@ -74,51 +76,71 @@ class _ChatsState extends State<Chats> {
                 children: <Widget>[
                   Text(
                     user.userName,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   Text(
                     user.email,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
             ),
             ListTile(
-              title: Text('Theme'),
-              enabled: true,
-              trailing: Icon(Icons.color_lens_outlined),
+              title: const Text('Theme'),
+              trailing: const Icon(Icons.color_lens_outlined),
               onTap: () {
                 Navigator.pushNamed(context, ThemePage.id);
               },
             ),
             ListTile(
-              title: Text('Language'),
-              trailing: Icon(Icons.language),
+              title: const Text('Language'),
+              trailing: const Icon(Icons.language),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Language(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Language(),
+                  ),
+                );
               },
             ),
             ListTile(
-              title: Text('Notifications'),
-              trailing: Icon(Icons.notifications),
+              title: const Text('Notifications'),
+              trailing: const Icon(Icons.notifications),
+              onTap: () {
+                AwesomeNotifications().showNotificationConfigPage();
+              },
             ),
             ListTile(
-              title: Text('Settings'),
-              trailing: Icon(Icons.settings),
+              title: const Text('Settings'),
+              trailing: const Icon(Icons.settings),
               onTap: () {
                 Navigator.pushNamed(context, SettingsScreen.id);
               },
             ),
-            ListTile(
+            const ListTile(
               title: Text('About'),
               trailing: Icon(Icons.info_outline),
             ),
-            LogoutButton()
+            const LogoutButton()
           ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(20),
+        child: FloatingActionButton(
+          backgroundColor: Colors.blueGrey[400],
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const Search(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
     );
