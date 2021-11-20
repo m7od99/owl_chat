@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/message_control.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/models/chat.dart';
 import '../../logic/event_handler/chats_logic.dart';
@@ -12,14 +14,9 @@ import 'friend_card.dart';
 class ChatsStream extends StatelessWidget {
   const ChatsStream({
     Key? key,
-    required this.stream,
-    required ChatsController chats,
     required this.user,
-  })  : _chats = chats,
-        super(key: key);
+  }) : super(key: key);
 
-  final stream;
-  final ChatsController _chats;
   final UserState user;
 
   String otherId(Chat chat) {
@@ -31,6 +28,10 @@ class ChatsStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final control = Provider.of<MessageControl>(context);
+    final _chats = ChatsController();
+    final stream = control.getChats(user.userId);
+
     return StreamBuilder<QuerySnapshot>(
       stream: stream,
       builder: (context, snapshot) {

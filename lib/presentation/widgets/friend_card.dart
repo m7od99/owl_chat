@@ -26,53 +26,84 @@ class FriendCard extends StatelessWidget {
       height: 55,
       child: InkWell(
         onTap: onTap,
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
+        child: Stack(
           children: [
-            CircleAvatar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              backgroundImage: const AssetImage('assets/images/user.png'),
-              radius: 28,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      name(user.userId),
-                      style: kFriendCardText,
-                    ),
-                    //  SizedBox(
-                    //  height: 4,
-                    //  ),
-                    Opacity(
-                      opacity: 0.64,
-                      child: Text(
-                        chat.lastMessage,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  backgroundImage: const AssetImage('assets/images/user.png'),
+                  radius: 28,
                 ),
-              ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          name(user.userId),
+                          style: kFriendCardText,
+                        ),
+                        Opacity(
+                          opacity: 0.64,
+                          child: Text(
+                            chat.lastMessage,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Opacity(
+                  opacity: 0.64,
+                  child: Text(Helper.format(chat.time)),
+                ),
+              ],
             ),
-            Opacity(
-              opacity: 0.64,
-              child: Text(Helper.format(chat.time)),
-            ),
+            //  CounterNewMessages(counter: 1),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class CounterNewMessages extends StatelessWidget {
+  int counter;
+  CounterNewMessages({
+    required this.counter,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 1,
+      right: 1,
+      child: Container(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: Colors.indigo[400],
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          '$counter',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

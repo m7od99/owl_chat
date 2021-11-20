@@ -47,23 +47,39 @@ class UserControl extends ChangeNotifier {
   }
 
   Future addFriend(String userId, OwlUser otherUser) async {
-    await _firestore.collection('users').doc(userId).collection('friends').add(otherUser.toMap());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('friends')
+        .add(otherUser.toMap());
   }
 
   Future<void> updateUser(OwlUser user) async {
-    await _firestore.collection('users').doc(user.id).update(user.toMap()).catchError((e) {
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .update(user.toMap())
+        .catchError((e) {
       log(e.toString());
     }).then((value) => log('updated'));
   }
 
   Future getUserInfo(String userId) async {
-    return _firestore.collection('users').where('id', isEqualTo: userId).get().catchError((e) {
+    return _firestore
+        .collection('users')
+        .where('id', isEqualTo: userId)
+        .get()
+        .catchError((e) {
       log(e.toString());
     });
   }
 
   Future getUserByEmail(String email) async {
-    return _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
+    return _firestore
+        .collection('users')
+        .where('email', isEqualTo: userId)
+        .get()
+        .catchError((e) {
       log(e.toString());
     });
   }
@@ -92,7 +108,7 @@ class UserControl extends ChangeNotifier {
       //  log('Document exists on the database');
       final data = documentSnapshot.data();
       //  log(data!['tokens'].runtimeType.toString());
-      final String? token = data!['tokens'];
+      final String? token = data!['tokens'] as String?;
 
       return token;
     }

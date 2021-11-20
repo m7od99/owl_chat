@@ -13,7 +13,8 @@ class ChatStream extends StatelessWidget {
   final Chat chat;
   final ScrollController controller;
 
-  const ChatStream({Key? key, required this.chat, required this.controller}) : super(key: key);
+  const ChatStream({Key? key, required this.chat, required this.controller})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final control = Provider.of<MessageControl>(context);
@@ -60,6 +61,7 @@ class ChatStream extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
           reverse: true,
           itemCount: messages.length,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           itemBuilder: (context, index) => messages[index],
         );
       },

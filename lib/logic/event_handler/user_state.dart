@@ -73,6 +73,7 @@ class UserState extends ChangeNotifier {
 
   Future updatePhoto(String uri) async {
     user.photoUri = uri;
+    notifyListeners();
     await _userControl.updatePhoto(uri);
   }
 
