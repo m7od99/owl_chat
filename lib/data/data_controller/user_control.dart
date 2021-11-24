@@ -108,9 +108,8 @@ class UserControl extends ChangeNotifier {
       //  log('Document exists on the database');
       final data = documentSnapshot.data();
       //  log(data!['tokens'].runtimeType.toString());
-      final String? token = data!['tokens'] as String?;
 
-      return token;
+      return data!['tokens'].toString();
     }
   }
 

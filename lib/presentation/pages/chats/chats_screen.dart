@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/presentation/pages/chats/slider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/data_controller/message_control.dart';
-import '../../../logic/event_handler/chats_logic.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../widgets/chats_stream.dart';
-import '../../widgets/searching_by_name.dart';
+import '../search/search_page.dart';
+import 'slider.dart';
 
 class Chats extends StatefulWidget {
   @override
@@ -17,10 +15,7 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
-    final control = Provider.of<MessageControl>(context);
     final user = Provider.of<UserState>(context);
-    final _chats = ChatsController();
-    final stream = control.getChats(user.userId);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +39,8 @@ class _ChatsState extends State<Chats> {
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                Navigator.pushNamed(context, SearchByName.id);
+                showSearch(context: context, delegate: UserSearchPage());
+                //    Navigator.pushNa  med(context, SearchByName.id);
               },
             )
           ],

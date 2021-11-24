@@ -13,7 +13,7 @@ class Message {
   bool? isRead;
   bool? isSend;
   bool? isGif;
-  double? id;
+  String? id;
 
   Message({
     required this.sender,

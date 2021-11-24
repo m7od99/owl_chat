@@ -15,6 +15,7 @@ dependencies:
   cached_network_image: ^3.1.0
   cloud_firestore: ^3.1.0
   collection: ^1.15.0
+  cropperx: ^0.0.4
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.0
   emoji_picker_flutter: ^1.0.7

@@ -39,6 +39,7 @@ class LoginScreen extends StatelessWidget {
           if (user.isLogin) {
             _load.success();
             validator.clearErrors();
+            // ignore: use_build_context_synchronously
             await Navigator.pushNamed(context, ChatsScreen.id);
           } else {
             _load.error();

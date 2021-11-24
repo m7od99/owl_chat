@@ -2,15 +2,14 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/drawer/gf_drawer.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:owl_chat/logic/controller/upload_image.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
-import 'package:owl_chat/presentation/widgets/change_photo.dart';
-import 'package:owl_chat/presentation/widgets/language.dart';
-import 'package:owl_chat/presentation/widgets/sign_out_button.dart';
-import 'package:owl_chat/presentation/widgets/theme_sw.dart';
 import 'package:provider/provider.dart';
+
+import '../../../logic/event_handler/user_state.dart';
+import '../../widgets/change_photo.dart';
+import '../../widgets/language.dart';
+import '../../widgets/sign_out_button.dart';
+import '../../widgets/theme_sw.dart';
+import '../settings/settings_screen.dart';
 
 class SliderPage extends StatelessWidget {
   const SliderPage({

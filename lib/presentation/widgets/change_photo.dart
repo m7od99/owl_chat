@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cropperx/cropperx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
 
 import '../../logic/event_handler/user_state.dart';
@@ -26,33 +27,43 @@ class _ChangePhotoState extends State<ChangePhoto> {
     final user = Provider.of<UserState>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            if (user.photoUri != null)
-              CachedNetworkImage(
-                imageUrl: user.photoUri!,
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-                fit: BoxFit.fitWidth,
+            Column(
+              children: [
+                if (user.photoUri != null)
+                  CachedNetworkImage(
+                    imageUrl: user.photoUri!,
+                    width: MediaQuery.of(context).size.width,
+                    height: 300,
+                    fit: BoxFit.fitWidth,
+                  ),
+                if (user.photoUri == null)
+                  Image.asset(
+                    'assets/images/user.png',
+                    height: 300,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitWidth,
+                  ),
+                const SizedBox(height: 30),
+                const SetNewPhotoButton(),
+              ],
+            ),
+            Positioned(
+              top: 1,
+              left: 1,
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 35,
+                  color: Colors.blue[200],
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-            if (user.photoUri == null)
-              Image.asset(
-                'assets/images/user.png',
-                height: 300,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.fitWidth,
-              ),
-            const SizedBox(height: 30),
-            const SetNewPhotoButton(),
+            ),
           ],
         ),
       ),
@@ -128,9 +139,13 @@ class _SetNewPhotoMenuState extends State<SetNewPhotoMenu> {
           ),
           onTap: () async {
             final _photo = await _picker.pickImage(source: ImageSource.gallery);
+
+            //  final LostDataResponse response = await _picker.retrieveLostData();
+            //  if (response.file != null) {}
+
             if (_photo != null) {
               Get.to(
-                ConfirmPhoto(photo: _photo),
+                () => ConfirmPhoto(photo: _photo),
               );
             }
           },
@@ -148,32 +163,69 @@ class _SetNewPhotoMenuState extends State<SetNewPhotoMenu> {
 }
 
 class ConfirmPhoto extends StatelessWidget {
-  const ConfirmPhoto({
+  ConfirmPhoto({
     Key? key,
-    required XFile? photo,
+    required XFile photo,
   })  : _photo = photo,
         super(key: key);
 
-  final XFile? _photo;
+  final XFile _photo;
+  final _cropperKey = GlobalKey(debugLabel: 'cropperKey');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Image.file(
-            File(_photo!.path),
-            height: 300,
-            width: double.infinity,
-            fit: BoxFit.fitWidth,
-          ),
-          const SizedBox(height: 40),
-          TextButton(
-            child: const Text('Set'),
-            onPressed: () {},
-          )
-        ],
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Cropper(
+                overlayType: OverlayType.circle,
+                cropperKey: _cropperKey,
+                image: Image.file(
+                  File(_photo.path),
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.clear_outlined,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                const SizedBox(width: 45),
+                IconButton(
+                  icon: const Icon(
+                    Icons.done,
+                    size: 35,
+                  ),
+                  onPressed: () async {
+                    final imageBytes = await Cropper.crop(
+                      cropperKey: _cropperKey,
+                    );
+
+                    final uploader = Storage();
+
+                    if (imageBytes != null) {
+                      await uploader.uploadPhotoByBytes(imageBytes);
+                    }
+
+                    Get.back();
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

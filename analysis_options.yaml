@@ -4,3 +4,6 @@ analyzer:
  errors:
    argument_type_not_assignable: ignore
    invalid_assignment: ignore
+
+
+   depend_on_referenced_packages: ignore

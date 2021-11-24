@@ -53,8 +53,6 @@ bool found = false;
 bool load = false;
 
 class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
-  final SearchLogic _search = SearchLogic();
-
   @override
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
@@ -71,7 +69,7 @@ class _BuildFloatingSearchBarState extends State<BuildFloatingSearchBar> {
           setState(() {
             load = true;
           });
-          final user = await _search.getUserByUserName(text);
+          final user = await SearchLogic.getUserByUserName(text);
 
           setState(
             () {

@@ -19,7 +19,6 @@ OwlUser other = OwlUser(email: '', userName: '', id: '');
 
 class _SearchByNameState extends State<SearchByName> {
   final _searchController = TextEditingController();
-  final _search = SearchLogic();
   final _userControl = UserState();
   bool found = false;
 
@@ -55,7 +54,7 @@ class _SearchByNameState extends State<SearchByName> {
               suggestions: users.map((e) => e.userName).toList(),
               hint: 'Search',
               onSubmitted: (text) async {
-                final user = await _search.getUserByUserName(_searchController.text);
+                final user = await SearchLogic.getUserByUserName(_searchController.text);
                 //  final tokens = await _user.getUserToken(user.id);
                 _searchController.clear();
 

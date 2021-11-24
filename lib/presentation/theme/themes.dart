@@ -4,7 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'constant.dart';
 
-const appBarTheme = AppBarTheme(centerTitle: false, elevation: 0);
+AppBarTheme appBaDarkTheme() {
+  return const AppBarTheme(
+    centerTitle: false,
+    elevation: 0,
+    backgroundColor: kDarkThemeSplashColor,
+  );
+}
 
 AppBarTheme appBarLightTheme() {
   return const AppBarTheme(
@@ -40,7 +46,8 @@ class ThemeProvider extends ChangeNotifier {
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: appBarLightTheme(),
       iconTheme: const IconThemeData(color: kContentColorLightTheme),
-      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(bodyColor: kContentColorLightTheme),
+      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+          .apply(bodyColor: kContentColorLightTheme),
       colorScheme: const ColorScheme.light(
         primary: kPrimaryColor,
         secondary: kSecondaryColor,
@@ -60,9 +67,10 @@ class ThemeProvider extends ChangeNotifier {
     return ThemeData.dark().copyWith(
       primaryColor: kPrimaryColor,
       scaffoldBackgroundColor: kContentColorLightTheme,
-      appBarTheme: appBarTheme,
+      appBarTheme: appBaDarkTheme(),
       iconTheme: const IconThemeData(color: kContentColorDarkTheme),
-      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(bodyColor: kContentColorDarkTheme),
+      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+          .apply(bodyColor: kContentColorDarkTheme),
       colorScheme: const ColorScheme.dark().copyWith(
         primary: kPrimaryColor,
         secondary: kSecondaryColor,

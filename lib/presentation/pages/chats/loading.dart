@@ -1,10 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
 import '../../../logic/controller/notifications.dart';
 import '../../../logic/event_handler/user_state.dart';

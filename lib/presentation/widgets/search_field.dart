@@ -122,7 +122,7 @@ class SearchField extends StatefulWidget {
   final String? Function(String?)? validator;
 
   /// if false the suggestions will be shown below
-  /// the searchfield along the Y-axis.
+  /// the search field along the Y-axis.
   /// if true the suggestions will be shown floating like the
   /// along the Z-axis
   /// defaults to ```true```
@@ -147,7 +147,8 @@ class SearchField extends StatefulWidget {
     this.maxSuggestionsInViewPort = 5,
     this.onTap,
   })  : assert(
-          (initialValue != null && suggestions.contains(initialValue)) || initialValue == null,
+          (initialValue != null && suggestions.contains(initialValue)) ||
+              initialValue == null,
           'Initial Value should either be null or should be present in suggestions list.',
         ),
         super(key: key);
@@ -157,7 +158,8 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
-  final StreamController<List<String?>?> sourceStream = StreamController<List<String>?>.broadcast();
+  final StreamController<List<String?>?> sourceStream =
+      StreamController<List<String>?>.broadcast();
   final FocusNode _focus = FocusNode();
   bool sourceFocused = false;
   TextEditingController? sourceController;
@@ -258,7 +260,9 @@ class _SearchFieldState extends State<SearchField> {
             child: ListView.builder(
               reverse: isUp,
               itemCount: snapshot.data!.length,
-              physics: snapshot.data!.length == 1 ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
+              physics: snapshot.data!.length == 1
+                  ? const NeverScrollableScrollPhysics()
+                  : const ScrollPhysics(),
               itemBuilder: (_focus, index) => GestureDetector(
                 onTap: () {
                   sourceController!.text = snapshot.data![index]!;
@@ -270,12 +274,14 @@ class _SearchFieldState extends State<SearchField> {
                   // hide the suggestions
                   sourceStream.sink.add(null);
                   if (widget.onTap != null) {
+                    // ignore: prefer_null_aware_method_calls
                     widget.onTap!(snapshot.data![index]);
                   }
                 },
                 child: Container(
                   height: widget.itemHeight,
-                  padding: const EdgeInsets.symmetric(horizontal: 5) + const EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 5) +
+                      const EdgeInsets.only(left: 8),
                   width: double.infinity,
                   alignment: Alignment.centerLeft,
                   decoration: widget.suggestionItemDecoration?.copyWith(
@@ -290,7 +296,8 @@ class _SearchFieldState extends State<SearchField> {
                             ? null
                             : Border(
                                 bottom: BorderSide(
-                                  color: widget.marginColor ?? onSurfaceColor.withOpacity(0.1),
+                                  color: widget.marginColor ??
+                                      onSurfaceColor.withOpacity(0.1),
                                 ),
                               ),
                       ),
@@ -327,6 +334,7 @@ class _SearchFieldState extends State<SearchField> {
   }
 
   OverlayEntry _createOverlay() {
+    // ignore: cast_nullable_to_non_nullable
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
@@ -341,7 +349,11 @@ class _SearchFieldState extends State<SearchField> {
           return Positioned(
             left: offset.dx,
             width: size.width,
-            child: CompositedTransformFollower(offset: getYOffset(offset, count), link: _layerLink, child: Material(child: _suggestionsBuilder())),
+            child: CompositedTransformFollower(
+              offset: getYOffset(offset, count),
+              link: _layerLink,
+              child: Material(child: _suggestionsBuilder()),
+            ),
           );
         },
       ),
@@ -369,7 +381,8 @@ class _SearchFieldState extends State<SearchField> {
             style: widget.searchStyle,
             onSubmitted: widget.onSubmitted,
             textInputAction: TextInputAction.search,
-            decoration: widget.searchInputDecoration?.copyWith(hintText: widget.hint) ?? InputDecoration(hintText: widget.hint),
+            decoration: widget.searchInputDecoration?.copyWith(hintText: widget.hint) ??
+                InputDecoration(hintText: widget.hint),
             onChanged: (item) {
               final searchResult = <String>[];
               if (item.isEmpty) {

@@ -18,7 +18,7 @@ Map<String, WidgetBuilder> routes() {
     LoginScreen.id: (context) => LoginScreen(),
     SignUpScreen.id: (context) => SignUpScreen(),
     ChatsScreen.id: (context) => ChatsScreen(),
-    ChatScreen.id: (context) => ChatScreen(),
+    ChatScreen.id: (context) => const ChatScreen(),
     SettingsScreen.id: (context) => SettingsScreen(),
     ThemePage.id: (context) => ThemePage(),
     SuccessPage.id: (context) => const SuccessPage(),
