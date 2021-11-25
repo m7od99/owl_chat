@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/message.dart';
+import '../../../../data/models/message.dart';
 
 class PopupCard extends StatelessWidget {
   final Message message;

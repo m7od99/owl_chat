@@ -63,22 +63,23 @@ class Message {
 
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
-      sender: map['sender'],
+      sender: map['sender'] as String,
       type: castType(map),
-      receiver: map['receiver'],
-      text: map['text'],
-      time: map['time'],
-      isMe: map['isMe'],
-      isSend: map['isSend'],
-      isRead: map['isRead'],
-      isGif: map['isGif'],
-      id: map['id'],
+      receiver: map['receiver'] as String,
+      text: map['text'] as String,
+      time: map['time'] as Timestamp,
+      isMe: map['isMe'] as bool,
+      isSend: map['isSend'] as bool?,
+      isRead: map['isRead'] as bool?,
+      isGif: map['isGif'] as bool?,
+      id: map['id'] as String?,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source));
+  factory Message.fromJson(String source) =>
+      Message.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 MessageType castType(Map<String, dynamic> map) {

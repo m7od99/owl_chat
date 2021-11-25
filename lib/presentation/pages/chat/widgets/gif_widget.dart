@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/message.dart';
+import '../../../../data/models/message.dart';
 import 'message_bubble.dart';
 
 class GifWidget extends StatelessWidget {

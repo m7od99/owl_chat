@@ -7,7 +7,7 @@ import 'package:owl_chat/data/models/chat.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 import 'package:owl_chat/logic/event_handler/send_message_state.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/widgets/gifs_button.dart';
+import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
 import 'package:provider/provider.dart';
 
 class SendMessageField extends StatefulWidget {

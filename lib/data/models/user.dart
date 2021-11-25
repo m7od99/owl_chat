@@ -73,20 +73,20 @@ class OwlUser {
 
   factory OwlUser.fromMap(Map<String, dynamic> map) {
     return OwlUser(
-      email: map['email'],
-      userName: map['userName'],
-      id: map['id'],
-      isOnline: map['isOnline'],
+      email: map['email'] as String,
+      userName: map['userName'] as String,
+      id: map['id'] as String,
+      isOnline: map['isOnline'] as bool?,
       // friends: List<OwlUser>.from(
       //   map['friends']?.map((x) => OwlUser.fromMap(x)),
       // ),
       // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
-      photoUri: map['photoUri'],
-      onChat: map['onChat'],
+      photoUri: map['photoUri'] as String?,
+      onChat: map['onChat'] as String?,
       //  tokens: map['tokens'],
     );
   }
 
   factory OwlUser.fromJson(String source) =>
-      OwlUser.fromMap(json.decode(source));
+      OwlUser.fromMap(json.decode(source) as Map<String, dynamic>);
 }

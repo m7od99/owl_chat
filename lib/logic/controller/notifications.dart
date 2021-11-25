@@ -109,7 +109,7 @@ class Notifications {
     if (message.data['type'] == 'chat') {
       Get.to(
         const ChatScreen(),
-        arguments: Chat.fromJson(message.data['chat']),
+        arguments: Chat.fromJson(message.data['chat'] as String),
       );
     }
   }

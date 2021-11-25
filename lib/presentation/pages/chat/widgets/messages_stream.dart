@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/message_control.dart';
-import 'package:owl_chat/data/models/chat.dart';
-import 'package:owl_chat/data/models/message.dart';
-import 'package:owl_chat/presentation/widgets/hero_root.dart';
-import 'package:owl_chat/presentation/widgets/message_bubble.dart';
-import 'package:owl_chat/presentation/widgets/popup_card.dart';
+import 'package:owl_chat/logic/event_handler/messages_state.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../data/data_controller/message_control.dart';
+import '../../../../data/models/chat.dart';
+import '../../../../data/models/message.dart';
+import '../../../widgets/hero_root.dart';
+import 'message_bubble.dart';
+import 'popup_card.dart';
 
 class ChatStream extends StatelessWidget {
   final Chat chat;
@@ -34,7 +38,7 @@ class ChatStream extends StatelessWidget {
 
         for (final mess in data) {
           final dynamic doc = mess.data();
-          final message = Message.fromMap(doc);
+          final message = Message.fromMap(doc as Map<String, dynamic>);
           message.isMe = control.isMe(message.sender);
 
           messages.add(

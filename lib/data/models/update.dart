@@ -33,13 +33,14 @@ class Update {
 
   factory Update.fromMap(Map<String, dynamic> map) {
     return Update(
-      currentVersions: map['currentVersions'],
-      newVersions: map['newVersions'],
-      uri: map['uri'],
+      currentVersions: map['currentVersions'] as String,
+      newVersions: map['newVersions'] as String,
+      uri: map['uri'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Update.fromJson(String source) => Update.fromMap(json.decode(source));
+  factory Update.fromJson(String source) =>
+      Update.fromMap(json.decode(source) as Map<String, dynamic>);
 }

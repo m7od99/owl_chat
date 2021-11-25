@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../../data/models/message.dart';
-import '../../logic/event_handler/settings.dart';
+import '../../../../data/models/message.dart';
+import '../../../../logic/event_handler/settings.dart';
 import 'gif_widget.dart';
 
 class MessageBubble extends StatelessWidget {
   final Message message;
   final VoidCallback? onDoubleTap;
 
-  const MessageBubble({Key? key, required this.message, this.onDoubleTap}) : super(key: key);
+  const MessageBubble({Key? key, required this.message, this.onDoubleTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,8 @@ class MessageBubble extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
           child: Column(
-            crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            crossAxisAlignment:
+                message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
               if (message.isGif != null && message.isGif == true)
                 GifWidget(message: message)
@@ -61,7 +63,8 @@ class Bubble extends StatelessWidget {
         child: Row(
           textBaseline: TextBaseline.alphabetic,
           crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment:
+              message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(

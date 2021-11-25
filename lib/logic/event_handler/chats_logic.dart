@@ -11,7 +11,8 @@ class ChatsController {
 
   ///create uniq id for chat room
   String createChatId(String otherUserId) {
-    if (_user.userId.substring(0, 1).codeUnitAt(0) > otherUserId.substring(0, 1).codeUnitAt(0)) {
+    if (_user.userId.substring(0, 1).codeUnitAt(0) >
+        otherUserId.substring(0, 1).codeUnitAt(0)) {
       return "$otherUserId${_user.userId}";
     } else {
       return "${_user.userId}$otherUserId";
@@ -25,10 +26,12 @@ class ChatsController {
   }
 
   // ignore: type_annotate_public_apis
-  bool isChatting(List<QueryDocumentSnapshot> snap, otherId) {
+  bool isChatting(List<QueryDocumentSnapshot> snap, String otherId) {
     return snap
         .where(
-          (element) => element['id'].toString().contains(_user.userId) && element['id'].toString().contains(otherId),
+          (element) =>
+              element['id'].toString().contains(_user.userId) &&
+              element['id'].toString().contains(otherId),
         )
         .isNotEmpty;
   }
@@ -37,7 +40,7 @@ class ChatsController {
     final List<Chat> chats = [];
     for (final chat in data) {
       final dynamic doc = chat.data();
-      chats.add(Chat.fromMap(doc));
+      chats.add(Chat.fromMap(doc as Map<String, dynamic>));
     }
 
     return chats;

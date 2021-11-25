@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../../../data/models/chat.dart';
 import '../../../logic/event_handler/user_state.dart';
-import '../../widgets/messages_stream.dart';
-import '../../widgets/send_message_field.dart';
+import 'widgets/messages_stream.dart';
+import 'widgets/send_message_field.dart';
 
 class ChatScreen extends StatefulWidget {
   static String id = 'ChatScreen';

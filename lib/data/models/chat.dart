@@ -39,16 +39,17 @@ class Chat {
   factory Chat.fromMap(Map<String, dynamic> map) {
     return Chat(
       id: map['id'] as String,
-      me: OwlUser.fromMap(map['me']),
-      other: OwlUser.fromMap(map['other']),
+      me: OwlUser.fromMap(map['me'] as Map<String, dynamic>),
+      other: OwlUser.fromMap(map['other'] as Map<String, dynamic>),
       lastMessage: map['lastMessage'] as String,
       name: map['name'] as String,
       photoUri: map['photoUri'] as String,
-      time: map['time'],
+      time: map['time'] as Timestamp,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Chat.fromJson(String source) => Chat.fromMap(json.decode(source));
+  factory Chat.fromJson(String source) =>
+      Chat.fromMap(json.decode(source) as Map<String, dynamic>);
 }

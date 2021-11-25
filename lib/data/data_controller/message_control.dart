@@ -21,6 +21,15 @@ class MessageControl extends ChangeNotifier {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getChatMessages(String chatId) {
+    return _firestore
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
+        .orderBy('time')
+        .snapshots();
+  }
+
   ///send message to specific chat room
   Future<void> sendMessage(Message message, String chatId) async {
     await _firestore
@@ -29,7 +38,7 @@ class MessageControl extends ChangeNotifier {
         .collection('messages')
         .add(message.toMap())
         .catchError((e) {
-      log(e);
+      log(e.toString());
     }).then((value) => log('message send $value'));
   }
 
@@ -40,7 +49,7 @@ class MessageControl extends ChangeNotifier {
         .doc(chat.id)
         .set(chat.toMap())
         .catchError((e) {
-      log(e);
+      log(e.toString());
     }).then((value) => log('chat room is created'));
   }
 

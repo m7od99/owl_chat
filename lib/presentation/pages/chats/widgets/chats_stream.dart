@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/data_controller/message_control.dart';
 import 'package:provider/provider.dart';
 
-import '../../data/models/chat.dart';
-import '../../logic/event_handler/chats_logic.dart';
-import '../../logic/event_handler/user_state.dart';
-import '../pages/chat/chat_screen.dart';
-import 'friend_card.dart';
+import '../../../../data/data_controller/message_control.dart';
+import '../../../../data/models/chat.dart';
+import '../../../../logic/event_handler/chats_logic.dart';
+import '../../../../logic/event_handler/user_state.dart';
+import '../../../widgets/friend_card.dart';
+import '../../chat/chat_screen.dart';
 
 class ChatsStream extends StatelessWidget {
   const ChatsStream({

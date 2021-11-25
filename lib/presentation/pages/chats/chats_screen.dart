@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../logic/event_handler/user_state.dart';
-import '../../widgets/chats_stream.dart';
 import '../search/search_page.dart';
 import 'slider.dart';
+import 'widgets/chats_stream.dart';
 
 class Chats extends StatefulWidget {
   @override
