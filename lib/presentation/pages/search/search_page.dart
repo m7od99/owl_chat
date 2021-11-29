@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';

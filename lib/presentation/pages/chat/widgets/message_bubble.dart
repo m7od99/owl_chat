@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
-import '../../../../data/models/message.dart';
+import '../../../../data/models/chats/message.dart';
 import '../../../../logic/event_handler/settings.dart';
 import 'gif_widget.dart';
 

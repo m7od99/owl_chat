@@ -5,7 +5,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
-import '../login/login_screen.dart';
+import '../auth/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'WelcomeScreen';
@@ -26,14 +26,6 @@ class WelcomeScreen extends StatelessWidget {
                 child: Logo(fontSize: 50, photoSize: 140),
               ),
               const SizedBox(height: 30),
-              // Text(
-              //   'Welcome to OwlChat family',
-              //   textAlign: TextAlign.center,
-              //   style: GoogleFonts.andada(
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
               const Spacer(),
               LargeButton(
                 onTap: () {

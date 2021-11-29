@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/chat.dart';
-import '../models/message.dart';
+import '../models/chats/chat.dart';
+import '../models/chats/message.dart';
 
 class MessageControl extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;

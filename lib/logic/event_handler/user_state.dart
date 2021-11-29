@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/data_controller/user_control.dart';
-import '../../data/models/chat.dart';
-import '../../data/models/user.dart';
+import '../../data/models/auth/user.dart';
+import '../../data/models/chats/chat.dart';
 
 class UserState extends ChangeNotifier {
   final _userControl = UserControl();

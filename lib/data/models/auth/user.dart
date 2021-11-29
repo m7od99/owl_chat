@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 
 class OwlUser {
   String email;

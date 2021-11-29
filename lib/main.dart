@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'app/porvider_control.dart';
 import 'logic/controller/notifications.dart';
-import 'porvider_control.dart';
 import 'translations/codegen_loader.g.dart';
 
 Future main() async {

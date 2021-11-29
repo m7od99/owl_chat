@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:owl_chat/data/models/messages_type.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/chats/messages_type.dart';
 
 class Message {
   final String sender;
@@ -68,7 +69,7 @@ class Message {
       receiver: map['receiver'] as String,
       text: map['text'] as String,
       time: map['time'] as Timestamp,
-      isMe: map['isMe'] as bool,
+      isMe: thatMe(map['sender'] as String),
       isSend: map['isSend'] as bool?,
       isRead: map['isRead'] as bool?,
       isGif: map['isGif'] as bool?,
@@ -90,5 +91,13 @@ MessageType castType(Map<String, dynamic> map) {
       return MessageType.text;
     default:
       return MessageType.text;
+  }
+}
+
+bool thatMe(String id) {
+  if (id == UserControl().userId) {
+    return true;
+  } else {
+    return false;
   }
 }

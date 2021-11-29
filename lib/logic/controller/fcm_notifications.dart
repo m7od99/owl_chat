@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/helper/credentials.dart' as credentials;
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 
@@ -20,7 +20,7 @@ class FCMNotifications {
     final _user = UserState();
     final String? token = await _user.getUserToken(toUserId);
 
-    if (token != null) {
+    if (token != null && body.isNotEmpty) {
       try {
         final http.Response res = await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),

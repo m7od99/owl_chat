@@ -10,9 +10,9 @@ import '../../../logic/controller/validator.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
-import '../../widgets/error_form.dart';
 import '../../widgets/large_button.dart';
-import '../../widgets/success_sign_up.dart';
+import 'widgets/error_form.dart';
+import 'widgets/success_sign_up.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String id = 'SignUpScreen';

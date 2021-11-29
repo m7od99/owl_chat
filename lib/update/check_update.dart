@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:owl_chat/data/data_controller/update_control.dart';
-import 'package:owl_chat/data/models/update.dart';
+import 'package:owl_chat/data/models/app/update.dart';
 import 'package:package_info/package_info.dart';
 import 'package:r_upgrade/r_upgrade.dart';
 import 'package:version/version.dart';

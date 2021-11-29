@@ -10,12 +10,12 @@ import '../../../logic/controller/validator.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
-import '../../widgets/error_form.dart';
-import '../../widgets/forgot_password.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
 import '../chats/loading.dart';
-import '../signup/sign_up_screen.dart';
+import 'sign_up_screen.dart';
+import 'widgets/error_form.dart';
+import 'widgets/forgot_password.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String id = 'LoginScreen';

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../data/models/chat.dart';
-import '../../helper/helper.dart';
-import '../../logic/event_handler/user_state.dart';
-import '../theme/constant.dart';
+import '../../../../data/models/chats/chat.dart';
+import '../../../../helper/helper.dart';
+import '../../../../logic/event_handler/user_state.dart';
+import '../../../theme/constant.dart';
 
 class FriendCard extends StatelessWidget {
   final Chat chat;

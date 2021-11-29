@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../logic/event_handler/user_state.dart';
-import '../pages/login/login_screen.dart';
+import '../pages/auth/login_screen.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({

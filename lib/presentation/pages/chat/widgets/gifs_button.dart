@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:giphy_get/giphy_get.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/models/chat.dart';
+import '../../../../data/models/chats/chat.dart';
 import '../../../../logic/event_handler/send_message_state.dart';
-import '../../../widgets/giphy.dart';
+import 'giphy.dart';
 
 class GifsButton extends StatelessWidget {
   const GifsButton({

@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
 import '../../data/data_controller/user_control.dart';

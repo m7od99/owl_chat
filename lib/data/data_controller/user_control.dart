@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;

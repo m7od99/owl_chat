@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
-import '../pages/chats/loading.dart';
-import '../pages/login/login_screen.dart';
-import '../pages/settings/settings_screen.dart';
-import '../pages/signup/sign_up_screen.dart';
-import '../pages/welcome/welcome_screen.dart';
-import '../widgets/change_photo.dart';
-import '../widgets/search_for_users.dart';
-import '../widgets/searching_by_name.dart';
-import '../widgets/success_sign_up.dart';
-import '../widgets/theme_sw.dart';
+import '../presentation/pages/auth/login_screen.dart';
+import '../presentation/pages/auth/sign_up_screen.dart';
+import '../presentation/pages/auth/widgets/success_sign_up.dart';
+import '../presentation/pages/chats/loading.dart';
+import '../presentation/pages/settings/change_photo.dart';
+import '../presentation/pages/settings/settings_screen.dart';
+import '../presentation/pages/settings/theme_sw.dart';
+import '../presentation/pages/welcome/welcome_screen.dart';
 
 Map<String, WidgetBuilder> routes() {
   return {
@@ -22,8 +20,6 @@ Map<String, WidgetBuilder> routes() {
     SettingsScreen.id: (context) => SettingsScreen(),
     ThemePage.id: (context) => ThemePage(),
     SuccessPage.id: (context) => const SuccessPage(),
-    Search.id: (context) => const Search(),
-    SearchByName.id: (context) => const SearchByName(),
     ChangePhoto.id: (context) => const ChangePhoto(),
   };
 }

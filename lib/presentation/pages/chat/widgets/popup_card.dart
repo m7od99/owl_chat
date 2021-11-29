@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/message.dart';
+import '../../../../data/models/chats/message.dart';
 
 class PopupCard extends StatelessWidget {
   final Message message;
+  final int tag;
   const PopupCard({
     Key? key,
     required this.message,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -14,7 +16,7 @@ class PopupCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 68),
         child: Hero(
-          tag: message.text.runes,
+          tag: tag,
           child: Material(
             borderRadius: BorderRadius.circular(25),
             color: Theme.of(context).scaffoldBackgroundColor,

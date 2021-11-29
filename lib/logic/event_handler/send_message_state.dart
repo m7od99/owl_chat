@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../data/data_controller/message_control.dart';
-import '../../data/models/chat.dart';
-import '../../data/models/message.dart';
-import '../../data/models/messages_type.dart';
+import '../../data/models/chats/chat.dart';
+import '../../data/models/chats/message.dart';
+import '../../data/models/chats/messages_type.dart';
 import 'user_state.dart';
 
 // handler input message from user here
@@ -59,9 +59,11 @@ class SendMessageState extends ChangeNotifier {
 
   Future updateChatState(Chat chat) async {
     chat.lastMessage = _textMessage;
-    chat.time = Timestamp.now();
-    await _messageControl.updateChatState(chat);
-    clearMessage();
+    if (chat.lastMessage.isNotEmpty) {
+      chat.time = Timestamp.now();
+      await _messageControl.updateChatState(chat);
+      clearMessage();
+    }
   }
 
   Future updateChatStateGif(Chat chat) async {

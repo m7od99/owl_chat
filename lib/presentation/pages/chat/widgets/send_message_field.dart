@@ -3,7 +3,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:owl_chat/data/models/chat.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 import 'package:owl_chat/logic/event_handler/send_message_state.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';

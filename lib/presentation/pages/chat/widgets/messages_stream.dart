@@ -1,17 +1,12 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/logic/event_handler/messages_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/data_controller/message_control.dart';
-import '../../../../data/models/chat.dart';
-import '../../../../data/models/message.dart';
-import '../../../widgets/hero_root.dart';
+import '../../../../data/models/chats/chat.dart';
+import '../../../../data/models/chats/message.dart';
 import 'message_bubble.dart';
-import 'popup_card.dart';
 
 class ChatStream extends StatelessWidget {
   final Chat chat;
@@ -45,18 +40,18 @@ class ChatStream extends StatelessWidget {
             MessageBubble(
               key: GlobalKey(),
               message: message,
-              onDoubleTap: () async {
-                await Navigator.push(
-                  context,
-                  HeroDialogRoute(
-                    builder: (BuildContext context) {
-                      return PopupCard(
-                        message: message,
-                      );
-                    },
-                  ),
-                );
-              },
+              // onDoubleTap: () async {
+              //   await Navigator.push(
+              //     context,
+              //     HeroDialogRoute(
+              //       builder: (BuildContext context) {
+              //         return PopupCard(
+              //           message: message, tag: 0,
+              //         );
+              //       },
+              //     ),
+              //   );
+              // },
             ),
           );
         }

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import '../../data/models/user.dart';
+import '../../data/models/auth/user.dart';
 import '../event_handler/user_state.dart';
 
 class SearchLogic {

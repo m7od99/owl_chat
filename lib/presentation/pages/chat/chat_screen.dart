@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:owl_chat/presentation/pages/chat/widgets/messages_bloc_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/chat.dart';
+import '../../../data/models/chats/chat.dart';
 import '../../../logic/event_handler/user_state.dart';
-import 'widgets/messages_stream.dart';
 import 'widgets/send_message_field.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -105,7 +105,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                   currentFocus.unfocus();
                 }
               },
-              child: ChatStream(
+              child: MessagesView(
                 chat: chat,
                 controller: _scrollController,
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/message.dart';
+import 'package:owl_chat/data/models/chats/message.dart';
 
 class ReplyMessage extends StatelessWidget {
   final Message message;

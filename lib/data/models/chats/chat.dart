@@ -3,7 +3,7 @@ import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 
 class Chat {
   final String id;

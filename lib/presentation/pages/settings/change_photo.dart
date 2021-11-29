@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
 
-import '../../logic/event_handler/user_state.dart';
+import '../../../logic/event_handler/user_state.dart';
 
 class ChangePhoto extends StatefulWidget {
   const ChangePhoto({Key? key}) : super(key: key);
