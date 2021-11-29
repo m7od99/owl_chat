@@ -37,7 +37,7 @@ functions
 .pub-cache/
 .pub/
 /build/
-
+credentials.dart
 # Web related
 lib/helper/generated_plugin_registrant.dart
 

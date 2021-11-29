@@ -9,6 +9,7 @@ const kFriendCardText = TextStyle(
 TextStyle kProfileCardText = GoogleFonts.breeSerif(
   fontSize: 20,
 );
+const Color kDarkThemeSplashColor = Color(0x40CCCCCC);
 
 const kPrimaryColor = Color(0xFFf79501);
 const kSecondaryColor = Color(0xFFFE9901);

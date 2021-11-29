@@ -1,29 +1,31 @@
-import '../../data/models/user.dart';
+import 'dart:developer';
+
+import '../../data/models/auth/user.dart';
 import '../event_handler/user_state.dart';
 
 class SearchLogic {
-  final UserState _user = UserState();
+  Future<OwlUser?> getUserByEmail(String email) async {
+    final UserState _user = UserState();
 
-  Future<OwlUser> getUserByEmail(String email) async {
-    List<OwlUser> users = await _user.getUsers();
+    final List<OwlUser> users = await _user.getUsers();
 
-    for (var user in users) {
+    for (final user in users) {
       if (user.email.toLowerCase() == email.trim().toLowerCase()) {
         return user;
       }
     }
-    return OwlUser(email: '', id: '', userName: '');
   }
 
-  Future<OwlUser> getUserByUserName(String userName) async {
-    List<OwlUser> users = await _user.getUsers();
+  static Future<OwlUser?> getUserByUserName(String userName) async {
+    final UserState _user = UserState();
 
-    for (var user in users) {
+    final List<OwlUser> users = await _user.getUsers();
+
+    for (final user in users) {
       if (user.userName.toLowerCase().trim() == userName.toLowerCase().trim()) {
-        print(user.id);
+        log(user.id);
         return user;
       }
     }
-    return OwlUser(email: '', id: '', userName: '');
   }
 }

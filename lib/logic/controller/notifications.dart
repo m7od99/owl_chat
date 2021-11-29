@@ -1,59 +1,126 @@
+import 'dart:developer';
+import 'dart:ui';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
+import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+
+import '../../data/data_controller/user_control.dart';
 
 class Notifications {
-  //to handle remote notifications
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final UserControl _control = UserControl();
 
-  void initMessaging() async {
-    FlutterLocalNotificationsPlugin fltNotification =
-        FlutterLocalNotificationsPlugin();
+  Future selectNotification(String payload) async {}
 
-    var androiInit = AndroidInitializationSettings('app_icon'); //for logo
-    var iosInit = IOSInitializationSettings();
-
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-
-    fltNotification = FlutterLocalNotificationsPlugin();
-    await fltNotification.initialize(initSetting);
-    var androidDetails = AndroidNotificationDetails(
-      '1',
-      'channelName',
-      'channelDescription',
-      playSound: true,
-      importance: Importance.max,
-      priority: Priority.high,
+  /// initialize notifications
+  ///
+  ///
+  ///its also handle the background messages from firebase messaging
+  Future startNotifications() async {
+    await AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          channelShowBadge: true,
+          playSound: true,
+          importance: NotificationImportance.Max,
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white,
+        ),
+        NotificationChannel(
+          channelKey: 'high_importance_channel',
+          channelName: 'High Importance Notifications',
+          channelDescription: 'This channel is used for important notifications.',
+          channelShowBadge: true,
+          playSound: true,
+          importance: NotificationImportance.Max,
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white,
+        ),
+      ],
     );
 
-    var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  }
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification!;
-      //AndroidNotification? android = message.notification!.android;
+  /// handel the foreground message that come from Firebase messaging
+  Future foregroundMessagingHandler() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      log('Got a message whilst in the foreground!');
+      log("Message data: ${message.data}");
+      final notification = message.notification;
 
-      fltNotification.show(notification.hashCode, notification.title,
-          notification.body, generalNotificationDetails);
+      if (notification != null) {
+        log('Message also contained a notification: ${message.notification}');
+        log(notification.title.toString());
+        log(notification.body.toString());
+
+        AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 10,
+            showWhen: true,
+            channelKey: 'high_importance_channel',
+            title: notification.title,
+            body: notification.body,
+            notificationLayout: NotificationLayout.BigText,
+          ),
+        );
+      }
     });
   }
 
-  UserControl _control = UserControl();
-
-  //get tokens form firebase messaging
-  Future<String?> getToken() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    return await messaging.getToken();
-  }
-
-  // get tokens then safe it in firestor
-  void token() async {
-    final token = await getToken();
-    print(token);
+  /// get token then save it in database
+  Future getTokenThenSaveItToDataBase() async {
+    final token = await _control.getToken();
+    log(token.toString());
     await _control.saveTokenToDatabase(token!);
 
-    FirebaseMessaging.instance.onTokenRefresh
-        .listen(_control.saveTokenToDatabase);
+    FirebaseMessaging.instance.onTokenRefresh.listen(_control.saveTokenToDatabase);
   }
+
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    final RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      AwesomeNotifications().actionStream.listen((_) {
+        _handleMessage(initialMessage);
+      });
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['type'] == 'chat') {
+      Get.to(
+        const ChatScreen(),
+        arguments: Chat.fromJson(message.data['chat'] as String),
+      );
+    }
+  }
+}
+
+// Declared as global, outside of any class
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  log("Handling a background message: ${message.messageId}");
+
+  // Use this method to automatically convert the push data, in case you gonna use our data standard
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
 }

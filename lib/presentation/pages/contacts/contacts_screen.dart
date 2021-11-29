@@ -1,6 +1,6 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/presentation/widgets/contacts_card.dart';
+import '../../widgets/contacts_card.dart';
 
 class ContactsScreen extends StatelessWidget {
   static const String id = "ContactsScreen";
@@ -14,11 +14,12 @@ class ContactsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: ListView.separated(
-          itemBuilder: (BuildContext context, int index) => ContactsCard(
-                name: users.names[index],
-              ),
-          separatorBuilder: (BuildContext context, int index) => Divider(),
-          itemCount: users.names.length),
+        itemBuilder: (BuildContext context, int index) => ContactsCard(
+          name: users.names[index],
+        ),
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemCount: users.names.length,
+      ),
     );
   }
 }

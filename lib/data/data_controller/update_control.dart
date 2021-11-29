@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:owl_chat/data/models/update.dart';
+import 'package:owl_chat/data/models/app/update.dart';
 
 class UpdateControl {
   final _firestore = FirebaseFirestore.instance;
 
-  updateStatus(Update update) async {
+  Future updateStatus(Update update) async {
     await _firestore.collection('update').add(update.toMap());
   }
 
-  getUpdateStatus() {
+  /// get the app version stats with latest apk uri
+  Future<Update?> getUpdateStatus() {
     return _firestore
         .collection('update')
         .doc('qgbGVG3A0S24q8s8r0wi')
@@ -16,7 +19,7 @@ class UpdateControl {
         .then((value) {
       if (value.exists) {
         final data = value.data();
-        print(data);
+        log(data.toString());
         return Update.fromMap(data!);
       }
     });

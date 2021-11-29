@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/data/models/user.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> login(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -14,13 +17,12 @@ class UserControl extends ChangeNotifier {
 
   Future<void> signOut() async {
     await _auth.signOut().catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
   Future<void> signUp(String email, String password, String userName) async {
-    await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
     await _auth.currentUser!.updateDisplayName(userName);
   }
@@ -29,21 +31,22 @@ class UserControl extends ChangeNotifier {
     return _firestore.collection('users').get();
   }
 
-  getUsersEmail() async {
-    return await _firestore.collection('users').where('email').get();
+  Future<QuerySnapshot<Map<String, dynamic>>> getUsersEmail() async {
+    return _firestore.collection('users').where('email').get();
+  }
+
+  Future<String?> getToken() async {
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+    return messaging.getToken();
   }
 
   Future<void> saveUser(OwlUser user) async {
-    await _firestore
-        .collection('users')
-        .doc(user.id)
-        .set(user.toMap())
-        .catchError((e) {
-      print(e.toString());
+    await _firestore.collection('users').doc(user.id).set(user.toMap()).catchError((e) {
+      log(e.toString());
     });
   }
 
-  addFriend(String userId, OwlUser otherUser) async {
+  Future addFriend(String userId, OwlUser otherUser) async {
     await _firestore
         .collection('users')
         .doc(userId)
@@ -57,30 +60,31 @@ class UserControl extends ChangeNotifier {
         .doc(user.id)
         .update(user.toMap())
         .catchError((e) {
-      print(e.toString());
-    }).then((value) => print('updated'));
+      log(e.toString());
+    }).then((value) => log('updated'));
   }
 
-  getUserInfo(String userId) async {
-    return await _firestore
+  Future getUserInfo(String userId) async {
+    return _firestore
         .collection('users')
         .where('id', isEqualTo: userId)
         .get()
         .catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
-  getUserByEmail(String email) async {
-    return await _firestore
+  Future getUserByEmail(String email) async {
+    return _firestore
         .collection('users')
         .where('email', isEqualTo: userId)
         .get()
         .catchError((e) {
-      print(e.toString());
+      log(e.toString());
     });
   }
 
+  /// check if user is login
   bool _hasUser() {
     if (_auth.currentUser != null) {
       return true;
@@ -88,39 +92,39 @@ class UserControl extends ChangeNotifier {
     return false;
   }
 
+  ///
   Future<void> saveTokenToDatabase(String token) async {
-    // Assume user is logged in for this example
-    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     _firestore.collection('users').doc(userId).update({
       'tokens': FieldValue.arrayUnion([token]),
     });
   }
 
-  getUserToken(String id) async {
-    if (id.isNotEmpty) {
-      _firestore.collection('users').doc(id).get().then((documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document exists on the database');
-          final data = documentSnapshot.data();
-          print(data!['tokens']);
-          return data['tokens'];
-        }
-      });
+  Future<String?> getUserToken(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return data!['tokens'].toString();
     }
   }
 
-  updatePhoto(String uri) async {
+  Future updatePhoto(String uri) async {
     await _auth.currentUser!.updatePhotoURL(uri);
   }
 
-  updateUserName(String newName) async {
+  Future updateUserName(String newName) async {
     await _auth.currentUser!.updateDisplayName(newName);
   }
 
-  get email => _auth.currentUser!.email;
-  get isLogin => _hasUser();
-  get userName => _auth.currentUser!.displayName;
-  get userId => _auth.currentUser!.uid;
-  get userUriPhoto => _auth.currentUser!.photoURL;
+  // return info about user
+  String get email => _auth.currentUser!.email!;
+  bool get isLogin => _hasUser();
+  String get userName => _auth.currentUser!.displayName!;
+  String get userId => _auth.currentUser!.uid;
+  String? get userUriPhoto => _auth.currentUser!.photoURL;
 }

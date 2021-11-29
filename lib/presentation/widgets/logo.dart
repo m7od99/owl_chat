@@ -5,33 +5,33 @@ class Logo extends StatelessWidget {
   final double photoSize;
   final double fontSize;
 
-  Logo({required this.fontSize, required this.photoSize});
+  const Logo({required this.fontSize, required this.photoSize});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: photoSize,
           child: Image(
             color: Colors.orange[700],
-            image: AssetImage('assets/images/logo.png'),
+            image: const AssetImage('assets/images/logo.png'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
-          'Owlers',
+          'Owls Night',
           style: GoogleFonts.margarine(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
             color: Colors.orange[400],
             shadows: [
-              Shadow(
+              const Shadow(
                 color: Colors.orangeAccent,
-                offset: Offset(2, 5),
-                blurRadius: 14,
+                offset: Offset(0, 2),
+                blurRadius: 5,
               ),
             ],
           ),
