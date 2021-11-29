@@ -53,3 +53,4 @@ app.*.map.json
 /android/app/release
 
 google-services.json
+lib/generated_plugin_registrant.dart
