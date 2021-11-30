@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart' as intl;
 
 import '../../data/data_controller/message_control.dart';
 import '../../data/models/chats/chat.dart';
@@ -18,7 +20,7 @@ class SendMessageState extends ChangeNotifier {
   String get message => _textMessage;
 
   void updateMessage(String message) {
-    _textMessage = message;
+    _textMessage = rtlFormat(message);
     notifyListeners();
   }
 
@@ -97,5 +99,16 @@ class SendMessageState extends ChangeNotifier {
       type: MessageType.gif,
     );
     return message;
+  }
+
+  String rtlFormat(String text) {
+    if (intl.Bidi.startsWithRtl(text)) {
+      return intl.Bidi.enforceRtlInText(text);
+    } else if (intl.Bidi.startsWithLtr(text)) {
+      return intl.Bidi.enforceLtrInText(text);
+    } else if (intl.Bidi.detectRtlDirectionality(text)) {
+      return intl.Bidi.enforceRtlInText(text);
+    }
+    return text;
   }
 }

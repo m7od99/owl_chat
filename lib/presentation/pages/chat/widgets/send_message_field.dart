@@ -58,7 +58,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                   children: [
                     AutoDirection(
                       text: _controller.text,
-                      onDirectionChange: (isRTL) {},
+                      onDirectionChange: (r) {},
                       child: Expanded(
                         child: CupertinoTextField(
                           textAlignVertical: TextAlignVertical.center,
@@ -69,6 +69,9 @@ class _SendMessageFieldState extends State<SendMessageField> {
                           placeholder: 'Message',
                           controller: _controller,
                           focusNode: _focusNode,
+                          onChanged: (str) {
+                            sendMessage.updateMessage(str);
+                          },
                           keyboardType: TextInputType.multiline,
                           maxLines: 5,
                           suffix: IconButton(
@@ -84,9 +87,9 @@ class _SendMessageFieldState extends State<SendMessageField> {
                           ),
                           minLines: 1,
                           onTap: () {
-                            setState(() {
-                              if (emojiShowing) emojiShowing = !emojiShowing;
-                            });
+                            // setState(() {
+                            //   if (emojiShowing) emojiShowing = !emojiShowing;
+                            // });
                           },
                           padding:
                               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
