@@ -87,9 +87,9 @@ class _SendMessageFieldState extends State<SendMessageField> {
                           ),
                           minLines: 1,
                           onTap: () {
-                            // setState(() {
-                            //   if (emojiShowing) emojiShowing = !emojiShowing;
-                            // });
+                            setState(() {
+                              if (emojiShowing) emojiShowing = !emojiShowing;
+                            });
                           },
                           padding:
                               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -130,6 +130,21 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 ),
               ),
             ],
+          ),
+          Offstage(
+            offstage: !emojiShowing,
+            child: SizedBox(
+              height: 250,
+              child: EmojiPicker(
+                onEmojiSelected: (Category category, Emoji emoji) {
+                  _controller.text += emoji.emoji;
+                },
+                config: const Config(
+                  emojiSizeMax: 25,
+                  columns: 9,
+                ),
+              ),
+            ),
           ),
         ],
       ),
