@@ -3,6 +3,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 import 'package:owl_chat/logic/event_handler/send_message_state.dart';
@@ -119,7 +120,19 @@ class _SendMessageFieldState extends State<SendMessageField> {
                     body: _controller.text,
                     title: user.userName,
                     toUserId: chat.other!.id,
-                    chat: chat,
+                    chat: Chat(
+                      id: chat.id,
+                      me: OwlUser(
+                        email: chat.me!.email,
+                        id: chat.me!.id,
+                        userName: chat.me!.userName,
+                      ),
+                      other: OwlUser(
+                        email: chat.other!.email,
+                        id: chat.other!.id,
+                        userName: chat.other!.userName,
+                      ),
+                    ),
                   );
                   _controller.clear();
                 },

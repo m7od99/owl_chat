@@ -9,17 +9,17 @@ class Chat {
   final String id;
   OwlUser? me;
   OwlUser? other;
-  String lastMessage;
-  String name;
-  String photoUri;
-  Timestamp time;
+  String? lastMessage;
+  String? name;
+  String? photoUri;
+  Timestamp? time;
 
   Chat({
     required this.id,
-    required this.lastMessage,
-    required this.name,
-    required this.photoUri,
-    required this.time,
+    this.lastMessage,
+    this.name,
+    this.photoUri,
+    this.time,
     required this.other,
     required this.me,
   });
@@ -41,10 +41,10 @@ class Chat {
       id: map['id'] as String,
       me: OwlUser.fromMap(map['me'] as Map<String, dynamic>),
       other: OwlUser.fromMap(map['other'] as Map<String, dynamic>),
-      lastMessage: map['lastMessage'] as String,
-      name: map['name'] as String,
-      photoUri: map['photoUri'] as String,
-      time: map['time'] as Timestamp,
+      lastMessage: map['lastMessage'] as String?,
+      name: map['name'] as String?,
+      photoUri: map['photoUri'] as String?,
+      time: map['time'] as Timestamp?,
     );
   }
 

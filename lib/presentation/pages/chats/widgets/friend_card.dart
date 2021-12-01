@@ -53,7 +53,7 @@ class FriendCard extends StatelessWidget {
                         Opacity(
                           opacity: 0.64,
                           child: Text(
-                            chat.lastMessage,
+                            chat.lastMessage ?? '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -67,7 +67,7 @@ class FriendCard extends StatelessWidget {
                 ),
                 Opacity(
                   opacity: 0.64,
-                  child: Text(Helper.format(chat.time)),
+                  child: Text(Helper.format(chat.time!)),
                 ),
               ],
             ),

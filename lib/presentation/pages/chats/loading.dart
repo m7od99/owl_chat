@@ -25,9 +25,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     update.isNewUpdate();
     notifications.getTokenThenSaveItToDataBase();
     user.updateOwlUser();
-    user.getUserToken(user.userId);
     notifications.foregroundMessagingHandler();
-    notifications.setupInteractedMessage();
 
     super.initState();
   }
@@ -80,9 +78,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
         );
         return true;
       },
-      child: Scaffold(
-        body: Chats(),
-      ),
+      child: const Chats(),
     );
   }
 }

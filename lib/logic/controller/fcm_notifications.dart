@@ -11,16 +11,18 @@ class FCMNotifications {
   // ignore: prefer_constructors_over_static_methods
   static FCMNotifications get instance => FCMNotifications();
 
+  final _user = UserState();
+
   Future<void> send({
     required String title,
     required String body,
     required String toUserId,
     required Chat chat,
   }) async {
-    final _user = UserState();
     final String? token = await _user.getUserToken(toUserId);
+    final onChat = await isOnChat(toUserId, chat.id);
 
-    if (token != null && body.isNotEmpty) {
+    if (token != null && body.isNotEmpty && !onChat) {
       try {
         final http.Response res = await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -39,7 +41,7 @@ class FCMNotifications {
               'data': {
                 'click_action': 'FLUTTER_NOTIFICATION_CLICK',
                 'type': 'chat',
-                'chat': chat.toMap().toString(),
+                'chat': chat.toMap(),
               },
               'to': token,
             },
@@ -55,5 +57,13 @@ class FCMNotifications {
     } else {
       log('cant get token');
     }
+  }
+
+  Future<bool> isOnChat(String id, String chatId) async {
+    final String? onChat = await _user.getOnChat(id);
+    if (onChat == chatId) {
+      return true;
+    }
+    return false;
   }
 }

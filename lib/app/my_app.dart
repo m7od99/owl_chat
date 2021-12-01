@@ -1,7 +1,7 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen_arg.dart';
@@ -13,6 +13,8 @@ import '../presentation/pages/chats/loading.dart';
 import '../presentation/theme/themes.dart';
 import 'roots.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -21,6 +23,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    RemoteMessage? message;
+    FirebaseMessaging.onMessage.listen((remote) {
+      message = remote;
+    });
+    AwesomeNotifications().actionStream.listen((notification) {
+      notifications.setupInteractedMessage();
+      notifications.handleMessage(message!);
+    });
+
     super.initState();
   }
 
@@ -29,11 +40,12 @@ class _MyAppState extends State<MyApp> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final user = Provider.of<UserState>(context);
 
-    return GetMaterialApp(
+    return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       routes: routes(),
       onGenerateRoute: (settings) {
         if (settings.name == ChatScreen.id) {
@@ -56,32 +68,32 @@ class _MyAppState extends State<MyApp> {
   }
 
 //todo: implement new router by go_router package
-  // ignore: unused_field
-  final _router = GoRouter(
-    errorPageBuilder: (BuildContext context, GoRouterState state) {
-      return MaterialPage(
-        key: state.pageKey,
-        child: Center(
-          child: Text(state.error.toString()),
-        ),
-      );
-    },
-    routes: [
-      GoRoute(
-        path: '/chats',
-        name: 'chats',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: ChatsScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/login',
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: LoginScreen(),
-        ),
-      ),
-    ],
-  );
+  // // ignore: unused_field
+  // final _router = GoRouter(
+  //   errorPageBuilder: (BuildContext context, GoRouterState state) {
+  //     return MaterialPage(
+  //       key: state.pageKey,
+  //       child: Center(
+  //         child: Text(state.error.toString()),
+  //       ),
+  //     );
+  //   },
+  //   routes: [
+  //     GoRoute(
+  //       path: '/chats',
+  //       name: 'chats',
+  //       pageBuilder: (context, state) => MaterialPage(
+  //         key: state.pageKey,
+  //         child: ChatsScreen(),
+  //       ),
+  //     ),
+  //     GoRoute(
+  //       path: '/login',
+  //       pageBuilder: (context, state) => MaterialPage(
+  //         key: state.pageKey,
+  //         child: LoginScreen(),
+  //       ),
+  //     ),
+  //   ],
+  // );
 }

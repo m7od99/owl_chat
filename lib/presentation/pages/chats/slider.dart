@@ -1,8 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:getwidget/components/drawer/gf_drawer.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:owl_chat/app/my_app.dart';
 import 'package:provider/provider.dart';
 
 import '../../../logic/event_handler/user_state.dart';
@@ -91,8 +91,12 @@ class SliderPage extends StatelessWidget {
             title: const Text('About'),
             trailing: const Icon(Icons.info_outline),
             onTap: () {
-              Get.to(
-                () => const AboutPage(),
+              navigatorKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return const AboutPage();
+                  },
+                ),
               );
             },
           ),

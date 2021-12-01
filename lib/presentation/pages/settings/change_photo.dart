@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cropperx/cropperx.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:owl_chat/app/my_app.dart';
 import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
 
@@ -76,17 +76,17 @@ class SetNewPhotoButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future _handelSetNewPhotoTap() async {
-    Get.bottomSheet(
-      const BottomCard(
-        child: SetNewPhotoMenu(),
-      ),
-      useRootNavigator: true,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future _handelSetNewPhotoTap() async {
+      showBottomSheet(
+        builder: (BuildContext context) => const BottomCard(
+          child: SetNewPhotoMenu(),
+        ),
+        context: context,
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -144,8 +144,14 @@ class _SetNewPhotoMenuState extends State<SetNewPhotoMenu> {
             //  if (response.file != null) {}
 
             if (_photo != null) {
-              Get.to(
-                () => ConfirmPhoto(photo: _photo),
+              navigatorKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return ConfirmPhoto(
+                      photo: _photo,
+                    );
+                  },
+                ),
               );
             }
           },
@@ -219,7 +225,8 @@ class ConfirmPhoto extends StatelessWidget {
                       await uploader.uploadPhotoByBytes(imageBytes);
                     }
 
-                    Get.back();
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
                   },
                 ),
               ],

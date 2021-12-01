@@ -61,7 +61,7 @@ class SendMessageState extends ChangeNotifier {
 
   Future updateChatState(Chat chat) async {
     chat.lastMessage = _textMessage;
-    if (chat.lastMessage.isNotEmpty) {
+    if (chat.lastMessage!.isNotEmpty) {
       chat.time = Timestamp.now();
       await _messageControl.updateChatState(chat);
       clearMessage();

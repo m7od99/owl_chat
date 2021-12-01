@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
 
 import '../presentation/pages/auth/login_screen.dart';
 import '../presentation/pages/auth/sign_up_screen.dart';
@@ -21,5 +22,6 @@ Map<String, WidgetBuilder> routes() {
     ThemePage.id: (context) => ThemePage(),
     SuccessPage.id: (context) => const SuccessPage(),
     ChangePhoto.id: (context) => const ChangePhoto(),
+    Chats.id: (context) => const Chats(),
   };
 }

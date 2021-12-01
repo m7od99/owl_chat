@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/messages_bloc_widget.dart';
+import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chats/chat.dart';
@@ -72,7 +73,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
     // ignore: cast_nullable_to_non_nullable
-    final chat = ModalRoute.of(context)!.settings.arguments as Chat;
+    final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () async {
             user.updateOnChat('null');
-            Navigator.pop(context);
+            Navigator.pushNamed(context, Chats.id);
           },
         ),
         title: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chats/chat.dart';
@@ -81,7 +82,7 @@ class _ChatScreenState extends State<ChatScreenArg> with SingleTickerProviderSta
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () async {
             user.updateOnChat('null');
-            Navigator.pop(context);
+            Navigator.pushNamed(context, Chats.id);
           },
         ),
         title: Row(

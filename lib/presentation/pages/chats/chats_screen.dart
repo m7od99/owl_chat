@@ -1,22 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../logic/event_handler/user_state.dart';
 import '../search/search_page.dart';
 import 'slider.dart';
 import 'widgets/chats_stream.dart';
 
-class Chats extends StatefulWidget {
-  @override
-  _ChatsState createState() => _ChatsState();
-}
+class Chats extends StatelessWidget {
+  const Chats({Key? key}) : super(key: key);
 
-class _ChatsState extends State<Chats> {
+  static String id = "/ChatsId";
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
@@ -46,7 +41,7 @@ class _ChatsState extends State<Chats> {
           ],
         ),
       ),
-      body: ChatsStream(user: user),
+      body: const ChatsStream(),
       drawer: const SliderPage(),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(20),

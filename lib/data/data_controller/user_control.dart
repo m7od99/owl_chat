@@ -113,6 +113,18 @@ class UserControl extends ChangeNotifier {
     }
   }
 
+  Future<String?> getUserOnChat(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return data!['onChat'].toString();
+    }
+  }
+
   Future updatePhoto(String uri) async {
     await _auth.currentUser!.updatePhotoURL(uri);
   }

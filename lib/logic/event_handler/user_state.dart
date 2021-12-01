@@ -89,6 +89,10 @@ class UserState extends ChangeNotifier {
     return _userControl.getToken();
   }
 
+  Future<String?> getOnChat(String id) {
+    return _userControl.getUserOnChat(id);
+  }
+
   Future<String?> getUserToken(String id) async {
     final String? token = await _userControl.getUserToken(id);
 

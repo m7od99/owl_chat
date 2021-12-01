@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +12,10 @@ import 'friend_card.dart';
 class ChatsStream extends StatelessWidget {
   const ChatsStream({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
-  final UserState user;
-
   String otherId(Chat chat) {
-    if (user.userId == chat.other!.id) {
+    if (UserState().userId == chat.other!.id) {
       return chat.me!.id;
     }
     return chat.other!.id;
@@ -28,6 +23,8 @@ class ChatsStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserState user = Provider.of<UserState>(context);
+
     final control = Provider.of<MessageControl>(context);
     final _chats = ChatsController();
     final stream = control.getChats(user.userId);
@@ -35,7 +32,6 @@ class ChatsStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: stream,
       builder: (context, snapshot) {
-        log(snapshot.hasData.toString());
         if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
 
         final snap = snapshot.data!.docs;
@@ -49,7 +45,7 @@ class ChatsStream extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) => FriendCard(
               chat: chats[index],
               onTap: () async {
-                user.updateOnChat(chats[index].other!.id);
+                user.updateOnChat(chats[index].id);
                 await Navigator.pushNamed(
                   context,
                   ChatScreen.id,

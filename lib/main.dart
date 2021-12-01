@@ -11,6 +11,7 @@ Future main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   await Notifications().startNotifications();
+  Notifications().setupInteractedMessage();
 
   runApp(
     EasyLocalization(

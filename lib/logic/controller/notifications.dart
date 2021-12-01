@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 
@@ -5,7 +6,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:owl_chat/app/my_app.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 
@@ -41,9 +42,20 @@ class Notifications {
           channelDescription: 'This channel is used for important notifications.',
           channelShowBadge: true,
           playSound: true,
+          groupAlertBehavior: GroupAlertBehavior.All,
           importance: NotificationImportance.Max,
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
+        ),
+      ],
+      channelGroups: [
+        NotificationChannelGroup(
+          channelGroupkey: 'basic_channel',
+          channelGroupName: 'Basic notifications',
+        ),
+        NotificationChannelGroup(
+          channelGroupkey: 'high_importance_channel',
+          channelGroupName: 'High Importance Notifications',
         ),
       ],
     );
@@ -53,28 +65,32 @@ class Notifications {
 
   /// handel the foreground message that come from Firebase messaging
   Future foregroundMessagingHandler() async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      log('Got a message whilst in the foreground!');
-      log("Message data: ${message.data}");
-      final notification = message.notification;
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) async {
+        log('Got a message whilst in the foreground!');
+        log("Message data: ${message.data}");
+        final notification = message.notification;
 
-      if (notification != null) {
-        log('Message also contained a notification: ${message.notification}');
-        log(notification.title.toString());
-        log(notification.body.toString());
+        if (notification != null) {
+          log('Message also contained a notification: ${message.notification}');
+          log(notification.title.toString());
+          log(notification.body.toString());
 
-        AwesomeNotifications().createNotification(
-          content: NotificationContent(
-            id: 10,
-            showWhen: true,
-            channelKey: 'high_importance_channel',
-            title: notification.title,
-            body: notification.body,
-            notificationLayout: NotificationLayout.BigText,
-          ),
-        );
-      }
-    });
+          AwesomeNotifications().createNotification(
+            content: NotificationContent(
+              id: 10,
+              showWhen: true,
+              channelKey: 'basic_channel',
+              groupKey: 'basic_channel',
+              title: notification.title,
+              body: notification.body,
+              autoDismissible: true,
+              notificationLayout: NotificationLayout.BigText,
+            ),
+          );
+        }
+      },
+    );
   }
 
   /// get token then save it in database
@@ -96,20 +112,22 @@ class Notifications {
     // navigate to a chat screen
     if (initialMessage != null) {
       AwesomeNotifications().actionStream.listen((_) {
-        _handleMessage(initialMessage);
+        handleMessage(initialMessage);
       });
     }
-
     // Also handle any interaction when the app is in the background via a
     // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
   }
 
-  void _handleMessage(RemoteMessage message) {
-    if (message.data['type'] == 'chat') {
-      Get.to(
-        const ChatScreen(),
-        arguments: Chat.fromJson(message.data['chat'] as String),
+  void handleMessage(RemoteMessage message) {
+    if (message.data['type'].toString() == 'chat') {
+      navigatorKey.currentState!.pushNamed(
+        ChatScreen.id,
+        arguments: Chat.fromMap(
+          json.decode(message.data['chat'] as String) as Map<String, dynamic>,
+        ),
       );
     }
   }

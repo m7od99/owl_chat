@@ -1,8 +1,24 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
+
+import 'package:equatable/equatable.dart';
 
 import 'package:owl_chat/data/models/chats/chat.dart';
 
-class OwlUser {
+class OwlUser extends Equatable {
+  OwlUser({
+    required this.email,
+    required this.userName,
+    required this.id,
+    this.isOnline,
+    this.friends,
+    this.chats,
+    this.photoUri,
+    this.tokens,
+    this.onChat,
+  });
+
   String email;
   String userName;
   String id;
@@ -22,18 +38,6 @@ class OwlUser {
     chats = [];
     chats!.add(chat);
   }
-
-  OwlUser({
-    required this.email,
-    required this.userName,
-    required this.id,
-    this.isOnline,
-    this.friends,
-    this.chats,
-    this.photoUri,
-    this.tokens,
-    this.onChat,
-  });
 
   OwlUser copyWith({
     String? email,
@@ -89,4 +93,16 @@ class OwlUser {
 
   factory OwlUser.fromJson(String source) =>
       OwlUser.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  List<Object> get props {
+    return [
+      email,
+      userName,
+      id,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
 }
