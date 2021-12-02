@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:owl_chat/app/my_app.dart';
 import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../../logic/event_handler/user_state.dart';
 
@@ -79,7 +80,8 @@ class SetNewPhotoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future _handelSetNewPhotoTap() async {
-      showBottomSheet(
+      showModalBottomSheet(
+        backgroundColor: const Color(0XFF0d0d18),
         builder: (BuildContext context) => const BottomCard(
           child: SetNewPhotoMenu(),
         ),
@@ -180,8 +182,8 @@ class ConfirmPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RoundedLoadingButtonController controller = RoundedLoadingButtonController();
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -209,12 +211,10 @@ class ConfirmPhoto extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 45),
-                IconButton(
-                  icon: const Icon(
-                    Icons.done,
-                    size: 35,
-                  ),
+                RoundedLoadingButton(
+                  width: 50,
                   onPressed: () async {
+                    controller.start();
                     final imageBytes = await Cropper.crop(
                       cropperKey: _cropperKey,
                     );
@@ -224,10 +224,15 @@ class ConfirmPhoto extends StatelessWidget {
                     if (imageBytes != null) {
                       await uploader.uploadPhotoByBytes(imageBytes);
                     }
-
+                    controller.stop();
                     // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   },
+                  controller: controller,
+                  child: const Icon(
+                    Icons.done,
+                    size: 35,
+                  ),
                 ),
               ],
             )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
@@ -17,6 +18,11 @@ class FriendCard extends StatelessWidget {
     return chat.me!.userName;
   }
 
+  String otherId(String myId) {
+    if (chat.me!.id == myId) return chat.other!.id;
+    return chat.me!.id;
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
@@ -31,10 +37,9 @@ class FriendCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                CircleAvatar(
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  backgroundImage: const AssetImage('assets/images/user.png'),
-                  radius: 28,
+                ChatProfilePhoto(
+                  size: 28,
+                  id: otherId(user.userId),
                 ),
                 const SizedBox(
                   width: 10,

@@ -65,13 +65,14 @@ class UserControl extends ChangeNotifier {
   }
 
   Future getUserInfo(String userId) async {
-    return _firestore
-        .collection('users')
-        .where('id', isEqualTo: userId)
-        .get()
-        .catchError((e) {
-      log(e.toString());
-    });
+    final doc = await _firestore.collection('users').where('id', isEqualTo: userId).get();
+
+    if (doc.docs.isNotEmpty) {
+      final data = doc.docs;
+      return data.map((snap) {
+        OwlUser.fromMap(snap.data());
+      });
+    }
   }
 
   Future getUserByEmail(String email) async {

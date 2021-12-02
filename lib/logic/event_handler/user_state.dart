@@ -111,4 +111,11 @@ class UserState extends ChangeNotifier {
     }
     return chat.me!.userName;
   }
+
+  String otherId(Chat chat) {
+    if (chat.me!.id == userId) {
+      return chat.other!.id;
+    }
+    return chat.me!.id;
+  }
 }

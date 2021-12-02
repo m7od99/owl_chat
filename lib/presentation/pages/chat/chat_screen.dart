@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/messages_bloc_widget.dart';
-import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
+import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chats/chat.dart';
@@ -82,15 +82,16 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () async {
             user.updateOnChat('null');
-            Navigator.pushNamed(context, Chats.id);
+            Navigator.pop(context);
           },
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(user.otherName(chat)),
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/user.png'),
+            ChatProfilePhoto(
+              id: user.otherId(chat),
+              size: 22,
             ),
           ],
         ),

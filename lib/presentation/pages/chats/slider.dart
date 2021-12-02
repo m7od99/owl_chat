@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/drawer/gf_drawer.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:owl_chat/app/my_app.dart';
+import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../logic/event_handler/user_state.dart';
@@ -35,10 +36,7 @@ class SliderPage extends StatelessWidget {
               onTap: () async {
                 await Navigator.pushNamed(context, ChangePhoto.id);
               },
-              child: const GFAvatar(
-                radius: 80.0,
-                backgroundImage: AssetImage('assets/images/user.png'),
-              ),
+              child: const ProfilePhoto(size: 80),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

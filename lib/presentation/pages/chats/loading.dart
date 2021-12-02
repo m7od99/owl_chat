@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 import '../../../logic/controller/notifications.dart';
 import '../../../logic/event_handler/user_state.dart';
-import '../../../update/check_update.dart';
 import 'chats_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -15,14 +14,12 @@ class ChatsScreen extends StatefulWidget {
 }
 
 Notifications notifications = Notifications();
-CheckUpdate update = CheckUpdate();
 final user = UserState();
 
 class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
-    update.isNewUpdate();
     notifications.getTokenThenSaveItToDataBase();
     user.updateOwlUser();
     notifications.foregroundMessagingHandler();
@@ -41,7 +38,8 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
+    if (state == AppLifecycleState.detached ||
+        state == AppLifecycleState.paused) {
       user.updateOnChat('null');
     }
   }

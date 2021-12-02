@@ -28,4 +28,16 @@ class SearchLogic {
       }
     }
   }
+
+  static Future<OwlUser?> getUserById(String id) async {
+    final UserState _user = UserState();
+
+    final List<OwlUser> users = await _user.getUsers();
+
+    for (final user in users) {
+      if (user.id.toLowerCase().trim() == id.toLowerCase().trim()) {
+        return user;
+      }
+    }
+  }
 }
