@@ -1,12 +1,11 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:owl_chat/app/my_app.dart';
+import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:provider/provider.dart';
 
 class UserSearchPage extends SearchDelegate<OwlUser> {
@@ -62,10 +61,8 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           ),
           onTap: () async {
             final chat = await ChatsController().createChatRoom(foundUser);
-            navigatorKey.currentState!.pushNamed(
-              ChatScreen.id,
-              arguments: chat,
-            );
+            // ignore: use_build_context_synchronously
+            context.go('/chat', extra: chat);
           },
         );
       },

@@ -34,7 +34,10 @@ class Chats extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                showSearch(context: context, delegate: UserSearchPage());
+                showSearch(
+                  context: context,
+                  delegate: UserSearchPage(),
+                );
                 //    Navigator.pushNa  med(context, SearchByName.id);
               },
             )

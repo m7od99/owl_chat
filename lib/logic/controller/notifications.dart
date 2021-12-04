@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 
@@ -6,9 +5,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:owl_chat/app/my_app.dart';
-import 'package:owl_chat/data/models/chats/chat.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/logic/event_handler/chats_logic.dart';
+import 'package:owl_chat/navigation/router.dart';
 
 import '../../data/data_controller/user_control.dart';
 
@@ -121,13 +119,14 @@ class Notifications {
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
   }
 
-  void handleMessage(RemoteMessage message) {
+  Future handleMessage(RemoteMessage message) async {
     if (message.data['type'].toString() == 'chat') {
-      navigatorKey.currentState!.pushNamed(
-        ChatScreen.id,
-        arguments: Chat.fromMap(
-          json.decode(message.data['chat'] as String) as Map<String, dynamic>,
-        ),
+      final chat =
+          await ChatsController().getSpecificChat(message.data['chat'] as String);
+
+      router.go(
+        '/chat/${chat!.id}',
+        extra: chat,
       );
     }
   }

@@ -76,13 +76,13 @@ class ThemeProvider extends ChangeNotifier {
         secondary: kSecondaryColor,
         error: kErrorColor,
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: kContentColorLightTheme,
-        selectedItemColor: Colors.white70,
-        unselectedItemColor: kContentColorDarkTheme.withOpacity(0.32),
-        selectedIconTheme: const IconThemeData(color: kPrimaryColor),
-        showUnselectedLabels: true,
-      ),
+      // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      //   backgroundColor: kContentColorLightTheme,
+      //   selectedItemColor: Colors.white70,
+      //   unselectedItemColor: kContentColorDarkTheme.withOpacity(0.32),
+      //   selectedIconTheme: const IconThemeData(color: kPrimaryColor),
+      //   showUnselectedLabels: true,
+      // ),
     );
   }
 }

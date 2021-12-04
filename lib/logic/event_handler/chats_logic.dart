@@ -19,6 +19,10 @@ class ChatsController {
     }
   }
 
+  Future<Chat?> getSpecificChat(String chatId) async {
+    return _control.getSpecificChat(chatId);
+  }
+
   Iterable<QueryDocumentSnapshot<Object?>> getMyChats(List<QueryDocumentSnapshot> snap) {
     return snap.where(
       (element) => element['id'].toString().contains(_user.userId),
@@ -70,10 +74,6 @@ class ChatsController {
     );
 
     await _control.createChat(chat);
-    // await _control.addNewChatToUser(_user.userId, chat);
-    // print('add chat to user is done');
-    // await _user.addFriend(_user.userId, otherUser);
-    // print('add friend to user is done');
 
     return chat;
   }

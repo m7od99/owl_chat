@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../logic/event_handler/user_state.dart';
-import '../pages/auth/login_screen.dart';
+import '../../../../logic/event_handler/user_state.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({
@@ -19,7 +19,7 @@ class LogoutButton extends StatelessWidget {
             await Provider.of<UserState>(context, listen: false).logOut();
 
             // ignore: use_build_context_synchronously
-            await Navigator.pushNamed(context, LoginScreen.id);
+            context.go('/login');
           },
           child: Material(
             borderRadius: BorderRadius.circular(20),

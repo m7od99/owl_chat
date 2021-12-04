@@ -1,10 +1,11 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cropperx/cropperx.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:owl_chat/app/my_app.dart';
 import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -146,13 +147,12 @@ class _SetNewPhotoMenuState extends State<SetNewPhotoMenu> {
             //  if (response.file != null) {}
 
             if (_photo != null) {
-              navigatorKey.currentState!.push(
+              Navigator.push(
+                context,
                 MaterialPageRoute(
-                  builder: (_) {
-                    return ConfirmPhoto(
-                      photo: _photo,
-                    );
-                  },
+                  builder: (context) => ConfirmPhoto(
+                    photo: _photo,
+                  ),
                 ),
               );
             }
@@ -225,7 +225,6 @@ class ConfirmPhoto extends StatelessWidget {
                       await uploader.uploadPhotoByBytes(imageBytes);
                     }
                     controller.stop();
-                    // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   },
                   controller: controller,

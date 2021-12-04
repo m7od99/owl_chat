@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Language extends StatelessWidget {
-  const Language({
+class LanguagePage extends StatelessWidget {
+  static String id = 'language';
+
+  const LanguagePage({
     Key? key,
   }) : super(key: key);
 

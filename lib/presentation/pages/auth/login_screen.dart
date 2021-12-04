@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -12,8 +16,6 @@ import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
 import '../../widgets/large_button.dart';
 import '../../widgets/logo.dart';
-import '../chats/loading.dart';
-import 'sign_up_screen.dart';
 import 'widgets/error_form.dart';
 import 'widgets/forgot_password.dart';
 
@@ -39,8 +41,7 @@ class LoginScreen extends StatelessWidget {
           if (user.isLogin) {
             _load.success();
             validator.clearErrors();
-            // ignore: use_build_context_synchronously
-            await Navigator.pushNamed(context, ChatsScreen.id);
+            context.go('/');
           } else {
             _load.error();
           }
@@ -114,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(width: 5),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, SignUpScreen.id);
+                            context.goNamed(SignUpScreen.id);
                           },
                           child: Text(LocaleKeys.register.tr()),
                         ),

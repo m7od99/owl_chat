@@ -14,7 +14,7 @@ class UserState extends ChangeNotifier {
     await _userControl.login(email, password);
     if (_userControl.isLogin) {
       log('login');
-      await updateOwlUser();
+      await saveUser();
     }
   }
 
@@ -32,6 +32,21 @@ class UserState extends ChangeNotifier {
     }
   }
 
+  Future saveUser() async {
+    if (_userControl.isLogin) {
+      user.id = _userControl.userId;
+      user.userName = userName;
+      user.email = email;
+      user.photoUri = photoUri;
+      user.isOnline = true;
+      user.tokens = await _userControl.getToken();
+
+      await _userControl.saveUser(user);
+
+      notifyListeners();
+    }
+  }
+
   Future updateOnChat(String chatId) async {
     user.onChat = chatId;
     notifyListeners();
@@ -41,7 +56,7 @@ class UserState extends ChangeNotifier {
   Future<void> signUp(String email, String password, String userName) async {
     await _userControl.signUp(email, password, userName);
 
-    await updateOwlUser();
+    await saveUser();
   }
 
   Future<List<OwlUser>> getUsers() async {
@@ -73,8 +88,8 @@ class UserState extends ChangeNotifier {
 
   Future updatePhoto(String uri) async {
     user.photoUri = uri;
-    notifyListeners();
     await _userControl.updatePhoto(uri);
+    notifyListeners();
   }
 
   Future updateUser(OwlUser user) async {
@@ -106,14 +121,18 @@ class UserState extends ChangeNotifier {
   String? get photoUri => _userControl.userUriPhoto;
 
   String otherName(Chat chat) {
-    if (chat.me!.id == userId) {
+    if (chat.other!.id == userId && chat.me!.id == userId) {
+      return userName;
+    } else if (chat.other!.id != userId) {
       return chat.other!.userName;
     }
     return chat.me!.userName;
   }
 
   String otherId(Chat chat) {
-    if (chat.me!.id == userId) {
+    if (chat.other!.id == userId && chat.me!.id == userId) {
+      return userId;
+    } else if (chat.other!.id != userId) {
       return chat.other!.id;
     }
     return chat.me!.id;

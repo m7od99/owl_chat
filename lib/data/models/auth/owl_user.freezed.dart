@@ -33,7 +33,8 @@ class _$OwlTearOff {
       String? userState,
       String? userTheme,
       List<String>? chats,
-      List<String>? friends}) {
+      List<String>? friends,
+      List<String>? blockedList}) {
     return _Owl(
       id: id,
       userName: userName,
@@ -47,6 +48,7 @@ class _$OwlTearOff {
       userTheme: userTheme,
       chats: chats,
       friends: friends,
+      blockedList: blockedList,
     );
   }
 
@@ -72,6 +74,7 @@ mixin _$Owl {
   String? get userTheme => throw _privateConstructorUsedError;
   List<String>? get chats => throw _privateConstructorUsedError;
   List<String>? get friends => throw _privateConstructorUsedError;
+  List<String>? get blockedList => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -94,7 +97,8 @@ abstract class $OwlCopyWith<$Res> {
       String? userState,
       String? userTheme,
       List<String>? chats,
-      List<String>? friends});
+      List<String>? friends,
+      List<String>? blockedList});
 }
 
 /// @nodoc
@@ -119,6 +123,7 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
     Object? userTheme = freezed,
     Object? chats = freezed,
     Object? friends = freezed,
+    Object? blockedList = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -169,6 +174,10 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
           ? _value.friends
           : friends // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      blockedList: blockedList == freezed
+          ? _value.blockedList
+          : blockedList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -190,7 +199,8 @@ abstract class _$OwlCopyWith<$Res> implements $OwlCopyWith<$Res> {
       String? userState,
       String? userTheme,
       List<String>? chats,
-      List<String>? friends});
+      List<String>? friends,
+      List<String>? blockedList});
 }
 
 /// @nodoc
@@ -216,6 +226,7 @@ class __$OwlCopyWithImpl<$Res> extends _$OwlCopyWithImpl<$Res>
     Object? userTheme = freezed,
     Object? chats = freezed,
     Object? friends = freezed,
+    Object? blockedList = freezed,
   }) {
     return _then(_Owl(
       id: id == freezed
@@ -266,6 +277,10 @@ class __$OwlCopyWithImpl<$Res> extends _$OwlCopyWithImpl<$Res>
           ? _value.friends
           : friends // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      blockedList: blockedList == freezed
+          ? _value.blockedList
+          : blockedList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -285,7 +300,8 @@ class _$_Owl implements _Owl {
       this.userState,
       this.userTheme,
       this.chats,
-      this.friends});
+      this.friends,
+      this.blockedList});
 
   factory _$_Owl.fromJson(Map<String, dynamic> json) => _$$_OwlFromJson(json);
 
@@ -313,10 +329,12 @@ class _$_Owl implements _Owl {
   final List<String>? chats;
   @override
   final List<String>? friends;
+  @override
+  final List<String>? blockedList;
 
   @override
   String toString() {
-    return 'Owl(id: $id, userName: $userName, email: $email, onChat: $onChat, lastSeen: $lastSeen, token: $token, photoUri: $photoUri, country: $country, userState: $userState, userTheme: $userTheme, chats: $chats, friends: $friends)';
+    return 'Owl(id: $id, userName: $userName, email: $email, onChat: $onChat, lastSeen: $lastSeen, token: $token, photoUri: $photoUri, country: $country, userState: $userState, userTheme: $userTheme, chats: $chats, friends: $friends, blockedList: $blockedList)';
   }
 
   @override
@@ -340,7 +358,9 @@ class _$_Owl implements _Owl {
             (identical(other.userTheme, userTheme) ||
                 other.userTheme == userTheme) &&
             const DeepCollectionEquality().equals(other.chats, chats) &&
-            const DeepCollectionEquality().equals(other.friends, friends));
+            const DeepCollectionEquality().equals(other.friends, friends) &&
+            const DeepCollectionEquality()
+                .equals(other.blockedList, blockedList));
   }
 
   @override
@@ -357,7 +377,8 @@ class _$_Owl implements _Owl {
       userState,
       userTheme,
       const DeepCollectionEquality().hash(chats),
-      const DeepCollectionEquality().hash(friends));
+      const DeepCollectionEquality().hash(friends),
+      const DeepCollectionEquality().hash(blockedList));
 
   @JsonKey(ignore: true)
   @override
@@ -383,7 +404,8 @@ abstract class _Owl implements Owl {
       String? userState,
       String? userTheme,
       List<String>? chats,
-      List<String>? friends}) = _$_Owl;
+      List<String>? friends,
+      List<String>? blockedList}) = _$_Owl;
 
   factory _Owl.fromJson(Map<String, dynamic> json) = _$_Owl.fromJson;
 
@@ -411,6 +433,8 @@ abstract class _Owl implements Owl {
   List<String>? get chats;
   @override
   List<String>? get friends;
+  @override
+  List<String>? get blockedList;
   @override
   @JsonKey(ignore: true)
   _$OwlCopyWith<_Owl> get copyWith => throw _privateConstructorUsedError;

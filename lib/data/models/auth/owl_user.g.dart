@@ -21,6 +21,9 @@ _$_Owl _$$_OwlFromJson(Map<String, dynamic> json) => _$_Owl(
           (json['chats'] as List<dynamic>?)?.map((e) => e as String).toList(),
       friends:
           (json['friends'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      blockedList: (json['blockedList'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_OwlToJson(_$_Owl instance) => <String, dynamic>{
@@ -36,4 +39,5 @@ Map<String, dynamic> _$$_OwlToJson(_$_Owl instance) => <String, dynamic>{
       'userTheme': instance.userTheme,
       'chats': instance.chats,
       'friends': instance.friends,
+      'blockedList': instance.blockedList,
     };

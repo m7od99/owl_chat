@@ -48,9 +48,13 @@ class SendMessageState extends ChangeNotifier {
     }
   }
 
-  Future sendGif({required String chatId, required String receiverId}) async {
+  Future sendGif({
+    required String chatId,
+    required String receiverId,
+    required String uri,
+  }) async {
     if (_textMessage.isNotEmpty) {
-      final message = await createGifMessage(receiverId);
+      final message = await createGifMessage(receiverId, uri);
       try {
         await _messageControl.sendMessage(message, chatId);
       } catch (e) {
@@ -88,12 +92,12 @@ class SendMessageState extends ChangeNotifier {
     return message;
   }
 
-  Future<Message> createGifMessage(String receiverId) async {
+  Future<Message> createGifMessage(String receiverId, String uri) async {
     final message = Message(
       isMe: true,
       receiver: receiverId,
       sender: _user.userId,
-      text: _textMessage,
+      text: uri,
       time: Timestamp.now(),
       isGif: true,
       type: MessageType.gif,

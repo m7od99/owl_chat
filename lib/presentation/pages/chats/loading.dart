@@ -38,8 +38,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.detached ||
-        state == AppLifecycleState.paused) {
+    if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
       user.updateOnChat('null');
     }
   }

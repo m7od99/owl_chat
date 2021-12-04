@@ -20,6 +20,7 @@ class Owl with _$Owl {
     String? userTheme,
     List<String>? chats,
     List<String>? friends,
+    List<String>? blockedList,
   }) = _Owl;
 
   factory Owl.fromJson(Map<String, dynamic> json) => _$OwlFromJson(json);

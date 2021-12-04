@@ -94,4 +94,13 @@ class MessageControl extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<Chat?> getSpecificChat(
+    String chatId,
+  ) async {
+    final docs = await _firestore.collection('messages').doc(chatId).get();
+    if (docs.exists) {
+      return Chat.fromMap(docs.data()!);
+    }
+  }
 }

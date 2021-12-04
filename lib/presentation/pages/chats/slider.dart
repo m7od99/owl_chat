@@ -2,16 +2,16 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/drawer/gf_drawer.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:owl_chat/app/my_app.dart';
+import 'package:go_router/go_router.dart';
+import 'package:owl_chat/presentation/pages/settings/about.dart';
+import 'package:owl_chat/presentation/pages/settings/change_photo.dart';
+import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../logic/event_handler/user_state.dart';
-import '../../widgets/sign_out_button.dart';
-import '../settings/change_photo.dart';
-import '../settings/language.dart';
-import '../settings/settings_screen.dart';
 import '../settings/theme_sw.dart';
+import 'widgets/sign_out_button.dart';
 
 class SliderPage extends StatelessWidget {
   const SliderPage({
@@ -34,7 +34,7 @@ class SliderPage extends StatelessWidget {
             closeButton: Container(),
             currentAccountPicture: InkWell(
               onTap: () async {
-                await Navigator.pushNamed(context, ChangePhoto.id);
+                context.goNamed(ChangePhoto.id);
               },
               child: const ProfilePhoto(size: 80),
             ),
@@ -56,20 +56,13 @@ class SliderPage extends StatelessWidget {
             title: const Text('Theme'),
             trailing: const Icon(Icons.color_lens_outlined),
             onTap: () {
-              Navigator.pushNamed(context, ThemePage.id);
+              context.goNamed(ThemePage.id);
             },
           ),
           ListTile(
             title: const Text('Language'),
             trailing: const Icon(Icons.language),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Language(),
-                ),
-              );
-            },
+            onTap: () {},
           ),
           ListTile(
             title: const Text('Notifications'),
@@ -82,63 +75,18 @@ class SliderPage extends StatelessWidget {
             title: const Text('Settings'),
             trailing: const Icon(Icons.settings),
             onTap: () {
-              Navigator.pushNamed(context, SettingsScreen.id);
+              context.goNamed(SettingsScreen.id);
             },
           ),
           ListTile(
             title: const Text('About'),
             trailing: const Icon(Icons.info_outline),
             onTap: () {
-              navigatorKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (_) {
-                    return const AboutPage();
-                  },
-                ),
-              );
+              context.goNamed(AboutPage.id);
             },
           ),
           const LogoutButton()
         ],
-      ),
-    );
-  }
-}
-
-class AboutPage extends StatelessWidget {
-  const AboutPage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About'),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              children: const [
-                Text(
-                  'OwlChat Project',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'version 0.0.1 alpha',
-                  style: TextStyle(fontSize: 17),
-                ),
-                SizedBox(height: 50),
-                Text('Owl Chat is App made by ')
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

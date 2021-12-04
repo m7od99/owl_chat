@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/data_controller/message_control.dart';
 import '../../../../data/models/chats/chat.dart';
 import '../../../../logic/event_handler/chats_logic.dart';
 import '../../../../logic/event_handler/user_state.dart';
-import '../../chat/chat_screen.dart';
 import 'friend_card.dart';
 
 class ChatsStream extends StatelessWidget {
@@ -45,12 +45,8 @@ class ChatsStream extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) => FriendCard(
               chat: chats[index],
               onTap: () async {
-                user.updateOnChat(chats[index].id);
-                await Navigator.pushNamed(
-                  context,
-                  ChatScreen.id,
-                  arguments: chats[index],
-                );
+                user.updateOnChat(user.otherId(chats[index]));
+                context.go('/chat/${chats[index].id}', extra: chats[index]);
               },
             ),
             separatorBuilder: (BuildContext context, int index) => const Divider(),

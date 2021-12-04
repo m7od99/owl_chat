@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:owl_chat/presentation/pages/chat/widgets/messages_bloc_widget.dart';
-import 'package:owl_chat/presentation/widgets/profile_photo.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chats/chat.dart';
 import '../../../logic/event_handler/user_state.dart';
+import '../../widgets/profile_photo.dart';
+import 'widgets/messages_bloc_widget.dart';
 import 'widgets/send_message_field.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -82,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () async {
             user.updateOnChat('null');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Row(

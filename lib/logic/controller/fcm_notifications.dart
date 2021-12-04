@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/helper/credentials.dart' as credentials;
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 
@@ -17,12 +16,13 @@ class FCMNotifications {
     required String title,
     required String body,
     required String toUserId,
-    required Chat chat,
+    required String chatId,
   }) async {
     final String? token = await _user.getUserToken(toUserId);
-    final onChat = await isOnChat(toUserId, chat.id);
+    final onChat = await isOnChat(toUserId);
+    final isSame = await isSameToken(token);
 
-    if (token != null && body.isNotEmpty && !onChat) {
+    if (token != null && body.isNotEmpty && !onChat && !isSame) {
       try {
         final http.Response res = await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -41,7 +41,7 @@ class FCMNotifications {
               'data': {
                 'click_action': 'FLUTTER_NOTIFICATION_CLICK',
                 'type': 'chat',
-                'chat': chat.toMap(),
+                'chat': chatId,
               },
               'to': token,
             },
@@ -55,13 +55,33 @@ class FCMNotifications {
         log(e.toString());
       }
     } else {
-      log('cant get token');
+      if (token == null) {
+        log('token is null');
+      }
+      if (isSame) {
+        log('you try send message to you');
+      }
+      if (onChat) {
+        log('he is already on the chat');
+      }
+      if (body.isEmpty) {
+        log('cant send empty message');
+      }
     }
   }
 
-  Future<bool> isOnChat(String id, String chatId) async {
-    final String? onChat = await _user.getOnChat(id);
-    if (onChat == chatId) {
+  Future<bool> isOnChat(String otherUserId) async {
+    final String? otherUserOnChat = await _user.getOnChat(otherUserId);
+    if (otherUserOnChat == _user.userId) {
+      return true;
+    }
+    return false;
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  Future<bool> isSameToken(String? toToken) async {
+    final myToken = await _user.getToken();
+    if (myToken == toToken) {
       return true;
     }
     return false;
