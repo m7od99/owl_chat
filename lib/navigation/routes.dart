@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:googleapis/spanner/v1.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/presentation/pages/auth/login_screen.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
@@ -15,6 +14,7 @@ import 'package:owl_chat/presentation/pages/settings/change_photo.dart';
 import 'package:owl_chat/presentation/pages/settings/language.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/theme_sw.dart';
+import 'package:owl_chat/presentation/pages/settings/update_page.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Routes {
@@ -137,6 +137,20 @@ class Routes {
     pageBuilder: (context, state) {
       return MaterialPage(
         child: const AboutPage(),
+        key: state.pageKey,
+      );
+    },
+    routes: [
+      update,
+    ],
+  );
+
+  static final update = GoRoute(
+    path: 'update',
+    name: UpdatePage.id,
+    pageBuilder: (context, state) {
+      return MaterialPage(
+        child: const UpdatePage(),
         key: state.pageKey,
       );
     },

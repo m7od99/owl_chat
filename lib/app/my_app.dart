@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/data_controller/update_control.dart';
 import 'package:owl_chat/navigation/router.dart';
 import "package:provider/provider.dart";
 

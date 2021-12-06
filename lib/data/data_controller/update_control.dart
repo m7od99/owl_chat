@@ -24,4 +24,12 @@ class UpdateControl {
       }
     });
   }
+
+  Stream<Update?> getUpdateData() async* {
+    yield* _firestore
+        .collection('update')
+        .doc('qgbGVG3A0S24q8s8r0wi')
+        .snapshots()
+        .map<Update>((e) => Update.fromMap(e.data()!));
+  }
 }
