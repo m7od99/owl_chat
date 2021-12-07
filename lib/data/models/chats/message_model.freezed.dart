@@ -276,21 +276,29 @@ class _$_MessageModel implements _MessageModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MessageModel &&
-            (identical(other.data, data) || other.data == data) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.receiver, receiver) ||
-                other.receiver == receiver) &&
-            (identical(other.time, time) || other.time == time) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.isSend, isSend) || other.isSend == isSend) &&
-            (identical(other.isSeen, isSeen) || other.isSeen == isSeen) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.chatId, chatId) || other.chatId == chatId));
+            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality().equals(other.sender, sender) &&
+            const DeepCollectionEquality().equals(other.receiver, receiver) &&
+            const DeepCollectionEquality().equals(other.time, time) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.isSend, isSend) &&
+            const DeepCollectionEquality().equals(other.isSeen, isSeen) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.chatId, chatId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data, sender, receiver, time,
-      type, isSend, isSeen, id, chatId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(sender),
+      const DeepCollectionEquality().hash(receiver),
+      const DeepCollectionEquality().hash(time),
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(isSend),
+      const DeepCollectionEquality().hash(isSeen),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(chatId));
 
   @JsonKey(ignore: true)
   @override

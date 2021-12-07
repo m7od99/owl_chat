@@ -15,7 +15,10 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
   UpdateBloc() : super(const UpdateState()) {
     on<NewUpdateEvent>(_onNewUpdateEvent);
 
-    on<AcceptUpdateEvent>((event, emit) async {});
+    on<AcceptUpdateEvent>((event, emit) async {
+      final uri = state.update.uri;
+      UpdateManger().upgrade(uri);
+    });
 
     on<CancelUpdateEvent>((event, emit) async {
       return;
@@ -34,24 +37,25 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
     });
   }
 
+  // ignore: cancel_subscriptions
   StreamSubscription? _streamSubscription;
 
-  Future<bool> checkFroNewUpdate() async {
-    final control = UpdateControl();
+  // Future<bool> checkFroNewUpdate() async {
+  //   final control = UpdateControl();
 
-    final update = await control.getUpdateStatus();
+  //   final update = await control.getUpdateStatus();
 
-    final runVersion = await PackageInfo.fromPlatform();
+  //   final runVersion = await PackageInfo.fromPlatform();
 
-    final runningVersion = Version.parse(runVersion.version);
-    final latestVersion = Version.parse(update!.newVersions);
+  //   final runningVersion = Version.parse(runVersion.version);
+  //   final latestVersion = Version.parse(update!.newVersions);
 
-    if (latestVersion > runningVersion) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  //   if (latestVersion > runningVersion) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   Future _onNewUpdateEvent(NewUpdateEvent event, Emitter emit) async {
     final control = UpdateControl();

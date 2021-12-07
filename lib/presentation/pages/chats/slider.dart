@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/drawer/gf_drawer.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
-import 'package:owl_chat/presentation/pages/settings/about.dart';
+import 'package:owl_chat/presentation/pages/settings/about_page.dart';
 import 'package:owl_chat/presentation/pages/settings/change_photo.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';

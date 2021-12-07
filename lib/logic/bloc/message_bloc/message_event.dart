@@ -7,12 +7,22 @@ abstract class MessageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnWriteEvent extends MessageEvent {}
+class WriteMessage extends MessageEvent {}
 
-class OnSendLocalEvent extends MessageEvent {}
+class SendLocalMessage extends MessageEvent {}
 
-class OnSendOnlineEvent extends MessageEvent {}
+class SendOnlineMessage extends MessageEvent {}
 
-class OnReceiveEvent extends MessageEvent {}
+class ReceiveMessage extends MessageEvent {}
 
-class OnSeenEvent extends MessageEvent {}
+class SeenMessage extends MessageEvent {}
+
+class EditMessage extends MessageEvent {}
+
+class CopyMessage extends MessageEvent {}
+
+class DeleteMessage extends MessageEvent {}
+
+class ForwardMessage extends MessageEvent {}
+
+class ReplayMessage extends MessageEvent {}

@@ -9,7 +9,7 @@ import 'package:owl_chat/presentation/pages/auth/widgets/success_sign_up.dart';
 import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
 import 'package:owl_chat/presentation/pages/chats/chats_screen.dart';
 import 'package:owl_chat/presentation/pages/chats/loading.dart';
-import 'package:owl_chat/presentation/pages/settings/about.dart';
+import 'package:owl_chat/presentation/pages/settings/about_page.dart';
 import 'package:owl_chat/presentation/pages/settings/change_photo.dart';
 import 'package:owl_chat/presentation/pages/settings/language.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';

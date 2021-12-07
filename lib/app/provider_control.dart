@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owl_chat/logic/bloc/bloc/update_bloc.dart';
 import 'package:owl_chat/logic/event_handler/send_message_state.dart';
 import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
@@ -16,16 +18,23 @@ class ProviderControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => MessageControl()),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => UserState()),
-        ChangeNotifierProvider(create: (context) => Validator()),
-        ChangeNotifierProvider(create: (context) => SendMessageState()),
-        ChangeNotifierProvider(create: (context) => AppSettings())
+        BlocProvider<UpdateBloc>(
+          create: (_) => UpdateBloc(),
+        )
       ],
-      child: MyApp(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => MessageControl()),
+          ChangeNotifierProvider(create: (context) => ThemeProvider()),
+          ChangeNotifierProvider(create: (context) => UserState()),
+          ChangeNotifierProvider(create: (context) => Validator()),
+          ChangeNotifierProvider(create: (context) => SendMessageState()),
+          ChangeNotifierProvider(create: (context) => AppSettings())
+        ],
+        child: MyApp(),
+      ),
     );
   }
 }

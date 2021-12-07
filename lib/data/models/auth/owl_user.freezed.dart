@@ -342,21 +342,16 @@ class _$_Owl implements _Owl {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Owl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.onChat, onChat) || other.onChat == onChat) &&
-            (identical(other.lastSeen, lastSeen) ||
-                other.lastSeen == lastSeen) &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.photoUri, photoUri) ||
-                other.photoUri == photoUri) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.userState, userState) ||
-                other.userState == userState) &&
-            (identical(other.userTheme, userTheme) ||
-                other.userTheme == userTheme) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.userName, userName) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.onChat, onChat) &&
+            const DeepCollectionEquality().equals(other.lastSeen, lastSeen) &&
+            const DeepCollectionEquality().equals(other.token, token) &&
+            const DeepCollectionEquality().equals(other.photoUri, photoUri) &&
+            const DeepCollectionEquality().equals(other.country, country) &&
+            const DeepCollectionEquality().equals(other.userState, userState) &&
+            const DeepCollectionEquality().equals(other.userTheme, userTheme) &&
             const DeepCollectionEquality().equals(other.chats, chats) &&
             const DeepCollectionEquality().equals(other.friends, friends) &&
             const DeepCollectionEquality()
@@ -366,16 +361,16 @@ class _$_Owl implements _Owl {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
-      userName,
-      email,
-      onChat,
-      lastSeen,
-      token,
-      photoUri,
-      country,
-      userState,
-      userTheme,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(userName),
+      const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(onChat),
+      const DeepCollectionEquality().hash(lastSeen),
+      const DeepCollectionEquality().hash(token),
+      const DeepCollectionEquality().hash(photoUri),
+      const DeepCollectionEquality().hash(country),
+      const DeepCollectionEquality().hash(userState),
+      const DeepCollectionEquality().hash(userTheme),
       const DeepCollectionEquality().hash(chats),
       const DeepCollectionEquality().hash(friends),
       const DeepCollectionEquality().hash(blockedList));

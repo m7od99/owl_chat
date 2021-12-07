@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:owl_chat/data/data_controller/update_control.dart';
-import 'package:owl_chat/data/models/app/update.dart';
 import 'package:owl_chat/logic/bloc/bloc/update_bloc.dart';
 
 class UpdatePage extends StatelessWidget {
@@ -20,32 +18,51 @@ class UpdatePage extends StatelessWidget {
           children: [
             const Text('....'),
             const Spacer(),
-            BlocProvider(
-              create: (_) => UpdateBloc(),
-              child: BlocBuilder<UpdateBloc, UpdateState>(
-                builder: (context, state) {
-                  context.read<UpdateBloc>().add(NewUpdateEvent());
+            BlocBuilder<UpdateBloc, UpdateState>(
+              builder: (context, state) {
+                context.read<UpdateBloc>().add(NewUpdateEvent());
 
-                  return Text(
-                    '${state.isNewUpdate}',
-                    style: const TextStyle(fontSize: 20),
-                  );
-                },
-              ),
-            ),
-            StreamBuilder<Update?>(
-              stream: UpdateControl().getUpdateData(),
-              builder: (context, snap) {
-                if (snap.hasData) {
-                  return Text(snap.data!.newVersions);
-                }
-                return Container();
+                return newUpdate(context, state);
               },
             ),
+            // StreamBuilder<About?>(
+            //   stream: UpdateControl().getUpdateInfoFromDataBase(),
+            //   builder: (context, snap) {
+            //     if (snap.hasData) {
+            //       return Text(snap.data!.changeLog.first);
+            //     }
+            //     return Container();
+            //   },
+            // ),
             const Spacer(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget newUpdate(BuildContext context, UpdateState state) {
+    if (state.isNewUpdate) {
+      return Column(
+        children: [
+          Text(
+            'there is a new update to version ${state.update.newVersions}',
+            style: const TextStyle(fontSize: 18),
+          ),
+          const Text('more information ...'),
+          const SizedBox(height: 30),
+          ListTile(
+            onTap: () {
+              context.read<UpdateBloc>().add(AcceptUpdateEvent());
+            },
+            title: const Center(child: Text('Update Now')),
+          ),
+        ],
+      );
+    }
+    return const Text(
+      'App is up to date',
+      style: TextStyle(fontSize: 18),
     );
   }
 }

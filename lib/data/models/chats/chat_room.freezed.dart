@@ -218,20 +218,26 @@ class _$_ChatRoom implements _ChatRoom {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ChatRoom &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId1, userId1) || other.userId1 == userId1) &&
-            (identical(other.userId2, userId2) || other.userId2 == userId2) &&
-            (identical(other.totalMessage, totalMessage) ||
-                other.totalMessage == totalMessage) &&
-            (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage) &&
-            (identical(other.timeOfLastMessage, timeOfLastMessage) ||
-                other.timeOfLastMessage == timeOfLastMessage));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.userId1, userId1) &&
+            const DeepCollectionEquality().equals(other.userId2, userId2) &&
+            const DeepCollectionEquality()
+                .equals(other.totalMessage, totalMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.lastMessage, lastMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.timeOfLastMessage, timeOfLastMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId1, userId2,
-      totalMessage, lastMessage, timeOfLastMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(userId1),
+      const DeepCollectionEquality().hash(userId2),
+      const DeepCollectionEquality().hash(totalMessage),
+      const DeepCollectionEquality().hash(lastMessage),
+      const DeepCollectionEquality().hash(timeOfLastMessage));
 
   @JsonKey(ignore: true)
   @override
