@@ -40,6 +40,7 @@ class SendMessageState extends ChangeNotifier {
   }) async {
     if (_textMessage.isNotEmpty) {
       final message = await createTextMessage(receiverId);
+      message.text = rtlFormat(message.text);
       try {
         await _messageControl.sendMessage(message, chatId);
       } catch (e) {
@@ -105,14 +106,14 @@ class SendMessageState extends ChangeNotifier {
     return message;
   }
 
+  final intl.BidiFormatter formatter = intl.BidiFormatter.RTL();
+  final intl.BidiFormatter formatterLtr = intl.BidiFormatter.RTL();
+
   String rtlFormat(String text) {
     if (intl.Bidi.startsWithRtl(text)) {
-      return intl.Bidi.enforceRtlInText(text);
-    } else if (intl.Bidi.startsWithLtr(text)) {
-      return intl.Bidi.enforceLtrInText(text);
-    } else if (intl.Bidi.detectRtlDirectionality(text)) {
-      return intl.Bidi.enforceRtlInText(text);
+      return formatter.wrapWithUnicode(text);
+    } else {
+      return formatterLtr.wrapWithUnicode(text);
     }
-    return text;
   }
 }

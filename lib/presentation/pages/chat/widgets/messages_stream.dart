@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +56,7 @@ class ChatStream extends StatelessWidget {
         }
         return ListView.builder(
           controller: controller,
-          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
           reverse: true,
           itemCount: messages.length,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,

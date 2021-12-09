@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/data/models/chats/message_model.dart';
 
 import '../models/chats/chat.dart';
 import '../models/chats/message.dart';
@@ -37,6 +38,17 @@ class MessageControl extends ChangeNotifier {
         .doc(chatId)
         .collection('messages')
         .add(message.toMap())
+        .catchError((e) {
+      log(e.toString());
+    }).then((value) => log('message send $value'));
+  }
+
+  Future<void> sendMessageModel(MessageModel message, String chatId) async {
+    await _firestore
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
+        .add(message.toJson())
         .catchError((e) {
       log(e.toString());
     }).then((value) => log('message send $value'));

@@ -18,24 +18,27 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: onDoubleTap,
-      child: Hero(
-        createRectTween: (begin, end) => RectTween(begin: begin, end: end),
-        tag: message.text.runes,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-          child: Column(
-            crossAxisAlignment:
-                message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: [
-              if (message.isGif != null && message.isGif == true)
-                GifWidget(message: message)
-              else
-                Bubble(
-                  message: message,
-                ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+      child: GestureDetector(
+        onDoubleTap: onDoubleTap,
+        child: Hero(
+          createRectTween: (begin, end) => RectTween(begin: begin, end: end),
+          tag: message.text.runes,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+            child: Column(
+              crossAxisAlignment:
+                  message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                if (message.isGif != null && message.isGif == true)
+                  GifWidget(message: message)
+                else
+                  Bubble(
+                    message: message,
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -74,7 +77,7 @@ class Bubble extends StatelessWidget {
                   children: const [],
                 ),
                 softWrap: true,
-                textAlign: TextAlign.justify,
+                textAlign: isRtl ? TextAlign.end : TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: settings.chatFontSize,
@@ -82,28 +85,32 @@ class Bubble extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6, left: 10),
-              child: TimeWidget(
-                time: format(message.time),
-              ),
+            TimeWidget(
+              time: format(message.time),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-String format(Timestamp time) {
-  return DateFormat('hh:mm a').format(time.toDate());
-}
-
-String rtlFormat(String text) {
-  if (intl.Bidi.startsWithRtl(text)) {
-    return intl.Bidi.enforceRtlInText(text);
+  String format(Timestamp time) {
+    return DateFormat('hh:mm a').format(time.toDate());
   }
-  return text;
+
+  String rtlFormat(String text) {
+    if (intl.Bidi.startsWithRtl(text)) {
+      return intl.Bidi.enforceRtlInText(text);
+    }
+    return text;
+  }
+
+  bool get isRtl {
+    if (intl.Bidi.startsWithRtl(message.text)) {
+      return true;
+    }
+    return false;
+  }
 }
 
 class TimeWidget extends StatelessWidget {
@@ -114,7 +121,10 @@ class TimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 6),
+      padding: const EdgeInsets.only(
+        top: 6,
+        left: 6,
+      ),
       child: Text(
         time,
         style: const TextStyle(
@@ -127,13 +137,13 @@ class TimeWidget extends StatelessWidget {
 }
 
 const meBorder = BorderRadius.only(
-  topLeft: Radius.circular(20),
-  topRight: Radius.circular(20),
-  bottomLeft: Radius.circular(20),
+  topLeft: Radius.circular(25),
+  bottomLeft: Radius.circular(25),
+  bottomRight: Radius.circular(25),
 );
 
 const otherBorder = BorderRadius.only(
-  topRight: Radius.circular(20),
-  topLeft: Radius.circular(20),
-  bottomRight: Radius.circular(20),
+  topRight: Radius.circular(25),
+  bottomRight: Radius.circular(25),
+  bottomLeft: Radius.circular(25),
 );

@@ -7,7 +7,25 @@ abstract class MessageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class WriteMessage extends MessageEvent {}
+class OpenChatRoom extends MessageEvent {
+  const OpenChatRoom({
+    required this.sender,
+    required this.receiver,
+    required this.chatRoomId,
+  });
+
+  final String sender;
+  final String receiver;
+  final String chatRoomId;
+}
+
+class WriteMessage extends MessageEvent {
+  const WriteMessage({
+    required this.text,
+  });
+
+  final String text;
+}
 
 class SendLocalMessage extends MessageEvent {}
 

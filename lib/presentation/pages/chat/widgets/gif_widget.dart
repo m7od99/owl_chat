@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/helper/helper.dart';
 
 import '../../../../data/models/chats/message.dart';
-import 'message_bubble.dart';
 
 class GifWidget extends StatelessWidget {
   const GifWidget({
@@ -36,7 +36,7 @@ class GifWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
               child: Text(
-                format(message.time),
+                Helper.format(message.time),
                 style: const TextStyle(
                   fontSize: 14,
                 ),

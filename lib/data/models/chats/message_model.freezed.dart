@@ -25,8 +25,10 @@ class _$MessageModelTearOff {
       {required String data,
       required String sender,
       required String receiver,
-      required String time,
-      required String type,
+      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+          DateTime? time,
+      @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+          required MessageType type,
       required bool isSend,
       required bool isSeen,
       required String id,
@@ -54,14 +56,35 @@ const $MessageModel = _$MessageModelTearOff();
 
 /// @nodoc
 mixin _$MessageModel {
+  ///the main data
   String get data => throw _privateConstructorUsedError;
+
+  /// sender id
   String get sender => throw _privateConstructorUsedError;
+
+  /// receiver id
   String get receiver => throw _privateConstructorUsedError;
-  String get time => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+
+  ///the time of sending the message
+  @JsonKey(
+      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  DateTime? get time => throw _privateConstructorUsedError;
+
+  ///the type of message
+  @JsonKey(
+      fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+  MessageType get type => throw _privateConstructorUsedError;
+
+  ///return true if send message successful
   bool get isSend => throw _privateConstructorUsedError;
+
+  ///return true when receiver see the message
   bool get isSeen => throw _privateConstructorUsedError;
+
+  /// represent doc id of message
   String get id => throw _privateConstructorUsedError;
+
+  /// id of chat room
   String? get chatId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -79,8 +102,10 @@ abstract class $MessageModelCopyWith<$Res> {
       {String data,
       String sender,
       String receiver,
-      String time,
-      String type,
+      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+          DateTime? time,
+      @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+          MessageType type,
       bool isSend,
       bool isSeen,
       String id,
@@ -123,11 +148,11 @@ class _$MessageModelCopyWithImpl<$Res> implements $MessageModelCopyWith<$Res> {
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as MessageType,
       isSend: isSend == freezed
           ? _value.isSend
           : isSend // ignore: cast_nullable_to_non_nullable
@@ -159,8 +184,10 @@ abstract class _$MessageModelCopyWith<$Res>
       {String data,
       String sender,
       String receiver,
-      String time,
-      String type,
+      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+          DateTime? time,
+      @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+          MessageType type,
       bool isSend,
       bool isSeen,
       String id,
@@ -205,11 +232,11 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as MessageType,
       isSend: isSend == freezed
           ? _value.isSend
           : isSend // ignore: cast_nullable_to_non_nullable
@@ -237,8 +264,10 @@ class _$_MessageModel implements _MessageModel {
       {required this.data,
       required this.sender,
       required this.receiver,
-      required this.time,
-      required this.type,
+      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+          this.time,
+      @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+          required this.type,
       required this.isSend,
       required this.isSeen,
       required this.id,
@@ -248,22 +277,44 @@ class _$_MessageModel implements _MessageModel {
       _$$_MessageModelFromJson(json);
 
   @override
+
+  ///the main data
   final String data;
   @override
+
+  /// sender id
   final String sender;
   @override
+
+  /// receiver id
   final String receiver;
   @override
-  final String time;
+
+  ///the time of sending the message
+  @JsonKey(
+      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  final DateTime? time;
   @override
-  final String type;
+
+  ///the type of message
+  @JsonKey(
+      fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+  final MessageType type;
   @override
+
+  ///return true if send message successful
   final bool isSend;
   @override
+
+  ///return true when receiver see the message
   final bool isSeen;
   @override
+
+  /// represent doc id of message
   final String id;
   @override
+
+  /// id of chat room
   final String? chatId;
 
   @override
@@ -316,8 +367,10 @@ abstract class _MessageModel implements MessageModel {
       {required String data,
       required String sender,
       required String receiver,
-      required String time,
-      required String type,
+      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+          DateTime? time,
+      @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+          required MessageType type,
       required bool isSend,
       required bool isSeen,
       required String id,
@@ -327,22 +380,44 @@ abstract class _MessageModel implements MessageModel {
       _$_MessageModel.fromJson;
 
   @override
+
+  ///the main data
   String get data;
   @override
+
+  /// sender id
   String get sender;
   @override
+
+  /// receiver id
   String get receiver;
   @override
-  String get time;
+
+  ///the time of sending the message
+  @JsonKey(
+      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  DateTime? get time;
   @override
-  String get type;
+
+  ///the type of message
+  @JsonKey(
+      fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
+  MessageType get type;
   @override
+
+  ///return true if send message successful
   bool get isSend;
   @override
+
+  ///return true when receiver see the message
   bool get isSeen;
   @override
+
+  /// represent doc id of message
   String get id;
   @override
+
+  /// id of chat room
   String? get chatId;
   @override
   @JsonKey(ignore: true)
