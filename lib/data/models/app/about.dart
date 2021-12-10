@@ -28,4 +28,12 @@ class AboutData {
       'Genera fixes',
     ],
   );
+
+  static const about2 = About(
+    version: '0.0.3',
+    changeLog: [
+      'Fix Text Alignment On Text Field',
+      'Fix Text Alignment On Message Bubble',
+    ],
+  );
 }
