@@ -20,7 +20,7 @@ class SendMessageState extends ChangeNotifier {
   String get message => _textMessage;
 
   void updateMessage(String message) {
-    _textMessage = rtlFormat(message);
+    _textMessage = message;
     notifyListeners();
   }
 
@@ -40,7 +40,7 @@ class SendMessageState extends ChangeNotifier {
   }) async {
     if (_textMessage.isNotEmpty) {
       final message = await createTextMessage(receiverId);
-      message.text = rtlFormat(message.text);
+      //  message.text = rtlFormat(message.text);
       try {
         await _messageControl.sendMessage(message, chatId);
       } catch (e) {

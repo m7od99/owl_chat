@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
+import 'package:owl_chat/logic/controller/multi_language_format.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/message.dart';
@@ -70,18 +71,17 @@ class Bubble extends StatelessWidget {
               message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Flexible(
-              child: Text.rich(
-                TextSpan(
-                  text: rtlFormat(message.text),
-                  children: const [],
-                ),
-                softWrap: true,
-                textAlign: isRtl ? TextAlign.end : TextAlign.start,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: settings.chatFontSize,
-                  height: 1.05,
+            AutoDirectionality(
+              text: message.text,
+              child: Flexible(
+                child: Text(
+                  message.text,
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: settings.chatFontSize,
+                    height: 1.05,
+                  ),
                 ),
               ),
             ),
@@ -100,16 +100,9 @@ class Bubble extends StatelessWidget {
 
   String rtlFormat(String text) {
     if (intl.Bidi.startsWithRtl(text)) {
-      return intl.Bidi.enforceRtlInText(text);
+      return intl.BidiFormatter.RTL().wrapWithUnicode(text);
     }
     return text;
-  }
-
-  bool get isRtl {
-    if (intl.Bidi.startsWithRtl(message.text)) {
-      return true;
-    }
-    return false;
   }
 }
 
@@ -138,12 +131,16 @@ class TimeWidget extends StatelessWidget {
 
 const meBorder = BorderRadius.only(
   topLeft: Radius.circular(25),
+  topRight: Radius.circular(25),
+
   bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
+  // bottomRight: Radius.circular(25),
 );
 
 const otherBorder = BorderRadius.only(
   topRight: Radius.circular(25),
+  topLeft: Radius.circular(25),
+
   bottomRight: Radius.circular(25),
-  bottomLeft: Radius.circular(25),
+//  bottomLeft: Radius.circular(25),
 );

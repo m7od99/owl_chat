@@ -49,13 +49,7 @@ class Chats extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: FloatingActionButton(
           backgroundColor: Colors.blueGrey[400],
-          onPressed: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => const Search(),
-            //   ),
-            // );
-          },
+          onPressed: () {},
           child: const Icon(
             Icons.add,
             color: Colors.white,
