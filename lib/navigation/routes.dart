@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/auth/login_screen.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
 import 'package:owl_chat/presentation/pages/auth/widgets/success_sign_up.dart';
@@ -25,6 +26,17 @@ class Routes {
       child: ChatsScreen(),
       key: state.pageKey,
     ),
+    redirect: (state) {
+      final isLogin = UserState().isLogin;
+
+      final goingToLogin = state.location == Routes.login.path;
+
+      if (!isLogin && !goingToLogin) return Routes.login.path;
+
+      if (isLogin && goingToLogin) return Routes.home.path;
+
+      return null;
+    },
     routes: [
       changePhoto,
       chat,

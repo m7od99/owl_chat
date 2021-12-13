@@ -22,9 +22,11 @@ class FormError extends StatelessWidget {
       children: [
         const Icon(Icons.error, color: Colors.red),
         const SizedBox(width: 4),
-        Text(
-          error,
-          style: const TextStyle(color: Colors.red),
+        Flexible(
+          child: Text(
+            error,
+            style: const TextStyle(color: Colors.red),
+          ),
         ),
       ],
     );

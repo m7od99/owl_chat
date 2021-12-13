@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../logic/event_handler/user_state.dart';
@@ -17,8 +20,7 @@ class LogoutButton extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             await Provider.of<UserState>(context, listen: false).logOut();
-
-            // ignore: use_build_context_synchronously
+            context.read<AuthBloc>().add(const TapToSignUpPage());
             context.go('/login');
           },
           child: Material(

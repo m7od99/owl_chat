@@ -16,17 +16,6 @@ final router = GoRouter(
       ),
     );
   },
-  redirect: (state) {
-    final isLogin = UserState().isLogin;
-
-    final goingToLogin = state.location == Routes.login.path;
-
-    if (!isLogin && !goingToLogin) return Routes.login.path;
-
-    if (isLogin && goingToLogin) return Routes.home.path;
-
-    return null;
-  },
   routes: [
     Routes.home,
     Routes.login,

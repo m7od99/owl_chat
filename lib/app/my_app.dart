@@ -45,34 +45,4 @@ class _MyAppState extends State<MyApp> {
       routerDelegate: router.routerDelegate,
     );
   }
-
-//todo: implement new router by go_router package
-  // // ignore: unused_field
-  // final _router = GoRouter(
-  //   errorPageBuilder: (BuildContext context, GoRouterState state) {
-  //     return MaterialPage(
-  //       key: state.pageKey,
-  //       child: Center(
-  //         child: Text(state.error.toString()),
-  //       ),
-  //     );
-  //   },
-  //   routes: [
-  //     GoRoute(
-  //       path: '/chats',
-  //       name: 'chats',
-  //       pageBuilder: (context, state) => MaterialPage(
-  //         key: state.pageKey,
-  //         child: ChatsScreen(),
-  //       ),
-  //     ),
-  //     GoRoute(
-  //       path: '/login',
-  //       pageBuilder: (context, state) => MaterialPage(
-  //         key: state.pageKey,
-  //         child: LoginScreen(),
-  //       ),
-  //     ),
-  //   ],
-  // );
 }

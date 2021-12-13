@@ -4,13 +4,11 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-import '../../../logic/controller/validator.dart';
-import '../../../logic/event_handler/user_state.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
 import '../../widgets/large_button.dart';
@@ -23,117 +21,91 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context);
-    final validator = Provider.of<Validator>(context);
     final _formKey = GlobalKey<FormState>();
-    final _load = RoundedLoadingButtonController();
 
-    String? email;
-    String? password;
-
-    Future onTapAction() async {
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState!.save();
-        try {
-          _load.start();
-          await user.login(email!, password!);
-          if (user.isLogin) {
-            _load.success();
-            validator.clearErrors();
-            context.go('/');
-          } else {
-            _load.error();
-          }
-          _load.stop();
-          _load.reset();
-        } catch (e) {
-          _load.reset();
-          log(e.toString());
-        }
-      }
-    }
-
-    return Form(
-      key: _formKey,
-      child: Scaffold(
-        body: SafeArea(
-          child: SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Logo(
-                      fontSize: 40,
-                      photoSize: 100,
-                    ),
-                    const SizedBox(height: 40),
-                    //email
-                    TextFormField(
-                      onChanged: (value) {
-                        validator.emailValidator(value);
-                        email = value;
-                      },
-                      onSaved: (newValue) => email = newValue,
-                      validator: (value) {
-                        validator.emailNotValidator(value!);
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: inputDecoration(
-                        hint: LocaleKeys.enter_your_email.tr(),
-                        labelText: LocaleKeys.email.tr(),
-                        icon: Icons.mail,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    //password
-                    TextFormField(
-                      obscureText: true,
-                      onChanged: (value) {
-                        validator.passwordValidator(value);
-                        password = value;
-                      },
-                      validator: (value) {
-                        validator.passwordNotValid(value!);
-                      },
-                      decoration: inputDecoration(
-                        hint: LocaleKeys.enter_your_password.tr(),
-                        labelText: LocaleKeys.password.tr(),
-                        icon: Icons.lock,
-                      ),
-                    ),
-                    const ForgotPassword(),
-                    FormError(errors: validator.errors),
-                    const SizedBox(height: 80),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return Form(
+          key: _formKey,
+          child: Scaffold(
+            body: SafeArea(
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        Text(LocaleKeys.dont_have_account.tr()),
-                        const SizedBox(width: 5),
-                        TextButton(
-                          onPressed: () {
-                            context.goNamed(SignUpScreen.id);
+                        const SizedBox(height: 10),
+                        const Logo(
+                          fontSize: 40,
+                          photoSize: 100,
+                        ),
+                        const SizedBox(height: 40),
+                        //email
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: inputDecoration(
+                            hint: LocaleKeys.enter_your_email.tr(),
+                            labelText: LocaleKeys.email.tr(),
+                            icon: Icons.mail,
+                          ),
+                          onChanged: (value) {
+                            context.read<AuthBloc>().add(UpdateEmail(email: value));
                           },
-                          child: Text(LocaleKeys.register.tr()),
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: 20),
+                        //password
+                        TextFormField(
+                          onChanged: (value) {
+                            context.read<AuthBloc>().add(UpdatePassword(value: value));
+                          },
+                          obscureText: true,
+                          decoration: inputDecoration(
+                            hint: LocaleKeys.enter_your_password.tr(),
+                            labelText: LocaleKeys.password.tr(),
+                            icon: Icons.lock,
+                          ),
+                        ),
+                        const ForgotPassword(),
+                        FormError(errors: state.errors),
+                        FormError(errors: state.firebaseError),
+                        const SizedBox(height: 80),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(LocaleKeys.dont_have_account.tr()),
+                            const SizedBox(width: 5),
+                            TextButton(
+                              onPressed: () {
+                                context.read<AuthBloc>().add(const TapToSignUpPage());
+                                context.goNamed(SignUpScreen.id);
+                              },
+                              child: Text(LocaleKeys.register.tr()),
+                            ),
+                          ],
+                        ),
+                        LargeButton(
+                          title: LocaleKeys.login.tr(),
+                          controller: context.read<AuthBloc>().load,
+                          onTap: () async {
+                            try {
+                              context.read<AuthBloc>().add(const LoginPress());
+                            } catch (e) {
+                              log(e.toString());
+                            }
+                          },
                         ),
                       ],
                     ),
-                    LargeButton(
-                      title: LocaleKeys.login.tr(),
-                      controller: _load,
-                      onTap: () async {
-                        await onTapAction();
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

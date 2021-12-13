@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:owl_chat/presentation/theme/error_list.dart';
 
 class Validator extends ChangeNotifier {
+  TextEditingController email = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+
   List<String> errors = [];
 
   void addError({String? error}) {

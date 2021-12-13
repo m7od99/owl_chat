@@ -37,6 +37,14 @@ class ChatsStream extends StatelessWidget {
         final snap = snapshot.data!.docs;
         final data = _chats.getMyChats(snap);
         final List<Chat> chats = _chats.getChats(data);
+        if (chats.isEmpty) {
+          return const Center(
+            child: Text(
+              'You dont have any chat',
+              style: TextStyle(fontSize: 18),
+            ),
+          );
+        }
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.separated(

@@ -62,7 +62,7 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           onTap: () async {
             final chat = await ChatsController().createChatRoom(foundUser);
             // ignore: use_build_context_synchronously
-            context.go('/chat', extra: chat);
+            context.go('/chat/${chat!.id}', extra: chat);
           },
         );
       },
