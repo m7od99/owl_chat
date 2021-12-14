@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/presentation/theme/error_list.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -81,8 +82,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(state.copyWith(errors: state.errors));
 
           try {
+            loadSign.start();
+
             if (state.errors.isEmpty) {
-              load.start();
               await _control.signUp(state.email, state.password, state.userName);
 
               if (_control.isLogin) {
@@ -91,11 +93,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 router.go('/');
               }
             }
-            load.reset();
+            loadSign.reset();
           } on FirebaseAuthException catch (e) {
+            loadSign.reset();
+
             add(OnFirebaseError(error: e.toString()));
           }
-          load.stop();
+          loadSign.reset();
         },
 
         ///
@@ -121,8 +125,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 
-  final UserControl _control = UserControl();
+  final UserState _control = UserState();
   final load = RoundedLoadingButtonController();
+  final loadSign = RoundedLoadingButtonController();
 
   void _addErrorE(String error) {
     if (!state.errors.contains(error)) {

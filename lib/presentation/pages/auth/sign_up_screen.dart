@@ -1,17 +1,24 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../../translations/locale_keys.g.dart';
 import '../../widgets/components.dart';
 import '../../widgets/large_button.dart';
 import 'widgets/error_form.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   static const String id = 'SignUpScreen';
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -107,9 +114,14 @@ class SignUpScreen extends StatelessWidget {
                         LargeButton(
                           title: LocaleKeys.register.tr(),
                           onTap: () async {
-                            context.read<AuthBloc>().add(const SignUpPress());
+                            try {
+                              context.read<AuthBloc>().add(const SignUpPress());
+                            } catch (e) {
+                              log(e.toString());
+                            }
+                            setState(() {});
                           },
-                          controller: context.read<AuthBloc>().load,
+                          controller: context.read<AuthBloc>().loadSign,
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                       ],
