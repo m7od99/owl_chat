@@ -36,4 +36,12 @@ class AboutData {
       'Fix Text Alignment On Message Bubble',
     ],
   );
+
+  static const about3 = About(
+    version: '0.0.4',
+    changeLog: [
+      'Fix registration page behavior',
+      'Fix registration /login page validator issues',
+    ],
+  );
 }
