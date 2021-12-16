@@ -21,7 +21,6 @@ class ProviderControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _userBloc = UserBloc();
     return MultiBlocProvider(
       providers: [
         BlocProvider<UpdateBloc>(
@@ -34,7 +33,7 @@ class ProviderControl extends StatelessWidget {
           create: (context) => AuthBloc(),
         ),
         BlocProvider<UserBloc>(
-          create: (context) => _userBloc,
+          create: (context) => UserBloc(),
         ),
       ],
       child: MultiProvider(
