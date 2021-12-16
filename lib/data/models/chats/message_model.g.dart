@@ -8,7 +8,7 @@ part of 'message_model.dart';
 
 _$_MessageModel _$$_MessageModelFromJson(Map<String, dynamic> json) =>
     _$_MessageModel(
-      data: json['data'] as String,
+      text: json['text'] as String,
       sender: json['sender'] as String,
       receiver: json['receiver'] as String,
       time: MessageModel._timeFromJson(json['time'] as Timestamp?),
@@ -21,7 +21,7 @@ _$_MessageModel _$$_MessageModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_MessageModelToJson(_$_MessageModel instance) =>
     <String, dynamic>{
-      'data': instance.data,
+      'text': instance.text,
       'sender': instance.sender,
       'receiver': instance.receiver,
       'time': MessageModel._timeToJson(instance.time),

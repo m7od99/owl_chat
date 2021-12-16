@@ -3,7 +3,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/presentation/theme/error_list.dart';
@@ -89,8 +88,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
               if (_control.isLogin) {
                 add(const TapToSignUpPage());
-
-                router.go('/');
               }
             }
             loadSign.reset();

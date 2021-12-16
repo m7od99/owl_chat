@@ -13,6 +13,7 @@ import 'package:owl_chat/presentation/pages/chats/loading.dart';
 import 'package:owl_chat/presentation/pages/settings/about_page.dart';
 import 'package:owl_chat/presentation/pages/settings/change_photo.dart';
 import 'package:owl_chat/presentation/pages/settings/language.dart';
+import 'package:owl_chat/presentation/pages/settings/notifications_page.dart';
 import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/theme_sw.dart';
 import 'package:owl_chat/presentation/pages/settings/update_page.dart';
@@ -45,6 +46,7 @@ class Routes {
       theme,
       language,
       about,
+      notifications,
     ],
   );
 
@@ -166,5 +168,14 @@ class Routes {
         key: state.pageKey,
       );
     },
+  );
+
+  static final notifications = GoRoute(
+    path: 'notifications',
+    name: NotificationsPage.id,
+    pageBuilder: (context, state) => MaterialPage(
+      child: const NotificationsPage(),
+      key: state.pageKey,
+    ),
   );
 }

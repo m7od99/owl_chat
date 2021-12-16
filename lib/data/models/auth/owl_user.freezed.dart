@@ -25,13 +25,13 @@ class _$OwlTearOff {
       {required String id,
       required String userName,
       required String email,
+      required UserProfileSettings userSettings,
       String? onChat,
       String? lastSeen,
       String? token,
       String? photoUri,
       String? country,
       String? userState,
-      String? userTheme,
       List<String>? chats,
       List<String>? friends,
       List<String>? blockedList}) {
@@ -39,13 +39,13 @@ class _$OwlTearOff {
       id: id,
       userName: userName,
       email: email,
+      userSettings: userSettings,
       onChat: onChat,
       lastSeen: lastSeen,
       token: token,
       photoUri: photoUri,
       country: country,
       userState: userState,
-      userTheme: userTheme,
       chats: chats,
       friends: friends,
       blockedList: blockedList,
@@ -65,13 +65,13 @@ mixin _$Owl {
   String get id => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  UserProfileSettings get userSettings => throw _privateConstructorUsedError;
   String? get onChat => throw _privateConstructorUsedError;
   String? get lastSeen => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   String? get photoUri => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
   String? get userState => throw _privateConstructorUsedError;
-  String? get userTheme => throw _privateConstructorUsedError;
   List<String>? get chats => throw _privateConstructorUsedError;
   List<String>? get friends => throw _privateConstructorUsedError;
   List<String>? get blockedList => throw _privateConstructorUsedError;
@@ -89,16 +89,18 @@ abstract class $OwlCopyWith<$Res> {
       {String id,
       String userName,
       String email,
+      UserProfileSettings userSettings,
       String? onChat,
       String? lastSeen,
       String? token,
       String? photoUri,
       String? country,
       String? userState,
-      String? userTheme,
       List<String>? chats,
       List<String>? friends,
       List<String>? blockedList});
+
+  $UserProfileSettingsCopyWith<$Res> get userSettings;
 }
 
 /// @nodoc
@@ -114,13 +116,13 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
     Object? id = freezed,
     Object? userName = freezed,
     Object? email = freezed,
+    Object? userSettings = freezed,
     Object? onChat = freezed,
     Object? lastSeen = freezed,
     Object? token = freezed,
     Object? photoUri = freezed,
     Object? country = freezed,
     Object? userState = freezed,
-    Object? userTheme = freezed,
     Object? chats = freezed,
     Object? friends = freezed,
     Object? blockedList = freezed,
@@ -138,6 +140,10 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      userSettings: userSettings == freezed
+          ? _value.userSettings
+          : userSettings // ignore: cast_nullable_to_non_nullable
+              as UserProfileSettings,
       onChat: onChat == freezed
           ? _value.onChat
           : onChat // ignore: cast_nullable_to_non_nullable
@@ -162,10 +168,6 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
           ? _value.userState
           : userState // ignore: cast_nullable_to_non_nullable
               as String?,
-      userTheme: userTheme == freezed
-          ? _value.userTheme
-          : userTheme // ignore: cast_nullable_to_non_nullable
-              as String?,
       chats: chats == freezed
           ? _value.chats
           : chats // ignore: cast_nullable_to_non_nullable
@@ -180,6 +182,13 @@ class _$OwlCopyWithImpl<$Res> implements $OwlCopyWith<$Res> {
               as List<String>?,
     ));
   }
+
+  @override
+  $UserProfileSettingsCopyWith<$Res> get userSettings {
+    return $UserProfileSettingsCopyWith<$Res>(_value.userSettings, (value) {
+      return _then(_value.copyWith(userSettings: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -191,16 +200,19 @@ abstract class _$OwlCopyWith<$Res> implements $OwlCopyWith<$Res> {
       {String id,
       String userName,
       String email,
+      UserProfileSettings userSettings,
       String? onChat,
       String? lastSeen,
       String? token,
       String? photoUri,
       String? country,
       String? userState,
-      String? userTheme,
       List<String>? chats,
       List<String>? friends,
       List<String>? blockedList});
+
+  @override
+  $UserProfileSettingsCopyWith<$Res> get userSettings;
 }
 
 /// @nodoc
@@ -217,13 +229,13 @@ class __$OwlCopyWithImpl<$Res> extends _$OwlCopyWithImpl<$Res>
     Object? id = freezed,
     Object? userName = freezed,
     Object? email = freezed,
+    Object? userSettings = freezed,
     Object? onChat = freezed,
     Object? lastSeen = freezed,
     Object? token = freezed,
     Object? photoUri = freezed,
     Object? country = freezed,
     Object? userState = freezed,
-    Object? userTheme = freezed,
     Object? chats = freezed,
     Object? friends = freezed,
     Object? blockedList = freezed,
@@ -241,6 +253,10 @@ class __$OwlCopyWithImpl<$Res> extends _$OwlCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      userSettings: userSettings == freezed
+          ? _value.userSettings
+          : userSettings // ignore: cast_nullable_to_non_nullable
+              as UserProfileSettings,
       onChat: onChat == freezed
           ? _value.onChat
           : onChat // ignore: cast_nullable_to_non_nullable
@@ -264,10 +280,6 @@ class __$OwlCopyWithImpl<$Res> extends _$OwlCopyWithImpl<$Res>
       userState: userState == freezed
           ? _value.userState
           : userState // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userTheme: userTheme == freezed
-          ? _value.userTheme
-          : userTheme // ignore: cast_nullable_to_non_nullable
               as String?,
       chats: chats == freezed
           ? _value.chats
@@ -292,13 +304,13 @@ class _$_Owl implements _Owl {
       {required this.id,
       required this.userName,
       required this.email,
+      required this.userSettings,
       this.onChat,
       this.lastSeen,
       this.token,
       this.photoUri,
       this.country,
       this.userState,
-      this.userTheme,
       this.chats,
       this.friends,
       this.blockedList});
@@ -312,6 +324,8 @@ class _$_Owl implements _Owl {
   @override
   final String email;
   @override
+  final UserProfileSettings userSettings;
+  @override
   final String? onChat;
   @override
   final String? lastSeen;
@@ -324,8 +338,6 @@ class _$_Owl implements _Owl {
   @override
   final String? userState;
   @override
-  final String? userTheme;
-  @override
   final List<String>? chats;
   @override
   final List<String>? friends;
@@ -334,7 +346,7 @@ class _$_Owl implements _Owl {
 
   @override
   String toString() {
-    return 'Owl(id: $id, userName: $userName, email: $email, onChat: $onChat, lastSeen: $lastSeen, token: $token, photoUri: $photoUri, country: $country, userState: $userState, userTheme: $userTheme, chats: $chats, friends: $friends, blockedList: $blockedList)';
+    return 'Owl(id: $id, userName: $userName, email: $email, userSettings: $userSettings, onChat: $onChat, lastSeen: $lastSeen, token: $token, photoUri: $photoUri, country: $country, userState: $userState, chats: $chats, friends: $friends, blockedList: $blockedList)';
   }
 
   @override
@@ -345,13 +357,14 @@ class _$_Owl implements _Owl {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.userName, userName) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality()
+                .equals(other.userSettings, userSettings) &&
             const DeepCollectionEquality().equals(other.onChat, onChat) &&
             const DeepCollectionEquality().equals(other.lastSeen, lastSeen) &&
             const DeepCollectionEquality().equals(other.token, token) &&
             const DeepCollectionEquality().equals(other.photoUri, photoUri) &&
             const DeepCollectionEquality().equals(other.country, country) &&
             const DeepCollectionEquality().equals(other.userState, userState) &&
-            const DeepCollectionEquality().equals(other.userTheme, userTheme) &&
             const DeepCollectionEquality().equals(other.chats, chats) &&
             const DeepCollectionEquality().equals(other.friends, friends) &&
             const DeepCollectionEquality()
@@ -364,13 +377,13 @@ class _$_Owl implements _Owl {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(userName),
       const DeepCollectionEquality().hash(email),
+      const DeepCollectionEquality().hash(userSettings),
       const DeepCollectionEquality().hash(onChat),
       const DeepCollectionEquality().hash(lastSeen),
       const DeepCollectionEquality().hash(token),
       const DeepCollectionEquality().hash(photoUri),
       const DeepCollectionEquality().hash(country),
       const DeepCollectionEquality().hash(userState),
-      const DeepCollectionEquality().hash(userTheme),
       const DeepCollectionEquality().hash(chats),
       const DeepCollectionEquality().hash(friends),
       const DeepCollectionEquality().hash(blockedList));
@@ -391,13 +404,13 @@ abstract class _Owl implements Owl {
       {required String id,
       required String userName,
       required String email,
+      required UserProfileSettings userSettings,
       String? onChat,
       String? lastSeen,
       String? token,
       String? photoUri,
       String? country,
       String? userState,
-      String? userTheme,
       List<String>? chats,
       List<String>? friends,
       List<String>? blockedList}) = _$_Owl;
@@ -411,6 +424,8 @@ abstract class _Owl implements Owl {
   @override
   String get email;
   @override
+  UserProfileSettings get userSettings;
+  @override
   String? get onChat;
   @override
   String? get lastSeen;
@@ -422,8 +437,6 @@ abstract class _Owl implements Owl {
   String? get country;
   @override
   String? get userState;
-  @override
-  String? get userTheme;
   @override
   List<String>? get chats;
   @override

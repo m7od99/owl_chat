@@ -20,7 +20,7 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
       child: GestureDetector(
         onDoubleTap: onDoubleTap,
         child: Hero(

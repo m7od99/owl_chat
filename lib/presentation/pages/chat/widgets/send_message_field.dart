@@ -112,7 +112,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
                             selectAll: true,
                             paste: true,
                           ),
-                          textCapitalization: TextCapitalization.words,
+                          textCapitalization: TextCapitalization.sentences,
                           onTap: () {
                             setState(() {
                               if (emojiShowing) emojiShowing = !emojiShowing;

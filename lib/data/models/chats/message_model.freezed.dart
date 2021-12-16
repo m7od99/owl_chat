@@ -22,7 +22,7 @@ class _$MessageModelTearOff {
   const _$MessageModelTearOff();
 
   _MessageModel call(
-      {required String data,
+      {required String text,
       required String sender,
       required String receiver,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -34,7 +34,7 @@ class _$MessageModelTearOff {
       required String id,
       String? chatId}) {
     return _MessageModel(
-      data: data,
+      text: text,
       sender: sender,
       receiver: receiver,
       time: time,
@@ -57,7 +57,7 @@ const $MessageModel = _$MessageModelTearOff();
 /// @nodoc
 mixin _$MessageModel {
   ///the main data
-  String get data => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
 
   /// sender id
   String get sender => throw _privateConstructorUsedError;
@@ -99,7 +99,7 @@ abstract class $MessageModelCopyWith<$Res> {
           MessageModel value, $Res Function(MessageModel) then) =
       _$MessageModelCopyWithImpl<$Res>;
   $Res call(
-      {String data,
+      {String text,
       String sender,
       String receiver,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -122,7 +122,7 @@ class _$MessageModelCopyWithImpl<$Res> implements $MessageModelCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? data = freezed,
+    Object? text = freezed,
     Object? sender = freezed,
     Object? receiver = freezed,
     Object? time = freezed,
@@ -133,9 +133,9 @@ class _$MessageModelCopyWithImpl<$Res> implements $MessageModelCopyWith<$Res> {
     Object? chatId = freezed,
   }) {
     return _then(_value.copyWith(
-      data: data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
               as String,
       sender: sender == freezed
           ? _value.sender
@@ -181,7 +181,7 @@ abstract class _$MessageModelCopyWith<$Res>
       __$MessageModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String data,
+      {String text,
       String sender,
       String receiver,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -206,7 +206,7 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? data = freezed,
+    Object? text = freezed,
     Object? sender = freezed,
     Object? receiver = freezed,
     Object? time = freezed,
@@ -217,9 +217,9 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
     Object? chatId = freezed,
   }) {
     return _then(_MessageModel(
-      data: data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
               as String,
       sender: sender == freezed
           ? _value.sender
@@ -261,7 +261,7 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageModel implements _MessageModel {
   const _$_MessageModel(
-      {required this.data,
+      {required this.text,
       required this.sender,
       required this.receiver,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -279,7 +279,7 @@ class _$_MessageModel implements _MessageModel {
   @override
 
   ///the main data
-  final String data;
+  final String text;
   @override
 
   /// sender id
@@ -319,7 +319,7 @@ class _$_MessageModel implements _MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(data: $data, sender: $sender, receiver: $receiver, time: $time, type: $type, isSend: $isSend, isSeen: $isSeen, id: $id, chatId: $chatId)';
+    return 'MessageModel(text: $text, sender: $sender, receiver: $receiver, time: $time, type: $type, isSend: $isSend, isSeen: $isSeen, id: $id, chatId: $chatId)';
   }
 
   @override
@@ -327,7 +327,7 @@ class _$_MessageModel implements _MessageModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _MessageModel &&
-            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality().equals(other.sender, sender) &&
             const DeepCollectionEquality().equals(other.receiver, receiver) &&
             const DeepCollectionEquality().equals(other.time, time) &&
@@ -341,7 +341,7 @@ class _$_MessageModel implements _MessageModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(text),
       const DeepCollectionEquality().hash(sender),
       const DeepCollectionEquality().hash(receiver),
       const DeepCollectionEquality().hash(time),
@@ -364,7 +364,7 @@ class _$_MessageModel implements _MessageModel {
 
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
-      {required String data,
+      {required String text,
       required String sender,
       required String receiver,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -382,7 +382,7 @@ abstract class _MessageModel implements MessageModel {
   @override
 
   ///the main data
-  String get data;
+  String get text;
   @override
 
   /// sender id

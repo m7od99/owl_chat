@@ -31,7 +31,7 @@ class SendLocalMessage extends MessageEvent {}
 
 class SendOnlineMessage extends MessageEvent {}
 
-class ReceiveMessage extends MessageEvent {}
+class LoadMessage extends MessageEvent {}
 
 class SeenMessage extends MessageEvent {}
 

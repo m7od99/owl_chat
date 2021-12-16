@@ -3,7 +3,7 @@ part of 'message_bloc.dart';
 class MessageState extends Equatable {
   const MessageState({
     this.message = const MessageModel(
-      data: '',
+      text: '',
       id: '',
       isSeen: false,
       isSend: false,

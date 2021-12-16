@@ -1,3 +1,5 @@
+// ignore_for_file: cast_nullable_to_non_nullable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
@@ -72,8 +74,9 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
-    // ignore: cast_nullable_to_non_nullable
     final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
+
+    //  user.updateOnChat(chat.id);
 
     return Scaffold(
       appBar: AppBar(

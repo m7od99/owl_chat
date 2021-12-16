@@ -6,7 +6,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as user;
+import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
 
 import '../../../translations/locale_keys.g.dart';
@@ -92,6 +95,13 @@ class LoginScreen extends StatelessWidget {
                           onTap: () async {
                             try {
                               context.read<AuthBloc>().add(const LoginPress());
+                              if (UserControl().isLogin) {
+                                // context
+                                //     .read<user.UserBloc>()
+                                //     .add(const user.SaveUserInServerDatabase());
+
+                                router.go('/');
+                              }
                             } catch (e) {
                               log(e.toString());
                             }

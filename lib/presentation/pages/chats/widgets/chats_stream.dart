@@ -53,7 +53,7 @@ class ChatsStream extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) => FriendCard(
               chat: chats[index],
               onTap: () async {
-                user.updateOnChat(user.otherId(chats[index]));
+                user.updateOnChat(chats[index].id);
                 context.go('/chat/${chats[index].id}', extra: chats[index]);
               },
             ),

@@ -12,7 +12,7 @@ part 'message_model.g.dart';
 class MessageModel with _$MessageModel {
   const factory MessageModel({
     ///the main data
-    required String data,
+    required String text,
 
     /// sender id
     required String sender,

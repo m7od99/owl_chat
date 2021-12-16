@@ -19,7 +19,7 @@ class FCMNotifications {
     required String chatId,
   }) async {
     final String? token = await _user.getUserToken(toUserId);
-    final onChat = await isOnChat(toUserId);
+    final onChat = await isOnChat(toUserId, chatId);
     final isSame = await isSameToken(token);
 
     if (token != null && body.isNotEmpty && !onChat && !isSame) {
@@ -70,9 +70,9 @@ class FCMNotifications {
     }
   }
 
-  Future<bool> isOnChat(String otherUserId) async {
+  Future<bool> isOnChat(String otherUserId, String chatId) async {
     final String? otherUserOnChat = await _user.getOnChat(otherUserId);
-    if (otherUserOnChat == _user.userId) {
+    if (otherUserOnChat == chatId) {
       return true;
     }
     return false;

@@ -27,6 +27,8 @@ class _MyAppState extends State<MyApp> {
       }
     });
 
+    notifications.setupInteractedMessage();
+
     super.initState();
   }
 

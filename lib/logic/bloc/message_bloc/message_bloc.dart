@@ -15,7 +15,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       return emit(
         state.copyWith(
           message: state.message.copyWith(
-            data: event.text,
+            text: event.text,
           ),
         ),
       );

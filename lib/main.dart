@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'app/provider_control.dart';
 import 'logic/controller/notifications.dart';
@@ -10,19 +14,28 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+
+  final Directory appDocDir = await getApplicationDocumentsDirectory();
+
+  final storage = await HydratedStorage.build(
+    storageDirectory: appDocDir,
+  );
   await Notifications().startNotifications();
   Notifications().setupInteractedMessage();
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
-      fallbackLocale: const Locale('en'),
-      path: 'assets/translations',
-      assetLoader: const CodegenLoader(),
-      child: const ProviderControl(),
+  HydratedBlocOverrides.runZoned(
+    () => runApp(
+      EasyLocalization(
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+        ],
+        fallbackLocale: const Locale('en'),
+        path: 'assets/translations',
+        assetLoader: const CodegenLoader(),
+        child: const ProviderControl(),
+      ),
     ),
+    storage: storage,
   );
 }

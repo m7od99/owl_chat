@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
 
 import 'routes.dart';
 

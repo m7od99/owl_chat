@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/navigation/router.dart';
 
 import '../../data/data_controller/user_control.dart';
@@ -29,7 +30,7 @@ class Notifications {
           channelDescription: 'Notification channel for basic tests',
           channelShowBadge: true,
           playSound: true,
-          importance: NotificationImportance.Max,
+          importance: NotificationImportance.Default,
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
         ),
@@ -44,6 +45,17 @@ class Notifications {
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
         ),
+        NotificationChannel(
+          channelKey: 'message_notifications',
+          channelName: 'message notifications',
+          channelDescription: 'Notification channel for messages',
+          channelShowBadge: true,
+          channelGroupKey: 'message_notifications',
+          playSound: true,
+          importance: NotificationImportance.Default,
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white,
+        ),
       ],
       channelGroups: [
         NotificationChannelGroup(
@@ -53,6 +65,10 @@ class Notifications {
         NotificationChannelGroup(
           channelGroupkey: 'high_importance_channel',
           channelGroupName: 'High Importance Notifications',
+        ),
+        NotificationChannelGroup(
+          channelGroupkey: 'message_notifications',
+          channelGroupName: 'message_notifications',
         ),
       ],
     );
@@ -81,6 +97,7 @@ class Notifications {
               groupKey: 'basic_channel',
               title: notification.title,
               body: notification.body,
+              //    category: NotificationCategory.Message,
               autoDismissible: true,
               notificationLayout: NotificationLayout.BigText,
             ),
@@ -123,12 +140,32 @@ class Notifications {
       final chat =
           await ChatsController().getSpecificChat(message.data['chat'] as String);
 
+      UserState().updateOnChat(chat!.id);
       router.go(
-        '/chat/${chat!.id}',
+        '/chat/${chat.id}',
         extra: chat,
       );
     }
+    AwesomeNotifications().requestPermissionToSendNotifications(
+      channelKey: '',
+      permissions: [],
+    );
   }
+
+  final notAllow = [];
+  final allowWithoutSound = const [
+    NotificationPermission.Alert,
+    NotificationPermission.Badge,
+    NotificationPermission.Vibration,
+    NotificationPermission.Light,
+  ];
+  final allowWithSound = const [
+    NotificationPermission.Alert,
+    NotificationPermission.Sound,
+    NotificationPermission.Badge,
+    NotificationPermission.Vibration,
+    NotificationPermission.Light,
+  ];
 }
 
 // Declared as global, outside of any class
