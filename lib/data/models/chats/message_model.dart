@@ -20,51 +20,69 @@ class MessageModel with _$MessageModel {
     /// receiver id
     required String receiver,
 
+    ///
+    required bool isMe,
+
     ///the time of sending the message
     @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-        DateTime? time,
+        required DateTime time,
 
     ///the type of message
     @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-        required MessageType type,
+        MessageType? type,
 
     ///return true if send message successful
-    required bool isSend,
+    bool? isSend,
 
     ///return true when receiver see the message
-    required bool isSeen,
+    bool? isSeen,
 
     /// represent doc id of message
-    required String id,
+    String? id,
 
-    /// id of chat room
+    /// send message to this chat room
     String? chatId,
+
+    ///
+    bool? isReplyMessage,
+
+    ///
+    bool? forwardMessage,
+
+    ///
+    bool? isEdited,
+
+    ///
+    bool? isGif,
+
+    ///
+
+    ///
+    String? replyMessageId,
   }) = _MessageModel;
 
-  static DateTime? _timeFromJson(Timestamp? time) {
-    if (time != null) {
-      return time.toDate();
+  static DateTime _timeFromJson(Timestamp time) {
+    return time.toDate();
+  }
+
+  static Timestamp _timeToJson(DateTime time) {
+    return Timestamp.fromDate(time);
+  }
+
+  static MessageType? _typeFromJson(String? type) {
+    if (type != null) {
+      switch (type) {
+        case 'gif':
+          return MessageType.gif;
+        case 'photo':
+          return MessageType.photo;
+        default:
+          return MessageType.text;
+      }
     }
   }
 
-  static Timestamp? _timeToJson(DateTime? time) {
-    if (time != null) {
-      return Timestamp.fromDate(time);
-    }
-  }
-
-  static MessageType _typeFromJson(String type) {
-    switch (type) {
-      case 'gif':
-        return MessageType.gif;
-      case 'photo':
-        return MessageType.photo;
-      default:
-        return MessageType.text;
-    }
-  }
-
-  static String _typeToJson(MessageType type) {
+  static String? _typeToJson(MessageType? type) {
     return type.toString();
   }
 

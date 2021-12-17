@@ -11,15 +11,15 @@ import 'logic/controller/notifications.dart';
 import 'translations/codegen_loader.g.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+
   final Directory appDocDir = await getApplicationDocumentsDirectory();
 
   final storage = await HydratedStorage.build(
     storageDirectory: appDocDir,
   );
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp();
 
   await Notifications().startNotifications();
   Notifications().setupInteractedMessage();

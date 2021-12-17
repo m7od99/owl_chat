@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/data_controller/message_control.dart';
@@ -45,20 +47,32 @@ class ChatsStream extends StatelessWidget {
             ),
           );
         }
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.separated(
-            itemCount: chats.length,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            itemBuilder: (BuildContext context, int index) => FriendCard(
-              chat: chats[index],
-              onTap: () async {
-                user.updateOnChat(chats[index].id);
-                context.go('/chat/${chats[index].id}', extra: chats[index]);
-              },
-            ),
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
-          ),
+        return BlocBuilder<MessageBloc, MessageState>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                itemCount: chats.length,
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                itemBuilder: (BuildContext context, int index) => FriendCard(
+                  chat: chats[index],
+                  onTap: () async {
+                    context.read<MessageBloc>().add(
+                          OpenChat(
+                            chatId: chats[index].id,
+                            receiver: chats[index].other!.id,
+                            sender: chats[index].me!.id,
+                          ),
+                        );
+
+                    user.updateOnChat(chats[index].id);
+                    context.go('/chat/${chats[index].id}', extra: chats[index]);
+                  },
+                ),
+                separatorBuilder: (BuildContext context, int index) => const Divider(),
+              ),
+            );
+          },
         );
       },
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: cast_nullable_to_non_nullable
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -114,5 +116,15 @@ class MessageControl extends ChangeNotifier {
     if (docs.exists) {
       return Chat.fromMap(docs.data()!);
     }
+  }
+
+  Stream<List<MessageModel>> getMessagesStream(String chatId) {
+    return getMessages(chatId).map((snapshot) {
+      return snapshot.docs.reversed.map<MessageModel>((docs) {
+        final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
+
+        return message.copyWith(id: docs.id);
+      }).toList();
+    });
   }
 }

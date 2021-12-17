@@ -1,28 +1,25 @@
 part of 'message_bloc.dart';
 
-class MessageState extends Equatable {
-  const MessageState({
-    this.message = const MessageModel(
-      text: '',
-      id: '',
-      isSeen: false,
-      isSend: false,
-      receiver: '',
-      sender: '',
-      type: MessageType.text,
-    ),
-  });
+@freezed
+abstract class MessageState with _$MessageState {
+  const factory MessageState({
+    required String chatId,
+    required MessageModel message,
+    required List<MessageModel> messages,
+  }) = _MessageState;
 
-  final MessageModel message;
+  factory MessageState.fromJson(Map<String, dynamic> json) =>
+      _$MessageStateFromJson(json);
 
-  @override
-  List<Object> get props => [message];
-
-  MessageState copyWith({
-    MessageModel? message,
-  }) {
-    return MessageState(
-      message: message ?? this.message,
-    );
-  }
+  factory MessageState.init() => MessageState(
+        message: MessageModel(
+          receiver: '',
+          sender: '',
+          text: '',
+          isMe: true,
+          time: DateTime.now(),
+        ),
+        messages: [],
+        chatId: '',
+      );
 }

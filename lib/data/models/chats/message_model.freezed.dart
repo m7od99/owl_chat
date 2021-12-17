@@ -25,24 +25,36 @@ class _$MessageModelTearOff {
       {required String text,
       required String sender,
       required String receiver,
+      required bool isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-          DateTime? time,
+          required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-          required MessageType type,
-      required bool isSend,
-      required bool isSeen,
-      required String id,
-      String? chatId}) {
+          MessageType? type,
+      bool? isSend,
+      bool? isSeen,
+      String? id,
+      String? chatId,
+      bool? isReplyMessage,
+      bool? forwardMessage,
+      bool? isEdited,
+      bool? isGif,
+      String? replyMessageId}) {
     return _MessageModel(
       text: text,
       sender: sender,
       receiver: receiver,
+      isMe: isMe,
       time: time,
       type: type,
       isSend: isSend,
       isSeen: isSeen,
       id: id,
       chatId: chatId,
+      isReplyMessage: isReplyMessage,
+      forwardMessage: forwardMessage,
+      isEdited: isEdited,
+      isGif: isGif,
+      replyMessageId: replyMessageId,
     );
   }
 
@@ -65,27 +77,46 @@ mixin _$MessageModel {
   /// receiver id
   String get receiver => throw _privateConstructorUsedError;
 
+  ///
+  bool get isMe => throw _privateConstructorUsedError;
+
   ///the time of sending the message
   @JsonKey(
       fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-  DateTime? get time => throw _privateConstructorUsedError;
+  DateTime get time => throw _privateConstructorUsedError;
 
   ///the type of message
   @JsonKey(
       fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-  MessageType get type => throw _privateConstructorUsedError;
+  MessageType? get type => throw _privateConstructorUsedError;
 
   ///return true if send message successful
-  bool get isSend => throw _privateConstructorUsedError;
+  bool? get isSend => throw _privateConstructorUsedError;
 
   ///return true when receiver see the message
-  bool get isSeen => throw _privateConstructorUsedError;
+  bool? get isSeen => throw _privateConstructorUsedError;
 
   /// represent doc id of message
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
 
-  /// id of chat room
+  /// send message to this chat room
   String? get chatId => throw _privateConstructorUsedError;
+
+  ///
+  bool? get isReplyMessage => throw _privateConstructorUsedError;
+
+  ///
+  bool? get forwardMessage => throw _privateConstructorUsedError;
+
+  ///
+  bool? get isEdited => throw _privateConstructorUsedError;
+
+  ///
+  bool? get isGif => throw _privateConstructorUsedError;
+
+  ///
+  ///
+  String? get replyMessageId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -102,14 +133,20 @@ abstract class $MessageModelCopyWith<$Res> {
       {String text,
       String sender,
       String receiver,
+      bool isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-          DateTime? time,
+          DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-          MessageType type,
-      bool isSend,
-      bool isSeen,
-      String id,
-      String? chatId});
+          MessageType? type,
+      bool? isSend,
+      bool? isSeen,
+      String? id,
+      String? chatId,
+      bool? isReplyMessage,
+      bool? forwardMessage,
+      bool? isEdited,
+      bool? isGif,
+      String? replyMessageId});
 }
 
 /// @nodoc
@@ -125,12 +162,18 @@ class _$MessageModelCopyWithImpl<$Res> implements $MessageModelCopyWith<$Res> {
     Object? text = freezed,
     Object? sender = freezed,
     Object? receiver = freezed,
+    Object? isMe = freezed,
     Object? time = freezed,
     Object? type = freezed,
     Object? isSend = freezed,
     Object? isSeen = freezed,
     Object? id = freezed,
     Object? chatId = freezed,
+    Object? isReplyMessage = freezed,
+    Object? forwardMessage = freezed,
+    Object? isEdited = freezed,
+    Object? isGif = freezed,
+    Object? replyMessageId = freezed,
   }) {
     return _then(_value.copyWith(
       text: text == freezed
@@ -145,29 +188,53 @@ class _$MessageModelCopyWithImpl<$Res> implements $MessageModelCopyWith<$Res> {
           ? _value.receiver
           : receiver // ignore: cast_nullable_to_non_nullable
               as String,
+      isMe: isMe == freezed
+          ? _value.isMe
+          : isMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as MessageType,
+              as MessageType?,
       isSend: isSend == freezed
           ? _value.isSend
           : isSend // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       isSeen: isSeen == freezed
           ? _value.isSeen
           : isSeen // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       chatId: chatId == freezed
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isReplyMessage: isReplyMessage == freezed
+          ? _value.isReplyMessage
+          : isReplyMessage // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      forwardMessage: forwardMessage == freezed
+          ? _value.forwardMessage
+          : forwardMessage // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isEdited: isEdited == freezed
+          ? _value.isEdited
+          : isEdited // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isGif: isGif == freezed
+          ? _value.isGif
+          : isGif // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      replyMessageId: replyMessageId == freezed
+          ? _value.replyMessageId
+          : replyMessageId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -184,14 +251,20 @@ abstract class _$MessageModelCopyWith<$Res>
       {String text,
       String sender,
       String receiver,
+      bool isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-          DateTime? time,
+          DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-          MessageType type,
-      bool isSend,
-      bool isSeen,
-      String id,
-      String? chatId});
+          MessageType? type,
+      bool? isSend,
+      bool? isSeen,
+      String? id,
+      String? chatId,
+      bool? isReplyMessage,
+      bool? forwardMessage,
+      bool? isEdited,
+      bool? isGif,
+      String? replyMessageId});
 }
 
 /// @nodoc
@@ -209,12 +282,18 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
     Object? text = freezed,
     Object? sender = freezed,
     Object? receiver = freezed,
+    Object? isMe = freezed,
     Object? time = freezed,
     Object? type = freezed,
     Object? isSend = freezed,
     Object? isSeen = freezed,
     Object? id = freezed,
     Object? chatId = freezed,
+    Object? isReplyMessage = freezed,
+    Object? forwardMessage = freezed,
+    Object? isEdited = freezed,
+    Object? isGif = freezed,
+    Object? replyMessageId = freezed,
   }) {
     return _then(_MessageModel(
       text: text == freezed
@@ -229,29 +308,53 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
           ? _value.receiver
           : receiver // ignore: cast_nullable_to_non_nullable
               as String,
+      isMe: isMe == freezed
+          ? _value.isMe
+          : isMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as MessageType,
+              as MessageType?,
       isSend: isSend == freezed
           ? _value.isSend
           : isSend // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       isSeen: isSeen == freezed
           ? _value.isSeen
           : isSeen // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       chatId: chatId == freezed
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isReplyMessage: isReplyMessage == freezed
+          ? _value.isReplyMessage
+          : isReplyMessage // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      forwardMessage: forwardMessage == freezed
+          ? _value.forwardMessage
+          : forwardMessage // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isEdited: isEdited == freezed
+          ? _value.isEdited
+          : isEdited // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isGif: isGif == freezed
+          ? _value.isGif
+          : isGif // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      replyMessageId: replyMessageId == freezed
+          ? _value.replyMessageId
+          : replyMessageId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -264,14 +367,20 @@ class _$_MessageModel implements _MessageModel {
       {required this.text,
       required this.sender,
       required this.receiver,
+      required this.isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-          this.time,
+          required this.time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-          required this.type,
-      required this.isSend,
-      required this.isSeen,
-      required this.id,
-      this.chatId});
+          this.type,
+      this.isSend,
+      this.isSeen,
+      this.id,
+      this.chatId,
+      this.isReplyMessage,
+      this.forwardMessage,
+      this.isEdited,
+      this.isGif,
+      this.replyMessageId});
 
   factory _$_MessageModel.fromJson(Map<String, dynamic> json) =>
       _$$_MessageModelFromJson(json);
@@ -290,36 +399,61 @@ class _$_MessageModel implements _MessageModel {
   final String receiver;
   @override
 
+  ///
+  final bool isMe;
+  @override
+
   ///the time of sending the message
   @JsonKey(
       fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-  final DateTime? time;
+  final DateTime time;
   @override
 
   ///the type of message
   @JsonKey(
       fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-  final MessageType type;
+  final MessageType? type;
   @override
 
   ///return true if send message successful
-  final bool isSend;
+  final bool? isSend;
   @override
 
   ///return true when receiver see the message
-  final bool isSeen;
+  final bool? isSeen;
   @override
 
   /// represent doc id of message
-  final String id;
+  final String? id;
   @override
 
-  /// id of chat room
+  /// send message to this chat room
   final String? chatId;
+  @override
+
+  ///
+  final bool? isReplyMessage;
+  @override
+
+  ///
+  final bool? forwardMessage;
+  @override
+
+  ///
+  final bool? isEdited;
+  @override
+
+  ///
+  final bool? isGif;
+  @override
+
+  ///
+  ///
+  final String? replyMessageId;
 
   @override
   String toString() {
-    return 'MessageModel(text: $text, sender: $sender, receiver: $receiver, time: $time, type: $type, isSend: $isSend, isSeen: $isSeen, id: $id, chatId: $chatId)';
+    return 'MessageModel(text: $text, sender: $sender, receiver: $receiver, isMe: $isMe, time: $time, type: $type, isSend: $isSend, isSeen: $isSeen, id: $id, chatId: $chatId, isReplyMessage: $isReplyMessage, forwardMessage: $forwardMessage, isEdited: $isEdited, isGif: $isGif, replyMessageId: $replyMessageId)';
   }
 
   @override
@@ -330,12 +464,21 @@ class _$_MessageModel implements _MessageModel {
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality().equals(other.sender, sender) &&
             const DeepCollectionEquality().equals(other.receiver, receiver) &&
+            const DeepCollectionEquality().equals(other.isMe, isMe) &&
             const DeepCollectionEquality().equals(other.time, time) &&
             const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.isSend, isSend) &&
             const DeepCollectionEquality().equals(other.isSeen, isSeen) &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.chatId, chatId));
+            const DeepCollectionEquality().equals(other.chatId, chatId) &&
+            const DeepCollectionEquality()
+                .equals(other.isReplyMessage, isReplyMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.forwardMessage, forwardMessage) &&
+            const DeepCollectionEquality().equals(other.isEdited, isEdited) &&
+            const DeepCollectionEquality().equals(other.isGif, isGif) &&
+            const DeepCollectionEquality()
+                .equals(other.replyMessageId, replyMessageId));
   }
 
   @override
@@ -344,12 +487,18 @@ class _$_MessageModel implements _MessageModel {
       const DeepCollectionEquality().hash(text),
       const DeepCollectionEquality().hash(sender),
       const DeepCollectionEquality().hash(receiver),
+      const DeepCollectionEquality().hash(isMe),
       const DeepCollectionEquality().hash(time),
       const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(isSend),
       const DeepCollectionEquality().hash(isSeen),
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(chatId));
+      const DeepCollectionEquality().hash(chatId),
+      const DeepCollectionEquality().hash(isReplyMessage),
+      const DeepCollectionEquality().hash(forwardMessage),
+      const DeepCollectionEquality().hash(isEdited),
+      const DeepCollectionEquality().hash(isGif),
+      const DeepCollectionEquality().hash(replyMessageId));
 
   @JsonKey(ignore: true)
   @override
@@ -367,14 +516,20 @@ abstract class _MessageModel implements MessageModel {
       {required String text,
       required String sender,
       required String receiver,
+      required bool isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-          DateTime? time,
+          required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-          required MessageType type,
-      required bool isSend,
-      required bool isSeen,
-      required String id,
-      String? chatId}) = _$_MessageModel;
+          MessageType? type,
+      bool? isSend,
+      bool? isSeen,
+      String? id,
+      String? chatId,
+      bool? isReplyMessage,
+      bool? forwardMessage,
+      bool? isEdited,
+      bool? isGif,
+      String? replyMessageId}) = _$_MessageModel;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
       _$_MessageModel.fromJson;
@@ -393,32 +548,57 @@ abstract class _MessageModel implements MessageModel {
   String get receiver;
   @override
 
+  ///
+  bool get isMe;
+  @override
+
   ///the time of sending the message
   @JsonKey(
       fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-  DateTime? get time;
+  DateTime get time;
   @override
 
   ///the type of message
   @JsonKey(
       fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
-  MessageType get type;
+  MessageType? get type;
   @override
 
   ///return true if send message successful
-  bool get isSend;
+  bool? get isSend;
   @override
 
   ///return true when receiver see the message
-  bool get isSeen;
+  bool? get isSeen;
   @override
 
   /// represent doc id of message
-  String get id;
+  String? get id;
   @override
 
-  /// id of chat room
+  /// send message to this chat room
   String? get chatId;
+  @override
+
+  ///
+  bool? get isReplyMessage;
+  @override
+
+  ///
+  bool? get forwardMessage;
+  @override
+
+  ///
+  bool? get isEdited;
+  @override
+
+  ///
+  bool? get isGif;
+  @override
+
+  ///
+  ///
+  String? get replyMessageId;
   @override
   @JsonKey(ignore: true)
   _$MessageModelCopyWith<_MessageModel> get copyWith =>
