@@ -45,15 +45,19 @@ class MessageControl extends ChangeNotifier {
     }).then((value) => log('message send $value'));
   }
 
-  Future<void> sendMessageModel(MessageModel message, String chatId) async {
+  Future<bool> sendMessageModel(MessageModel message, String chatId) async {
+    late bool isSend;
     await _firestore
         .collection('messages')
         .doc(chatId)
         .collection('messages')
         .add(message.toJson())
         .catchError((e) {
-      log(e.toString());
-    }).then((value) => log('message send $value'));
+      isSend = false;
+    }).whenComplete(() {
+      isSend = true;
+    });
+    return isSend;
   }
 
   ///create a new chat room
@@ -82,13 +86,6 @@ class MessageControl extends ChangeNotifier {
         .doc(userId)
         .collection('chats')
         .add(chat.toMap());
-  }
-
-  /// return stream of chats that user have
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getUserChats(
-    String userId,
-  ) async {
-    return _firestore.collection('users').doc(userId).collection('chats').snapshots();
   }
 
   ///get user chats
@@ -123,8 +120,24 @@ class MessageControl extends ChangeNotifier {
       return snapshot.docs.reversed.map<MessageModel>((docs) {
         final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
 
-        return message.copyWith(id: docs.id);
+        return message.copyWith(id: docs.id, isSend: isSend(message.id));
       }).toList();
     });
+  }
+
+  Future updateMessage(MessageModel message) async {
+    await _firestore
+        .collection('messages')
+        .doc(message.chatId)
+        .collection('messages')
+        .doc(message.id)
+        .update(message.toJson());
+  }
+
+  bool isSend(String? id) {
+    if (id != null) {
+      return true;
+    }
+    return false;
   }
 }

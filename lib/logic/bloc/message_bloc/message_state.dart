@@ -6,6 +6,9 @@ abstract class MessageState with _$MessageState {
     required String chatId,
     required MessageModel message,
     required List<MessageModel> messages,
+    required bool isEdit,
+    required bool isReply,
+    required bool isForward,
   }) = _MessageState;
 
   factory MessageState.fromJson(Map<String, dynamic> json) =>
@@ -21,5 +24,8 @@ abstract class MessageState with _$MessageState {
         ),
         messages: [],
         chatId: '',
+        isEdit: false,
+        isForward: false,
+        isReply: false,
       );
 }

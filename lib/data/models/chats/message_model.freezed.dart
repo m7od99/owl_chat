@@ -25,7 +25,7 @@ class _$MessageModelTearOff {
       {required String text,
       required String sender,
       required String receiver,
-      required bool isMe,
+      bool isMe = false,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
           required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
@@ -367,7 +367,7 @@ class _$_MessageModel implements _MessageModel {
       {required this.text,
       required this.sender,
       required this.receiver,
-      required this.isMe,
+      this.isMe = false,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
           required this.time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
@@ -397,6 +397,7 @@ class _$_MessageModel implements _MessageModel {
 
   /// receiver id
   final String receiver;
+  @JsonKey(defaultValue: false)
   @override
 
   ///
@@ -516,7 +517,7 @@ abstract class _MessageModel implements MessageModel {
       {required String text,
       required String sender,
       required String receiver,
-      required bool isMe,
+      bool isMe,
       @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
           required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)

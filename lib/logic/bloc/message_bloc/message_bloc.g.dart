@@ -13,6 +13,9 @@ _$_MessageState _$$_MessageStateFromJson(Map<String, dynamic> json) =>
       messages: (json['messages'] as List<dynamic>)
           .map((e) => MessageModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isEdit: json['isEdit'] as bool,
+      isReply: json['isReply'] as bool,
+      isForward: json['isForward'] as bool,
     );
 
 Map<String, dynamic> _$$_MessageStateToJson(_$_MessageState instance) =>
@@ -20,4 +23,7 @@ Map<String, dynamic> _$$_MessageStateToJson(_$_MessageState instance) =>
       'chatId': instance.chatId,
       'message': instance.message,
       'messages': instance.messages,
+      'isEdit': instance.isEdit,
+      'isReply': instance.isReply,
+      'isForward': instance.isForward,
     };

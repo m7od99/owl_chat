@@ -34,20 +34,26 @@ class _$MessageEventTearOff {
     );
   }
 
-  SendMessage sendMessage() {
-    return const SendMessage();
+  SendMessage sendMessage({required Chat chat}) {
+    return SendMessage(
+      chat: chat,
+    );
   }
 
-  OnSend onSend() {
-    return const OnSend();
+  OnSend onSend({required bool isSend}) {
+    return OnSend(
+      isSend: isSend,
+    );
   }
 
-  OnSeen onSeen() {
-    return const OnSeen();
+  OnSeen onSeen({required String id}) {
+    return OnSeen(
+      id: id,
+    );
   }
 
-  LoadMessages loadMessages() {
-    return const LoadMessages();
+  LoadChatRoomMessages loadChatRoomMessages() {
+    return const LoadChatRoomMessages();
   }
 
   AddMessage addMessage({required MessageModel message}) {
@@ -62,29 +68,58 @@ class _$MessageEventTearOff {
     );
   }
 
-  UpdateMessages updateMessages({required List<MessageModel> messages}) {
-    return UpdateMessages(
+  UpdateChatRoomMessages updateChatRoomMessages(
+      {required List<MessageModel> messages}) {
+    return UpdateChatRoomMessages(
       messages: messages,
     );
   }
 
-  ReplyMessage replyMessage({required String messageId}) {
+  UpdateMessage updateMessage({required MessageModel message}) {
+    return UpdateMessage(
+      message: message,
+    );
+  }
+
+  ReplyMessage replyMessage({required MessageModel message}) {
     return ReplyMessage(
-      messageId: messageId,
+      message: message,
     );
   }
 
   ForwardMessage forwardMessage(
-      {required String messageId, required String chatId}) {
+      {required MessageModel message, required String chatId}) {
     return ForwardMessage(
-      messageId: messageId,
+      message: message,
       chatId: chatId,
     );
   }
 
-  EditMessage editMessage({required String messageId}) {
+  EditMessage editMessage({required MessageModel message}) {
     return EditMessage(
-      messageId: messageId,
+      message: message,
+    );
+  }
+
+  ClearMessage clearMessage() {
+    return const ClearMessage();
+  }
+
+  CancelEdit cancelEdit() {
+    return const CancelEdit();
+  }
+
+  CancelReply cancelReply() {
+    return const CancelReply();
+  }
+
+  CancelForward cancelForward() {
+    return const CancelForward();
+  }
+
+  UpdateChatState updateChatState({required Chat chat}) {
+    return UpdateChatState(
+      chat: chat,
     );
   }
 }
@@ -99,48 +134,68 @@ mixin _$MessageEvent {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -151,13 +206,20 @@ mixin _$MessageEvent {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -167,13 +229,19 @@ mixin _$MessageEvent {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -183,13 +251,19 @@ mixin _$MessageEvent {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -278,16 +352,24 @@ class _$WriteMessage implements WriteMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
     return writeMessage(text);
   }
@@ -297,16 +379,22 @@ class _$WriteMessage implements WriteMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
     return writeMessage?.call(text);
   }
@@ -316,16 +404,22 @@ class _$WriteMessage implements WriteMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (writeMessage != null) {
@@ -342,13 +436,20 @@ class _$WriteMessage implements WriteMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return writeMessage(this);
   }
@@ -361,13 +462,19 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return writeMessage?.call(this);
   }
@@ -380,13 +487,19 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (writeMessage != null) {
@@ -490,16 +603,24 @@ class _$OpenChat implements OpenChat {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
     return openChat(chatId, sender, receiver);
   }
@@ -509,16 +630,22 @@ class _$OpenChat implements OpenChat {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
     return openChat?.call(chatId, sender, receiver);
   }
@@ -528,16 +655,22 @@ class _$OpenChat implements OpenChat {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (openChat != null) {
@@ -554,13 +687,20 @@ class _$OpenChat implements OpenChat {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return openChat(this);
   }
@@ -573,13 +713,19 @@ class _$OpenChat implements OpenChat {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return openChat?.call(this);
   }
@@ -592,13 +738,19 @@ class _$OpenChat implements OpenChat {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (openChat != null) {
@@ -627,6 +779,7 @@ abstract class $SendMessageCopyWith<$Res> {
   factory $SendMessageCopyWith(
           SendMessage value, $Res Function(SendMessage) then) =
       _$SendMessageCopyWithImpl<$Res>;
+  $Res call({Chat chat});
 }
 
 /// @nodoc
@@ -638,26 +791,49 @@ class _$SendMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   SendMessage get _value => super._value as SendMessage;
+
+  @override
+  $Res call({
+    Object? chat = freezed,
+  }) {
+    return _then(SendMessage(
+      chat: chat == freezed
+          ? _value.chat
+          : chat // ignore: cast_nullable_to_non_nullable
+              as Chat,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SendMessage implements SendMessage {
-  const _$SendMessage();
+  const _$SendMessage({required this.chat});
+
+  @override
+  final Chat chat;
 
   @override
   String toString() {
-    return 'MessageEvent.sendMessage()';
+    return 'MessageEvent.sendMessage(chat: $chat)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SendMessage);
+        (other.runtimeType == runtimeType &&
+            other is SendMessage &&
+            const DeepCollectionEquality().equals(other.chat, chat));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(chat));
+
+  @JsonKey(ignore: true)
+  @override
+  $SendMessageCopyWith<SendMessage> get copyWith =>
+      _$SendMessageCopyWithImpl<SendMessage>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -665,18 +841,26 @@ class _$SendMessage implements SendMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return sendMessage();
+    return sendMessage(chat);
   }
 
   @override
@@ -684,18 +868,24 @@ class _$SendMessage implements SendMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return sendMessage?.call();
+    return sendMessage?.call(chat);
   }
 
   @override
@@ -703,20 +893,26 @@ class _$SendMessage implements SendMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
-      return sendMessage();
+      return sendMessage(chat);
     }
     return orElse();
   }
@@ -729,13 +925,20 @@ class _$SendMessage implements SendMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return sendMessage(this);
   }
@@ -748,13 +951,19 @@ class _$SendMessage implements SendMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return sendMessage?.call(this);
   }
@@ -767,13 +976,19 @@ class _$SendMessage implements SendMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -784,13 +999,19 @@ class _$SendMessage implements SendMessage {
 }
 
 abstract class SendMessage implements MessageEvent {
-  const factory SendMessage() = _$SendMessage;
+  const factory SendMessage({required Chat chat}) = _$SendMessage;
+
+  Chat get chat;
+  @JsonKey(ignore: true)
+  $SendMessageCopyWith<SendMessage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $OnSendCopyWith<$Res> {
   factory $OnSendCopyWith(OnSend value, $Res Function(OnSend) then) =
       _$OnSendCopyWithImpl<$Res>;
+  $Res call({bool isSend});
 }
 
 /// @nodoc
@@ -801,26 +1022,49 @@ class _$OnSendCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   OnSend get _value => super._value as OnSend;
+
+  @override
+  $Res call({
+    Object? isSend = freezed,
+  }) {
+    return _then(OnSend(
+      isSend: isSend == freezed
+          ? _value.isSend
+          : isSend // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$OnSend implements OnSend {
-  const _$OnSend();
+  const _$OnSend({required this.isSend});
+
+  @override
+  final bool isSend;
 
   @override
   String toString() {
-    return 'MessageEvent.onSend()';
+    return 'MessageEvent.onSend(isSend: $isSend)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is OnSend);
+        (other.runtimeType == runtimeType &&
+            other is OnSend &&
+            const DeepCollectionEquality().equals(other.isSend, isSend));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(isSend));
+
+  @JsonKey(ignore: true)
+  @override
+  $OnSendCopyWith<OnSend> get copyWith =>
+      _$OnSendCopyWithImpl<OnSend>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -828,18 +1072,26 @@ class _$OnSend implements OnSend {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return onSend();
+    return onSend(isSend);
   }
 
   @override
@@ -847,18 +1099,24 @@ class _$OnSend implements OnSend {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return onSend?.call();
+    return onSend?.call(isSend);
   }
 
   @override
@@ -866,20 +1124,26 @@ class _$OnSend implements OnSend {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (onSend != null) {
-      return onSend();
+      return onSend(isSend);
     }
     return orElse();
   }
@@ -892,13 +1156,20 @@ class _$OnSend implements OnSend {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return onSend(this);
   }
@@ -911,13 +1182,19 @@ class _$OnSend implements OnSend {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return onSend?.call(this);
   }
@@ -930,13 +1207,19 @@ class _$OnSend implements OnSend {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (onSend != null) {
@@ -947,13 +1230,18 @@ class _$OnSend implements OnSend {
 }
 
 abstract class OnSend implements MessageEvent {
-  const factory OnSend() = _$OnSend;
+  const factory OnSend({required bool isSend}) = _$OnSend;
+
+  bool get isSend;
+  @JsonKey(ignore: true)
+  $OnSendCopyWith<OnSend> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $OnSeenCopyWith<$Res> {
   factory $OnSeenCopyWith(OnSeen value, $Res Function(OnSeen) then) =
       _$OnSeenCopyWithImpl<$Res>;
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -964,26 +1252,49 @@ class _$OnSeenCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   OnSeen get _value => super._value as OnSeen;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+  }) {
+    return _then(OnSeen(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$OnSeen implements OnSeen {
-  const _$OnSeen();
+  const _$OnSeen({required this.id});
+
+  @override
+  final String id;
 
   @override
   String toString() {
-    return 'MessageEvent.onSeen()';
+    return 'MessageEvent.onSeen(id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is OnSeen);
+        (other.runtimeType == runtimeType &&
+            other is OnSeen &&
+            const DeepCollectionEquality().equals(other.id, id));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+
+  @JsonKey(ignore: true)
+  @override
+  $OnSeenCopyWith<OnSeen> get copyWith =>
+      _$OnSeenCopyWithImpl<OnSeen>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -991,18 +1302,26 @@ class _$OnSeen implements OnSeen {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return onSeen();
+    return onSeen(id);
   }
 
   @override
@@ -1010,18 +1329,24 @@ class _$OnSeen implements OnSeen {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return onSeen?.call();
+    return onSeen?.call(id);
   }
 
   @override
@@ -1029,20 +1354,26 @@ class _$OnSeen implements OnSeen {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (onSeen != null) {
-      return onSeen();
+      return onSeen(id);
     }
     return orElse();
   }
@@ -1055,13 +1386,20 @@ class _$OnSeen implements OnSeen {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return onSeen(this);
   }
@@ -1074,13 +1412,19 @@ class _$OnSeen implements OnSeen {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return onSeen?.call(this);
   }
@@ -1093,13 +1437,19 @@ class _$OnSeen implements OnSeen {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (onSeen != null) {
@@ -1110,41 +1460,46 @@ class _$OnSeen implements OnSeen {
 }
 
 abstract class OnSeen implements MessageEvent {
-  const factory OnSeen() = _$OnSeen;
+  const factory OnSeen({required String id}) = _$OnSeen;
+
+  String get id;
+  @JsonKey(ignore: true)
+  $OnSeenCopyWith<OnSeen> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LoadMessagesCopyWith<$Res> {
-  factory $LoadMessagesCopyWith(
-          LoadMessages value, $Res Function(LoadMessages) then) =
-      _$LoadMessagesCopyWithImpl<$Res>;
+abstract class $LoadChatRoomMessagesCopyWith<$Res> {
+  factory $LoadChatRoomMessagesCopyWith(LoadChatRoomMessages value,
+          $Res Function(LoadChatRoomMessages) then) =
+      _$LoadChatRoomMessagesCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoadMessagesCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
-    implements $LoadMessagesCopyWith<$Res> {
-  _$LoadMessagesCopyWithImpl(
-      LoadMessages _value, $Res Function(LoadMessages) _then)
-      : super(_value, (v) => _then(v as LoadMessages));
+class _$LoadChatRoomMessagesCopyWithImpl<$Res>
+    extends _$MessageEventCopyWithImpl<$Res>
+    implements $LoadChatRoomMessagesCopyWith<$Res> {
+  _$LoadChatRoomMessagesCopyWithImpl(
+      LoadChatRoomMessages _value, $Res Function(LoadChatRoomMessages) _then)
+      : super(_value, (v) => _then(v as LoadChatRoomMessages));
 
   @override
-  LoadMessages get _value => super._value as LoadMessages;
+  LoadChatRoomMessages get _value => super._value as LoadChatRoomMessages;
 }
 
 /// @nodoc
 
-class _$LoadMessages implements LoadMessages {
-  const _$LoadMessages();
+class _$LoadChatRoomMessages implements LoadChatRoomMessages {
+  const _$LoadChatRoomMessages();
 
   @override
   String toString() {
-    return 'MessageEvent.loadMessages()';
+    return 'MessageEvent.loadChatRoomMessages()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LoadMessages);
+        (other.runtimeType == runtimeType && other is LoadChatRoomMessages);
   }
 
   @override
@@ -1156,18 +1511,26 @@ class _$LoadMessages implements LoadMessages {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return loadMessages();
+    return loadChatRoomMessages();
   }
 
   @override
@@ -1175,18 +1538,24 @@ class _$LoadMessages implements LoadMessages {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return loadMessages?.call();
+    return loadChatRoomMessages?.call();
   }
 
   @override
@@ -1194,20 +1563,26 @@ class _$LoadMessages implements LoadMessages {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
-    if (loadMessages != null) {
-      return loadMessages();
+    if (loadChatRoomMessages != null) {
+      return loadChatRoomMessages();
     }
     return orElse();
   }
@@ -1220,15 +1595,22 @@ class _$LoadMessages implements LoadMessages {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
-    return loadMessages(this);
+    return loadChatRoomMessages(this);
   }
 
   @override
@@ -1239,15 +1621,21 @@ class _$LoadMessages implements LoadMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
-    return loadMessages?.call(this);
+    return loadChatRoomMessages?.call(this);
   }
 
   @override
@@ -1258,24 +1646,30 @@ class _$LoadMessages implements LoadMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
-    if (loadMessages != null) {
-      return loadMessages(this);
+    if (loadChatRoomMessages != null) {
+      return loadChatRoomMessages(this);
     }
     return orElse();
   }
 }
 
-abstract class LoadMessages implements MessageEvent {
-  const factory LoadMessages() = _$LoadMessages;
+abstract class LoadChatRoomMessages implements MessageEvent {
+  const factory LoadChatRoomMessages() = _$LoadChatRoomMessages;
 }
 
 /// @nodoc
@@ -1353,16 +1747,24 @@ class _$AddMessage implements AddMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
     return addMessage(message);
   }
@@ -1372,16 +1774,22 @@ class _$AddMessage implements AddMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
     return addMessage?.call(message);
   }
@@ -1391,16 +1799,22 @@ class _$AddMessage implements AddMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (addMessage != null) {
@@ -1417,13 +1831,20 @@ class _$AddMessage implements AddMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return addMessage(this);
   }
@@ -1436,13 +1857,19 @@ class _$AddMessage implements AddMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return addMessage?.call(this);
   }
@@ -1455,13 +1882,19 @@ class _$AddMessage implements AddMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (addMessage != null) {
@@ -1547,16 +1980,24 @@ class _$RemoveMessage implements RemoveMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
     return removeMessage(messageId);
   }
@@ -1566,16 +2007,22 @@ class _$RemoveMessage implements RemoveMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
     return removeMessage?.call(messageId);
   }
@@ -1585,16 +2032,22 @@ class _$RemoveMessage implements RemoveMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (removeMessage != null) {
@@ -1611,13 +2064,20 @@ class _$RemoveMessage implements RemoveMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return removeMessage(this);
   }
@@ -1630,13 +2090,19 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return removeMessage?.call(this);
   }
@@ -1649,13 +2115,19 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (removeMessage != null) {
@@ -1675,29 +2147,29 @@ abstract class RemoveMessage implements MessageEvent {
 }
 
 /// @nodoc
-abstract class $UpdateMessagesCopyWith<$Res> {
-  factory $UpdateMessagesCopyWith(
-          UpdateMessages value, $Res Function(UpdateMessages) then) =
-      _$UpdateMessagesCopyWithImpl<$Res>;
+abstract class $UpdateChatRoomMessagesCopyWith<$Res> {
+  factory $UpdateChatRoomMessagesCopyWith(UpdateChatRoomMessages value,
+          $Res Function(UpdateChatRoomMessages) then) =
+      _$UpdateChatRoomMessagesCopyWithImpl<$Res>;
   $Res call({List<MessageModel> messages});
 }
 
 /// @nodoc
-class _$UpdateMessagesCopyWithImpl<$Res>
+class _$UpdateChatRoomMessagesCopyWithImpl<$Res>
     extends _$MessageEventCopyWithImpl<$Res>
-    implements $UpdateMessagesCopyWith<$Res> {
-  _$UpdateMessagesCopyWithImpl(
-      UpdateMessages _value, $Res Function(UpdateMessages) _then)
-      : super(_value, (v) => _then(v as UpdateMessages));
+    implements $UpdateChatRoomMessagesCopyWith<$Res> {
+  _$UpdateChatRoomMessagesCopyWithImpl(UpdateChatRoomMessages _value,
+      $Res Function(UpdateChatRoomMessages) _then)
+      : super(_value, (v) => _then(v as UpdateChatRoomMessages));
 
   @override
-  UpdateMessages get _value => super._value as UpdateMessages;
+  UpdateChatRoomMessages get _value => super._value as UpdateChatRoomMessages;
 
   @override
   $Res call({
     Object? messages = freezed,
   }) {
-    return _then(UpdateMessages(
+    return _then(UpdateChatRoomMessages(
       messages: messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -1708,22 +2180,22 @@ class _$UpdateMessagesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UpdateMessages implements UpdateMessages {
-  const _$UpdateMessages({required this.messages});
+class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
+  const _$UpdateChatRoomMessages({required this.messages});
 
   @override
   final List<MessageModel> messages;
 
   @override
   String toString() {
-    return 'MessageEvent.updateMessages(messages: $messages)';
+    return 'MessageEvent.updateChatRoomMessages(messages: $messages)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is UpdateMessages &&
+            other is UpdateChatRoomMessages &&
             const DeepCollectionEquality().equals(other.messages, messages));
   }
 
@@ -1733,8 +2205,9 @@ class _$UpdateMessages implements UpdateMessages {
 
   @JsonKey(ignore: true)
   @override
-  $UpdateMessagesCopyWith<UpdateMessages> get copyWith =>
-      _$UpdateMessagesCopyWithImpl<UpdateMessages>(this, _$identity);
+  $UpdateChatRoomMessagesCopyWith<UpdateChatRoomMessages> get copyWith =>
+      _$UpdateChatRoomMessagesCopyWithImpl<UpdateChatRoomMessages>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1742,18 +2215,26 @@ class _$UpdateMessages implements UpdateMessages {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return updateMessages(messages);
+    return updateChatRoomMessages(messages);
   }
 
   @override
@@ -1761,18 +2242,24 @@ class _$UpdateMessages implements UpdateMessages {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return updateMessages?.call(messages);
+    return updateChatRoomMessages?.call(messages);
   }
 
   @override
@@ -1780,20 +2267,26 @@ class _$UpdateMessages implements UpdateMessages {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
-    if (updateMessages != null) {
-      return updateMessages(messages);
+    if (updateChatRoomMessages != null) {
+      return updateChatRoomMessages(messages);
     }
     return orElse();
   }
@@ -1806,15 +2299,22 @@ class _$UpdateMessages implements UpdateMessages {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
-    return updateMessages(this);
+    return updateChatRoomMessages(this);
   }
 
   @override
@@ -1825,15 +2325,21 @@ class _$UpdateMessages implements UpdateMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
-    return updateMessages?.call(this);
+    return updateChatRoomMessages?.call(this);
   }
 
   @override
@@ -1844,29 +2350,278 @@ class _$UpdateMessages implements UpdateMessages {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
-    if (updateMessages != null) {
-      return updateMessages(this);
+    if (updateChatRoomMessages != null) {
+      return updateChatRoomMessages(this);
     }
     return orElse();
   }
 }
 
-abstract class UpdateMessages implements MessageEvent {
-  const factory UpdateMessages({required List<MessageModel> messages}) =
-      _$UpdateMessages;
+abstract class UpdateChatRoomMessages implements MessageEvent {
+  const factory UpdateChatRoomMessages({required List<MessageModel> messages}) =
+      _$UpdateChatRoomMessages;
 
   List<MessageModel> get messages;
   @JsonKey(ignore: true)
-  $UpdateMessagesCopyWith<UpdateMessages> get copyWith =>
+  $UpdateChatRoomMessagesCopyWith<UpdateChatRoomMessages> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateMessageCopyWith<$Res> {
+  factory $UpdateMessageCopyWith(
+          UpdateMessage value, $Res Function(UpdateMessage) then) =
+      _$UpdateMessageCopyWithImpl<$Res>;
+  $Res call({MessageModel message});
+
+  $MessageModelCopyWith<$Res> get message;
+}
+
+/// @nodoc
+class _$UpdateMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $UpdateMessageCopyWith<$Res> {
+  _$UpdateMessageCopyWithImpl(
+      UpdateMessage _value, $Res Function(UpdateMessage) _then)
+      : super(_value, (v) => _then(v as UpdateMessage));
+
+  @override
+  UpdateMessage get _value => super._value as UpdateMessage;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(UpdateMessage(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as MessageModel,
+    ));
+  }
+
+  @override
+  $MessageModelCopyWith<$Res> get message {
+    return $MessageModelCopyWith<$Res>(_value.message, (value) {
+      return _then(_value.copyWith(message: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$UpdateMessage implements UpdateMessage {
+  const _$UpdateMessage({required this.message});
+
+  @override
+  final MessageModel message;
+
+  @override
+  String toString() {
+    return 'MessageEvent.updateMessage(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateMessage &&
+            const DeepCollectionEquality().equals(other.message, message));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  $UpdateMessageCopyWith<UpdateMessage> get copyWith =>
+      _$UpdateMessageCopyWithImpl<UpdateMessage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return updateMessage(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return updateMessage?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (updateMessage != null) {
+      return updateMessage(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return updateMessage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return updateMessage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (updateMessage != null) {
+      return updateMessage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateMessage implements MessageEvent {
+  const factory UpdateMessage({required MessageModel message}) =
+      _$UpdateMessage;
+
+  MessageModel get message;
+  @JsonKey(ignore: true)
+  $UpdateMessageCopyWith<UpdateMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1875,7 +2630,9 @@ abstract class $ReplyMessageCopyWith<$Res> {
   factory $ReplyMessageCopyWith(
           ReplyMessage value, $Res Function(ReplyMessage) then) =
       _$ReplyMessageCopyWithImpl<$Res>;
-  $Res call({String messageId});
+  $Res call({MessageModel message});
+
+  $MessageModelCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -1890,28 +2647,35 @@ class _$ReplyMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? messageId = freezed,
+    Object? message = freezed,
   }) {
     return _then(ReplyMessage(
-      messageId: messageId == freezed
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as MessageModel,
     ));
+  }
+
+  @override
+  $MessageModelCopyWith<$Res> get message {
+    return $MessageModelCopyWith<$Res>(_value.message, (value) {
+      return _then(_value.copyWith(message: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$ReplyMessage implements ReplyMessage {
-  const _$ReplyMessage({required this.messageId});
+  const _$ReplyMessage({required this.message});
 
   @override
-  final String messageId;
+  final MessageModel message;
 
   @override
   String toString() {
-    return 'MessageEvent.replyMessage(messageId: $messageId)';
+    return 'MessageEvent.replyMessage(message: $message)';
   }
 
   @override
@@ -1919,12 +2683,12 @@ class _$ReplyMessage implements ReplyMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ReplyMessage &&
-            const DeepCollectionEquality().equals(other.messageId, messageId));
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(messageId));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
@@ -1937,18 +2701,26 @@ class _$ReplyMessage implements ReplyMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return replyMessage(messageId);
+    return replyMessage(message);
   }
 
   @override
@@ -1956,18 +2728,24 @@ class _$ReplyMessage implements ReplyMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return replyMessage?.call(messageId);
+    return replyMessage?.call(message);
   }
 
   @override
@@ -1975,20 +2753,26 @@ class _$ReplyMessage implements ReplyMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (replyMessage != null) {
-      return replyMessage(messageId);
+      return replyMessage(message);
     }
     return orElse();
   }
@@ -2001,13 +2785,20 @@ class _$ReplyMessage implements ReplyMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return replyMessage(this);
   }
@@ -2020,13 +2811,19 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return replyMessage?.call(this);
   }
@@ -2039,13 +2836,19 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (replyMessage != null) {
@@ -2056,9 +2859,9 @@ class _$ReplyMessage implements ReplyMessage {
 }
 
 abstract class ReplyMessage implements MessageEvent {
-  const factory ReplyMessage({required String messageId}) = _$ReplyMessage;
+  const factory ReplyMessage({required MessageModel message}) = _$ReplyMessage;
 
-  String get messageId;
+  MessageModel get message;
   @JsonKey(ignore: true)
   $ReplyMessageCopyWith<ReplyMessage> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2069,7 +2872,9 @@ abstract class $ForwardMessageCopyWith<$Res> {
   factory $ForwardMessageCopyWith(
           ForwardMessage value, $Res Function(ForwardMessage) then) =
       _$ForwardMessageCopyWithImpl<$Res>;
-  $Res call({String messageId, String chatId});
+  $Res call({MessageModel message, String chatId});
+
+  $MessageModelCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -2085,35 +2890,42 @@ class _$ForwardMessageCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? messageId = freezed,
+    Object? message = freezed,
     Object? chatId = freezed,
   }) {
     return _then(ForwardMessage(
-      messageId: messageId == freezed
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as MessageModel,
       chatId: chatId == freezed
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
+
+  @override
+  $MessageModelCopyWith<$Res> get message {
+    return $MessageModelCopyWith<$Res>(_value.message, (value) {
+      return _then(_value.copyWith(message: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$ForwardMessage implements ForwardMessage {
-  const _$ForwardMessage({required this.messageId, required this.chatId});
+  const _$ForwardMessage({required this.message, required this.chatId});
 
   @override
-  final String messageId;
+  final MessageModel message;
   @override
   final String chatId;
 
   @override
   String toString() {
-    return 'MessageEvent.forwardMessage(messageId: $messageId, chatId: $chatId)';
+    return 'MessageEvent.forwardMessage(message: $message, chatId: $chatId)';
   }
 
   @override
@@ -2121,14 +2933,14 @@ class _$ForwardMessage implements ForwardMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ForwardMessage &&
-            const DeepCollectionEquality().equals(other.messageId, messageId) &&
+            const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.chatId, chatId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(messageId),
+      const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(chatId));
 
   @JsonKey(ignore: true)
@@ -2142,18 +2954,26 @@ class _$ForwardMessage implements ForwardMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return forwardMessage(messageId, chatId);
+    return forwardMessage(message, chatId);
   }
 
   @override
@@ -2161,18 +2981,24 @@ class _$ForwardMessage implements ForwardMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return forwardMessage?.call(messageId, chatId);
+    return forwardMessage?.call(message, chatId);
   }
 
   @override
@@ -2180,20 +3006,26 @@ class _$ForwardMessage implements ForwardMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (forwardMessage != null) {
-      return forwardMessage(messageId, chatId);
+      return forwardMessage(message, chatId);
     }
     return orElse();
   }
@@ -2206,13 +3038,20 @@ class _$ForwardMessage implements ForwardMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return forwardMessage(this);
   }
@@ -2225,13 +3064,19 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return forwardMessage?.call(this);
   }
@@ -2244,13 +3089,19 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (forwardMessage != null) {
@@ -2262,9 +3113,10 @@ class _$ForwardMessage implements ForwardMessage {
 
 abstract class ForwardMessage implements MessageEvent {
   const factory ForwardMessage(
-      {required String messageId, required String chatId}) = _$ForwardMessage;
+      {required MessageModel message,
+      required String chatId}) = _$ForwardMessage;
 
-  String get messageId;
+  MessageModel get message;
   String get chatId;
   @JsonKey(ignore: true)
   $ForwardMessageCopyWith<ForwardMessage> get copyWith =>
@@ -2276,7 +3128,9 @@ abstract class $EditMessageCopyWith<$Res> {
   factory $EditMessageCopyWith(
           EditMessage value, $Res Function(EditMessage) then) =
       _$EditMessageCopyWithImpl<$Res>;
-  $Res call({String messageId});
+  $Res call({MessageModel message});
+
+  $MessageModelCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -2291,28 +3145,35 @@ class _$EditMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? messageId = freezed,
+    Object? message = freezed,
   }) {
     return _then(EditMessage(
-      messageId: messageId == freezed
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as MessageModel,
     ));
+  }
+
+  @override
+  $MessageModelCopyWith<$Res> get message {
+    return $MessageModelCopyWith<$Res>(_value.message, (value) {
+      return _then(_value.copyWith(message: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$EditMessage implements EditMessage {
-  const _$EditMessage({required this.messageId});
+  const _$EditMessage({required this.message});
 
   @override
-  final String messageId;
+  final MessageModel message;
 
   @override
   String toString() {
-    return 'MessageEvent.editMessage(messageId: $messageId)';
+    return 'MessageEvent.editMessage(message: $message)';
   }
 
   @override
@@ -2320,12 +3181,12 @@ class _$EditMessage implements EditMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is EditMessage &&
-            const DeepCollectionEquality().equals(other.messageId, messageId));
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(messageId));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
@@ -2338,18 +3199,26 @@ class _$EditMessage implements EditMessage {
     required TResult Function(String text) writeMessage,
     required TResult Function(String chatId, String sender, String receiver)
         openChat,
-    required TResult Function() sendMessage,
-    required TResult Function() onSend,
-    required TResult Function() onSeen,
-    required TResult Function() loadMessages,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
-    required TResult Function(List<MessageModel> messages) updateMessages,
-    required TResult Function(String messageId) replyMessage,
-    required TResult Function(String messageId, String chatId) forwardMessage,
-    required TResult Function(String messageId) editMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
   }) {
-    return editMessage(messageId);
+    return editMessage(message);
   }
 
   @override
@@ -2357,18 +3226,24 @@ class _$EditMessage implements EditMessage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
   }) {
-    return editMessage?.call(messageId);
+    return editMessage?.call(message);
   }
 
   @override
@@ -2376,20 +3251,26 @@ class _$EditMessage implements EditMessage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String text)? writeMessage,
     TResult Function(String chatId, String sender, String receiver)? openChat,
-    TResult Function()? sendMessage,
-    TResult Function()? onSend,
-    TResult Function()? onSeen,
-    TResult Function()? loadMessages,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
-    TResult Function(List<MessageModel> messages)? updateMessages,
-    TResult Function(String messageId)? replyMessage,
-    TResult Function(String messageId, String chatId)? forwardMessage,
-    TResult Function(String messageId)? editMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
     required TResult orElse(),
   }) {
     if (editMessage != null) {
-      return editMessage(messageId);
+      return editMessage(message);
     }
     return orElse();
   }
@@ -2402,13 +3283,20 @@ class _$EditMessage implements EditMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(OnSend value) onSend,
     required TResult Function(OnSeen value) onSeen,
-    required TResult Function(LoadMessages value) loadMessages,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
     required TResult Function(AddMessage value) addMessage,
     required TResult Function(RemoveMessage value) removeMessage,
-    required TResult Function(UpdateMessages value) updateMessages,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
     required TResult Function(ReplyMessage value) replyMessage,
     required TResult Function(ForwardMessage value) forwardMessage,
     required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
   }) {
     return editMessage(this);
   }
@@ -2421,13 +3309,19 @@ class _$EditMessage implements EditMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
   }) {
     return editMessage?.call(this);
   }
@@ -2440,13 +3334,19 @@ class _$EditMessage implements EditMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(OnSend value)? onSend,
     TResult Function(OnSeen value)? onSeen,
-    TResult Function(LoadMessages value)? loadMessages,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
     TResult Function(AddMessage value)? addMessage,
     TResult Function(RemoveMessage value)? removeMessage,
-    TResult Function(UpdateMessages value)? updateMessages,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
     TResult Function(ReplyMessage value)? replyMessage,
     TResult Function(ForwardMessage value)? forwardMessage,
     TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
     required TResult orElse(),
   }) {
     if (editMessage != null) {
@@ -2457,11 +3357,1060 @@ class _$EditMessage implements EditMessage {
 }
 
 abstract class EditMessage implements MessageEvent {
-  const factory EditMessage({required String messageId}) = _$EditMessage;
+  const factory EditMessage({required MessageModel message}) = _$EditMessage;
 
-  String get messageId;
+  MessageModel get message;
   @JsonKey(ignore: true)
   $EditMessageCopyWith<EditMessage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ClearMessageCopyWith<$Res> {
+  factory $ClearMessageCopyWith(
+          ClearMessage value, $Res Function(ClearMessage) then) =
+      _$ClearMessageCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ClearMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $ClearMessageCopyWith<$Res> {
+  _$ClearMessageCopyWithImpl(
+      ClearMessage _value, $Res Function(ClearMessage) _then)
+      : super(_value, (v) => _then(v as ClearMessage));
+
+  @override
+  ClearMessage get _value => super._value as ClearMessage;
+}
+
+/// @nodoc
+
+class _$ClearMessage implements ClearMessage {
+  const _$ClearMessage();
+
+  @override
+  String toString() {
+    return 'MessageEvent.clearMessage()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ClearMessage);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return clearMessage();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return clearMessage?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (clearMessage != null) {
+      return clearMessage();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return clearMessage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return clearMessage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (clearMessage != null) {
+      return clearMessage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ClearMessage implements MessageEvent {
+  const factory ClearMessage() = _$ClearMessage;
+}
+
+/// @nodoc
+abstract class $CancelEditCopyWith<$Res> {
+  factory $CancelEditCopyWith(
+          CancelEdit value, $Res Function(CancelEdit) then) =
+      _$CancelEditCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$CancelEditCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $CancelEditCopyWith<$Res> {
+  _$CancelEditCopyWithImpl(CancelEdit _value, $Res Function(CancelEdit) _then)
+      : super(_value, (v) => _then(v as CancelEdit));
+
+  @override
+  CancelEdit get _value => super._value as CancelEdit;
+}
+
+/// @nodoc
+
+class _$CancelEdit implements CancelEdit {
+  const _$CancelEdit();
+
+  @override
+  String toString() {
+    return 'MessageEvent.cancelEdit()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CancelEdit);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return cancelEdit();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return cancelEdit?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelEdit != null) {
+      return cancelEdit();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return cancelEdit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return cancelEdit?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelEdit != null) {
+      return cancelEdit(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CancelEdit implements MessageEvent {
+  const factory CancelEdit() = _$CancelEdit;
+}
+
+/// @nodoc
+abstract class $CancelReplyCopyWith<$Res> {
+  factory $CancelReplyCopyWith(
+          CancelReply value, $Res Function(CancelReply) then) =
+      _$CancelReplyCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$CancelReplyCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $CancelReplyCopyWith<$Res> {
+  _$CancelReplyCopyWithImpl(
+      CancelReply _value, $Res Function(CancelReply) _then)
+      : super(_value, (v) => _then(v as CancelReply));
+
+  @override
+  CancelReply get _value => super._value as CancelReply;
+}
+
+/// @nodoc
+
+class _$CancelReply implements CancelReply {
+  const _$CancelReply();
+
+  @override
+  String toString() {
+    return 'MessageEvent.cancelReply()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CancelReply);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return cancelReply();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return cancelReply?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelReply != null) {
+      return cancelReply();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return cancelReply(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return cancelReply?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelReply != null) {
+      return cancelReply(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CancelReply implements MessageEvent {
+  const factory CancelReply() = _$CancelReply;
+}
+
+/// @nodoc
+abstract class $CancelForwardCopyWith<$Res> {
+  factory $CancelForwardCopyWith(
+          CancelForward value, $Res Function(CancelForward) then) =
+      _$CancelForwardCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$CancelForwardCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $CancelForwardCopyWith<$Res> {
+  _$CancelForwardCopyWithImpl(
+      CancelForward _value, $Res Function(CancelForward) _then)
+      : super(_value, (v) => _then(v as CancelForward));
+
+  @override
+  CancelForward get _value => super._value as CancelForward;
+}
+
+/// @nodoc
+
+class _$CancelForward implements CancelForward {
+  const _$CancelForward();
+
+  @override
+  String toString() {
+    return 'MessageEvent.cancelForward()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CancelForward);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return cancelForward();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return cancelForward?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelForward != null) {
+      return cancelForward();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return cancelForward(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return cancelForward?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (cancelForward != null) {
+      return cancelForward(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CancelForward implements MessageEvent {
+  const factory CancelForward() = _$CancelForward;
+}
+
+/// @nodoc
+abstract class $UpdateChatStateCopyWith<$Res> {
+  factory $UpdateChatStateCopyWith(
+          UpdateChatState value, $Res Function(UpdateChatState) then) =
+      _$UpdateChatStateCopyWithImpl<$Res>;
+  $Res call({Chat chat});
+}
+
+/// @nodoc
+class _$UpdateChatStateCopyWithImpl<$Res>
+    extends _$MessageEventCopyWithImpl<$Res>
+    implements $UpdateChatStateCopyWith<$Res> {
+  _$UpdateChatStateCopyWithImpl(
+      UpdateChatState _value, $Res Function(UpdateChatState) _then)
+      : super(_value, (v) => _then(v as UpdateChatState));
+
+  @override
+  UpdateChatState get _value => super._value as UpdateChatState;
+
+  @override
+  $Res call({
+    Object? chat = freezed,
+  }) {
+    return _then(UpdateChatState(
+      chat: chat == freezed
+          ? _value.chat
+          : chat // ignore: cast_nullable_to_non_nullable
+              as Chat,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateChatState implements UpdateChatState {
+  const _$UpdateChatState({required this.chat});
+
+  @override
+  final Chat chat;
+
+  @override
+  String toString() {
+    return 'MessageEvent.updateChatState(chat: $chat)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateChatState &&
+            const DeepCollectionEquality().equals(other.chat, chat));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(chat));
+
+  @JsonKey(ignore: true)
+  @override
+  $UpdateChatStateCopyWith<UpdateChatState> get copyWith =>
+      _$UpdateChatStateCopyWithImpl<UpdateChatState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+  }) {
+    return updateChatState(chat);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+  }) {
+    return updateChatState?.call(chat);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (updateChatState != null) {
+      return updateChatState(chat);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+  }) {
+    return updateChatState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+  }) {
+    return updateChatState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    required TResult orElse(),
+  }) {
+    if (updateChatState != null) {
+      return updateChatState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateChatState implements MessageEvent {
+  const factory UpdateChatState({required Chat chat}) = _$UpdateChatState;
+
+  Chat get chat;
+  @JsonKey(ignore: true)
+  $UpdateChatStateCopyWith<UpdateChatState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2476,11 +4425,17 @@ class _$MessageStateTearOff {
   _MessageState call(
       {required String chatId,
       required MessageModel message,
-      required List<MessageModel> messages}) {
+      required List<MessageModel> messages,
+      required bool isEdit,
+      required bool isReply,
+      required bool isForward}) {
     return _MessageState(
       chatId: chatId,
       message: message,
       messages: messages,
+      isEdit: isEdit,
+      isReply: isReply,
+      isForward: isForward,
     );
   }
 
@@ -2497,6 +4452,9 @@ mixin _$MessageState {
   String get chatId => throw _privateConstructorUsedError;
   MessageModel get message => throw _privateConstructorUsedError;
   List<MessageModel> get messages => throw _privateConstructorUsedError;
+  bool get isEdit => throw _privateConstructorUsedError;
+  bool get isReply => throw _privateConstructorUsedError;
+  bool get isForward => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2509,7 +4467,13 @@ abstract class $MessageStateCopyWith<$Res> {
   factory $MessageStateCopyWith(
           MessageState value, $Res Function(MessageState) then) =
       _$MessageStateCopyWithImpl<$Res>;
-  $Res call({String chatId, MessageModel message, List<MessageModel> messages});
+  $Res call(
+      {String chatId,
+      MessageModel message,
+      List<MessageModel> messages,
+      bool isEdit,
+      bool isReply,
+      bool isForward});
 
   $MessageModelCopyWith<$Res> get message;
 }
@@ -2527,6 +4491,9 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
     Object? chatId = freezed,
     Object? message = freezed,
     Object? messages = freezed,
+    Object? isEdit = freezed,
+    Object? isReply = freezed,
+    Object? isForward = freezed,
   }) {
     return _then(_value.copyWith(
       chatId: chatId == freezed
@@ -2541,6 +4508,18 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
+      isEdit: isEdit == freezed
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReply: isReply == freezed
+          ? _value.isReply
+          : isReply // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isForward: isForward == freezed
+          ? _value.isForward
+          : isForward // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -2559,7 +4538,13 @@ abstract class _$MessageStateCopyWith<$Res>
           _MessageState value, $Res Function(_MessageState) then) =
       __$MessageStateCopyWithImpl<$Res>;
   @override
-  $Res call({String chatId, MessageModel message, List<MessageModel> messages});
+  $Res call(
+      {String chatId,
+      MessageModel message,
+      List<MessageModel> messages,
+      bool isEdit,
+      bool isReply,
+      bool isForward});
 
   @override
   $MessageModelCopyWith<$Res> get message;
@@ -2580,6 +4565,9 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
     Object? chatId = freezed,
     Object? message = freezed,
     Object? messages = freezed,
+    Object? isEdit = freezed,
+    Object? isReply = freezed,
+    Object? isForward = freezed,
   }) {
     return _then(_MessageState(
       chatId: chatId == freezed
@@ -2594,6 +4582,18 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
+      isEdit: isEdit == freezed
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReply: isReply == freezed
+          ? _value.isReply
+          : isReply // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isForward: isForward == freezed
+          ? _value.isForward
+          : isForward // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -2602,7 +4602,12 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageState implements _MessageState {
   const _$_MessageState(
-      {required this.chatId, required this.message, required this.messages});
+      {required this.chatId,
+      required this.message,
+      required this.messages,
+      required this.isEdit,
+      required this.isReply,
+      required this.isForward});
 
   factory _$_MessageState.fromJson(Map<String, dynamic> json) =>
       _$$_MessageStateFromJson(json);
@@ -2613,10 +4618,16 @@ class _$_MessageState implements _MessageState {
   final MessageModel message;
   @override
   final List<MessageModel> messages;
+  @override
+  final bool isEdit;
+  @override
+  final bool isReply;
+  @override
+  final bool isForward;
 
   @override
   String toString() {
-    return 'MessageState(chatId: $chatId, message: $message, messages: $messages)';
+    return 'MessageState(chatId: $chatId, message: $message, messages: $messages, isEdit: $isEdit, isReply: $isReply, isForward: $isForward)';
   }
 
   @override
@@ -2626,7 +4637,10 @@ class _$_MessageState implements _MessageState {
             other is _MessageState &&
             const DeepCollectionEquality().equals(other.chatId, chatId) &&
             const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.messages, messages));
+            const DeepCollectionEquality().equals(other.messages, messages) &&
+            const DeepCollectionEquality().equals(other.isEdit, isEdit) &&
+            const DeepCollectionEquality().equals(other.isReply, isReply) &&
+            const DeepCollectionEquality().equals(other.isForward, isForward));
   }
 
   @override
@@ -2634,7 +4648,10 @@ class _$_MessageState implements _MessageState {
       runtimeType,
       const DeepCollectionEquality().hash(chatId),
       const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(messages));
+      const DeepCollectionEquality().hash(messages),
+      const DeepCollectionEquality().hash(isEdit),
+      const DeepCollectionEquality().hash(isReply),
+      const DeepCollectionEquality().hash(isForward));
 
   @JsonKey(ignore: true)
   @override
@@ -2651,7 +4668,10 @@ abstract class _MessageState implements MessageState {
   const factory _MessageState(
       {required String chatId,
       required MessageModel message,
-      required List<MessageModel> messages}) = _$_MessageState;
+      required List<MessageModel> messages,
+      required bool isEdit,
+      required bool isReply,
+      required bool isForward}) = _$_MessageState;
 
   factory _MessageState.fromJson(Map<String, dynamic> json) =
       _$_MessageState.fromJson;
@@ -2662,6 +4682,12 @@ abstract class _MessageState implements MessageState {
   MessageModel get message;
   @override
   List<MessageModel> get messages;
+  @override
+  bool get isEdit;
+  @override
+  bool get isReply;
+  @override
+  bool get isForward;
   @override
   @JsonKey(ignore: true)
   _$MessageStateCopyWith<_MessageState> get copyWith =>

@@ -12,13 +12,17 @@ abstract class MessageEvent with _$MessageEvent {
     required String receiver,
   }) = OpenChat;
 
-  const factory MessageEvent.sendMessage() = SendMessage;
+  const factory MessageEvent.sendMessage({required Chat chat}) = SendMessage;
 
-  const factory MessageEvent.onSend() = OnSend;
+  const factory MessageEvent.onSend({
+    required bool isSend,
+  }) = OnSend;
 
-  const factory MessageEvent.onSeen() = OnSeen;
+  const factory MessageEvent.onSeen({
+    required String id,
+  }) = OnSeen;
 
-  const factory MessageEvent.loadMessages() = LoadMessages;
+  const factory MessageEvent.loadChatRoomMessages() = LoadChatRoomMessages;
 
   const factory MessageEvent.addMessage({
     required MessageModel message,
@@ -28,20 +32,30 @@ abstract class MessageEvent with _$MessageEvent {
     required String messageId,
   }) = RemoveMessage;
 
-  const factory MessageEvent.updateMessages({
+  const factory MessageEvent.updateChatRoomMessages({
     required List<MessageModel> messages,
-  }) = UpdateMessages;
+  }) = UpdateChatRoomMessages;
+
+  const factory MessageEvent.updateMessage({
+    required MessageModel message,
+  }) = UpdateMessage;
 
   const factory MessageEvent.replyMessage({
-    required String messageId,
+    required MessageModel message,
   }) = ReplyMessage;
 
   const factory MessageEvent.forwardMessage({
-    required String messageId,
+    required MessageModel message,
     required String chatId,
   }) = ForwardMessage;
 
   const factory MessageEvent.editMessage({
-    required String messageId,
+    required MessageModel message,
   }) = EditMessage;
+
+  const factory MessageEvent.clearMessage() = ClearMessage;
+  const factory MessageEvent.cancelEdit() = CancelEdit;
+  const factory MessageEvent.cancelReply() = CancelReply;
+  const factory MessageEvent.cancelForward() = CancelForward;
+  const factory MessageEvent.updateChatState({required Chat chat}) = UpdateChatState;
 }

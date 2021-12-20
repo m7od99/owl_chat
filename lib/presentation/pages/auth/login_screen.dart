@@ -8,7 +8,6 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
-import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as user;
 import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
 

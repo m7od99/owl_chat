@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
@@ -140,4 +141,13 @@ class UserControl extends ChangeNotifier {
   String get userName => _auth.currentUser!.displayName!;
   String get userId => _auth.currentUser!.uid;
   String? get userUriPhoto => _auth.currentUser!.photoURL;
+
+  String otherId(Chat chat) {
+    if (chat.other!.id == userId && chat.me!.id == userId) {
+      return userId;
+    } else if (chat.other!.id != userId) {
+      return chat.other!.id;
+    }
+    return chat.me!.id;
+  }
 }

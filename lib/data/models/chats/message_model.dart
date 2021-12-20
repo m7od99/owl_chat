@@ -21,7 +21,7 @@ class MessageModel with _$MessageModel {
     required String receiver,
 
     ///
-    required bool isMe,
+    @Default(false) bool isMe,
 
     ///the time of sending the message
     @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
@@ -61,12 +61,16 @@ class MessageModel with _$MessageModel {
     String? replyMessageId,
   }) = _MessageModel;
 
-  static DateTime _timeFromJson(Timestamp time) {
-    return time.toDate();
+  static DateTime _timeFromJson(dynamic time) {
+    if (time is Timestamp) {
+      return time.toDate();
+    } else {
+      return DateTime.fromMicrosecondsSinceEpoch(time as int);
+    }
   }
 
-  static Timestamp _timeToJson(DateTime time) {
-    return Timestamp.fromDate(time);
+  static int _timeToJson(DateTime time) {
+    return Timestamp.fromDate(time).microsecondsSinceEpoch;
   }
 
   static MessageType? _typeFromJson(String? type) {

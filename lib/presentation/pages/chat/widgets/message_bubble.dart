@@ -1,26 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
-import 'package:intl/intl.dart' as intl;
+import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../data/models/chats/message.dart';
-import '../../../../logic/event_handler/settings.dart';
-import 'gif_widget.dart';
 
 class MessageBubble extends StatelessWidget {
-  final Message message;
-  final VoidCallback? onDoubleTap;
+  const MessageBubble({
+    Key? key,
+    required this.message,
+    this.onDoubleTap,
+    this.animation,
+  }) : super(key: key);
 
-  const MessageBubble({Key? key, required this.message, this.onDoubleTap})
-      : super(key: key);
+  final MessageModel message;
+  final VoidCallback? onDoubleTap;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
       child: GestureDetector(
         onDoubleTap: onDoubleTap,
         child: Hero(
@@ -33,7 +34,7 @@ class MessageBubble extends StatelessWidget {
                   message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 if (message.isGif != null && message.isGif == true)
-                  GifWidget(message: message)
+                  NewGifWidget(message: message)
                 else
                   Bubble(
                     message: message,
@@ -53,80 +54,88 @@ class Bubble extends StatelessWidget {
     required this.message,
   }) : super(key: key);
 
-  final Message message;
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<AppSettings>(context);
-    return Material(
-      color: message.isMe ? Colors.indigo[300] : Colors.indigo[400],
-      elevation: 0.5,
-      borderRadius: message.isMe ? meBorder : otherBorder,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-        child: Row(
-          textBaseline: TextBaseline.alphabetic,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment:
-              message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AutoDirectionality(
-              text: message.text,
-              child: Flexible(
-                child: Text(
-                  message.text,
-                  softWrap: true,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: settings.chatFontSize,
-                    height: 1.05,
+    return Column(
+      crossAxisAlignment:
+          message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Material(
+          color: message.isMe ? Colors.indigo[300] : Colors.indigo[400],
+          elevation: 0.5,
+          borderRadius: message.isMe ? meBorder : otherBorder,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            child: Row(
+              textBaseline: TextBaseline.alphabetic,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment:
+                  message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AutoDirectionality(
+                  text: message.text,
+                  child: Flexible(
+                    child: RichText(
+                      text: TextSpan(
+                        text: message.text,
+                        style: GoogleFonts.almarai(
+                          height: 1.15,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (message.isEdited != null && message.isEdited == true)
+              const Text(
+                'edited',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(width: 4),
+            Text(
+              format(message.time),
+              style: GoogleFonts.notoSans(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            TimeWidget(
-              time: format(message.time),
-            ),
+            if (message.isSend != null && message.isSend == true)
+              const Icon(
+                Icons.done,
+                size: 15,
+              ),
+            if (message.isSend != null && message.isSend == false)
+              const Icon(
+                Icons.error_outline,
+                size: 15,
+              ),
+            if (message.isSeen != null && message.isSeen == true)
+              const Icon(
+                Icons.done,
+                size: 15,
+              ),
           ],
         ),
-      ),
+      ],
     );
-  }
-
-  String format(Timestamp time) {
-    return DateFormat('hh:mm a').format(time.toDate());
-  }
-
-  String rtlFormat(String text) {
-    if (intl.Bidi.startsWithRtl(text)) {
-      return intl.BidiFormatter.RTL().wrapWithUnicode(text);
-    }
-    return text;
   }
 }
 
-class TimeWidget extends StatelessWidget {
-  final String time;
-
-  const TimeWidget({required this.time});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 6,
-        left: 6,
-      ),
-      child: Text(
-        time,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-        ),
-      ),
-    );
-  }
+String format(DateTime time) {
+  return DateFormat('hh:mm a').format(time);
 }
 
 const meBorder = BorderRadius.only(
@@ -144,3 +153,48 @@ const otherBorder = BorderRadius.only(
   bottomRight: Radius.circular(25),
 //  bottomLeft: Radius.circular(25),
 );
+
+class NewGifWidget extends StatelessWidget {
+  const NewGifWidget({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
+
+  final MessageModel message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: message.isMe ? 60 : 0,
+        right: message.isMe ? 0 : 60,
+        top: 10,
+      ),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: CachedNetworkImage(
+              imageUrl: message.text,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          ),
+          Positioned(
+            bottom: 1,
+            right: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+              child: Text(
+                format(message.time),
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
