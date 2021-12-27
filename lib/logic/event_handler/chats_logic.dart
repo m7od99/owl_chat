@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../data/data_controller/message_control.dart';
+import '../../data/data_controller/message_control/message_control.dart';
 import '../../data/data_controller/user_control.dart';
 import '../../data/models/auth/user.dart';
 import '../../data/models/chats/chat.dart';

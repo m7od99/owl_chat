@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 import '../../../logic/controller/notifications.dart';
 import '../../../logic/event_handler/user_state.dart';
@@ -22,6 +25,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     notifications.getTokenThenSaveItToDataBase();
     user.updateOwlUser();
     notifications.foregroundMessagingHandler();
+    context.read<AppMangerBloc>().add(const OnConnectivityChanged());
 
     super.initState();
   }

@@ -4428,7 +4428,8 @@ class _$MessageStateTearOff {
       required List<MessageModel> messages,
       required bool isEdit,
       required bool isReply,
-      required bool isForward}) {
+      required bool isForward,
+      required bool loadingMessages}) {
     return _MessageState(
       chatId: chatId,
       message: message,
@@ -4436,6 +4437,7 @@ class _$MessageStateTearOff {
       isEdit: isEdit,
       isReply: isReply,
       isForward: isForward,
+      loadingMessages: loadingMessages,
     );
   }
 
@@ -4455,6 +4457,7 @@ mixin _$MessageState {
   bool get isEdit => throw _privateConstructorUsedError;
   bool get isReply => throw _privateConstructorUsedError;
   bool get isForward => throw _privateConstructorUsedError;
+  bool get loadingMessages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -4473,7 +4476,8 @@ abstract class $MessageStateCopyWith<$Res> {
       List<MessageModel> messages,
       bool isEdit,
       bool isReply,
-      bool isForward});
+      bool isForward,
+      bool loadingMessages});
 
   $MessageModelCopyWith<$Res> get message;
 }
@@ -4494,6 +4498,7 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
     Object? isEdit = freezed,
     Object? isReply = freezed,
     Object? isForward = freezed,
+    Object? loadingMessages = freezed,
   }) {
     return _then(_value.copyWith(
       chatId: chatId == freezed
@@ -4520,6 +4525,10 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
           ? _value.isForward
           : isForward // ignore: cast_nullable_to_non_nullable
               as bool,
+      loadingMessages: loadingMessages == freezed
+          ? _value.loadingMessages
+          : loadingMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -4544,7 +4553,8 @@ abstract class _$MessageStateCopyWith<$Res>
       List<MessageModel> messages,
       bool isEdit,
       bool isReply,
-      bool isForward});
+      bool isForward,
+      bool loadingMessages});
 
   @override
   $MessageModelCopyWith<$Res> get message;
@@ -4568,6 +4578,7 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
     Object? isEdit = freezed,
     Object? isReply = freezed,
     Object? isForward = freezed,
+    Object? loadingMessages = freezed,
   }) {
     return _then(_MessageState(
       chatId: chatId == freezed
@@ -4594,6 +4605,10 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
           ? _value.isForward
           : isForward // ignore: cast_nullable_to_non_nullable
               as bool,
+      loadingMessages: loadingMessages == freezed
+          ? _value.loadingMessages
+          : loadingMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -4607,7 +4622,8 @@ class _$_MessageState implements _MessageState {
       required this.messages,
       required this.isEdit,
       required this.isReply,
-      required this.isForward});
+      required this.isForward,
+      required this.loadingMessages});
 
   factory _$_MessageState.fromJson(Map<String, dynamic> json) =>
       _$$_MessageStateFromJson(json);
@@ -4624,10 +4640,12 @@ class _$_MessageState implements _MessageState {
   final bool isReply;
   @override
   final bool isForward;
+  @override
+  final bool loadingMessages;
 
   @override
   String toString() {
-    return 'MessageState(chatId: $chatId, message: $message, messages: $messages, isEdit: $isEdit, isReply: $isReply, isForward: $isForward)';
+    return 'MessageState(chatId: $chatId, message: $message, messages: $messages, isEdit: $isEdit, isReply: $isReply, isForward: $isForward, loadingMessages: $loadingMessages)';
   }
 
   @override
@@ -4640,7 +4658,9 @@ class _$_MessageState implements _MessageState {
             const DeepCollectionEquality().equals(other.messages, messages) &&
             const DeepCollectionEquality().equals(other.isEdit, isEdit) &&
             const DeepCollectionEquality().equals(other.isReply, isReply) &&
-            const DeepCollectionEquality().equals(other.isForward, isForward));
+            const DeepCollectionEquality().equals(other.isForward, isForward) &&
+            const DeepCollectionEquality()
+                .equals(other.loadingMessages, loadingMessages));
   }
 
   @override
@@ -4651,7 +4671,8 @@ class _$_MessageState implements _MessageState {
       const DeepCollectionEquality().hash(messages),
       const DeepCollectionEquality().hash(isEdit),
       const DeepCollectionEquality().hash(isReply),
-      const DeepCollectionEquality().hash(isForward));
+      const DeepCollectionEquality().hash(isForward),
+      const DeepCollectionEquality().hash(loadingMessages));
 
   @JsonKey(ignore: true)
   @override
@@ -4671,7 +4692,8 @@ abstract class _MessageState implements MessageState {
       required List<MessageModel> messages,
       required bool isEdit,
       required bool isReply,
-      required bool isForward}) = _$_MessageState;
+      required bool isForward,
+      required bool loadingMessages}) = _$_MessageState;
 
   factory _MessageState.fromJson(Map<String, dynamic> json) =
       _$_MessageState.fromJson;
@@ -4688,6 +4710,8 @@ abstract class _MessageState implements MessageState {
   bool get isReply;
   @override
   bool get isForward;
+  @override
+  bool get loadingMessages;
   @override
   @JsonKey(ignore: true)
   _$MessageStateCopyWith<_MessageState> get copyWith =>

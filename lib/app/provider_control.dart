@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
@@ -8,7 +9,7 @@ import 'package:owl_chat/logic/event_handler/send_message_state.dart';
 import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
 
-import '../data/data_controller/message_control.dart';
+import '../data/data_controller/message_control/message_control.dart';
 import '../logic/controller/validator.dart';
 import '../logic/event_handler/settings.dart';
 import '../logic/event_handler/user_state.dart' as user;
@@ -23,6 +24,9 @@ class ProviderControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AppMangerBloc>(
+          create: (context) => AppMangerBloc(),
+        ),
         BlocProvider<UpdateBloc>(
           create: (_) => UpdateBloc(),
         ),

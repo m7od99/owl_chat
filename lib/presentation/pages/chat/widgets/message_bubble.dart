@@ -12,11 +12,13 @@ class MessageBubble extends StatelessWidget {
     required this.message,
     this.onDoubleTap,
     this.animation,
+    required this.index,
   }) : super(key: key);
 
   final MessageModel message;
   final VoidCallback? onDoubleTap;
   final Animation<double>? animation;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,8 @@ class MessageBubble extends StatelessWidget {
       child: GestureDetector(
         onDoubleTap: onDoubleTap,
         child: Hero(
-          createRectTween: (begin, end) => RectTween(begin: begin, end: end),
-          tag: message.text.runes,
+          createRectTween: (begin, end) => RectTween(begin: end, end: begin),
+          tag: index,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
             child: Column(
@@ -112,17 +114,17 @@ class Bubble extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            if (message.isSend != null && message.isSend == true)
+            if (message.isMe && message.isSend != null && message.isSend == true)
               const Icon(
                 Icons.done,
                 size: 15,
               ),
-            if (message.isSend != null && message.isSend == false)
+            if (message.isMe && message.isSend != null && message.isSend == false)
               const Icon(
                 Icons.error_outline,
                 size: 15,
               ),
-            if (message.isSeen != null && message.isSeen == true)
+            if (message.isMe && message.isSeen != null && message.isSeen == true)
               const Icon(
                 Icons.done,
                 size: 15,

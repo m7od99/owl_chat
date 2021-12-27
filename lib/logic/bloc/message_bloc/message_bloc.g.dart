@@ -16,6 +16,7 @@ _$_MessageState _$$_MessageStateFromJson(Map<String, dynamic> json) =>
       isEdit: json['isEdit'] as bool,
       isReply: json['isReply'] as bool,
       isForward: json['isForward'] as bool,
+      loadingMessages: json['loadingMessages'] as bool,
     );
 
 Map<String, dynamic> _$$_MessageStateToJson(_$_MessageState instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$_MessageStateToJson(_$_MessageState instance) =>
       'isEdit': instance.isEdit,
       'isReply': instance.isReply,
       'isForward': instance.isForward,
+      'loadingMessages': instance.loadingMessages,
     };

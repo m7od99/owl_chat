@@ -3,11 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:owl_chat/data/data_controller/message_control.dart';
+import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
+import 'package:owl_chat/data/data_controller/message_control/remote_message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/app/source_type.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
+import 'package:owl_chat/logic/controller/message_repository.dart';
 
 part 'message_bloc.freezed.dart';
 part 'message_bloc.g.dart';
@@ -16,51 +19,93 @@ part 'message_state.dart';
 
 class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
   MessageBloc() : super(MessageState.init()) {
+//    _localMessageControl = LocalMessageControl(chatId: state.chatId);
+//    _localMessageControl.ready();
+
+    _remoteMessage = FirebaseMessageControl();
+
+    final _messageControl = MessageRepository([
+      //    _localMessageControl,
+      _remoteMessage,
+    ]);
+
     on<MessageEvent>((event, emit) async {
+      //    await _localMessageControl.clearData();
       await event.map(
         ///
         loadChatRoomMessages: (LoadChatRoomMessages value) async {
+          emit(state.copyWith(loadingMessages: true));
+
+          final _messages =
+              state.messages.where((e) => e.chatId == state.chatId).toList();
+
+          final MessageModel? mostRecentMessage =
+              _messages.isNotEmpty ? _messages.first : null;
+
+          add(UpdateChatRoomMessages(messages: _messages));
+
           await emit.forEach<List<MessageModel>>(
-            _control.getMessagesStream(state.chatId),
+            mostRecentMessage != null
+                ? _remoteMessage.getMessageWhere(
+                    state.chatId,
+                    Timestamp.fromDate(mostRecentMessage.time).microsecondsSinceEpoch,
+                  )
+                : _messageControl.getMessages(state.chatId),
             onData: (messages) {
               final _messages = messages.map((m) {
-                return m.copyWith(isMe: _control.isMe(m.sender));
+                return m.copyWith(
+                  isMe: _control.isMe(m.sender),
+                  chatId: state.chatId,
+                );
               }).toList();
 
-              final _order = _messages
-                ..sort((a, b) => b.time.compareTo(a.time))
-                ..reversed;
+              final _order = _messages..sort((a, b) => a.time.compareTo(b.time));
 
-              add(UpdateChatRoomMessages(messages: _order));
+              add(UpdateChatRoomMessages(messages: _order.reversed.toList()));
+
+              emit(state.copyWith(loadingMessages: false));
+
               return state;
             },
           );
         },
 
         ///
-        openChat: (OpenChat value) {
-          add(const LoadChatRoomMessages());
+        openChat: (OpenChat value) async {
           emit(
             state.copyWith(
+              loadingMessages: false,
               chatId: value.chatId,
               message: state.message.copyWith(
                 receiver: value.receiver,
                 sender: value.sender,
+                isSend: null,
               ),
-              messages: state.messages,
+              //  messages: state.messages,
               isEdit: false,
               isForward: false,
               isReply: false,
             ),
           );
+
+          add(const LoadChatRoomMessages());
         },
 
         ///
         addMessage: (AddMessage value) {},
 
         ///
-        updateChatRoomMessages: (UpdateChatRoomMessages value) {
-          emit(state.copyWith(messages: value.messages));
+        updateChatRoomMessages: (UpdateChatRoomMessages value) async {
+          final localMessages =
+              state.messages.where((e) => e.chatId == state.chatId).toSet();
+
+          final allMessages = localMessages..addAll(value.messages.toSet());
+
+          final sort = allMessages.toList()..sort((a, b) => a.time.compareTo(b.time));
+
+          emit(
+            state.copyWith(messages: sort.reversed.toList()),
+          );
         },
 
         ///
@@ -72,11 +117,6 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
         forwardMessage: (ForwardMessage value) {},
         onSeen: (OnSeen value) async {},
 
-        ///
-        onSend: (OnSend value) {
-          emit(state.copyWith(message: state.message.copyWith(isSend: value.isSend)));
-        },
-
         removeMessage: (RemoveMessage value) {},
 
         ///
@@ -84,7 +124,7 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 
         ///
         sendMessage: (SendMessage value) async {
-          if (!state.isEdit) {
+          if (!state.isEdit && state.message.text.isNotEmpty) {
             emit(
               state.copyWith(
                 message: state.message.copyWith(
@@ -92,8 +132,9 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
                 ),
               ),
             );
-            final isSend = await _control.sendMessageModel(state.message, state.chatId);
-            add(OnSend(isSend: isSend));
+
+            await _messageControl.addMessage(state.message, state.chatId);
+            //  add(OnSend(isSend: isSend));
 
             add(UpdateChatState(chat: value.chat));
 
@@ -118,6 +159,9 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
           }
           add(const ClearMessage());
         },
+
+        ///
+        onSend: (OnSend value) {},
 
         ///
         writeMessage: (WriteMessage value) {
@@ -151,13 +195,14 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
         },
 
         ///
-        updateMessage: (UpdateMessage value) {
-          _control.updateMessage(value.message);
+        updateMessage: (UpdateMessage value) async {
+          await _messageControl.updateMessage(value.message);
         },
 
         ///
         cancelForward: (CancelForward value) {
           emit(state.copyWith(isForward: false));
+          add(const ClearMessage());
         },
 
         ///
@@ -169,6 +214,7 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
         ///
         cancelReply: (CancelReply value) {
           emit(state.copyWith(isReply: false));
+          add(const ClearMessage());
         },
 
         ///
@@ -184,11 +230,17 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 
   final _control = MessageControl();
   final _user = UserControl();
+//  late LocalMessageControl _localMessageControl;
+  late FirebaseMessageControl _remoteMessage;
 
   @override
   MessageState? fromJson(Map<String, dynamic> json) {
     return MessageState.fromJson(json);
   }
+
+  @override
+  // TODO: implement id
+  String get id => state.chatId;
 
   @override
   Map<String, dynamic>? toJson(MessageState state) {

@@ -7,8 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 
-import '../models/chats/chat.dart';
-import '../models/chats/message.dart';
+import '../../models/chats/chat.dart';
+import '../../models/chats/message.dart';
 
 class MessageControl extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
@@ -22,6 +22,25 @@ class MessageControl extends ChangeNotifier {
         .collection('messages')
         .orderBy('time')
         .snapshots();
+  }
+
+  Stream<List<MessageModel>> getMessagesWhere(String chatId, int time) {
+    final newMessages = _firestore
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
+        .where('time', isGreaterThan: time)
+        .snapshots();
+
+    return newMessages.map((snapshot) {
+      return snapshot.docs.reversed.map<MessageModel>((docs) {
+        final message = MessageModel.fromJson(docs.data());
+
+        return message.copyWith(
+          id: docs.id,
+        );
+      }).toList();
+    });
   }
 
   Stream<QuerySnapshot> getChatMessages(String chatId) {
@@ -52,11 +71,13 @@ class MessageControl extends ChangeNotifier {
         .doc(chatId)
         .collection('messages')
         .add(message.toJson())
-        .catchError((e) {
-      isSend = false;
-    }).whenComplete(() {
+        .then((e) {
       isSend = true;
+    }).catchError((e) {
+      log(e.toString());
+      isSend = false;
     });
+
     return isSend;
   }
 
@@ -120,9 +141,19 @@ class MessageControl extends ChangeNotifier {
       return snapshot.docs.reversed.map<MessageModel>((docs) {
         final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
 
-        return message.copyWith(id: docs.id, isSend: isSend(message.id));
+        return message.copyWith(
+          id: docs.id,
+        );
       }).toList();
     });
+  }
+
+  bool isOffline(String chatId) {
+    late bool isOffline;
+    getMessages(chatId).listen((e) {
+      isOffline = e.metadata.hasPendingWrites;
+    });
+    return isOffline;
   }
 
   Future updateMessage(MessageModel message) async {

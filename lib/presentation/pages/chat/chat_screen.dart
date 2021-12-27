@@ -8,7 +8,6 @@ import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/chats/chat.dart';
-import '../../../data/models/chats/message_model.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../widgets/profile_photo.dart';
 import 'widgets/message_view_bloc.dart';
@@ -124,7 +123,10 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                   ),
                 ),
               ),
-              if (state.isEdit == true) const EditMessageCard(),
+              if (state.isEdit == true)
+                EditMessageCard(
+                  controller: _controller,
+                ),
               SendMessageField(
                 chat: chat,
                 controller: _controller,
@@ -165,12 +167,16 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
 class EditMessageCard extends StatelessWidget {
   const EditMessageCard({
     Key? key,
+    required this.controller,
   }) : super(key: key);
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MessageBloc, MessageState>(
       builder: (context, state) {
+        final message = state.message.text;
         return Material(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
@@ -187,7 +193,8 @@ class EditMessageCard extends StatelessWidget {
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      state.message.text,
+                      message,
+                      maxLines: 1,
                       style: const TextStyle(fontSize: 18),
                     ),
                   ],
@@ -196,6 +203,7 @@ class EditMessageCard extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
+                    controller.clear();
                     Provider.of<MessageBloc>(context, listen: false)
                         .add(const CancelEdit());
                   },

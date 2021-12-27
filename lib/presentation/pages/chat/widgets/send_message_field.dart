@@ -4,10 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
-import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
-import 'package:owl_chat/logic/event_handler/send_message_state.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
 import 'package:provider/provider.dart';
 
@@ -41,9 +38,6 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
   @override
   Widget build(BuildContext context) {
-    final sendMessage = Provider.of<SendMessageState>(context);
-    final user = Provider.of<UserState>(context);
-
     final _selectControl = MaterialTextSelectionControls();
 
     final Chat chat = widget.chat;

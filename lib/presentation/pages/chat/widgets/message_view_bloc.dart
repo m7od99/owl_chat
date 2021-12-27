@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
@@ -34,6 +35,11 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView> {
   Widget build(BuildContext context) {
     return BlocBuilder<MessageBloc, MessageState>(
       builder: (context, state) {
+        if (state.loadingMessages) {
+          return Center(
+            child: LoadingRotating.square(),
+          );
+        }
         return ListView.builder(
           reverse: true,
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -54,6 +60,7 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView> {
                   ),
                 );
               },
+              index: index,
             );
           },
         );

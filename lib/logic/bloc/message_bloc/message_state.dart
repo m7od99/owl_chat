@@ -9,6 +9,7 @@ abstract class MessageState with _$MessageState {
     required bool isEdit,
     required bool isReply,
     required bool isForward,
+    required bool loadingMessages,
   }) = _MessageState;
 
   factory MessageState.fromJson(Map<String, dynamic> json) =>
@@ -27,5 +28,6 @@ abstract class MessageState with _$MessageState {
         isEdit: false,
         isForward: false,
         isReply: false,
+        loadingMessages: false,
       );
 }

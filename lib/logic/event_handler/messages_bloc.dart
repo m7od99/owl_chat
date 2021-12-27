@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import '../../data/data_controller/message_control.dart';
+import '../../data/data_controller/message_control/message_control.dart';
 import '../../data/models/chats/message.dart';
 
 ///  [MessagesState]

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/data_controller/message_control.dart';
+import '../../../../data/data_controller/message_control/message_control.dart';
 import '../../../../data/models/chats/chat.dart';
 import '../../../../logic/event_handler/chats_logic.dart';
 import '../../../../logic/event_handler/user_state.dart';
@@ -60,8 +60,8 @@ class ChatsStream extends StatelessWidget {
                     context.read<MessageBloc>().add(
                           OpenChat(
                             chatId: chats[index].id,
-                            receiver: chats[index].other!.id,
-                            sender: chats[index].me!.id,
+                            receiver: user.otherId(chats[index]),
+                            sender: user.userId,
                           ),
                         );
 

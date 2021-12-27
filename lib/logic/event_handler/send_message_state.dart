@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart' as intl;
 
-import '../../data/data_controller/message_control.dart';
+import '../../data/data_controller/message_control/message_control.dart';
 import '../../data/models/chats/chat.dart';
 import '../../data/models/chats/message.dart';
 import '../../data/models/chats/messages_type.dart';
