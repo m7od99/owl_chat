@@ -6,7 +6,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
 import 'package:owl_chat/data/data_controller/message_control/remote_message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/app/source_type.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
@@ -196,6 +195,10 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 
         ///
         updateMessage: (UpdateMessage value) async {
+          final int index = state.messages.indexWhere((e) => e.id == value.message.id);
+
+          emit(state.copyWith(messages: state.messages..removeAt(index)));
+
           await _messageControl.updateMessage(value.message);
         },
 

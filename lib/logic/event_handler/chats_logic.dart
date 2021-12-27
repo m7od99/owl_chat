@@ -66,6 +66,7 @@ class ChatsController {
         email: _user.email,
         userName: _user.userName,
         id: _user.userId,
+        photoUri: _user.userUriPhoto,
       ),
       other: otherUser,
       photoUri: '',

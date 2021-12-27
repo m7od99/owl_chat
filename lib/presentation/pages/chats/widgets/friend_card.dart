@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
 import '../../../../helper/helper.dart';
-import '../../../../logic/event_handler/user_state.dart';
+import '../../../../logic/event_handler/user_state.dart' as p;
 import '../../../theme/constant.dart';
 
-class FriendCard extends StatelessWidget {
+class FriendCard extends StatefulWidget {
   final Chat chat;
   final VoidCallback onTap;
 
   const FriendCard({required this.onTap, required this.chat});
 
+  @override
+  State<FriendCard> createState() => _FriendCardState();
+}
+
+class _FriendCardState extends State<FriendCard> {
   String name(String myId) {
-    if (chat.me!.id == myId) return chat.other!.userName;
-    return chat.me!.userName;
+    if (widget.chat.me!.id == myId) return widget.chat.other!.userName;
+    return widget.chat.me!.userName;
   }
 
   String otherId(String myId) {
-    if (chat.me!.id == myId) return chat.other!.id;
-    return chat.me!.id;
+    if (widget.chat.me!.id == myId) return widget.chat.other!.id;
+    return widget.chat.me!.id;
+  }
+
+  @override
+  void initState() {
+    context.read<UserBloc>().add(GetChatData(userId: p.UserState().otherId(widget.chat)));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context);
+    final user = Provider.of<p.UserState>(context);
 
     return SizedBox(
       height: 55,
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
         child: Stack(
           children: [
             Row(
@@ -58,7 +70,7 @@ class FriendCard extends StatelessWidget {
                         Opacity(
                           opacity: 0.64,
                           child: Text(
-                            chat.lastMessage ?? '',
+                            widget.chat.lastMessage ?? '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -72,7 +84,7 @@ class FriendCard extends StatelessWidget {
                 ),
                 Opacity(
                   opacity: 0.64,
-                  child: Text(Helper.format(chat.time!)),
+                  child: Text(Helper.format(widget.chat.time!)),
                 ),
               ],
             ),

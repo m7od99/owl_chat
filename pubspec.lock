@@ -196,21 +196,28 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.5"
+  cloud_firestore_odm:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore_odm
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-dev.5"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
       name: cloud_firestore_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.6"
+    version: "5.4.10"
   cloud_firestore_web:
     dependency: transitive
     description:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.6.5"
   code_builder:
     dependency: transitive
     description:

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class ChatsStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: stream,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+        if (!snapshot.hasData) return Center(child: LoadingRotating.square());
 
         final snap = snapshot.data!.docs;
         final data = _chats.getMyChats(snap);

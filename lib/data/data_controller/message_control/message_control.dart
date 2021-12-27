@@ -1,7 +1,8 @@
-// ignore_for_file: cast_nullable_to_non_nullable
+// ignore_for_file: cast_nullable_to_non_nullable, depend_on_referenced_packages
 
 import 'dart:developer';
 
+import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class MessageControl extends ChangeNotifier {
   }
 
   Stream<List<MessageModel>> getMessagesWhere(String chatId, int time) {
+    final List<Stream<QuerySnapshot>> streams = [];
     final newMessages = _firestore
         .collection('messages')
         .doc(chatId)
@@ -32,12 +34,25 @@ class MessageControl extends ChangeNotifier {
         .where('time', isGreaterThan: time)
         .snapshots();
 
-    return newMessages.map((snapshot) {
+    final updatedMessages = _firestore
+        .collection('messages')
+        .doc(chatId)
+        .collection('messages')
+        .where('isEdited', isEqualTo: true)
+        .snapshots();
+
+    streams.add(newMessages);
+    streams.add(updatedMessages);
+
+    final Stream<QuerySnapshot> results = StreamGroup.merge(streams);
+
+    return results.map((snapshot) {
       return snapshot.docs.reversed.map<MessageModel>((docs) {
-        final message = MessageModel.fromJson(docs.data());
+        final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
 
         return message.copyWith(
           id: docs.id,
+          chatId: chatId,
         );
       }).toList();
     });
@@ -143,17 +158,10 @@ class MessageControl extends ChangeNotifier {
 
         return message.copyWith(
           id: docs.id,
+          chatId: chatId,
         );
       }).toList();
     });
-  }
-
-  bool isOffline(String chatId) {
-    late bool isOffline;
-    getMessages(chatId).listen((e) {
-      isOffline = e.metadata.hasPendingWrites;
-    });
-    return isOffline;
   }
 
   Future updateMessage(MessageModel message) async {

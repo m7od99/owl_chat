@@ -65,11 +65,11 @@ class Bubble extends StatelessWidget {
           message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Material(
-          color: message.isMe ? Colors.indigo[300] : Colors.indigo[400],
+          color: message.isMe ? Colors.indigo[400] : Colors.deepPurple[700],
           elevation: 0.5,
           borderRadius: message.isMe ? meBorder : otherBorder,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               textBaseline: TextBaseline.alphabetic,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -82,7 +82,7 @@ class Bubble extends StatelessWidget {
                   child: Flexible(
                     child: RichText(
                       text: TextSpan(
-                        text: message.text,
+                        text: message.text.trim(),
                         style: GoogleFonts.almarai(
                           height: 1.15,
                           fontSize: 18,

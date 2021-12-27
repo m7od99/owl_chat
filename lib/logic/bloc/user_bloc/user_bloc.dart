@@ -6,6 +6,8 @@ import 'package:owl_chat/data/data_controller/owl_user_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/auth/owl_user.dart';
 import 'package:owl_chat/data/models/auth/profile_user_settings.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/logic/controller/search.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -108,6 +110,40 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
             ),
           );
         },
+
+        ///
+        addNewChatData: (AddNewChatData value) {
+          if (!state.user.chatsData.any((e) => e.id == value.user.id)) {
+            emit(
+              state.copyWith(
+                user:
+                    state.user.copyWith(chatsData: state.user.chatsData..add(value.user)),
+              ),
+            );
+          }
+        },
+
+        ///
+        getChatData: (GetChatData value) async {
+          if (state.user.chatsData.any((e) => e.id == value.userId)) {
+            emit(
+              state.copyWith(
+                chatPhoto: state.user.chatsData
+                    .where((e) => e.id == value.userId)
+                    .first
+                    .photoUri,
+              ),
+            );
+          } else {
+            final user = await SearchLogic.getUserById(value.userId);
+            if (user != null) {
+              add(AddNewChatData(user: user));
+              emit(state.copyWith(chatPhoto: user.photoUri));
+            }
+          }
+        },
+
+        ///
       );
     });
   }
@@ -116,7 +152,7 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
 
   @override
   UserState? fromJson(Map<String, dynamic> json) {
-    return UserState(user: Owl.fromJson(json));
+    return UserState(user: Owl.fromJson(json), chatPhoto: state.chatPhoto);
   }
 
   @override

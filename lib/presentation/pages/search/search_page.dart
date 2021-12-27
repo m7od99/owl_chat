@@ -3,9 +3,10 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
 import 'package:provider/provider.dart';
 
 class UserSearchPage extends SearchDelegate<OwlUser> {
@@ -51,6 +52,7 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           );
         }
         final foundUser = snapshot.data! as OwlUser;
+        context.read<UserBloc>().add(AddNewChatData(user: foundUser));
         return ListTile(
           title: Text(
             foundUser.userName,
@@ -71,7 +73,7 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final user = Provider.of<UserState>(context);
+    final user = Provider.of<p.UserState>(context);
     return SafeArea(
       child: FutureBuilder<List<OwlUser>>(
         builder: (context, snap) {

@@ -45,4 +45,8 @@ abstract class UserEvent with _$UserEvent {
 
   const factory UserEvent.toggleDisplayNotificationOnOpenApp() =
       ToggleDisplayNotificationOnOpenApp;
+
+  const factory UserEvent.addNewChatData({required OwlUser user}) = AddNewChatData;
+
+  const factory UserEvent.getChatData({required String userId}) = GetChatData;
 }

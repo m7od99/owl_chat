@@ -1,8 +1,11 @@
+// ignore_for_file: unnecessary_null_comparison, prefer_final_locals
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
-import 'package:owl_chat/logic/controller/search.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
 import 'package:provider/provider.dart';
 
 class ProfilePhoto extends StatelessWidget {
@@ -11,7 +14,7 @@ class ProfilePhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserState user = Provider.of<UserState>(context);
+    final p.UserState user = Provider.of<p.UserState>(context);
 
     if (user.photoUri != null) {
       return CachedNetworkImage(
@@ -44,13 +47,20 @@ class ChatProfilePhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<OwlUser?>(
-      future: SearchLogic.getUserById(id),
-      builder: (context, snap) {
-        if (snap.hasData) {
-          if (snap.data!.photoUri != null) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        late OwlUser? user;
+
+        if (state.user.chatsData.any((e) => e.id == id)) {
+          user = state.user.chatsData.firstWhere((e) => e.id == id);
+        } else {
+          user = null;
+        }
+
+        if (user != null) {
+          if (user.photoUri != null) {
             return CachedNetworkImage(
-              imageUrl: snap.data!.photoUri!,
+              imageUrl: state.user.chatsData.where((e) => e.id == id).first.photoUri!,
               imageBuilder: (context, image) => CircleAvatar(
                 backgroundImage: image,
                 radius: size,

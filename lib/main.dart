@@ -9,7 +9,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'app/provider_control.dart';
-import 'firebase_options.dart';
 import 'logic/controller/notifications.dart';
 import 'translations/codegen_loader.g.dart';
 

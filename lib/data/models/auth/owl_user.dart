@@ -2,6 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:owl_chat/data/models/auth/profile_user_settings.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 
 part 'owl_user.freezed.dart';
 part 'owl_user.g.dart';
@@ -22,6 +23,7 @@ class Owl with _$Owl {
     List<String>? chats,
     List<String>? friends,
     List<String>? blockedList,
+    required List<OwlUser> chatsData,
   }) = _Owl;
 
   factory Owl.fromJson(Map<String, dynamic> json) => _$OwlFromJson(json);
