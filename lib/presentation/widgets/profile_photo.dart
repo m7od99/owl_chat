@@ -36,7 +36,7 @@ class ProfilePhoto extends StatelessWidget {
   }
 }
 
-class ChatProfilePhoto extends StatelessWidget {
+class ChatProfilePhoto extends StatefulWidget {
   final double size;
   final String id;
   const ChatProfilePhoto({
@@ -46,34 +46,41 @@ class ChatProfilePhoto extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ChatProfilePhoto> createState() => _ChatProfilePhotoState();
+}
+
+class _ChatProfilePhotoState extends State<ChatProfilePhoto> {
+  @override
+  void initState() {
+    context.read<UserBloc>().add(GetChatData(userId: widget.id));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-      builder: (context, state) {
-        late OwlUser? user;
-
-        if (state.user.chatsData.any((e) => e.id == id)) {
-          user = state.user.chatsData.firstWhere((e) => e.id == id);
-        } else {
-          user = null;
+      buildWhen: (previous, current) {
+        if (current.otherUserInfo != null && current.otherUserInfo!.id == widget.id) {
+          return true;
         }
-
-        if (user != null) {
-          if (user.photoUri != null) {
-            return CachedNetworkImage(
-              imageUrl: state.user.chatsData.where((e) => e.id == id).first.photoUri!,
-              imageBuilder: (context, image) => CircleAvatar(
-                backgroundImage: image,
-                radius: size,
-              ),
-              placeholder: (context, o) => CircleAvatar(
-                radius: size,
-              ),
-            );
-          }
+        return false;
+      },
+      builder: (context, state) {
+        if (state.otherUserInfo != null && state.otherUserInfo?.photoUri != null) {
+          return CachedNetworkImage(
+            imageUrl: state.otherUserInfo!.photoUri!,
+            imageBuilder: (context, image) => CircleAvatar(
+              backgroundImage: image,
+              radius: widget.size,
+            ),
+            placeholder: (context, o) => CircleAvatar(
+              radius: widget.size,
+            ),
+          );
         }
         return CircleAvatar(
           backgroundImage: const AssetImage('assets/images/user.png'),
-          radius: size,
+          radius: widget.size,
         );
       },
     );

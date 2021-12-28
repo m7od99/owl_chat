@@ -13,7 +13,7 @@ import '../../widgets/profile_photo.dart';
 import 'widgets/message_view_bloc.dart';
 import 'widgets/send_message_field.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   static String id = 'ChatScreen';
 
   //final Chat chat;
@@ -22,11 +22,23 @@ class ChatScreen extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
+  Widget build(BuildContext context) {
+    final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
+    return ChatPage(chat: chat);
+    //  user.updateOnChat(chat.id);
+  }
 }
 
-class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateMixin {
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key, required this.chat}) : super(key: key);
+
+  final Chat chat;
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
 
@@ -67,20 +79,21 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    super.initState();
     animationControl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 15),
     );
+
     _showArrow();
+
+    UserState().updateOnChat(widget.chat.id);
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
-    final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
-
-    //  user.updateOnChat(chat.id);
 
     return BlocBuilder<MessageBloc, MessageState>(
       builder: (context, state) {
@@ -97,9 +110,9 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(user.otherName(chat)),
+                Text(user.otherName(widget.chat)),
                 ChatProfilePhoto(
-                  id: user.otherId(chat),
+                  id: user.otherId(widget.chat),
                   size: 22,
                 ),
               ],
@@ -117,7 +130,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                     }
                   },
                   child: ChatRoomMessagesView(
-                    chat: chat,
+                    chat: widget.chat,
                     scrollController: _scrollController,
                     textEditingController: _controller,
                   ),
@@ -128,7 +141,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
                   controller: _controller,
                 ),
               SendMessageField(
-                chat: chat,
+                chat: widget.chat,
                 controller: _controller,
               ),
             ],

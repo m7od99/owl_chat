@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
+import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -26,6 +29,8 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     user.updateOwlUser();
     notifications.foregroundMessagingHandler();
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
+    context.read<b.UserBloc>().add(const b.GetChatsData());
+    context.read<ChatRoomBloc>().add(const LoadChatRoom());
 
     super.initState();
   }

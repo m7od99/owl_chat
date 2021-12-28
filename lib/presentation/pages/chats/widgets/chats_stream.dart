@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animations/loading_animations.dart';
+import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/data_controller/message_control/message_control.dart';
 import '../../../../data/models/chats/chat.dart';
-import '../../../../logic/event_handler/chats_logic.dart';
 import '../../../../logic/event_handler/user_state.dart';
 import 'friend_card.dart';
 
@@ -28,19 +25,12 @@ class ChatsStream extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserState user = Provider.of<UserState>(context);
 
-    final control = Provider.of<MessageControl>(context);
-    final _chats = ChatsController();
-    final stream = control.getChats(user.userId);
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: stream,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return Center(child: LoadingRotating.square());
-
-        final snap = snapshot.data!.docs;
-        final data = _chats.getMyChats(snap);
-        final List<Chat> chats = _chats.getChats(data);
-        if (chats.isEmpty) {
+    return BlocBuilder<ChatRoomBloc, ChatRoomState>(
+      builder: (context, state) {
+        if (state.isLoading == true) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state.chats.isEmpty) {
           return const Center(
             child: Text(
               'You dont have any chat',
@@ -48,6 +38,7 @@ class ChatsStream extends StatelessWidget {
             ),
           );
         }
+        final chats = state.chats;
         return BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             return Padding(

@@ -49,4 +49,6 @@ abstract class UserEvent with _$UserEvent {
   const factory UserEvent.addNewChatData({required OwlUser user}) = AddNewChatData;
 
   const factory UserEvent.getChatData({required String userId}) = GetChatData;
+
+  const factory UserEvent.getChatsData() = GetChatsData;
 }

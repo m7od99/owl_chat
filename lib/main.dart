@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +45,4 @@ Future main() async {
     ),
     storage: storage,
   );
-}
-
-Future connect() async {
-  final connectivityResult = await Connectivity().checkConnectivity();
-  connectivityResult.name;
 }

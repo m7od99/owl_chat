@@ -8,31 +8,23 @@ import '../../../../helper/helper.dart';
 import '../../../../logic/event_handler/user_state.dart' as p;
 import '../../../theme/constant.dart';
 
-class FriendCard extends StatefulWidget {
+class FriendCard extends StatelessWidget {
+  const FriendCard({
+    required this.onTap,
+    required this.chat,
+  });
+
   final Chat chat;
   final VoidCallback onTap;
 
-  const FriendCard({required this.onTap, required this.chat});
-
-  @override
-  State<FriendCard> createState() => _FriendCardState();
-}
-
-class _FriendCardState extends State<FriendCard> {
   String name(String myId) {
-    if (widget.chat.me!.id == myId) return widget.chat.other!.userName;
-    return widget.chat.me!.userName;
+    if (chat.me!.id == myId) return chat.other!.userName;
+    return chat.me!.userName;
   }
 
   String otherId(String myId) {
-    if (widget.chat.me!.id == myId) return widget.chat.other!.id;
-    return widget.chat.me!.id;
-  }
-
-  @override
-  void initState() {
-    context.read<UserBloc>().add(GetChatData(userId: p.UserState().otherId(widget.chat)));
-    super.initState();
+    if (chat.me!.id == myId) return chat.other!.id;
+    return chat.me!.id;
   }
 
   @override
@@ -42,7 +34,7 @@ class _FriendCardState extends State<FriendCard> {
     return SizedBox(
       height: 55,
       child: InkWell(
-        onTap: widget.onTap,
+        onTap: onTap,
         child: Stack(
           children: [
             Row(
@@ -70,7 +62,7 @@ class _FriendCardState extends State<FriendCard> {
                         Opacity(
                           opacity: 0.64,
                           child: Text(
-                            widget.chat.lastMessage ?? '',
+                            chat.lastMessage ?? '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
@@ -84,7 +76,7 @@ class _FriendCardState extends State<FriendCard> {
                 ),
                 Opacity(
                   opacity: 0.64,
-                  child: Text(Helper.format(widget.chat.time!)),
+                  child: Text(Helper.format(chat.time!)),
                 ),
               ],
             ),

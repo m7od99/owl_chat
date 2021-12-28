@@ -7,8 +7,18 @@ import '../../data/models/auth/user.dart';
 import '../../data/models/chats/chat.dart';
 
 class UserState extends ChangeNotifier {
+  factory UserState() {
+    return _instance;
+  }
+
+  static final UserState _instance = UserState._internal();
+
+  UserState._internal() {
+    user = OwlUser(id: '', userName: '', email: '');
+  }
+
   final _userControl = UserControl();
-  OwlUser user = OwlUser(id: '', userName: '', email: '');
+  late OwlUser user;
 
   Future<void> login(String email, String password) async {
     await _userControl.login(email, password);
@@ -49,7 +59,7 @@ class UserState extends ChangeNotifier {
 
   Future updateOnChat(String chatId) async {
     user.onChat = chatId;
-    notifyListeners();
+    //  notifyListeners();
     await updateOwlUser();
   }
 

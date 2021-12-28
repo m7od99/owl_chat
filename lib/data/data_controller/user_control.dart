@@ -135,6 +135,19 @@ class UserControl extends ChangeNotifier {
     await _auth.currentUser!.updateDisplayName(newName);
   }
 
+  Future<List<OwlUser>> getUsersData() async {
+    final dynamic data = await getUsers();
+    final docs = data.docs;
+
+    final List<OwlUser> users = [];
+    for (final user in docs) {
+      final data = user.data();
+      users.add(OwlUser.fromMap(data as Map<String, dynamic>));
+    }
+
+    return users;
+  }
+
   // return info about user
   String get email => _auth.currentUser!.email!;
   bool get isLogin => _hasUser();

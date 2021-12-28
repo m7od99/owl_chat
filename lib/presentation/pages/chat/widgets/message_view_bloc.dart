@@ -8,7 +8,7 @@ import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/popup_card.dart';
 import 'package:owl_chat/presentation/widgets/hero_root.dart';
 
-class ChatRoomMessagesView extends StatefulWidget {
+class ChatRoomMessagesView extends StatelessWidget {
   const ChatRoomMessagesView({
     Key? key,
     required this.chat,
@@ -19,17 +19,6 @@ class ChatRoomMessagesView extends StatefulWidget {
   final Chat chat;
   final ScrollController scrollController;
   final TextEditingController textEditingController;
-
-  @override
-  _ChatRoomMessagesViewState createState() => _ChatRoomMessagesViewState();
-}
-
-class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView> {
-  @override
-  void initState() {
-    UserState().updateOnChat(widget.chat.id);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +32,7 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView> {
         return ListView.builder(
           reverse: true,
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          controller: widget.scrollController,
+          controller: scrollController,
           itemCount: state.messages.length,
           itemBuilder: (BuildContext context, int index) {
             return MessageBubble(
@@ -55,7 +44,7 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView> {
                     builder: (context) => PopupCard(
                       message: state.messages[index],
                       tag: index,
-                      textEditingController: widget.textEditingController,
+                      textEditingController: textEditingController,
                     ),
                   ),
                 );

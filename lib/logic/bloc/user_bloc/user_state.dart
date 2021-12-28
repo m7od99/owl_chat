@@ -2,7 +2,10 @@ part of 'user_bloc.dart';
 
 @freezed
 abstract class UserState with _$UserState {
-  const factory UserState({required Owl user, String? chatPhoto}) = _UserState;
+  const factory UserState({
+    required Owl user,
+    OwlUser? otherUserInfo,
+  }) = _UserState;
 
   factory UserState.initial() => const UserState(
         user: Owl(
@@ -24,6 +27,5 @@ abstract class UserState with _$UserState {
           chats: [],
           chatsData: [],
         ),
-        chatPhoto: '',
       );
 }

@@ -179,4 +179,15 @@ class MessageControl extends ChangeNotifier {
     }
     return false;
   }
+
+  Stream<List<Chat>> getUserChatsRoom() {
+    return _firestore
+        .collection('messages')
+        //    .where('id', arrayContains: _user.currentUser!.uid)
+        .orderBy('time', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((data) => Chat.fromMap(data.data())).toList();
+    });
+  }
 }

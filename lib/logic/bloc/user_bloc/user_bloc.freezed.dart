@@ -116,6 +116,10 @@ class _$UserEventTearOff {
       userId: userId,
     );
   }
+
+  GetChatsData getChatsData() {
+    return const GetChatsData();
+  }
 }
 
 /// @nodoc
@@ -145,6 +149,7 @@ mixin _$UserEvent {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -169,6 +174,7 @@ mixin _$UserEvent {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -193,6 +199,7 @@ mixin _$UserEvent {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -223,6 +230,7 @@ mixin _$UserEvent {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -249,6 +257,7 @@ mixin _$UserEvent {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -275,6 +284,7 @@ mixin _$UserEvent {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -379,6 +389,7 @@ class _$UpdateUserName implements UpdateUserName {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateUserName(userName);
   }
@@ -406,6 +417,7 @@ class _$UpdateUserName implements UpdateUserName {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateUserName?.call(userName);
   }
@@ -433,6 +445,7 @@ class _$UpdateUserName implements UpdateUserName {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUserName != null) {
@@ -469,6 +482,7 @@ class _$UpdateUserName implements UpdateUserName {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateUserName(this);
   }
@@ -498,6 +512,7 @@ class _$UpdateUserName implements UpdateUserName {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateUserName?.call(this);
   }
@@ -527,6 +542,7 @@ class _$UpdateUserName implements UpdateUserName {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUserName != null) {
@@ -629,6 +645,7 @@ class _$UpdateEmail implements UpdateEmail {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateEmail(email);
   }
@@ -656,6 +673,7 @@ class _$UpdateEmail implements UpdateEmail {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateEmail?.call(email);
   }
@@ -683,6 +701,7 @@ class _$UpdateEmail implements UpdateEmail {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateEmail != null) {
@@ -719,6 +738,7 @@ class _$UpdateEmail implements UpdateEmail {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateEmail(this);
   }
@@ -748,6 +768,7 @@ class _$UpdateEmail implements UpdateEmail {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateEmail?.call(this);
   }
@@ -777,6 +798,7 @@ class _$UpdateEmail implements UpdateEmail {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateEmail != null) {
@@ -877,6 +899,7 @@ class _$UpdateId implements UpdateId {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateId(id);
   }
@@ -904,6 +927,7 @@ class _$UpdateId implements UpdateId {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateId?.call(id);
   }
@@ -931,6 +955,7 @@ class _$UpdateId implements UpdateId {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateId != null) {
@@ -967,6 +992,7 @@ class _$UpdateId implements UpdateId {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateId(this);
   }
@@ -996,6 +1022,7 @@ class _$UpdateId implements UpdateId {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateId?.call(this);
   }
@@ -1025,6 +1052,7 @@ class _$UpdateId implements UpdateId {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateId != null) {
@@ -1127,6 +1155,7 @@ class _$UpdateOnChat implements UpdateOnChat {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateOnChat(chatId);
   }
@@ -1154,6 +1183,7 @@ class _$UpdateOnChat implements UpdateOnChat {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateOnChat?.call(chatId);
   }
@@ -1181,6 +1211,7 @@ class _$UpdateOnChat implements UpdateOnChat {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateOnChat != null) {
@@ -1217,6 +1248,7 @@ class _$UpdateOnChat implements UpdateOnChat {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateOnChat(this);
   }
@@ -1246,6 +1278,7 @@ class _$UpdateOnChat implements UpdateOnChat {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateOnChat?.call(this);
   }
@@ -1275,6 +1308,7 @@ class _$UpdateOnChat implements UpdateOnChat {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateOnChat != null) {
@@ -1387,6 +1421,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateUserSettings(settings);
   }
@@ -1414,6 +1449,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateUserSettings?.call(settings);
   }
@@ -1441,6 +1477,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUserSettings != null) {
@@ -1477,6 +1514,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateUserSettings(this);
   }
@@ -1506,6 +1544,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateUserSettings?.call(this);
   }
@@ -1535,6 +1574,7 @@ class _$UpdateUserSettings implements UpdateUserSettings {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUserSettings != null) {
@@ -1653,6 +1693,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateNotificationsSettings(notificationsSetting);
   }
@@ -1680,6 +1721,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateNotificationsSettings?.call(notificationsSetting);
   }
@@ -1707,6 +1749,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateNotificationsSettings != null) {
@@ -1743,6 +1786,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateNotificationsSettings(this);
   }
@@ -1772,6 +1816,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateNotificationsSettings?.call(this);
   }
@@ -1801,6 +1846,7 @@ class _$UpdateNotificationsSettings implements UpdateNotificationsSettings {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateNotificationsSettings != null) {
@@ -1879,6 +1925,7 @@ class _$LoadUser implements LoadUser {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return loadUser();
   }
@@ -1906,6 +1953,7 @@ class _$LoadUser implements LoadUser {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return loadUser?.call();
   }
@@ -1933,6 +1981,7 @@ class _$LoadUser implements LoadUser {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (loadUser != null) {
@@ -1969,6 +2018,7 @@ class _$LoadUser implements LoadUser {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return loadUser(this);
   }
@@ -1998,6 +2048,7 @@ class _$LoadUser implements LoadUser {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return loadUser?.call(this);
   }
@@ -2027,6 +2078,7 @@ class _$LoadUser implements LoadUser {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (loadUser != null) {
@@ -2100,6 +2152,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return changeUserStatus();
   }
@@ -2127,6 +2180,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return changeUserStatus?.call();
   }
@@ -2154,6 +2208,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (changeUserStatus != null) {
@@ -2190,6 +2245,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return changeUserStatus(this);
   }
@@ -2219,6 +2275,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return changeUserStatus?.call(this);
   }
@@ -2248,6 +2305,7 @@ class _$ChangeUserStatus implements ChangeUserStatus {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (changeUserStatus != null) {
@@ -2320,6 +2378,7 @@ class _$UpdateUser implements UpdateUser {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateUser();
   }
@@ -2347,6 +2406,7 @@ class _$UpdateUser implements UpdateUser {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateUser?.call();
   }
@@ -2374,6 +2434,7 @@ class _$UpdateUser implements UpdateUser {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUser != null) {
@@ -2410,6 +2471,7 @@ class _$UpdateUser implements UpdateUser {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateUser(this);
   }
@@ -2439,6 +2501,7 @@ class _$UpdateUser implements UpdateUser {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateUser?.call(this);
   }
@@ -2468,6 +2531,7 @@ class _$UpdateUser implements UpdateUser {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateUser != null) {
@@ -2565,6 +2629,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updatePhotoUri(uri);
   }
@@ -2592,6 +2657,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updatePhotoUri?.call(uri);
   }
@@ -2619,6 +2685,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updatePhotoUri != null) {
@@ -2655,6 +2722,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updatePhotoUri(this);
   }
@@ -2684,6 +2752,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updatePhotoUri?.call(this);
   }
@@ -2713,6 +2782,7 @@ class _$UpdatePhotoUri implements UpdatePhotoUri {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updatePhotoUri != null) {
@@ -2791,6 +2861,7 @@ class _$UpdateToken implements UpdateToken {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return updateToken();
   }
@@ -2818,6 +2889,7 @@ class _$UpdateToken implements UpdateToken {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return updateToken?.call();
   }
@@ -2845,6 +2917,7 @@ class _$UpdateToken implements UpdateToken {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (updateToken != null) {
@@ -2881,6 +2954,7 @@ class _$UpdateToken implements UpdateToken {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return updateToken(this);
   }
@@ -2910,6 +2984,7 @@ class _$UpdateToken implements UpdateToken {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return updateToken?.call(this);
   }
@@ -2939,6 +3014,7 @@ class _$UpdateToken implements UpdateToken {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (updateToken != null) {
@@ -3014,6 +3090,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return saveUserInServerDatabase();
   }
@@ -3041,6 +3118,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return saveUserInServerDatabase?.call();
   }
@@ -3068,6 +3146,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (saveUserInServerDatabase != null) {
@@ -3104,6 +3183,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return saveUserInServerDatabase(this);
   }
@@ -3133,6 +3213,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return saveUserInServerDatabase?.call(this);
   }
@@ -3162,6 +3243,7 @@ class _$SaveUserInServerDatabase implements SaveUserInServerDatabase {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (saveUserInServerDatabase != null) {
@@ -3263,6 +3345,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return ignoreNotificationFromChat(id);
   }
@@ -3290,6 +3373,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return ignoreNotificationFromChat?.call(id);
   }
@@ -3317,6 +3401,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (ignoreNotificationFromChat != null) {
@@ -3353,6 +3438,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return ignoreNotificationFromChat(this);
   }
@@ -3382,6 +3468,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return ignoreNotificationFromChat?.call(this);
   }
@@ -3411,6 +3498,7 @@ class _$IgnoreNotificationFromChat implements IgnoreNotificationFromChat {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (ignoreNotificationFromChat != null) {
@@ -3515,6 +3603,7 @@ class _$ChangeTheme implements ChangeTheme {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return changeTheme(isDarkTheme);
   }
@@ -3542,6 +3631,7 @@ class _$ChangeTheme implements ChangeTheme {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return changeTheme?.call(isDarkTheme);
   }
@@ -3569,6 +3659,7 @@ class _$ChangeTheme implements ChangeTheme {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (changeTheme != null) {
@@ -3605,6 +3696,7 @@ class _$ChangeTheme implements ChangeTheme {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return changeTheme(this);
   }
@@ -3634,6 +3726,7 @@ class _$ChangeTheme implements ChangeTheme {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return changeTheme?.call(this);
   }
@@ -3663,6 +3756,7 @@ class _$ChangeTheme implements ChangeTheme {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (changeTheme != null) {
@@ -3742,6 +3836,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return toggleAllowNotification();
   }
@@ -3769,6 +3864,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return toggleAllowNotification?.call();
   }
@@ -3796,6 +3892,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleAllowNotification != null) {
@@ -3832,6 +3929,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return toggleAllowNotification(this);
   }
@@ -3861,6 +3959,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return toggleAllowNotification?.call(this);
   }
@@ -3890,6 +3989,7 @@ class _$ToggleAllowNotification implements ToggleAllowNotification {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleAllowNotification != null) {
@@ -3964,6 +4064,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return toggleSoundNotification();
   }
@@ -3991,6 +4092,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return toggleSoundNotification?.call();
   }
@@ -4018,6 +4120,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleSoundNotification != null) {
@@ -4054,6 +4157,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return toggleSoundNotification(this);
   }
@@ -4083,6 +4187,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return toggleSoundNotification?.call(this);
   }
@@ -4112,6 +4217,7 @@ class _$ToggleSoundNotification implements ToggleSoundNotification {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleSoundNotification != null) {
@@ -4191,6 +4297,7 @@ class _$ToggleDisplayNotificationOnOpenApp
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return toggleDisplayNotificationOnOpenApp();
   }
@@ -4218,6 +4325,7 @@ class _$ToggleDisplayNotificationOnOpenApp
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return toggleDisplayNotificationOnOpenApp?.call();
   }
@@ -4245,6 +4353,7 @@ class _$ToggleDisplayNotificationOnOpenApp
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleDisplayNotificationOnOpenApp != null) {
@@ -4281,6 +4390,7 @@ class _$ToggleDisplayNotificationOnOpenApp
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return toggleDisplayNotificationOnOpenApp(this);
   }
@@ -4310,6 +4420,7 @@ class _$ToggleDisplayNotificationOnOpenApp
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return toggleDisplayNotificationOnOpenApp?.call(this);
   }
@@ -4339,6 +4450,7 @@ class _$ToggleDisplayNotificationOnOpenApp
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (toggleDisplayNotificationOnOpenApp != null) {
@@ -4437,6 +4549,7 @@ class _$AddNewChatData implements AddNewChatData {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return addNewChatData(user);
   }
@@ -4464,6 +4577,7 @@ class _$AddNewChatData implements AddNewChatData {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return addNewChatData?.call(user);
   }
@@ -4491,6 +4605,7 @@ class _$AddNewChatData implements AddNewChatData {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (addNewChatData != null) {
@@ -4527,6 +4642,7 @@ class _$AddNewChatData implements AddNewChatData {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return addNewChatData(this);
   }
@@ -4556,6 +4672,7 @@ class _$AddNewChatData implements AddNewChatData {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return addNewChatData?.call(this);
   }
@@ -4585,6 +4702,7 @@ class _$AddNewChatData implements AddNewChatData {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (addNewChatData != null) {
@@ -4687,6 +4805,7 @@ class _$GetChatData implements GetChatData {
     required TResult Function() toggleDisplayNotificationOnOpenApp,
     required TResult Function(OwlUser user) addNewChatData,
     required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
   }) {
     return getChatData(userId);
   }
@@ -4714,6 +4833,7 @@ class _$GetChatData implements GetChatData {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
   }) {
     return getChatData?.call(userId);
   }
@@ -4741,6 +4861,7 @@ class _$GetChatData implements GetChatData {
     TResult Function()? toggleDisplayNotificationOnOpenApp,
     TResult Function(OwlUser user)? addNewChatData,
     TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
     required TResult orElse(),
   }) {
     if (getChatData != null) {
@@ -4777,6 +4898,7 @@ class _$GetChatData implements GetChatData {
         toggleDisplayNotificationOnOpenApp,
     required TResult Function(AddNewChatData value) addNewChatData,
     required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
   }) {
     return getChatData(this);
   }
@@ -4806,6 +4928,7 @@ class _$GetChatData implements GetChatData {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
   }) {
     return getChatData?.call(this);
   }
@@ -4835,6 +4958,7 @@ class _$GetChatData implements GetChatData {
         toggleDisplayNotificationOnOpenApp,
     TResult Function(AddNewChatData value)? addNewChatData,
     TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
     required TResult orElse(),
   }) {
     if (getChatData != null) {
@@ -4854,13 +4978,240 @@ abstract class GetChatData implements UserEvent {
 }
 
 /// @nodoc
+abstract class $GetChatsDataCopyWith<$Res> {
+  factory $GetChatsDataCopyWith(
+          GetChatsData value, $Res Function(GetChatsData) then) =
+      _$GetChatsDataCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$GetChatsDataCopyWithImpl<$Res> extends _$UserEventCopyWithImpl<$Res>
+    implements $GetChatsDataCopyWith<$Res> {
+  _$GetChatsDataCopyWithImpl(
+      GetChatsData _value, $Res Function(GetChatsData) _then)
+      : super(_value, (v) => _then(v as GetChatsData));
+
+  @override
+  GetChatsData get _value => super._value as GetChatsData;
+}
+
+/// @nodoc
+
+class _$GetChatsData implements GetChatsData {
+  const _$GetChatsData();
+
+  @override
+  String toString() {
+    return 'UserEvent.getChatsData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is GetChatsData);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userName) updateUserName,
+    required TResult Function(String email) updateEmail,
+    required TResult Function(String id) updateId,
+    required TResult Function(String chatId) updateOnChat,
+    required TResult Function(UserProfileSettings settings) updateUserSettings,
+    required TResult Function(NotificationsSetting notificationsSetting)
+        updateNotificationsSettings,
+    required TResult Function() loadUser,
+    required TResult Function() changeUserStatus,
+    required TResult Function() updateUser,
+    required TResult Function(String uri) updatePhotoUri,
+    required TResult Function() updateToken,
+    required TResult Function() saveUserInServerDatabase,
+    required TResult Function(String id) ignoreNotificationFromChat,
+    required TResult Function(bool isDarkTheme) changeTheme,
+    required TResult Function() toggleAllowNotification,
+    required TResult Function() toggleSoundNotification,
+    required TResult Function() toggleDisplayNotificationOnOpenApp,
+    required TResult Function(OwlUser user) addNewChatData,
+    required TResult Function(String userId) getChatData,
+    required TResult Function() getChatsData,
+  }) {
+    return getChatsData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String userName)? updateUserName,
+    TResult Function(String email)? updateEmail,
+    TResult Function(String id)? updateId,
+    TResult Function(String chatId)? updateOnChat,
+    TResult Function(UserProfileSettings settings)? updateUserSettings,
+    TResult Function(NotificationsSetting notificationsSetting)?
+        updateNotificationsSettings,
+    TResult Function()? loadUser,
+    TResult Function()? changeUserStatus,
+    TResult Function()? updateUser,
+    TResult Function(String uri)? updatePhotoUri,
+    TResult Function()? updateToken,
+    TResult Function()? saveUserInServerDatabase,
+    TResult Function(String id)? ignoreNotificationFromChat,
+    TResult Function(bool isDarkTheme)? changeTheme,
+    TResult Function()? toggleAllowNotification,
+    TResult Function()? toggleSoundNotification,
+    TResult Function()? toggleDisplayNotificationOnOpenApp,
+    TResult Function(OwlUser user)? addNewChatData,
+    TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
+  }) {
+    return getChatsData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userName)? updateUserName,
+    TResult Function(String email)? updateEmail,
+    TResult Function(String id)? updateId,
+    TResult Function(String chatId)? updateOnChat,
+    TResult Function(UserProfileSettings settings)? updateUserSettings,
+    TResult Function(NotificationsSetting notificationsSetting)?
+        updateNotificationsSettings,
+    TResult Function()? loadUser,
+    TResult Function()? changeUserStatus,
+    TResult Function()? updateUser,
+    TResult Function(String uri)? updatePhotoUri,
+    TResult Function()? updateToken,
+    TResult Function()? saveUserInServerDatabase,
+    TResult Function(String id)? ignoreNotificationFromChat,
+    TResult Function(bool isDarkTheme)? changeTheme,
+    TResult Function()? toggleAllowNotification,
+    TResult Function()? toggleSoundNotification,
+    TResult Function()? toggleDisplayNotificationOnOpenApp,
+    TResult Function(OwlUser user)? addNewChatData,
+    TResult Function(String userId)? getChatData,
+    TResult Function()? getChatsData,
+    required TResult orElse(),
+  }) {
+    if (getChatsData != null) {
+      return getChatsData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UpdateUserName value) updateUserName,
+    required TResult Function(UpdateEmail value) updateEmail,
+    required TResult Function(UpdateId value) updateId,
+    required TResult Function(UpdateOnChat value) updateOnChat,
+    required TResult Function(UpdateUserSettings value) updateUserSettings,
+    required TResult Function(UpdateNotificationsSettings value)
+        updateNotificationsSettings,
+    required TResult Function(LoadUser value) loadUser,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(UpdateUser value) updateUser,
+    required TResult Function(UpdatePhotoUri value) updatePhotoUri,
+    required TResult Function(UpdateToken value) updateToken,
+    required TResult Function(SaveUserInServerDatabase value)
+        saveUserInServerDatabase,
+    required TResult Function(IgnoreNotificationFromChat value)
+        ignoreNotificationFromChat,
+    required TResult Function(ChangeTheme value) changeTheme,
+    required TResult Function(ToggleAllowNotification value)
+        toggleAllowNotification,
+    required TResult Function(ToggleSoundNotification value)
+        toggleSoundNotification,
+    required TResult Function(ToggleDisplayNotificationOnOpenApp value)
+        toggleDisplayNotificationOnOpenApp,
+    required TResult Function(AddNewChatData value) addNewChatData,
+    required TResult Function(GetChatData value) getChatData,
+    required TResult Function(GetChatsData value) getChatsData,
+  }) {
+    return getChatsData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(UpdateUserName value)? updateUserName,
+    TResult Function(UpdateEmail value)? updateEmail,
+    TResult Function(UpdateId value)? updateId,
+    TResult Function(UpdateOnChat value)? updateOnChat,
+    TResult Function(UpdateUserSettings value)? updateUserSettings,
+    TResult Function(UpdateNotificationsSettings value)?
+        updateNotificationsSettings,
+    TResult Function(LoadUser value)? loadUser,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(UpdateUser value)? updateUser,
+    TResult Function(UpdatePhotoUri value)? updatePhotoUri,
+    TResult Function(UpdateToken value)? updateToken,
+    TResult Function(SaveUserInServerDatabase value)? saveUserInServerDatabase,
+    TResult Function(IgnoreNotificationFromChat value)?
+        ignoreNotificationFromChat,
+    TResult Function(ChangeTheme value)? changeTheme,
+    TResult Function(ToggleAllowNotification value)? toggleAllowNotification,
+    TResult Function(ToggleSoundNotification value)? toggleSoundNotification,
+    TResult Function(ToggleDisplayNotificationOnOpenApp value)?
+        toggleDisplayNotificationOnOpenApp,
+    TResult Function(AddNewChatData value)? addNewChatData,
+    TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
+  }) {
+    return getChatsData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UpdateUserName value)? updateUserName,
+    TResult Function(UpdateEmail value)? updateEmail,
+    TResult Function(UpdateId value)? updateId,
+    TResult Function(UpdateOnChat value)? updateOnChat,
+    TResult Function(UpdateUserSettings value)? updateUserSettings,
+    TResult Function(UpdateNotificationsSettings value)?
+        updateNotificationsSettings,
+    TResult Function(LoadUser value)? loadUser,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(UpdateUser value)? updateUser,
+    TResult Function(UpdatePhotoUri value)? updatePhotoUri,
+    TResult Function(UpdateToken value)? updateToken,
+    TResult Function(SaveUserInServerDatabase value)? saveUserInServerDatabase,
+    TResult Function(IgnoreNotificationFromChat value)?
+        ignoreNotificationFromChat,
+    TResult Function(ChangeTheme value)? changeTheme,
+    TResult Function(ToggleAllowNotification value)? toggleAllowNotification,
+    TResult Function(ToggleSoundNotification value)? toggleSoundNotification,
+    TResult Function(ToggleDisplayNotificationOnOpenApp value)?
+        toggleDisplayNotificationOnOpenApp,
+    TResult Function(AddNewChatData value)? addNewChatData,
+    TResult Function(GetChatData value)? getChatData,
+    TResult Function(GetChatsData value)? getChatsData,
+    required TResult orElse(),
+  }) {
+    if (getChatsData != null) {
+      return getChatsData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetChatsData implements UserEvent {
+  const factory GetChatsData() = _$GetChatsData;
+}
+
+/// @nodoc
 class _$UserStateTearOff {
   const _$UserStateTearOff();
 
-  _UserState call({required Owl user, String? chatPhoto}) {
+  _UserState call({required Owl user, OwlUser? otherUserInfo}) {
     return _UserState(
       user: user,
-      chatPhoto: chatPhoto,
+      otherUserInfo: otherUserInfo,
     );
   }
 }
@@ -4871,7 +5222,7 @@ const $UserState = _$UserStateTearOff();
 /// @nodoc
 mixin _$UserState {
   Owl get user => throw _privateConstructorUsedError;
-  String? get chatPhoto => throw _privateConstructorUsedError;
+  OwlUser? get otherUserInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -4882,7 +5233,7 @@ mixin _$UserState {
 abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res>;
-  $Res call({Owl user, String? chatPhoto});
+  $Res call({Owl user, OwlUser? otherUserInfo});
 
   $OwlCopyWith<$Res> get user;
 }
@@ -4898,17 +5249,17 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
   @override
   $Res call({
     Object? user = freezed,
-    Object? chatPhoto = freezed,
+    Object? otherUserInfo = freezed,
   }) {
     return _then(_value.copyWith(
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as Owl,
-      chatPhoto: chatPhoto == freezed
-          ? _value.chatPhoto
-          : chatPhoto // ignore: cast_nullable_to_non_nullable
-              as String?,
+      otherUserInfo: otherUserInfo == freezed
+          ? _value.otherUserInfo
+          : otherUserInfo // ignore: cast_nullable_to_non_nullable
+              as OwlUser?,
     ));
   }
 
@@ -4926,7 +5277,7 @@ abstract class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
           _UserState value, $Res Function(_UserState) then) =
       __$UserStateCopyWithImpl<$Res>;
   @override
-  $Res call({Owl user, String? chatPhoto});
+  $Res call({Owl user, OwlUser? otherUserInfo});
 
   @override
   $OwlCopyWith<$Res> get user;
@@ -4944,17 +5295,17 @@ class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = freezed,
-    Object? chatPhoto = freezed,
+    Object? otherUserInfo = freezed,
   }) {
     return _then(_UserState(
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as Owl,
-      chatPhoto: chatPhoto == freezed
-          ? _value.chatPhoto
-          : chatPhoto // ignore: cast_nullable_to_non_nullable
-              as String?,
+      otherUserInfo: otherUserInfo == freezed
+          ? _value.otherUserInfo
+          : otherUserInfo // ignore: cast_nullable_to_non_nullable
+              as OwlUser?,
     ));
   }
 }
@@ -4962,16 +5313,16 @@ class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserState implements _UserState {
-  const _$_UserState({required this.user, this.chatPhoto});
+  const _$_UserState({required this.user, this.otherUserInfo});
 
   @override
   final Owl user;
   @override
-  final String? chatPhoto;
+  final OwlUser? otherUserInfo;
 
   @override
   String toString() {
-    return 'UserState(user: $user, chatPhoto: $chatPhoto)';
+    return 'UserState(user: $user, otherUserInfo: $otherUserInfo)';
   }
 
   @override
@@ -4980,14 +5331,15 @@ class _$_UserState implements _UserState {
         (other.runtimeType == runtimeType &&
             other is _UserState &&
             const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other.chatPhoto, chatPhoto));
+            const DeepCollectionEquality()
+                .equals(other.otherUserInfo, otherUserInfo));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(chatPhoto));
+      const DeepCollectionEquality().hash(otherUserInfo));
 
   @JsonKey(ignore: true)
   @override
@@ -4996,13 +5348,13 @@ class _$_UserState implements _UserState {
 }
 
 abstract class _UserState implements UserState {
-  const factory _UserState({required Owl user, String? chatPhoto}) =
+  const factory _UserState({required Owl user, OwlUser? otherUserInfo}) =
       _$_UserState;
 
   @override
   Owl get user;
   @override
-  String? get chatPhoto;
+  OwlUser? get otherUserInfo;
   @override
   @JsonKey(ignore: true)
   _$UserStateCopyWith<_UserState> get copyWith =>

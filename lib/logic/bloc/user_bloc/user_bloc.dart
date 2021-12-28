@@ -128,18 +128,21 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
           if (state.user.chatsData.any((e) => e.id == value.userId)) {
             emit(
               state.copyWith(
-                chatPhoto: state.user.chatsData
-                    .where((e) => e.id == value.userId)
-                    .first
-                    .photoUri,
+                otherUserInfo:
+                    state.user.chatsData.firstWhere((e) => e.id == value.userId),
               ),
             );
           } else {
-            final user = await SearchLogic.getUserById(value.userId);
-            if (user != null) {
-              add(AddNewChatData(user: user));
-              emit(state.copyWith(chatPhoto: user.photoUri));
-            }
+            emit(state.copyWith(otherUserInfo: null));
+          }
+          return state.otherUserInfo;
+        },
+
+        ///
+        getChatsData: (GetChatsData value) async {
+          final users = await _user.getUsersData();
+          for (final user in users) {
+            add(AddNewChatData(user: user));
           }
         },
 
@@ -152,7 +155,9 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
 
   @override
   UserState? fromJson(Map<String, dynamic> json) {
-    return UserState(user: Owl.fromJson(json), chatPhoto: state.chatPhoto);
+    return UserState(
+      user: Owl.fromJson(json),
+    );
   }
 
   @override

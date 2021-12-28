@@ -44,4 +44,15 @@ class AboutData {
       'Fix registration /login page validator issues',
     ],
   );
+
+  static const about4 = About(
+    version: '0.0.5',
+    changeLog: [
+      'Fix notification bugs',
+      'Saving data Locally',
+      'Now you can edits your message',
+      'improve UI',
+      'Fix loading the photos',
+    ],
+  );
 }
