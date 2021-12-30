@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:owl_chat/data/models/chats/messages_type.dart';
+import 'messages_type.dart';
 
 part 'message_model.freezed.dart';
 part 'message_model.g.dart';
@@ -10,6 +10,7 @@ part 'message_model.g.dart';
 /// Date Model to hold information about messages
 @freezed
 class MessageModel with _$MessageModel {
+  @JsonSerializable(explicitToJson: true)
   const factory MessageModel({
     ///the main data
     required String text,
@@ -56,7 +57,6 @@ class MessageModel with _$MessageModel {
     bool? isGif,
 
     ///
-
     ///
     String? replyMessageId,
   }) = _MessageModel;
@@ -90,6 +90,21 @@ class MessageModel with _$MessageModel {
     return type.toString();
   }
 
-  factory MessageModel.fromJson(Map<String, dynamic> json) =>
-      _$MessageModelFromJson(json);
+  factory MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
+}
+
+class ServerTimestampConverter implements JsonConverter<DateTime?, Object?> {
+  const ServerTimestampConverter();
+
+  @override
+  DateTime? fromJson(Object? timestamp) {
+    if (timestamp is Timestamp) {
+      return timestamp.toDate();
+    } else {
+      return DateTime.fromMillisecondsSinceEpoch(0);
+    }
+  }
+
+  @override
+  Object? toJson(DateTime? date) => date != null ? FieldValue.serverTimestamp() : null;
 }

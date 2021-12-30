@@ -26,7 +26,7 @@ class GifsButton extends StatelessWidget {
           sendMessage.updateMessage(gif.images!.original!.webp!);
           sendMessage.sendGif(
             chatId: chat.id,
-            receiverId: chat.other!.id,
+            receiverId: chat.other.id,
             uri: gif.images!.original!.webp!,
           );
           sendMessage.updateChatStateGif(chat);

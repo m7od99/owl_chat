@@ -780,6 +780,8 @@ abstract class $SendMessageCopyWith<$Res> {
           SendMessage value, $Res Function(SendMessage) then) =
       _$SendMessageCopyWithImpl<$Res>;
   $Res call({Chat chat});
+
+  $ChatCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -802,6 +804,13 @@ class _$SendMessageCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
           : chat // ignore: cast_nullable_to_non_nullable
               as Chat,
     ));
+  }
+
+  @override
+  $ChatCopyWith<$Res> get chat {
+    return $ChatCopyWith<$Res>(_value.chat, (value) {
+      return _then(_value.copyWith(chat: value));
+    });
   }
 }
 
@@ -4186,6 +4195,8 @@ abstract class $UpdateChatStateCopyWith<$Res> {
           UpdateChatState value, $Res Function(UpdateChatState) then) =
       _$UpdateChatStateCopyWithImpl<$Res>;
   $Res call({Chat chat});
+
+  $ChatCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -4209,6 +4220,13 @@ class _$UpdateChatStateCopyWithImpl<$Res>
           : chat // ignore: cast_nullable_to_non_nullable
               as Chat,
     ));
+  }
+
+  @override
+  $ChatCopyWith<$Res> get chat {
+    return $ChatCopyWith<$Res>(_value.chat, (value) {
+      return _then(_value.copyWith(chat: value));
+    });
   }
 }
 

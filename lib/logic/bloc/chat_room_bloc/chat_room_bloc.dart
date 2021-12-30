@@ -30,9 +30,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
               final _chats =
                   chats.where((e) => e.id.contains(UserState().userId)).toList();
 
-              add(const LoadAnimation(load: false));
 
-              return state.copyWith(chats: _chats);
+              return state.copyWith(chats: _chats ,isLoading: false);
             },
           );
         },

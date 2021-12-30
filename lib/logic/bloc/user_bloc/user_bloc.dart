@@ -7,7 +7,6 @@ import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/auth/owl_user.dart';
 import 'package:owl_chat/data/models/auth/profile_user_settings.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
-import 'package:owl_chat/logic/controller/search.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

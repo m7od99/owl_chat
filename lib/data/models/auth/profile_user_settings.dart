@@ -7,6 +7,7 @@ part 'profile_user_settings.g.dart';
 
 @freezed
 class UserProfileSettings with _$UserProfileSettings {
+  @JsonSerializable(explicitToJson: true)
   const factory UserProfileSettings({
     required bool darkTheme,
     required String language,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +17,13 @@ class FriendCard extends StatelessWidget {
   final VoidCallback onTap;
 
   String name(String myId) {
-    if (chat.me!.id == myId) return chat.other!.userName;
-    return chat.me!.userName;
+    if (chat.me.id == myId) return chat.other.userName;
+    return chat.me.userName;
   }
 
   String otherId(String myId) {
-    if (chat.me!.id == myId) return chat.other!.id;
-    return chat.me!.id;
+    if (chat.me.id == myId) return chat.other.id;
+    return chat.me.id;
   }
 
   @override
@@ -62,7 +61,7 @@ class FriendCard extends StatelessWidget {
                         Opacity(
                           opacity: 0.64,
                           child: Text(
-                            chat.lastMessage ?? '',
+                            chat.lastMessage,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(

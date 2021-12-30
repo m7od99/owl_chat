@@ -131,20 +131,20 @@ class UserState extends ChangeNotifier {
   String? get photoUri => _userControl.userUriPhoto;
 
   String otherName(Chat chat) {
-    if (chat.other!.id == userId && chat.me!.id == userId) {
+    if (chat.other.id == userId && chat.me.id == userId) {
       return userName;
-    } else if (chat.other!.id != userId) {
-      return chat.other!.userName;
+    } else if (chat.other.id != userId) {
+      return chat.other.userName;
     }
-    return chat.me!.userName;
+    return chat.me.userName;
   }
 
   String otherId(Chat chat) {
-    if (chat.other!.id == userId && chat.me!.id == userId) {
+    if (chat.other.id == userId && chat.me.id == userId) {
       return userId;
-    } else if (chat.other!.id != userId) {
-      return chat.other!.id;
+    } else if (chat.other.id != userId) {
+      return chat.other.id;
     }
-    return chat.me!.id;
+    return chat.me.id;
   }
 }

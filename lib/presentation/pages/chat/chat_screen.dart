@@ -22,6 +22,7 @@ class ChatScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
     return ChatPage(chat: chat);

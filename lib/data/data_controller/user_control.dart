@@ -48,19 +48,11 @@ class UserControl extends ChangeNotifier {
   }
 
   Future addFriend(String userId, OwlUser otherUser) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('friends')
-        .add(otherUser.toMap());
+    await _firestore.collection('users').doc(userId).collection('friends').add(otherUser.toMap());
   }
 
   Future<void> updateUser(OwlUser user) async {
-    await _firestore
-        .collection('users')
-        .doc(user.id)
-        .update(user.toMap())
-        .catchError((e) {
+    await _firestore.collection('users').doc(user.id).update(user.toMap()).catchError((e) {
       log(e.toString());
     }).then((value) => log('updated'));
   }
@@ -77,11 +69,7 @@ class UserControl extends ChangeNotifier {
   }
 
   Future getUserByEmail(String email) async {
-    return _firestore
-        .collection('users')
-        .where('email', isEqualTo: userId)
-        .get()
-        .catchError((e) {
+    return _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
       log(e.toString());
     });
   }
@@ -156,11 +144,11 @@ class UserControl extends ChangeNotifier {
   String? get userUriPhoto => _auth.currentUser!.photoURL;
 
   String otherId(Chat chat) {
-    if (chat.other!.id == userId && chat.me!.id == userId) {
+    if (chat.other.id == userId && chat.me.id == userId) {
       return userId;
-    } else if (chat.other!.id != userId) {
-      return chat.other!.id;
+    } else if (chat.other.id != userId) {
+      return chat.other.id;
     }
-    return chat.me!.id;
+    return chat.me.id;
   }
 }

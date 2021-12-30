@@ -361,7 +361,8 @@ class __$MessageModelCopyWithImpl<$Res> extends _$MessageModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_MessageModel implements _MessageModel {
   const _$_MessageModel(
       {required this.text,

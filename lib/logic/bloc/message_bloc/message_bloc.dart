@@ -16,7 +16,7 @@ part 'message_bloc.g.dart';
 part 'message_event.dart';
 part 'message_state.dart';
 
-class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
+class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc() : super(MessageState.init()) {
 //    _localMessageControl = LocalMessageControl(chatId: state.chatId);
 //    _localMessageControl.ready();
@@ -35,21 +35,8 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
         loadChatRoomMessages: (LoadChatRoomMessages value) async {
           emit(state.copyWith(loadingMessages: true));
 
-          final _messages =
-              state.messages.where((e) => e.chatId == state.chatId).toList();
-
-          final MessageModel? mostRecentMessage =
-              _messages.isNotEmpty ? _messages.first : null;
-
-          add(UpdateChatRoomMessages(messages: _messages));
-
           await emit.forEach<List<MessageModel>>(
-            mostRecentMessage != null
-                ? _remoteMessage.getMessageWhere(
-                    state.chatId,
-                    Timestamp.fromDate(mostRecentMessage.time).microsecondsSinceEpoch,
-                  )
-                : _messageControl.getMessages(state.chatId),
+            _messageControl.getMessages(state.chatId),
             onData: (messages) {
               final _messages = messages.map((m) {
                 return m.copyWith(
@@ -95,15 +82,8 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 
         ///
         updateChatRoomMessages: (UpdateChatRoomMessages value) async {
-          final localMessages =
-              state.messages.where((e) => e.chatId == state.chatId).toSet();
-
-          final allMessages = localMessages..addAll(value.messages.toSet());
-
-          final sort = allMessages.toList()..sort((a, b) => a.time.compareTo(b.time));
-
           emit(
-            state.copyWith(messages: sort.reversed.toList()),
+            state.copyWith(messages: value.messages),
           );
         },
 
@@ -222,9 +202,10 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 
         ///
         updateChatState: (UpdateChatState value) async {
-          final chat = value.chat;
-          chat.lastMessage = state.message.text;
-          chat.time = Timestamp.fromDate(state.message.time);
+          final chat = value.chat.copyWith(
+            time: Timestamp.fromDate(state.message.time),
+            lastMessage: state.message.text,
+          );
           await _control.updateChatState(chat);
         },
       );
@@ -236,17 +217,17 @@ class MessageBloc extends HydratedBloc<MessageEvent, MessageState> {
 //  late LocalMessageControl _localMessageControl;
   late FirebaseMessageControl _remoteMessage;
 
-  @override
-  MessageState? fromJson(Map<String, dynamic> json) {
-    return MessageState.fromJson(json);
-  }
+  // @override
+  // MessageState? fromJson(Map<String, dynamic> json) {
+  //   return MessageState.fromJson(json);
+  // }
 
-  @override
-  // TODO: implement id
-  String get id => state.chatId;
+  // @override
+  // // TODO: implement id
+  // String get id => state.chatId;
 
-  @override
-  Map<String, dynamic>? toJson(MessageState state) {
-    return state.toJson();
-  }
+  // @override
+  // Map<String, dynamic>? toJson(MessageState state) {
+  //   return state.toJson();
+  // }
 }

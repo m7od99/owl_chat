@@ -157,7 +157,8 @@ class __$UserProfileSettingsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_UserProfileSettings implements _UserProfileSettings {
   const _$_UserProfileSettings(
       {required this.darkTheme,

@@ -66,7 +66,7 @@ class OwlUser extends Equatable {
       'id': id,
       'isOnline': isOnline,
       'friends': friends?.map((x) => x.toMap()).toList(),
-      'chats': chats?.map((x) => x.toMap()).toList(),
+      'chats': chats?.map((x) => x.toJson()).toList(),
       'photoUri': photoUri,
       'tokens': tokens,
       'onChat': onChat,

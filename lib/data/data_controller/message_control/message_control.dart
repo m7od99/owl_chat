@@ -13,6 +13,7 @@ import '../../models/chats/message.dart';
 
 class MessageControl extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
+
   final _user = FirebaseAuth.instance;
 
   ///get messages from specific chat room
@@ -22,7 +23,7 @@ class MessageControl extends ChangeNotifier {
         .doc(chatId)
         .collection('messages')
         .orderBy('time')
-        .snapshots();
+        .snapshots(includeMetadataChanges: true);
   }
 
   Stream<List<MessageModel>> getMessagesWhere(String chatId, int time) {
@@ -32,14 +33,14 @@ class MessageControl extends ChangeNotifier {
         .doc(chatId)
         .collection('messages')
         .where('time', isGreaterThan: time)
-        .snapshots();
+        .snapshots(includeMetadataChanges: true);
 
     final updatedMessages = _firestore
         .collection('messages')
         .doc(chatId)
         .collection('messages')
         .where('isEdited', isEqualTo: true)
-        .snapshots();
+        .snapshots(includeMetadataChanges: true);
 
     streams.add(newMessages);
     streams.add(updatedMessages);
@@ -48,11 +49,13 @@ class MessageControl extends ChangeNotifier {
 
     return results.map((snapshot) {
       return snapshot.docs.reversed.map<MessageModel>((docs) {
+        final isLocal = docs.metadata.hasPendingWrites;
         final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
 
         return message.copyWith(
           id: docs.id,
           chatId: chatId,
+          isSend: !isLocal,
         );
       }).toList();
     });
@@ -79,30 +82,17 @@ class MessageControl extends ChangeNotifier {
     }).then((value) => log('message send $value'));
   }
 
-  Future<bool> sendMessageModel(MessageModel message, String chatId) async {
-    late bool isSend;
+  Future sendMessageModel(MessageModel message, String chatId) async {
     await _firestore
         .collection('messages')
         .doc(chatId)
         .collection('messages')
-        .add(message.toJson())
-        .then((e) {
-      isSend = true;
-    }).catchError((e) {
-      log(e.toString());
-      isSend = false;
-    });
-
-    return isSend;
+        .add(message.toJson());
   }
 
   ///create a new chat room
   Future<void> createChat(Chat chat) async {
-    await _firestore
-        .collection('messages')
-        .doc(chat.id)
-        .set(chat.toMap())
-        .catchError((e) {
+    await _firestore.collection('messages').doc(chat.id).set(chat.toJson()).catchError((e) {
       log(e.toString());
     }).then((value) => log('chat room is created'));
   }
@@ -112,26 +102,19 @@ class MessageControl extends ChangeNotifier {
     await _firestore
         .collection('messages')
         .doc(chat.id)
-        .update(chat.toMap())
+        .update(chat.toJson())
         .then((value) => log('chat room is updated'));
   }
 
   Future addNewChatToUser(String userId, Chat chat) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('chats')
-        .add(chat.toMap());
+    await _firestore.collection('users').doc(userId).collection('chats').add(chat.toJson());
   }
 
   ///get user chats
   Stream<QuerySnapshot<Map<String, dynamic>>> getChats(String userId) {
     log('id is ${_firestore.collection('messages').id}');
 
-    return _firestore
-        .collection('messages')
-        .orderBy('time', descending: true)
-        .snapshots();
+    return _firestore.collection('messages').orderBy('time', descending: true).snapshots();
   }
 
   bool isMe(String id) {
@@ -147,18 +130,21 @@ class MessageControl extends ChangeNotifier {
   ) async {
     final docs = await _firestore.collection('messages').doc(chatId).get();
     if (docs.exists) {
-      return Chat.fromMap(docs.data()!);
+      return Chat.fromJson(docs.data()!);
     }
   }
 
   Stream<List<MessageModel>> getMessagesStream(String chatId) {
     return getMessages(chatId).map((snapshot) {
       return snapshot.docs.reversed.map<MessageModel>((docs) {
+        final isLocal = docs.metadata.hasPendingWrites;
+
         final message = MessageModel.fromJson(docs.data() as Map<String, dynamic>);
 
         return message.copyWith(
           id: docs.id,
           chatId: chatId,
+          isSend: !isLocal,
         );
       }).toList();
     });
@@ -187,7 +173,7 @@ class MessageControl extends ChangeNotifier {
         .orderBy('time', descending: true)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((data) => Chat.fromMap(data.data())).toList();
+      return snapshot.docs.map((data) => Chat.fromJson(data.data())).toList();
     });
   }
 }

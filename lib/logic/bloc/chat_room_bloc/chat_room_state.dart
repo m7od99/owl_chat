@@ -12,6 +12,6 @@ abstract class ChatRoomState with _$ChatRoomState {
 
   factory ChatRoomState.init() => const ChatRoomState(
         chats: [],
-        isLoading: false,
+        isLoading: true,
       );
 }

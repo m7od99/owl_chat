@@ -146,10 +146,6 @@ class Notifications {
         extra: chat,
       );
     }
-    AwesomeNotifications().requestPermissionToSendNotifications(
-      channelKey: '',
-      permissions: [],
-    );
   }
 
   final notAllow = [];

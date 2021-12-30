@@ -65,18 +65,15 @@ class SendMessageState extends ChangeNotifier {
   }
 
   Future updateChatState(Chat chat) async {
-    chat.lastMessage = _textMessage;
-    if (chat.lastMessage!.isNotEmpty) {
-      chat.time = Timestamp.now();
-      await _messageControl.updateChatState(chat);
+    if (chat.lastMessage.isNotEmpty) {
+      await _messageControl
+          .updateChatState(chat.copyWith(time: Timestamp.now(), lastMessage: _textMessage));
       clearMessage();
     }
   }
 
   Future updateChatStateGif(Chat chat) async {
-    chat.lastMessage = 'gif';
-    chat.time = Timestamp.now();
-    await _messageControl.updateChatState(chat);
+    await _messageControl.updateChatState(chat.copyWith(time: Timestamp.now(), lastMessage: 'gif'));
     clearMessage();
   }
 

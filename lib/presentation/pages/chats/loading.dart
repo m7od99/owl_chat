@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
-import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';

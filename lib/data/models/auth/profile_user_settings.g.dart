@@ -20,7 +20,7 @@ Map<String, dynamic> _$$_UserProfileSettingsToJson(
     <String, dynamic>{
       'darkTheme': instance.darkTheme,
       'language': instance.language,
-      'notificationsSetting': instance.notificationsSetting,
+      'notificationsSetting': instance.notificationsSetting.toJson(),
     };
 
 _$_NotificationsSetting _$$_NotificationsSettingFromJson(

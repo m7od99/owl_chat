@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animations/loading_animations.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
@@ -95,41 +96,47 @@ class Bubble extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (message.isEdited != null && message.isEdited == true)
-              const Text(
-                'edited',
-                style: TextStyle(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (message.isEdited != null && message.isEdited == true)
+                const Text(
+                  'edited',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              const SizedBox(width: 4),
+              Text(
+                format(message.time),
+                style: GoogleFonts.notoSans(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            const SizedBox(width: 4),
-            Text(
-              format(message.time),
-              style: GoogleFonts.notoSans(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+              const SizedBox(
+                width: 5,
               ),
-            ),
-            if (message.isMe && message.isSend != null && message.isSend == true)
-              const Icon(
-                Icons.done,
-                size: 15,
-              ),
-            if (message.isMe && message.isSend != null && message.isSend == false)
-              const Icon(
-                Icons.error_outline,
-                size: 15,
-              ),
-            if (message.isMe && message.isSeen != null && message.isSeen == true)
-              const Icon(
-                Icons.done,
-                size: 15,
-              ),
-          ],
+              if (message.isMe && message.isSend != null && message.isSend == true)
+                const Icon(
+                  Icons.done,
+                  size: 15,
+                ),
+              if (message.isMe && message.isSend != null && message.isSend == false)
+                LoadingRotating.square(
+                  size: 15,
+                  backgroundColor: Colors.white,
+                ),
+              if (message.isMe && message.isSeen != null && message.isSeen == true)
+                const Icon(
+                  Icons.done,
+                  size: 15,
+                ),
+            ],
+          ),
         ),
       ],
     );

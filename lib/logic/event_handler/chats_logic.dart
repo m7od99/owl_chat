@@ -11,8 +11,7 @@ class ChatsController {
 
   ///create uniq id for chat room
   String createChatId(String otherUserId) {
-    if (_user.userId.substring(0, 1).codeUnitAt(0) >
-        otherUserId.substring(0, 1).codeUnitAt(0)) {
+    if (_user.userId.substring(0, 1).codeUnitAt(0) > otherUserId.substring(0, 1).codeUnitAt(0)) {
       return "$otherUserId${_user.userId}";
     } else {
       return "${_user.userId}$otherUserId";
@@ -44,7 +43,7 @@ class ChatsController {
     final List<Chat> chats = [];
     for (final chat in data) {
       final dynamic doc = chat.data();
-      chats.add(Chat.fromMap(doc as Map<String, dynamic>));
+      chats.add(Chat.fromJson(doc as Map<String, dynamic>));
     }
 
     return chats;
@@ -61,7 +60,6 @@ class ChatsController {
 
     final chat = Chat(
       time: Timestamp.now(),
-      name: otherUser.userName,
       me: OwlUser(
         email: _user.email,
         userName: _user.userName,
@@ -69,7 +67,6 @@ class ChatsController {
         photoUri: _user.userUriPhoto,
       ),
       other: otherUser,
-      photoUri: '',
       lastMessage: '',
       id: id,
     );
