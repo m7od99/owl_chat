@@ -130,7 +130,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                       currentFocus.unfocus();
                     }
                   },
-                  child: ChatRoomMessagesView(
+                  child: MessageAnimatedList(
                     chat: widget.chat,
                     scrollController: _scrollController,
                     textEditingController: _controller,
@@ -218,8 +218,7 @@ class EditMessageCard extends StatelessWidget {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.clear();
-                    Provider.of<MessageBloc>(context, listen: false)
-                        .add(const CancelEdit());
+                    Provider.of<MessageBloc>(context, listen: false).add(const CancelEdit());
                   },
                 ),
               ],

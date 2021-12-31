@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -41,7 +43,6 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               final _messages = messages.map((m) {
                 return m.copyWith(
                   isMe: _control.isMe(m.sender),
-                  chatId: state.chatId,
                 );
               }).toList();
 
@@ -108,6 +109,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               state.copyWith(
                 message: state.message.copyWith(
                   time: DateTime.now(),
+                  chatId: state.chatId,
                 ),
               ),
             );
@@ -207,6 +209,27 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             lastMessage: state.message.text,
           );
           await _control.updateChatState(chat);
+        },
+
+        ///
+        closeChat: (CloseChat value) {
+          emit(
+            state.copyWith(
+              message: state.message.copyWith(
+                text: '',
+                isEdited: false,
+                isGif: false,
+                isReplyMessage: false,
+                isSend: null,
+                isSeen: null,
+                forwardMessage: false,
+              ),
+              isEdit: false,
+              isForward: false,
+              isReply: false,
+              chatId: '',
+            ),
+          );
         },
       );
     });

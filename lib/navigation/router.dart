@@ -10,8 +10,11 @@ final router = GoRouter(
   errorPageBuilder: (BuildContext context, GoRouterState state) {
     return MaterialPage(
       key: state.pageKey,
-      child: Center(
-        child: Text(state.error.toString()),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Text(state.error.toString()),
+        ),
       ),
     );
   },

@@ -25,8 +25,7 @@ class MessageModel with _$MessageModel {
     @Default(false) bool isMe,
 
     ///the time of sending the message
-    @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
-        required DateTime time,
+    @ServerTimestampConverter() required DateTime time,
 
     ///the type of message
     @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
@@ -61,18 +60,6 @@ class MessageModel with _$MessageModel {
     String? replyMessageId,
   }) = _MessageModel;
 
-  static DateTime _timeFromJson(dynamic time) {
-    if (time is Timestamp) {
-      return time.toDate();
-    } else {
-      return DateTime.fromMicrosecondsSinceEpoch(time as int);
-    }
-  }
-
-  static int _timeToJson(DateTime time) {
-    return Timestamp.fromDate(time).microsecondsSinceEpoch;
-  }
-
   static MessageType? _typeFromJson(String? type) {
     if (type != null) {
       switch (type) {
@@ -93,16 +80,18 @@ class MessageModel with _$MessageModel {
   factory MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
 }
 
-class ServerTimestampConverter implements JsonConverter<DateTime?, Object?> {
+class ServerTimestampConverter implements JsonConverter<DateTime, Object?> {
   const ServerTimestampConverter();
 
   @override
-  DateTime? fromJson(Object? timestamp) {
+  DateTime fromJson(Object? timestamp) {
     if (timestamp is Timestamp) {
       return timestamp.toDate();
-    } else {
-      return DateTime.fromMillisecondsSinceEpoch(0);
     }
+    if (timestamp is int) {
+      return DateTime.fromMicrosecondsSinceEpoch(timestamp);
+    }
+    return DateTime.now();
   }
 
   @override

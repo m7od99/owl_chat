@@ -12,8 +12,7 @@ abstract class MessageState with _$MessageState {
     required bool loadingMessages,
   }) = _MessageState;
 
-  factory MessageState.fromJson(Map<String, dynamic> json) =>
-      _$MessageStateFromJson(json);
+  factory MessageState.fromJson(Map<String, dynamic> json) => _$MessageStateFromJson(json);
 
   factory MessageState.init() => MessageState(
         message: MessageModel(

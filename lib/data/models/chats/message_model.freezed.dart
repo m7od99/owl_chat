@@ -26,7 +26,7 @@ class _$MessageModelTearOff {
       required String sender,
       required String receiver,
       bool isMe = false,
-      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+      @ServerTimestampConverter()
           required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
           MessageType? type,
@@ -81,8 +81,7 @@ mixin _$MessageModel {
   bool get isMe => throw _privateConstructorUsedError;
 
   ///the time of sending the message
-  @JsonKey(
-      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  @ServerTimestampConverter()
   DateTime get time => throw _privateConstructorUsedError;
 
   ///the type of message
@@ -134,7 +133,7 @@ abstract class $MessageModelCopyWith<$Res> {
       String sender,
       String receiver,
       bool isMe,
-      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+      @ServerTimestampConverter()
           DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
           MessageType? type,
@@ -252,7 +251,7 @@ abstract class _$MessageModelCopyWith<$Res>
       String sender,
       String receiver,
       bool isMe,
-      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+      @ServerTimestampConverter()
           DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
           MessageType? type,
@@ -369,7 +368,7 @@ class _$_MessageModel implements _MessageModel {
       required this.sender,
       required this.receiver,
       this.isMe = false,
-      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+      @ServerTimestampConverter()
           required this.time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
           this.type,
@@ -406,8 +405,7 @@ class _$_MessageModel implements _MessageModel {
   @override
 
   ///the time of sending the message
-  @JsonKey(
-      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  @ServerTimestampConverter()
   final DateTime time;
   @override
 
@@ -519,7 +517,7 @@ abstract class _MessageModel implements MessageModel {
       required String sender,
       required String receiver,
       bool isMe,
-      @JsonKey(fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+      @ServerTimestampConverter()
           required DateTime time,
       @JsonKey(fromJson: MessageModel._typeFromJson, toJson: MessageModel._typeToJson)
           MessageType? type,
@@ -555,8 +553,7 @@ abstract class _MessageModel implements MessageModel {
   @override
 
   ///the time of sending the message
-  @JsonKey(
-      fromJson: MessageModel._timeFromJson, toJson: MessageModel._timeToJson)
+  @ServerTimestampConverter()
   DateTime get time;
   @override
 

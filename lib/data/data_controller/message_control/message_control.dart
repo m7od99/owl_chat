@@ -23,7 +23,7 @@ class MessageControl extends ChangeNotifier {
         .doc(chatId)
         .collection('messages')
         .orderBy('time')
-        .snapshots(includeMetadataChanges: true);
+        .snapshots();
   }
 
   Stream<List<MessageModel>> getMessagesWhere(String chatId, int time) {
@@ -83,11 +83,13 @@ class MessageControl extends ChangeNotifier {
   }
 
   Future sendMessageModel(MessageModel message, String chatId) async {
-    await _firestore
-        .collection('messages')
-        .doc(chatId)
-        .collection('messages')
-        .add(message.toJson());
+    await _firestore.collection('messages').doc(chatId).collection('messages').add(
+          message.toJson()
+            ..update(
+              'time',
+              (value) => FieldValue.serverTimestamp(),
+            ),
+        );
   }
 
   ///create a new chat room
