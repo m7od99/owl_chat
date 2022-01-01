@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../data/models/chats/chat.dart';
 import '../../../logic/event_handler/user_state.dart';
@@ -40,33 +41,28 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin {
-  final ScrollController _scrollController = ScrollController();
+  final ItemScrollController itemScrollController = ItemScrollController();
+
+  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
   final TextEditingController _controller = TextEditingController();
 
   late final AnimationController animationControl;
 
   Future _jumpToEnd() async {
-    final end = _scrollController.position.minScrollExtent;
-    await _scrollController.animateTo(
-      end,
-      duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeInOut,
+    itemScrollController.scrollTo(
+      index: 0,
+      duration: const Duration(seconds: 2),
+      curve: Curves.easeInOutCubic,
     );
-    animationControl.reset();
   }
 
   void _showArrow() {
-    _scrollController.addListener(() {
-      switch (_scrollController.position.userScrollDirection) {
-        case ScrollDirection.forward:
-          animationControl.forward();
-          break;
-        case ScrollDirection.reverse:
-          animationControl.reverse();
-          break;
-        case ScrollDirection.idle:
-          animationControl.reset();
-          break;
+    itemPositionsListener.itemPositions.addListener(() {
+      if (itemPositionsListener.itemPositions.value.first.index > 10) {
+        animationControl.reverse();
+      } else {
+        animationControl.forward();
       }
     });
   }
@@ -74,7 +70,6 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     super.dispose();
-    _scrollController.dispose();
     animationControl.dispose();
   }
 
@@ -132,8 +127,9 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                   },
                   child: MessageAnimatedList(
                     chat: widget.chat,
-                    scrollController: _scrollController,
+                    itemScrollController: itemScrollController,
                     textEditingController: _controller,
+                    itemPositionsListener: itemPositionsListener,
                   ),
                 ),
               ),
@@ -154,8 +150,9 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 60),
                 child: Container(
+                  width: 45,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(20),
                     color: Colors.blue,
                   ),
                   child: IconButton(
@@ -165,7 +162,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                     icon: const Icon(
                       Icons.arrow_downward,
                       color: Colors.white,
-                      size: 20,
+                      size: 24,
                     ),
                   ),
                 ),

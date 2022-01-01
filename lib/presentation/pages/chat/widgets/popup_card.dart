@@ -21,7 +21,7 @@ class PopupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      createRectTween: (begin, end) => RectTween(begin: begin, end: end),
+      transitionOnUserGestures: true,
       tag: tag,
       child: BlocBuilder<MessageBloc, MessageState>(
         builder: (context, state) {
@@ -41,7 +41,7 @@ class PopupCard extends StatelessWidget {
                           if (message.isGif != null && message.isGif == true)
                             NewGifWidget(message: message)
                           else
-                            Bubble(message: message),
+                            BubbleAnimated(message: message),
                           MenuCard(
                             icon: Icons.restore,
                             onTap: () {
