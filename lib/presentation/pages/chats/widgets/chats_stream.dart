@@ -40,25 +40,37 @@ class ChatsStream extends StatelessWidget {
         }
         final chats = state.chats;
 
+        final _list = List<MessageBloc>.generate(
+          chats.length,
+          (index) => MessageBloc(),
+        );
+
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.separated(
             itemCount: chats.length,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            itemBuilder: (BuildContext context, int index) => FriendCard(
-              chat: chats[index],
-              onTap: () async {
-                Provider.of<MessageBloc>(context, listen: false).add(
-                  OpenChat(
-                    chatId: chats[index].id,
-                    receiver: user.otherId(chats[index]),
-                    sender: user.userId,
-                  ),
-                );
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            itemBuilder: (BuildContext context, int index) {
+              _list[index].add(
+                OpenChat(
+                  chatId: chats[index].id,
+                  receiver: user.otherId(chats[index]),
+                  sender: user.userId,
+                ),
+              );
 
-                context.go('/chat/${chats[index].id}', extra: chats[index]);
-              },
-            ),
+              _list[index].add(UpdateChat(chat: chats[index]));
+
+              return BlocProvider<MessageBloc>(
+                create: (context) => _list[index],
+                child: FriendCard(
+                  chat: chats[index],
+                  onTap: () async {
+                    context.go('/chat/${chats[index].id}', extra: _list[index]);
+                  },
+                ),
+              );
+            },
             separatorBuilder: (BuildContext context, int index) => const Divider(),
           ),
         );

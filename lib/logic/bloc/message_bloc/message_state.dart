@@ -9,6 +9,7 @@ abstract class MessageState with _$MessageState {
     required bool isEdit,
     required bool isReply,
     required bool isForward,
+    required Chat chat,
     required bool loadingMessages,
   }) = _MessageState;
 
@@ -28,5 +29,10 @@ abstract class MessageState with _$MessageState {
         isForward: false,
         isReply: false,
         loadingMessages: false,
+        chat: Chat(
+          id: '',
+          me: OwlUser(email: '', id: '', userName: ''),
+          other: OwlUser(email: '', id: '', userName: ''),
+        ),
       );
 }

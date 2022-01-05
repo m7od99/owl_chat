@@ -5,18 +5,20 @@ import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 
 import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
-import 'package:provider/provider.dart';
 
 class PopupCard extends StatelessWidget {
-  final MessageModel message;
-  final int tag;
-  final TextEditingController textEditingController;
   const PopupCard({
     Key? key,
     required this.message,
     required this.tag,
     required this.textEditingController,
+    required this.messageBloc,
   }) : super(key: key);
+
+  final MessageBloc messageBloc;
+  final MessageModel message;
+  final int tag;
+  final TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +64,7 @@ class PopupCard extends StatelessWidget {
                             MenuCard(
                               icon: Icons.edit,
                               onTap: () {
-                                Provider.of<MessageBloc>(context, listen: false)
-                                    .add(EditMessage(message: message));
+                                messageBloc.add(EditMessage(message: message));
                                 textEditingController.text = message.text;
 
                                 context.pop();

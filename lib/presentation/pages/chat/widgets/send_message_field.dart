@@ -6,14 +6,21 @@ import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
-import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SendMessageField extends StatefulWidget {
+  const SendMessageField({
+    Key? key,
+    required this.chat,
+    required this.controller,
+    required this.itemScrollController,
+    required this.messageBloc,
+  }) : super(key: key);
+
   final Chat chat;
   final TextEditingController controller;
-
-  const SendMessageField({Key? key, required this.chat, required this.controller})
-      : super(key: key);
+  final ItemScrollController itemScrollController;
+  final MessageBloc messageBloc;
 
   @override
   _SendMessageFieldState createState() => _SendMessageFieldState();
@@ -25,11 +32,6 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
   final _focusNode = FocusNode();
   bool emojiShowing = false;
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -100,8 +102,8 @@ class _SendMessageFieldState extends State<SendMessageField> {
                             focusNode: _focusNode,
                             decoration: _inputDecoration,
                             onChanged: (str) {
-                              Provider.of<MessageBloc>(context, listen: false)
-                                  .add(WriteMessage(text: widget.controller.text));
+                              widget.messageBloc.add(WriteMessage(text: widget.controller.text));
+
                               //    sendMessage.updateMessage(str);
                             },
                             keyboardType: TextInputType.multiline,
@@ -132,13 +134,17 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 const SizedBox(width: 8),
                 IconButton(
                   onPressed: () async {
-                    Provider.of<MessageBloc>(context, listen: false)
-                        .add(WriteMessage(text: widget.controller.text));
+                    widget.messageBloc.add(WriteMessage(text: widget.controller.text));
 
-                    Provider.of<MessageBloc>(context, listen: false)
-                        .add(SendMessage(chat: chat));
+                    widget.messageBloc.add(SendMessage(chat: chat));
 
                     widget.controller.clear();
+
+                    widget.itemScrollController.scrollTo(
+                      index: 0,
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInBack,
+                    );
                   },
                   iconSize: 25,
                   color: Colors.blue,

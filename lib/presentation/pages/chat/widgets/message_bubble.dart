@@ -86,27 +86,24 @@ class MessageBubbleAnimated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-      child: GestureDetector(
-        onDoubleTap: onDoubleTap,
-        child: Hero(
-          transitionOnUserGestures: true,
-          tag: index,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-            child: Align(
-              alignment: message.isMe ? Alignment.topRight : Alignment.topLeft,
-              child: Column(
-                children: [
-                  if (message.isGif != null && message.isGif == true)
-                    NewGifWidget(message: message)
-                  else
-                    BubbleAnimated(
-                      message: message,
-                    ),
-                ],
-              ),
+    return GestureDetector(
+      onDoubleTap: onDoubleTap,
+      child: Hero(
+        transitionOnUserGestures: true,
+        tag: index,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+          child: Align(
+            alignment: message.isMe ? Alignment.topRight : Alignment.topLeft,
+            child: Column(
+              children: [
+                if (message.isGif != null && message.isGif == true)
+                  NewGifWidget(message: message)
+                else
+                  BubbleAnimated(
+                    message: message,
+                  ),
+              ],
             ),
           ),
         ),
@@ -126,6 +123,7 @@ class BubbleAnimated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Container(

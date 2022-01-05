@@ -59,5 +59,7 @@ abstract class MessageEvent with _$MessageEvent {
   const factory MessageEvent.cancelForward() = CancelForward;
   const factory MessageEvent.updateChatState({required Chat chat}) = UpdateChatState;
 
+  const factory MessageEvent.updateChat({required Chat chat}) = UpdateChat;
+
   const factory MessageEvent.closeChat() = CloseChat;
 }

@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/navigation/router.dart';
@@ -71,6 +72,7 @@ class Notifications {
           channelGroupName: 'message_notifications',
         ),
       ],
+      debug: true,
     );
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -85,21 +87,19 @@ class Notifications {
         final notification = message.notification;
 
         if (notification != null) {
-          log('Message also contained a notification: ${message.notification}');
-          log(notification.title.toString());
-          log(notification.body.toString());
-
-          AwesomeNotifications().createNotification(
+          await AwesomeNotifications().createNotification(
             content: NotificationContent(
-              id: 10,
+              id: message.hashCode,
               showWhen: true,
-              channelKey: 'basic_channel',
-              groupKey: 'basic_channel',
+              channelKey: 'message_notifications',
+              groupKey: 'message_notifications',
+              summary: notification.body,
               title: notification.title,
               body: notification.body,
-              //    category: NotificationCategory.Message,
+              largeIcon: 'asset://assets/images/user.png',
+              category: NotificationCategory.Message,
               autoDismissible: true,
-              notificationLayout: NotificationLayout.BigText,
+              notificationLayout: NotificationLayout.Messaging,
             ),
           );
         }
@@ -119,8 +119,7 @@ class Notifications {
   Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
-    final RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    final RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
@@ -137,13 +136,26 @@ class Notifications {
 
   Future handleMessage(RemoteMessage message) async {
     if (message.data['type'].toString() == 'chat') {
-      final chat =
-          await ChatsController().getSpecificChat(message.data['chat'] as String);
+      final chat = await ChatsController().getSpecificChat(message.data['chat'] as String);
 
-      UserState().updateOnChat(chat!.id);
+      final _user = UserState();
+
+      final MessageBloc bloc = MessageBloc();
+
+      bloc.add(UpdateChat(chat: chat!));
+      bloc.add(
+        OpenChat(
+          chatId: chat.id,
+          receiver: _user.otherId(chat),
+          sender: _user.userId,
+        ),
+      );
+
+      await _user.updateOnChat(chat.id);
+
       router.go(
         '/chat/${chat.id}',
-        extra: chat,
+        extra: bloc,
       );
     }
   }

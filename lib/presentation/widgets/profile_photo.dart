@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
 import 'package:provider/provider.dart';
@@ -36,13 +37,14 @@ class ProfilePhoto extends StatelessWidget {
 }
 
 class ChatProfilePhoto extends StatefulWidget {
-  final double size;
-  final String id;
   const ChatProfilePhoto({
     Key? key,
     required this.size,
     required this.id,
   }) : super(key: key);
+
+  final double size;
+  final String id;
 
   @override
   State<ChatProfilePhoto> createState() => _ChatProfilePhotoState();
@@ -50,24 +52,19 @@ class ChatProfilePhoto extends StatefulWidget {
 
 class _ChatProfilePhotoState extends State<ChatProfilePhoto> {
   @override
-  void initState() {
-    context.read<UserBloc>().add(GetChatData(userId: widget.id));
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-      buildWhen: (previous, current) {
-        if (current.otherUserInfo != null && current.otherUserInfo!.id == widget.id) {
-          return true;
-        }
-        return false;
-      },
       builder: (context, state) {
-        if (state.otherUserInfo != null && state.otherUserInfo?.photoUri != null) {
+        late OwlUser? user;
+
+        if (state.user.chatsData.any((e) => e.id == widget.id)) {
+          user = state.user.chatsData.firstWhere((e) => e.id == widget.id);
+        } else {
+          user = null;
+        }
+        if (user != null && user.photoUri != null) {
           return CachedNetworkImage(
-            imageUrl: state.otherUserInfo!.photoUri!,
+            imageUrl: user.photoUri!,
             imageBuilder: (context, image) => CircleAvatar(
               backgroundImage: image,
               radius: widget.size,

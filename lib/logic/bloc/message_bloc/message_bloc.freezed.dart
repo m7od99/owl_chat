@@ -123,6 +123,12 @@ class _$MessageEventTearOff {
     );
   }
 
+  UpdateChat updateChat({required Chat chat}) {
+    return UpdateChat(
+      chat: chat,
+    );
+  }
+
   CloseChat closeChat() {
     return const CloseChat();
   }
@@ -156,6 +162,7 @@ mixin _$MessageEvent {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) =>
       throw _privateConstructorUsedError;
@@ -179,6 +186,7 @@ mixin _$MessageEvent {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) =>
       throw _privateConstructorUsedError;
@@ -202,6 +210,7 @@ mixin _$MessageEvent {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) =>
@@ -227,6 +236,7 @@ mixin _$MessageEvent {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) =>
       throw _privateConstructorUsedError;
@@ -250,6 +260,7 @@ mixin _$MessageEvent {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) =>
       throw _privateConstructorUsedError;
@@ -273,6 +284,7 @@ mixin _$MessageEvent {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) =>
@@ -380,6 +392,7 @@ class _$WriteMessage implements WriteMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return writeMessage(text);
@@ -406,6 +419,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return writeMessage?.call(text);
@@ -432,6 +446,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -463,6 +478,7 @@ class _$WriteMessage implements WriteMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return writeMessage(this);
@@ -489,6 +505,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return writeMessage?.call(this);
@@ -515,6 +532,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -637,6 +655,7 @@ class _$OpenChat implements OpenChat {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return openChat(chatId, sender, receiver);
@@ -663,6 +682,7 @@ class _$OpenChat implements OpenChat {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return openChat?.call(chatId, sender, receiver);
@@ -689,6 +709,7 @@ class _$OpenChat implements OpenChat {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -720,6 +741,7 @@ class _$OpenChat implements OpenChat {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return openChat(this);
@@ -746,6 +768,7 @@ class _$OpenChat implements OpenChat {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return openChat?.call(this);
@@ -772,6 +795,7 @@ class _$OpenChat implements OpenChat {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -890,6 +914,7 @@ class _$SendMessage implements SendMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return sendMessage(chat);
@@ -916,6 +941,7 @@ class _$SendMessage implements SendMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return sendMessage?.call(chat);
@@ -942,6 +968,7 @@ class _$SendMessage implements SendMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -973,6 +1000,7 @@ class _$SendMessage implements SendMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return sendMessage(this);
@@ -999,6 +1027,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return sendMessage?.call(this);
@@ -1025,6 +1054,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -1127,6 +1157,7 @@ class _$OnSend implements OnSend {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return onSend(isSend);
@@ -1153,6 +1184,7 @@ class _$OnSend implements OnSend {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return onSend?.call(isSend);
@@ -1179,6 +1211,7 @@ class _$OnSend implements OnSend {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -1210,6 +1243,7 @@ class _$OnSend implements OnSend {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return onSend(this);
@@ -1236,6 +1270,7 @@ class _$OnSend implements OnSend {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return onSend?.call(this);
@@ -1262,6 +1297,7 @@ class _$OnSend implements OnSend {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -1363,6 +1399,7 @@ class _$OnSeen implements OnSeen {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return onSeen(id);
@@ -1389,6 +1426,7 @@ class _$OnSeen implements OnSeen {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return onSeen?.call(id);
@@ -1415,6 +1453,7 @@ class _$OnSeen implements OnSeen {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -1446,6 +1485,7 @@ class _$OnSeen implements OnSeen {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return onSeen(this);
@@ -1472,6 +1512,7 @@ class _$OnSeen implements OnSeen {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return onSeen?.call(this);
@@ -1498,6 +1539,7 @@ class _$OnSeen implements OnSeen {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -1578,6 +1620,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return loadChatRoomMessages();
@@ -1604,6 +1647,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return loadChatRoomMessages?.call();
@@ -1630,6 +1674,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -1661,6 +1706,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return loadChatRoomMessages(this);
@@ -1687,6 +1733,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return loadChatRoomMessages?.call(this);
@@ -1713,6 +1760,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -1820,6 +1868,7 @@ class _$AddMessage implements AddMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return addMessage(message);
@@ -1846,6 +1895,7 @@ class _$AddMessage implements AddMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return addMessage?.call(message);
@@ -1872,6 +1922,7 @@ class _$AddMessage implements AddMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -1903,6 +1954,7 @@ class _$AddMessage implements AddMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return addMessage(this);
@@ -1929,6 +1981,7 @@ class _$AddMessage implements AddMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return addMessage?.call(this);
@@ -1955,6 +2008,7 @@ class _$AddMessage implements AddMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -2059,6 +2113,7 @@ class _$RemoveMessage implements RemoveMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return removeMessage(messageId);
@@ -2085,6 +2140,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return removeMessage?.call(messageId);
@@ -2111,6 +2167,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -2142,6 +2199,7 @@ class _$RemoveMessage implements RemoveMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return removeMessage(this);
@@ -2168,6 +2226,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return removeMessage?.call(this);
@@ -2194,6 +2253,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -2300,6 +2360,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return updateChatRoomMessages(messages);
@@ -2326,6 +2387,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return updateChatRoomMessages?.call(messages);
@@ -2352,6 +2414,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -2383,6 +2446,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return updateChatRoomMessages(this);
@@ -2409,6 +2473,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return updateChatRoomMessages?.call(this);
@@ -2435,6 +2500,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -2549,6 +2615,7 @@ class _$UpdateMessage implements UpdateMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return updateMessage(message);
@@ -2575,6 +2642,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return updateMessage?.call(message);
@@ -2601,6 +2669,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -2632,6 +2701,7 @@ class _$UpdateMessage implements UpdateMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return updateMessage(this);
@@ -2658,6 +2728,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return updateMessage?.call(this);
@@ -2684,6 +2755,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -2798,6 +2870,7 @@ class _$ReplyMessage implements ReplyMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return replyMessage(message);
@@ -2824,6 +2897,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return replyMessage?.call(message);
@@ -2850,6 +2924,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -2881,6 +2956,7 @@ class _$ReplyMessage implements ReplyMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return replyMessage(this);
@@ -2907,6 +2983,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return replyMessage?.call(this);
@@ -2933,6 +3010,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -3057,6 +3135,7 @@ class _$ForwardMessage implements ForwardMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return forwardMessage(message, chatId);
@@ -3083,6 +3162,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return forwardMessage?.call(message, chatId);
@@ -3109,6 +3189,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -3140,6 +3221,7 @@ class _$ForwardMessage implements ForwardMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return forwardMessage(this);
@@ -3166,6 +3248,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return forwardMessage?.call(this);
@@ -3192,6 +3275,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -3308,6 +3392,7 @@ class _$EditMessage implements EditMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return editMessage(message);
@@ -3334,6 +3419,7 @@ class _$EditMessage implements EditMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return editMessage?.call(message);
@@ -3360,6 +3446,7 @@ class _$EditMessage implements EditMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -3391,6 +3478,7 @@ class _$EditMessage implements EditMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return editMessage(this);
@@ -3417,6 +3505,7 @@ class _$EditMessage implements EditMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return editMessage?.call(this);
@@ -3443,6 +3532,7 @@ class _$EditMessage implements EditMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -3523,6 +3613,7 @@ class _$ClearMessage implements ClearMessage {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return clearMessage();
@@ -3549,6 +3640,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return clearMessage?.call();
@@ -3575,6 +3667,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -3606,6 +3699,7 @@ class _$ClearMessage implements ClearMessage {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return clearMessage(this);
@@ -3632,6 +3726,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return clearMessage?.call(this);
@@ -3658,6 +3753,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -3732,6 +3828,7 @@ class _$CancelEdit implements CancelEdit {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return cancelEdit();
@@ -3758,6 +3855,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return cancelEdit?.call();
@@ -3784,6 +3882,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -3815,6 +3914,7 @@ class _$CancelEdit implements CancelEdit {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return cancelEdit(this);
@@ -3841,6 +3941,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return cancelEdit?.call(this);
@@ -3867,6 +3968,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -3942,6 +4044,7 @@ class _$CancelReply implements CancelReply {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return cancelReply();
@@ -3968,6 +4071,7 @@ class _$CancelReply implements CancelReply {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return cancelReply?.call();
@@ -3994,6 +4098,7 @@ class _$CancelReply implements CancelReply {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -4025,6 +4130,7 @@ class _$CancelReply implements CancelReply {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return cancelReply(this);
@@ -4051,6 +4157,7 @@ class _$CancelReply implements CancelReply {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return cancelReply?.call(this);
@@ -4077,6 +4184,7 @@ class _$CancelReply implements CancelReply {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -4152,6 +4260,7 @@ class _$CancelForward implements CancelForward {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return cancelForward();
@@ -4178,6 +4287,7 @@ class _$CancelForward implements CancelForward {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return cancelForward?.call();
@@ -4204,6 +4314,7 @@ class _$CancelForward implements CancelForward {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -4235,6 +4346,7 @@ class _$CancelForward implements CancelForward {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return cancelForward(this);
@@ -4261,6 +4373,7 @@ class _$CancelForward implements CancelForward {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return cancelForward?.call(this);
@@ -4287,6 +4400,7 @@ class _$CancelForward implements CancelForward {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -4396,6 +4510,7 @@ class _$UpdateChatState implements UpdateChatState {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return updateChatState(chat);
@@ -4422,6 +4537,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return updateChatState?.call(chat);
@@ -4448,6 +4564,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -4479,6 +4596,7 @@ class _$UpdateChatState implements UpdateChatState {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return updateChatState(this);
@@ -4505,6 +4623,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return updateChatState?.call(this);
@@ -4531,6 +4650,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -4547,6 +4667,259 @@ abstract class UpdateChatState implements MessageEvent {
   Chat get chat;
   @JsonKey(ignore: true)
   $UpdateChatStateCopyWith<UpdateChatState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateChatCopyWith<$Res> {
+  factory $UpdateChatCopyWith(
+          UpdateChat value, $Res Function(UpdateChat) then) =
+      _$UpdateChatCopyWithImpl<$Res>;
+  $Res call({Chat chat});
+
+  $ChatCopyWith<$Res> get chat;
+}
+
+/// @nodoc
+class _$UpdateChatCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
+    implements $UpdateChatCopyWith<$Res> {
+  _$UpdateChatCopyWithImpl(UpdateChat _value, $Res Function(UpdateChat) _then)
+      : super(_value, (v) => _then(v as UpdateChat));
+
+  @override
+  UpdateChat get _value => super._value as UpdateChat;
+
+  @override
+  $Res call({
+    Object? chat = freezed,
+  }) {
+    return _then(UpdateChat(
+      chat: chat == freezed
+          ? _value.chat
+          : chat // ignore: cast_nullable_to_non_nullable
+              as Chat,
+    ));
+  }
+
+  @override
+  $ChatCopyWith<$Res> get chat {
+    return $ChatCopyWith<$Res>(_value.chat, (value) {
+      return _then(_value.copyWith(chat: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$UpdateChat implements UpdateChat {
+  const _$UpdateChat({required this.chat});
+
+  @override
+  final Chat chat;
+
+  @override
+  String toString() {
+    return 'MessageEvent.updateChat(chat: $chat)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateChat &&
+            const DeepCollectionEquality().equals(other.chat, chat));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(chat));
+
+  @JsonKey(ignore: true)
+  @override
+  $UpdateChatCopyWith<UpdateChat> get copyWith =>
+      _$UpdateChatCopyWithImpl<UpdateChat>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) writeMessage,
+    required TResult Function(String chatId, String sender, String receiver)
+        openChat,
+    required TResult Function(Chat chat) sendMessage,
+    required TResult Function(bool isSend) onSend,
+    required TResult Function(String id) onSeen,
+    required TResult Function() loadChatRoomMessages,
+    required TResult Function(MessageModel message) addMessage,
+    required TResult Function(String messageId) removeMessage,
+    required TResult Function(List<MessageModel> messages)
+        updateChatRoomMessages,
+    required TResult Function(MessageModel message) updateMessage,
+    required TResult Function(MessageModel message) replyMessage,
+    required TResult Function(MessageModel message, String chatId)
+        forwardMessage,
+    required TResult Function(MessageModel message) editMessage,
+    required TResult Function() clearMessage,
+    required TResult Function() cancelEdit,
+    required TResult Function() cancelReply,
+    required TResult Function() cancelForward,
+    required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
+    required TResult Function() closeChat,
+  }) {
+    return updateChat(chat);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
+    TResult Function()? closeChat,
+  }) {
+    return updateChat?.call(chat);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? writeMessage,
+    TResult Function(String chatId, String sender, String receiver)? openChat,
+    TResult Function(Chat chat)? sendMessage,
+    TResult Function(bool isSend)? onSend,
+    TResult Function(String id)? onSeen,
+    TResult Function()? loadChatRoomMessages,
+    TResult Function(MessageModel message)? addMessage,
+    TResult Function(String messageId)? removeMessage,
+    TResult Function(List<MessageModel> messages)? updateChatRoomMessages,
+    TResult Function(MessageModel message)? updateMessage,
+    TResult Function(MessageModel message)? replyMessage,
+    TResult Function(MessageModel message, String chatId)? forwardMessage,
+    TResult Function(MessageModel message)? editMessage,
+    TResult Function()? clearMessage,
+    TResult Function()? cancelEdit,
+    TResult Function()? cancelReply,
+    TResult Function()? cancelForward,
+    TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
+    TResult Function()? closeChat,
+    required TResult orElse(),
+  }) {
+    if (updateChat != null) {
+      return updateChat(chat);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(WriteMessage value) writeMessage,
+    required TResult Function(OpenChat value) openChat,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(OnSend value) onSend,
+    required TResult Function(OnSeen value) onSeen,
+    required TResult Function(LoadChatRoomMessages value) loadChatRoomMessages,
+    required TResult Function(AddMessage value) addMessage,
+    required TResult Function(RemoveMessage value) removeMessage,
+    required TResult Function(UpdateChatRoomMessages value)
+        updateChatRoomMessages,
+    required TResult Function(UpdateMessage value) updateMessage,
+    required TResult Function(ReplyMessage value) replyMessage,
+    required TResult Function(ForwardMessage value) forwardMessage,
+    required TResult Function(EditMessage value) editMessage,
+    required TResult Function(ClearMessage value) clearMessage,
+    required TResult Function(CancelEdit value) cancelEdit,
+    required TResult Function(CancelReply value) cancelReply,
+    required TResult Function(CancelForward value) cancelForward,
+    required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
+    required TResult Function(CloseChat value) closeChat,
+  }) {
+    return updateChat(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
+    TResult Function(CloseChat value)? closeChat,
+  }) {
+    return updateChat?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(WriteMessage value)? writeMessage,
+    TResult Function(OpenChat value)? openChat,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(OnSend value)? onSend,
+    TResult Function(OnSeen value)? onSeen,
+    TResult Function(LoadChatRoomMessages value)? loadChatRoomMessages,
+    TResult Function(AddMessage value)? addMessage,
+    TResult Function(RemoveMessage value)? removeMessage,
+    TResult Function(UpdateChatRoomMessages value)? updateChatRoomMessages,
+    TResult Function(UpdateMessage value)? updateMessage,
+    TResult Function(ReplyMessage value)? replyMessage,
+    TResult Function(ForwardMessage value)? forwardMessage,
+    TResult Function(EditMessage value)? editMessage,
+    TResult Function(ClearMessage value)? clearMessage,
+    TResult Function(CancelEdit value)? cancelEdit,
+    TResult Function(CancelReply value)? cancelReply,
+    TResult Function(CancelForward value)? cancelForward,
+    TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
+    TResult Function(CloseChat value)? closeChat,
+    required TResult orElse(),
+  }) {
+    if (updateChat != null) {
+      return updateChat(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateChat implements MessageEvent {
+  const factory UpdateChat({required Chat chat}) = _$UpdateChat;
+
+  Chat get chat;
+  @JsonKey(ignore: true)
+  $UpdateChatCopyWith<UpdateChat> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -4609,6 +4982,7 @@ class _$CloseChat implements CloseChat {
     required TResult Function() cancelReply,
     required TResult Function() cancelForward,
     required TResult Function(Chat chat) updateChatState,
+    required TResult Function(Chat chat) updateChat,
     required TResult Function() closeChat,
   }) {
     return closeChat();
@@ -4635,6 +5009,7 @@ class _$CloseChat implements CloseChat {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
   }) {
     return closeChat?.call();
@@ -4661,6 +5036,7 @@ class _$CloseChat implements CloseChat {
     TResult Function()? cancelReply,
     TResult Function()? cancelForward,
     TResult Function(Chat chat)? updateChatState,
+    TResult Function(Chat chat)? updateChat,
     TResult Function()? closeChat,
     required TResult orElse(),
   }) {
@@ -4692,6 +5068,7 @@ class _$CloseChat implements CloseChat {
     required TResult Function(CancelReply value) cancelReply,
     required TResult Function(CancelForward value) cancelForward,
     required TResult Function(UpdateChatState value) updateChatState,
+    required TResult Function(UpdateChat value) updateChat,
     required TResult Function(CloseChat value) closeChat,
   }) {
     return closeChat(this);
@@ -4718,6 +5095,7 @@ class _$CloseChat implements CloseChat {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
   }) {
     return closeChat?.call(this);
@@ -4744,6 +5122,7 @@ class _$CloseChat implements CloseChat {
     TResult Function(CancelReply value)? cancelReply,
     TResult Function(CancelForward value)? cancelForward,
     TResult Function(UpdateChatState value)? updateChatState,
+    TResult Function(UpdateChat value)? updateChat,
     TResult Function(CloseChat value)? closeChat,
     required TResult orElse(),
   }) {
@@ -4773,6 +5152,7 @@ class _$MessageStateTearOff {
       required bool isEdit,
       required bool isReply,
       required bool isForward,
+      required Chat chat,
       required bool loadingMessages}) {
     return _MessageState(
       chatId: chatId,
@@ -4781,6 +5161,7 @@ class _$MessageStateTearOff {
       isEdit: isEdit,
       isReply: isReply,
       isForward: isForward,
+      chat: chat,
       loadingMessages: loadingMessages,
     );
   }
@@ -4801,6 +5182,7 @@ mixin _$MessageState {
   bool get isEdit => throw _privateConstructorUsedError;
   bool get isReply => throw _privateConstructorUsedError;
   bool get isForward => throw _privateConstructorUsedError;
+  Chat get chat => throw _privateConstructorUsedError;
   bool get loadingMessages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -4821,9 +5203,11 @@ abstract class $MessageStateCopyWith<$Res> {
       bool isEdit,
       bool isReply,
       bool isForward,
+      Chat chat,
       bool loadingMessages});
 
   $MessageModelCopyWith<$Res> get message;
+  $ChatCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -4842,6 +5226,7 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
     Object? isEdit = freezed,
     Object? isReply = freezed,
     Object? isForward = freezed,
+    Object? chat = freezed,
     Object? loadingMessages = freezed,
   }) {
     return _then(_value.copyWith(
@@ -4869,6 +5254,10 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
           ? _value.isForward
           : isForward // ignore: cast_nullable_to_non_nullable
               as bool,
+      chat: chat == freezed
+          ? _value.chat
+          : chat // ignore: cast_nullable_to_non_nullable
+              as Chat,
       loadingMessages: loadingMessages == freezed
           ? _value.loadingMessages
           : loadingMessages // ignore: cast_nullable_to_non_nullable
@@ -4880,6 +5269,13 @@ class _$MessageStateCopyWithImpl<$Res> implements $MessageStateCopyWith<$Res> {
   $MessageModelCopyWith<$Res> get message {
     return $MessageModelCopyWith<$Res>(_value.message, (value) {
       return _then(_value.copyWith(message: value));
+    });
+  }
+
+  @override
+  $ChatCopyWith<$Res> get chat {
+    return $ChatCopyWith<$Res>(_value.chat, (value) {
+      return _then(_value.copyWith(chat: value));
     });
   }
 }
@@ -4898,10 +5294,13 @@ abstract class _$MessageStateCopyWith<$Res>
       bool isEdit,
       bool isReply,
       bool isForward,
+      Chat chat,
       bool loadingMessages});
 
   @override
   $MessageModelCopyWith<$Res> get message;
+  @override
+  $ChatCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -4922,6 +5321,7 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
     Object? isEdit = freezed,
     Object? isReply = freezed,
     Object? isForward = freezed,
+    Object? chat = freezed,
     Object? loadingMessages = freezed,
   }) {
     return _then(_MessageState(
@@ -4949,6 +5349,10 @@ class __$MessageStateCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
           ? _value.isForward
           : isForward // ignore: cast_nullable_to_non_nullable
               as bool,
+      chat: chat == freezed
+          ? _value.chat
+          : chat // ignore: cast_nullable_to_non_nullable
+              as Chat,
       loadingMessages: loadingMessages == freezed
           ? _value.loadingMessages
           : loadingMessages // ignore: cast_nullable_to_non_nullable
@@ -4967,6 +5371,7 @@ class _$_MessageState implements _MessageState {
       required this.isEdit,
       required this.isReply,
       required this.isForward,
+      required this.chat,
       required this.loadingMessages});
 
   factory _$_MessageState.fromJson(Map<String, dynamic> json) =>
@@ -4985,11 +5390,13 @@ class _$_MessageState implements _MessageState {
   @override
   final bool isForward;
   @override
+  final Chat chat;
+  @override
   final bool loadingMessages;
 
   @override
   String toString() {
-    return 'MessageState(chatId: $chatId, message: $message, messages: $messages, isEdit: $isEdit, isReply: $isReply, isForward: $isForward, loadingMessages: $loadingMessages)';
+    return 'MessageState(chatId: $chatId, message: $message, messages: $messages, isEdit: $isEdit, isReply: $isReply, isForward: $isForward, chat: $chat, loadingMessages: $loadingMessages)';
   }
 
   @override
@@ -5003,6 +5410,7 @@ class _$_MessageState implements _MessageState {
             const DeepCollectionEquality().equals(other.isEdit, isEdit) &&
             const DeepCollectionEquality().equals(other.isReply, isReply) &&
             const DeepCollectionEquality().equals(other.isForward, isForward) &&
+            const DeepCollectionEquality().equals(other.chat, chat) &&
             const DeepCollectionEquality()
                 .equals(other.loadingMessages, loadingMessages));
   }
@@ -5016,6 +5424,7 @@ class _$_MessageState implements _MessageState {
       const DeepCollectionEquality().hash(isEdit),
       const DeepCollectionEquality().hash(isReply),
       const DeepCollectionEquality().hash(isForward),
+      const DeepCollectionEquality().hash(chat),
       const DeepCollectionEquality().hash(loadingMessages));
 
   @JsonKey(ignore: true)
@@ -5037,6 +5446,7 @@ abstract class _MessageState implements MessageState {
       required bool isEdit,
       required bool isReply,
       required bool isForward,
+      required Chat chat,
       required bool loadingMessages}) = _$_MessageState;
 
   factory _MessageState.fromJson(Map<String, dynamic> json) =
@@ -5054,6 +5464,8 @@ abstract class _MessageState implements MessageState {
   bool get isReply;
   @override
   bool get isForward;
+  @override
+  Chat get chat;
   @override
   bool get loadingMessages;
   @override

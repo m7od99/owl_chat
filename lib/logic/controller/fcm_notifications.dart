@@ -22,7 +22,7 @@ class FCMNotifications {
     final onChat = await isOnChat(toUserId, chatId);
     final isSame = await isSameToken(token);
 
-    if (token != null && body.isNotEmpty && !onChat && !isSame) {
+    if (token != null && !onChat && !isSame) {
       try {
         final http.Response res = await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),

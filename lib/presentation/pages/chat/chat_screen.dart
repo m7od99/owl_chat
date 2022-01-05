@@ -1,10 +1,10 @@
 // ignore_for_file: cast_nullable_to_non_nullable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/presentation/pages/chat/widgets/edits_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -25,16 +25,22 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Chat chat = ModalRoute.of(context)!.settings.arguments as Chat;
-    return ChatPage(chat: chat);
+    final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
+
+    return ChatPage(chat: bloc.state.chat, messageBloc: bloc);
     //  user.updateOnChat(chat.id);
   }
 }
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, required this.chat}) : super(key: key);
+  const ChatPage({
+    Key? key,
+    required this.chat,
+    required this.messageBloc,
+  }) : super(key: key);
 
   final Chat chat;
+  final MessageBloc messageBloc;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -59,10 +65,13 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
 
   void _showArrow() {
     itemPositionsListener.itemPositions.addListener(() {
-      if (itemPositionsListener.itemPositions.value.first.index > 10) {
-        animationControl.reverse();
-      } else {
+      if (itemPositionsListener.itemPositions.value.first.index == 0) {
+        animationControl.reset();
+      }
+      if (itemPositionsListener.itemPositions.value.first.index > 12) {
         animationControl.forward();
+      } else {
+        animationControl.reverse();
       }
     });
   }
@@ -71,6 +80,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   void dispose() {
     super.dispose();
     animationControl.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -84,6 +94,14 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
 
     UserState().updateOnChat(widget.chat.id);
 
+    widget.messageBloc.add(
+      OpenChat(
+        chatId: widget.chat.id,
+        receiver: UserState().otherId(widget.chat),
+        sender: UserState().userId,
+      ),
+    );
+
     super.initState();
   }
 
@@ -92,6 +110,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     final user = Provider.of<UserState>(context);
 
     return BlocBuilder<MessageBloc, MessageState>(
+      bloc: widget.messageBloc,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -130,16 +149,20 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                     itemScrollController: itemScrollController,
                     textEditingController: _controller,
                     itemPositionsListener: itemPositionsListener,
+                    messageBloc: widget.messageBloc,
                   ),
                 ),
               ),
               if (state.isEdit == true)
                 EditMessageCard(
                   controller: _controller,
+                  messageBloc: widget.messageBloc,
                 ),
               SendMessageField(
                 chat: widget.chat,
                 controller: _controller,
+                itemScrollController: itemScrollController,
+                messageBloc: widget.messageBloc,
               ),
             ],
           ),
@@ -167,58 +190,6 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                   ),
                 ),
               ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class EditMessageCard extends StatelessWidget {
-  const EditMessageCard({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<MessageBloc, MessageState>(
-      builder: (context, state) {
-        final message = state.message.text;
-        return Material(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-            child: Row(
-              children: [
-                const Icon(Icons.edit),
-                const SizedBox(width: 30),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Edit Message',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      message,
-                      maxLines: 1,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    controller.clear();
-                    Provider.of<MessageBloc>(context, listen: false).add(const CancelEdit());
-                  },
-                ),
-              ],
             ),
           ),
         );

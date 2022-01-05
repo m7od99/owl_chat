@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:owl_chat/data/models/chats/chat.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 import 'package:owl_chat/presentation/pages/auth/login_screen.dart';
 import 'package:owl_chat/presentation/pages/auth/sign_up_screen.dart';
@@ -95,10 +95,11 @@ class Routes {
   static final chat = GoRoute(
     path: 'chat/:id',
     name: ChatScreen.id,
+    redirect: (state) {},
     pageBuilder: (context, state) {
       return MaterialPage(
         child: const ChatScreen(),
-        arguments: state.extra as Chat,
+        arguments: state.extra as MessageBloc,
         key: state.pageKey,
       );
     },

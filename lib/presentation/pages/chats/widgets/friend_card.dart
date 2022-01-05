@@ -87,13 +87,13 @@ class FriendCard extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class CounterNewMessages extends StatelessWidget {
-  int counter;
-  CounterNewMessages({
+  const CounterNewMessages({
     required this.counter,
     Key? key,
   }) : super(key: key);
+
+  final int counter;
 
   @override
   Widget build(BuildContext context) {

@@ -55,4 +55,12 @@ class AboutData {
       'Fix loading the photos',
     ],
   );
+
+  static const about5 = About(
+    version: '0.0.6',
+    changeLog: [
+      'Fix freezing bug',
+      'Ordering messages by the time when message arrive server',
+    ],
+  );
 }

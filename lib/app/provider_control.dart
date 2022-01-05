@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
-import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/logic/event_handler/send_message_state.dart';
@@ -34,9 +33,9 @@ class ProviderControl extends StatelessWidget {
         BlocProvider<UpdateBloc>(
           create: (_) => UpdateBloc(),
         ),
-        BlocProvider<MessageBloc>(
-          create: (context) => MessageBloc(),
-        ),
+        // BlocProvider<MessageBloc>(
+        //   create: (context) => MessageBloc(),
+        // ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
         ),

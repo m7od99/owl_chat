@@ -1,17 +1,14 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
-import 'package:owl_chat/data/data_controller/message_control/remote_message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
-import 'package:owl_chat/logic/controller/message_repository.dart';
 
 part 'message_bloc.freezed.dart';
 part 'message_bloc.g.dart';
@@ -20,16 +17,6 @@ part 'message_state.dart';
 
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc() : super(MessageState.init()) {
-//    _localMessageControl = LocalMessageControl(chatId: state.chatId);
-//    _localMessageControl.ready();
-
-    _remoteMessage = FirebaseMessageControl();
-
-    final _messageControl = MessageRepository([
-      //    _localMessageControl,
-      _remoteMessage,
-    ]);
-
     on<MessageEvent>((event, emit) async {
       //    await _localMessageControl.clearData();
       await event.map(
@@ -38,7 +25,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           emit(state.copyWith(loadingMessages: true));
 
           await emit.forEach<List<MessageModel>>(
-            _messageControl.getMessages(state.chatId),
+            _control.getMessagesStream(state.chatId),
             onData: (messages) {
               final _messages = messages.map((m) {
                 return m.copyWith(
@@ -66,10 +53,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               message: state.message.copyWith(
                 receiver: value.receiver,
                 sender: value.sender,
+                chatId: value.chatId,
                 isSend: null,
               ),
               //  messages: state.messages,
-              isEdit: false,
+              //    isEdit: false,
               isForward: false,
               isReply: false,
             ),
@@ -114,7 +102,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               ),
             );
 
-            await _messageControl.addMessage(state.message, state.chatId);
+            await _control.sendMessageModel(state.message, state.chatId);
             //  add(OnSend(isSend: isSend));
 
             add(UpdateChatState(chat: value.chat));
@@ -177,11 +165,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
         ///
         updateMessage: (UpdateMessage value) async {
-          final int index = state.messages.indexWhere((e) => e.id == value.message.id);
-
-          emit(state.copyWith(messages: state.messages..removeAt(index)));
-
-          await _messageControl.updateMessage(value.message);
+          await _control.updateMessage(value.message);
         },
 
         ///
@@ -230,15 +214,26 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               chatId: '',
             ),
           );
+
+          ///
+        },
+        updateChat: (UpdateChat value) {
+          emit(state.copyWith(chat: value.chat));
         },
       );
     });
   }
 
+  @override
+  void onEvent(MessageEvent event) {
+    // TODO: implement onEvent
+    super.onEvent(event);
+  }
+
   final _control = MessageControl();
   final _user = UserControl();
 //  late LocalMessageControl _localMessageControl;
-  late FirebaseMessageControl _remoteMessage;
+  // late FirebaseMessageControl _remoteMessage;
 
   // @override
   // MessageState? fromJson(Map<String, dynamic> json) {
