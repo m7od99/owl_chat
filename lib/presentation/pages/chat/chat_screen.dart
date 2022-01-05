@@ -27,7 +27,10 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
-    return ChatPage(chat: bloc.state.chat, messageBloc: bloc);
+    return BlocProvider<MessageBloc>(
+      create: (BuildContext context) => bloc,
+      child: ChatPage(chat: bloc.state.chat, messageBloc: bloc),
+    );
     //  user.updateOnChat(chat.id);
   }
 }
@@ -110,7 +113,6 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     final user = Provider.of<UserState>(context);
 
     return BlocBuilder<MessageBloc, MessageState>(
-      bloc: widget.messageBloc,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(

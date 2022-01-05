@@ -61,14 +61,11 @@ class ChatsStream extends StatelessWidget {
 
               _list[index].add(UpdateChat(chat: chats[index]));
 
-              return BlocProvider<MessageBloc>(
-                create: (context) => _list[index],
-                child: FriendCard(
-                  chat: chats[index],
-                  onTap: () async {
-                    context.go('/chat/${chats[index].id}', extra: _list[index]);
-                  },
-                ),
+              return FriendCard(
+                chat: chats[index],
+                onTap: () async {
+                  context.go('/chat/${chats[index].id}', extra: _list[index]);
+                },
               );
             },
             separatorBuilder: (BuildContext context, int index) => const Divider(),

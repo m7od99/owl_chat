@@ -192,7 +192,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             time: Timestamp.fromDate(state.message.time),
             lastMessage: state.message.text,
           );
-          await _control.updateChatState(chat);
+          _control.updateChatState(chat);
         },
 
         ///

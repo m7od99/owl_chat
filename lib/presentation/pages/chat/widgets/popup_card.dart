@@ -5,8 +5,14 @@ import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 
 import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
+import 'package:provider/provider.dart';
 
 class PopupCard extends StatelessWidget {
+  final MessageModel message;
+  final int tag;
+  final TextEditingController textEditingController;
+  final MessageBloc messageBloc;
+
   const PopupCard({
     Key? key,
     required this.message,
@@ -15,17 +21,13 @@ class PopupCard extends StatelessWidget {
     required this.messageBloc,
   }) : super(key: key);
 
-  final MessageBloc messageBloc;
-  final MessageModel message;
-  final int tag;
-  final TextEditingController textEditingController;
-
   @override
   Widget build(BuildContext context) {
     return Hero(
       transitionOnUserGestures: true,
       tag: tag,
       child: BlocBuilder<MessageBloc, MessageState>(
+        bloc: messageBloc,
         builder: (context, state) {
           return Center(
             child: Padding(
@@ -64,7 +66,7 @@ class PopupCard extends StatelessWidget {
                             MenuCard(
                               icon: Icons.edit,
                               onTap: () {
-                                messageBloc.add(EditMessage(message: message));
+                                context.read<MessageBloc>().add(EditMessage(message: message));
                                 textEditingController.text = message.text;
 
                                 context.pop();

@@ -143,6 +143,7 @@ class Notifications {
       final MessageBloc bloc = MessageBloc();
 
       bloc.add(UpdateChat(chat: chat!));
+
       bloc.add(
         OpenChat(
           chatId: chat.id,
@@ -160,20 +161,20 @@ class Notifications {
     }
   }
 
-  final notAllow = [];
-  final allowWithoutSound = const [
-    NotificationPermission.Alert,
-    NotificationPermission.Badge,
-    NotificationPermission.Vibration,
-    NotificationPermission.Light,
-  ];
-  final allowWithSound = const [
-    NotificationPermission.Alert,
-    NotificationPermission.Sound,
-    NotificationPermission.Badge,
-    NotificationPermission.Vibration,
-    NotificationPermission.Light,
-  ];
+  // final notAllow = [];
+  // final allowWithoutSound = const [
+  //   NotificationPermission.Alert,
+  //   NotificationPermission.Badge,
+  //   NotificationPermission.Vibration,
+  //   NotificationPermission.Light,
+  // ];
+  // final allowWithSound = const [
+  //   NotificationPermission.Alert,
+  //   NotificationPermission.Sound,
+  //   NotificationPermission.Badge,
+  //   NotificationPermission.Vibration,
+  //   NotificationPermission.Light,
+  // ];
 }
 
 // Declared as global, outside of any class

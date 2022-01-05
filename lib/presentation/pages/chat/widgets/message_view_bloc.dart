@@ -9,7 +9,7 @@ import '../../../widgets/hero_root.dart';
 import 'message_bubble.dart';
 import 'popup_card.dart';
 
-class MessageAnimatedList extends StatefulWidget {
+class MessageAnimatedList extends StatelessWidget {
   const MessageAnimatedList({
     Key? key,
     required this.chat,
@@ -26,22 +26,16 @@ class MessageAnimatedList extends StatefulWidget {
   final MessageBloc messageBloc;
 
   @override
-  State<MessageAnimatedList> createState() => _MessageAnimatedListState();
-}
-
-class _MessageAnimatedListState extends State<MessageAnimatedList> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<MessageBloc, MessageState>(
-      bloc: widget.messageBloc,
       builder: (context, state) {
         if (state.loadingMessages) {
           return const Center(child: CircularProgressIndicator());
         }
         return ScrollablePositionedList.builder(
           reverse: true,
-          itemScrollController: widget.itemScrollController,
-          itemPositionsListener: widget.itemPositionsListener,
+          itemScrollController: itemScrollController,
+          itemPositionsListener: itemPositionsListener,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           itemCount: state.messages.length,
           itemBuilder: (context, index) {
@@ -55,8 +49,8 @@ class _MessageAnimatedListState extends State<MessageAnimatedList> {
                     builder: (context) => PopupCard(
                       message: state.messages[index],
                       tag: index,
-                      textEditingController: widget.textEditingController,
-                      messageBloc: widget.messageBloc,
+                      textEditingController: textEditingController,
+                      messageBloc: messageBloc,
                     ),
                   ),
                 );

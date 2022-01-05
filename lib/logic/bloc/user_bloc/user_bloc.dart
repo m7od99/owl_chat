@@ -115,6 +115,20 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
                 user: state.user.copyWith(chatsData: state.user.chatsData..add(value.user)),
               ),
             );
+          } else {
+            final user = state.user.chatsData.indexWhere((e) => e.id == value.user.id);
+
+            if (state.user.chatsData[user].photoUri != value.user.photoUri) {
+              emit(
+                state.copyWith(
+                  user: state.user.copyWith(
+                    chatsData: state.user.chatsData
+                      ..removeAt(user)
+                      ..add(value.user),
+                  ),
+                ),
+              );
+            }
           }
         },
 
