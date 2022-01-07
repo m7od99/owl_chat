@@ -5,7 +5,6 @@ import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 
 import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
-import 'package:provider/provider.dart';
 
 class PopupCard extends StatelessWidget {
   final MessageModel message;

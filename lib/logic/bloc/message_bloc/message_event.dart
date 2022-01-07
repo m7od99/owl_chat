@@ -1,7 +1,7 @@
 part of 'message_bloc.dart';
 
 @freezed
-abstract class MessageEvent with _$MessageEvent {
+class MessageEvent with _$MessageEvent {
   const factory MessageEvent.writeMessage({
     required String text,
   }) = WriteMessage;
@@ -60,6 +60,8 @@ abstract class MessageEvent with _$MessageEvent {
   const factory MessageEvent.updateChatState({required Chat chat}) = UpdateChatState;
 
   const factory MessageEvent.updateChat({required Chat chat}) = UpdateChat;
+
+  const factory MessageEvent.sendGif({required Chat chat}) = SendGif;
 
   const factory MessageEvent.closeChat() = CloseChat;
 }

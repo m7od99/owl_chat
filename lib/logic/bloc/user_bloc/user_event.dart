@@ -1,7 +1,7 @@
 part of 'user_bloc.dart';
 
 @freezed
-abstract class UserEvent with _$UserEvent {
+class UserEvent with _$UserEvent {
   const factory UserEvent.updateUserName({
     required String userName,
   }) = UpdateUserName;
@@ -43,8 +43,7 @@ abstract class UserEvent with _$UserEvent {
 
   const factory UserEvent.toggleSoundNotification() = ToggleSoundNotification;
 
-  const factory UserEvent.toggleDisplayNotificationOnOpenApp() =
-      ToggleDisplayNotificationOnOpenApp;
+  const factory UserEvent.toggleDisplayNotificationOnOpenApp() = ToggleDisplayNotificationOnOpenApp;
 
   const factory UserEvent.addNewChatData({required OwlUser user}) = AddNewChatData;
 

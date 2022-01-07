@@ -51,19 +51,19 @@ class ChatsStream extends StatelessWidget {
             itemCount: chats.length,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             itemBuilder: (BuildContext context, int index) {
-              _list[index].add(
-                OpenChat(
-                  chatId: chats[index].id,
-                  receiver: user.otherId(chats[index]),
-                  sender: user.userId,
-                ),
-              );
-
-              _list[index].add(UpdateChat(chat: chats[index]));
-
               return FriendCard(
                 chat: chats[index],
                 onTap: () async {
+                  _list[index].add(
+                    OpenChat(
+                      chatId: chats[index].id,
+                      receiver: user.otherId(chats[index]),
+                      sender: user.userId,
+                    ),
+                  );
+
+                  _list[index].add(UpdateChat(chat: chats[index]));
+
                   context.go('/chat/${chats[index].id}', extra: _list[index]);
                 },
               );

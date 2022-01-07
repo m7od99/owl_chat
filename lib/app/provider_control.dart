@@ -5,12 +5,9 @@ import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
-import 'package:owl_chat/logic/event_handler/send_message_state.dart';
 import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
 
-import '../data/data_controller/message_control/message_control.dart';
-import '../logic/controller/validator.dart';
 import '../logic/event_handler/settings.dart';
 import '../logic/event_handler/user_state.dart' as user;
 import 'my_app.dart';
@@ -45,11 +42,11 @@ class ProviderControl extends StatelessWidget {
       ],
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => MessageControl()),
+          // ChangeNotifierProvider(create: (context) => MessageControl()),
           ChangeNotifierProvider(create: (context) => ThemeProvider()),
           ChangeNotifierProvider(create: (context) => user.UserState()),
-          ChangeNotifierProvider(create: (context) => Validator()),
-          ChangeNotifierProvider(create: (context) => SendMessageState()),
+          // ChangeNotifierProvider(create: (context) => Validator()),
+          // ChangeNotifierProvider(create: (context) => SendMessageState()),
           ChangeNotifierProvider(create: (context) => AppSettings())
         ],
         child: MyApp(),

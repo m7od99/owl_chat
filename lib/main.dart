@@ -14,6 +14,7 @@ import 'translations/codegen_loader.g.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await EasyLocalization.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -32,7 +33,7 @@ Future main() async {
   Hive.init(appDocDir.path);
 
   await Notifications().startNotifications();
-  Notifications().setupInteractedMessage();
+  await Notifications().setupInteractedMessage();
 
   HydratedBlocOverrides.runZoned(
     () => runApp(

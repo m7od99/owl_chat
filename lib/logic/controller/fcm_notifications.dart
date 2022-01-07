@@ -39,6 +39,16 @@ class FCMNotifications {
               },
               'priority': 'high',
               'data': {
+                'content': {
+                  'id': 1,
+                  'title': title,
+                  'body': body,
+                  'largeIcon': 'asset://assets/images/user.png',
+                  'channelKey': 'message_notifications',
+                  'category': 'Message',
+                  'autoDismissible': true,
+                  'notificationLayout': 'Messaging',
+                },
                 'click_action': 'FLUTTER_NOTIFICATION_CLICK',
                 'type': 'chat',
                 'chat': chatId,

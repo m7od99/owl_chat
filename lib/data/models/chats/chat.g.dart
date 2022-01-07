@@ -12,7 +12,8 @@ _$_Chat _$$_ChatFromJson(Map<String, dynamic> json) => _$_Chat(
       me: const AuthorConverter().fromJson(json['me'] as Map),
       lastMessage: json['lastMessage'] as String? ?? '',
       time: const TimestampConverter().fromJson(json['time']),
-      totalMessage: json['totalMessage'] as int? ?? 0,
+      totalMessages: json['totalMessages'] as int? ?? 0,
+      totalNewMessages: json['totalNewMessages'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_ChatToJson(_$_Chat instance) => <String, dynamic>{
@@ -21,5 +22,6 @@ Map<String, dynamic> _$$_ChatToJson(_$_Chat instance) => <String, dynamic>{
       'me': const AuthorConverter().toJson(instance.me),
       'lastMessage': instance.lastMessage,
       'time': const TimestampConverter().toJson(instance.time),
-      'totalMessage': instance.totalMessage,
+      'totalMessages': instance.totalMessages,
+      'totalNewMessages': instance.totalNewMessages,
     };

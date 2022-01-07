@@ -109,6 +109,13 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   }
 
   @override
+  void didChangeDependencies() {
+    // Future.delayed(const Duration(seconds: 5), () => UserState().updateOnChat(widget.chat.id));
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
 

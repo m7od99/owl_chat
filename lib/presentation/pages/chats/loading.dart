@@ -24,9 +24,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
+
     notifications.getTokenThenSaveItToDataBase();
+
     user.updateOwlUser();
     notifications.foregroundMessagingHandler();
+
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
     context.read<b.UserBloc>().add(const b.GetChatsData());
     context.read<ChatRoomBloc>().add(const LoadChatRoom());

@@ -26,7 +26,10 @@ class Chat with _$Chat {
     @TimestampConverter() Timestamp? time,
 
     ///
-    @Default(0) int totalMessage,
+    @Default(0) int totalMessages,
+
+    ///
+    @Default(0) int totalNewMessages,
   }) = _Chat;
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);

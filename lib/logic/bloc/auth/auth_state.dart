@@ -3,7 +3,7 @@
 part of 'auth_bloc.dart';
 
 @freezed
-abstract class AuthState with _$AuthState {
+class AuthState with _$AuthState {
   const factory AuthState({
     required String email,
     required String password,

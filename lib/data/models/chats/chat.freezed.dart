@@ -27,14 +27,16 @@ class _$ChatTearOff {
       @AuthorConverter() required OwlUser me,
       String lastMessage = '',
       @TimestampConverter() Timestamp? time,
-      int totalMessage = 0}) {
+      int totalMessages = 0,
+      int totalNewMessages = 0}) {
     return _Chat(
       id: id,
       other: other,
       me: me,
       lastMessage: lastMessage,
       time: time,
-      totalMessage: totalMessage,
+      totalMessages: totalMessages,
+      totalNewMessages: totalNewMessages,
     );
   }
 
@@ -67,7 +69,10 @@ mixin _$Chat {
   Timestamp? get time => throw _privateConstructorUsedError;
 
   ///
-  int get totalMessage => throw _privateConstructorUsedError;
+  int get totalMessages => throw _privateConstructorUsedError;
+
+  ///
+  int get totalNewMessages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -84,7 +89,8 @@ abstract class $ChatCopyWith<$Res> {
       @AuthorConverter() OwlUser me,
       String lastMessage,
       @TimestampConverter() Timestamp? time,
-      int totalMessage});
+      int totalMessages,
+      int totalNewMessages});
 }
 
 /// @nodoc
@@ -102,7 +108,8 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
     Object? me = freezed,
     Object? lastMessage = freezed,
     Object? time = freezed,
-    Object? totalMessage = freezed,
+    Object? totalMessages = freezed,
+    Object? totalNewMessages = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -125,9 +132,13 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as Timestamp?,
-      totalMessage: totalMessage == freezed
-          ? _value.totalMessage
-          : totalMessage // ignore: cast_nullable_to_non_nullable
+      totalMessages: totalMessages == freezed
+          ? _value.totalMessages
+          : totalMessages // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalNewMessages: totalNewMessages == freezed
+          ? _value.totalNewMessages
+          : totalNewMessages // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -144,7 +155,8 @@ abstract class _$ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       @AuthorConverter() OwlUser me,
       String lastMessage,
       @TimestampConverter() Timestamp? time,
-      int totalMessage});
+      int totalMessages,
+      int totalNewMessages});
 }
 
 /// @nodoc
@@ -163,7 +175,8 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
     Object? me = freezed,
     Object? lastMessage = freezed,
     Object? time = freezed,
-    Object? totalMessage = freezed,
+    Object? totalMessages = freezed,
+    Object? totalNewMessages = freezed,
   }) {
     return _then(_Chat(
       id: id == freezed
@@ -186,9 +199,13 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as Timestamp?,
-      totalMessage: totalMessage == freezed
-          ? _value.totalMessage
-          : totalMessage // ignore: cast_nullable_to_non_nullable
+      totalMessages: totalMessages == freezed
+          ? _value.totalMessages
+          : totalMessages // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalNewMessages: totalNewMessages == freezed
+          ? _value.totalNewMessages
+          : totalNewMessages // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -203,7 +220,8 @@ class _$_Chat implements _Chat {
       @AuthorConverter() required this.me,
       this.lastMessage = '',
       @TimestampConverter() this.time,
-      this.totalMessage = 0});
+      this.totalMessages = 0,
+      this.totalNewMessages = 0});
 
   factory _$_Chat.fromJson(Map<String, dynamic> json) => _$$_ChatFromJson(json);
 
@@ -235,11 +253,16 @@ class _$_Chat implements _Chat {
   @override
 
   ///
-  final int totalMessage;
+  final int totalMessages;
+  @JsonKey(defaultValue: 0)
+  @override
+
+  ///
+  final int totalNewMessages;
 
   @override
   String toString() {
-    return 'Chat(id: $id, other: $other, me: $me, lastMessage: $lastMessage, time: $time, totalMessage: $totalMessage)';
+    return 'Chat(id: $id, other: $other, me: $me, lastMessage: $lastMessage, time: $time, totalMessages: $totalMessages, totalNewMessages: $totalNewMessages)';
   }
 
   @override
@@ -254,7 +277,9 @@ class _$_Chat implements _Chat {
                 .equals(other.lastMessage, lastMessage) &&
             const DeepCollectionEquality().equals(other.time, time) &&
             const DeepCollectionEquality()
-                .equals(other.totalMessage, totalMessage));
+                .equals(other.totalMessages, totalMessages) &&
+            const DeepCollectionEquality()
+                .equals(other.totalNewMessages, totalNewMessages));
   }
 
   @override
@@ -265,7 +290,8 @@ class _$_Chat implements _Chat {
       const DeepCollectionEquality().hash(me),
       const DeepCollectionEquality().hash(lastMessage),
       const DeepCollectionEquality().hash(time),
-      const DeepCollectionEquality().hash(totalMessage));
+      const DeepCollectionEquality().hash(totalMessages),
+      const DeepCollectionEquality().hash(totalNewMessages));
 
   @JsonKey(ignore: true)
   @override
@@ -285,7 +311,8 @@ abstract class _Chat implements Chat {
       @AuthorConverter() required OwlUser me,
       String lastMessage,
       @TimestampConverter() Timestamp? time,
-      int totalMessage}) = _$_Chat;
+      int totalMessages,
+      int totalNewMessages}) = _$_Chat;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$_Chat.fromJson;
 
@@ -315,7 +342,11 @@ abstract class _Chat implements Chat {
   @override
 
   ///
-  int get totalMessage;
+  int get totalMessages;
+  @override
+
+  ///
+  int get totalNewMessages;
   @override
   @JsonKey(ignore: true)
   _$ChatCopyWith<_Chat> get copyWith => throw _privateConstructorUsedError;

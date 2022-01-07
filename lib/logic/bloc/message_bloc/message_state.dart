@@ -1,7 +1,7 @@
 part of 'message_bloc.dart';
 
 @freezed
-abstract class MessageState with _$MessageState {
+class MessageState with _$MessageState {
   const factory MessageState({
     required String chatId,
     required MessageModel message,

@@ -183,6 +183,27 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   log("Handling a background message: ${message.messageId}");
 
-  // Use this method to automatically convert the push data, in case you gonna use our data standard
   AwesomeNotifications().createNotificationFromJsonData(message.data);
+
+  // Use this method to automatically convert the push data, in case you gonna use our data standard
+
+  // final notification = message.notification;
+
+  // if (notification != null) {
+  //   await AwesomeNotifications().createNotification(
+  //     content: NotificationContent(
+  //       id: message.hashCode,
+  //       showWhen: true,
+  //       channelKey: 'message_notifications',
+  //       groupKey: 'message_notifications',
+  //       summary: notification.body,
+  //       title: notification.title,
+  //       body: notification.body,
+  //       largeIcon: 'asset://assets/images/user.png',
+  //       category: NotificationCategory.Message,
+  //       autoDismissible: true,
+  //       notificationLayout: NotificationLayout.Messaging,
+  //     ),
+  //   );
+  // }
 }

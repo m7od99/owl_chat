@@ -8,6 +8,7 @@ import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
+import 'package:owl_chat/data/models/chats/messages_type.dart';
 import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 
 part 'message_bloc.freezed.dart';
@@ -219,6 +220,24 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         },
         updateChat: (UpdateChat value) {
           emit(state.copyWith(chat: value.chat));
+        },
+
+        ///
+        sendGif: (SendGif value) async {
+          emit(
+            state.copyWith(
+              message: state.message.copyWith(
+                isGif: true,
+                time: DateTime.now(),
+                chatId: state.chatId,
+                type: MessageType.gif,
+              ),
+            ),
+          );
+
+          await _control.sendMessageModel(state.message, state.chatId);
+          _control.updateChatState(value.chat.copyWith(lastMessage: 'gif', time: Timestamp.now()));
+          add(const ClearMessage());
         },
       );
     });

@@ -6,6 +6,7 @@ import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -83,7 +84,10 @@ class _SendMessageFieldState extends State<SendMessageField> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                GifsButton(chat: chat),
+                GifsButton(
+                  chat: chat,
+                  messageBloc: widget.messageBloc,
+                ),
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,11 +147,11 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
                     widget.controller.clear();
 
-                    // widget.itemScrollController.scrollTo(
-                    //   index: 0,
-                    //   duration: const Duration(seconds: 1),
-                    //   curve: Curves.easeInBack,
-                    // );
+                    widget.itemScrollController.scrollTo(
+                      index: 0,
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInBack,
+                    );
                   },
                   iconSize: 25,
                   color: Colors.blue,

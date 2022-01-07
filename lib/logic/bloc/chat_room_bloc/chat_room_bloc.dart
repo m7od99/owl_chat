@@ -27,11 +27,9 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
           await emit.forEach<List<Chat>>(
             _control.getUserChatsRoom(),
             onData: (chats) {
-              final _chats =
-                  chats.where((e) => e.id.contains(UserState().userId)).toList();
+              final _chats = chats.where((e) => e.id.contains(UserState().userId)).toList();
 
-
-              return state.copyWith(chats: _chats ,isLoading: false);
+              return state.copyWith(chats: _chats, isLoading: false);
             },
           );
         },
