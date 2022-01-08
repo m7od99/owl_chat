@@ -12,18 +12,18 @@ String format(DateTime time) {
 }
 
 const BorderRadius meBorder = BorderRadius.only(
-  topLeft: Radius.circular(15),
-  topRight: Radius.circular(15),
+  topLeft: Radius.circular(12),
+  topRight: Radius.circular(12),
 
-  bottomLeft: Radius.circular(15),
+  bottomLeft: Radius.circular(12),
   // bottomRight: Radius.circular(25),
 );
 
 const BorderRadius otherBorder = BorderRadius.only(
-  topRight: Radius.circular(15),
-  topLeft: Radius.circular(15),
+  topRight: Radius.circular(12),
+  topLeft: Radius.circular(12),
 
-  bottomRight: Radius.circular(15),
+  bottomRight: Radius.circular(12),
 //  bottomLeft: Radius.circular(25),
 );
 
@@ -92,7 +92,12 @@ class MessageBubbleAnimated extends StatelessWidget {
         transitionOnUserGestures: true,
         tag: index,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+          padding: EdgeInsets.only(
+            left: message.isMe ? 40 : 0,
+            right: message.isMe ? 0 : 40,
+            top: 3,
+            bottom: 3,
+          ),
           child: Align(
             alignment: message.isMe ? Alignment.topRight : Alignment.topLeft,
             child: Column(
@@ -128,7 +133,7 @@ class BubbleAnimated extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: message.isMe ? Colors.indigo[400] : Colors.deepPurple[700],
+            color: message.isMe ? const Color(0xff0A6873) : const Color(0xFF044A59),
             borderRadius: message.isMe ? meBorder : otherBorder,
           ),
           padding: const EdgeInsets.symmetric(

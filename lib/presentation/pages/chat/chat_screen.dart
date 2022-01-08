@@ -84,6 +84,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     super.dispose();
     animationControl.dispose();
     _controller.dispose();
+    widget.messageBloc.close();
   }
 
   @override
@@ -181,20 +182,18 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
               scale: animationControl,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 60),
-                child: Container(
-                  width: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.blue,
-                  ),
+                child: Material(
+                  clipBehavior: Clip.hardEdge,
+                  color: const Color(0xFF233720),
+                  shape: const CircleBorder(),
                   child: IconButton(
                     onPressed: () async {
                       await _jumpToEnd();
                     },
                     icon: const Icon(
-                      Icons.arrow_downward,
+                      Icons.expand_more,
                       color: Colors.white,
-                      size: 24,
+                      size: 30,
                     ),
                   ),
                 ),

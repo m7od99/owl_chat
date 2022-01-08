@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-const backgroundColor = Color(0xFF0f0e17);
+const backgroundColor = Color(0xFF232946);
 
 const headlineColor = Color(0xFFfffffe);
 

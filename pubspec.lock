@@ -337,6 +337,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  custom_pop_up_menu:
+    dependency: "direct main"
+    description:
+      name: custom_pop_up_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   dart_style:
     dependency: transitive
     description:
@@ -1205,7 +1212,7 @@ packages:
     source: hosted
     version: "2.0.9"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
