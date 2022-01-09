@@ -43,14 +43,7 @@ class ChatsStream extends StatelessWidget {
         final _list = List<MessageBloc>.generate(
           chats.length,
           (index) {
-            return MessageBloc()
-              ..add(
-                OpenChat(
-                  chatId: chats[index].id,
-                  receiver: user.otherId(chats[index]),
-                  sender: user.userId,
-                ),
-              );
+            return MessageBloc();
           },
         );
 

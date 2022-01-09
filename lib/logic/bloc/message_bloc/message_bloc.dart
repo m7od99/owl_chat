@@ -84,7 +84,18 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
         ///
         forwardMessage: (ForwardMessage value) {},
-        onSeen: (OnSeen value) async {},
+
+        ///
+        onSeen: (OnSeen value) async {
+          final message = state.messages[value.index];
+          if (message.isSeen == null && message.isSeen != true && !message.isMe) {
+            add(
+              UpdateMessage(
+                message: message.copyWith(isSeen: true),
+              ),
+            );
+          }
+        },
 
         removeMessage: (RemoveMessage value) {},
 
@@ -103,12 +114,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
               ),
             );
 
-            await _control.sendMessageModel(state.message, state.chatId);
+            final doc = await _control.sendMessageModel(state.message, state.chatId);
             //  add(OnSend(isSend: isSend));
 
             add(UpdateChatState(chat: value.chat));
 
             FCMNotifications.instance.send(
+              messageId: doc.id.codeUnits.sum,
               body: state.message.text,
               title: _user.userName,
               toUserId: _user.otherId(value.chat),
@@ -166,7 +178,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
         ///
         updateMessage: (UpdateMessage value) async {
-          await _control.updateMessage(value.message);
+          _control.updateMessage(value.message);
         },
 
         ///

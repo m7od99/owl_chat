@@ -95,5 +95,5 @@ class ServerTimestampConverter implements JsonConverter<DateTime, Object?> {
   }
 
   @override
-  Object? toJson(DateTime? date) => date != null ? FieldValue.serverTimestamp() : null;
+  Object? toJson(DateTime? date) => date ?? Timestamp.now();
 }

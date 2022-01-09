@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -86,17 +87,24 @@ class Notifications {
         log("Message data: ${message.data}");
         final notification = message.notification;
 
+        late final Map<String, dynamic>? content;
+        if (message.data['content'] != null) {
+          content = jsonDecode(message.data['content'] as String) as Map<String, dynamic>?;
+        } else {
+          content = null;
+        }
+
         if (notification != null) {
           await AwesomeNotifications().createNotification(
             content: NotificationContent(
-              id: message.hashCode,
+              id: 10,
               showWhen: true,
               channelKey: 'message_notifications',
               groupKey: 'message_notifications',
               summary: notification.body,
               title: notification.title,
               body: notification.body,
-              largeIcon: 'asset://assets/images/user.png',
+              largeIcon: content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
               category: NotificationCategory.Message,
               autoDismissible: true,
               notificationLayout: NotificationLayout.Messaging,
@@ -154,7 +162,7 @@ class Notifications {
 
       await _user.updateOnChat(chat.id);
 
-      router.go(
+      router.push(
         '/chat/${chat.id}',
         extra: bloc,
       );

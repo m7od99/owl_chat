@@ -5,9 +5,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../data/models/chats/chat.dart';
 
 import '../../../../logic/bloc/message_bloc/message_bloc.dart';
-import '../../../widgets/hero_root.dart';
 import 'message_bubble.dart';
-import 'popup_card.dart';
 
 class MessageAnimatedList extends StatelessWidget {
   const MessageAnimatedList({
@@ -42,19 +40,6 @@ class MessageAnimatedList extends StatelessWidget {
             return MessageBubbleAnimated(
               index: index,
               message: state.messages[index],
-              onDoubleTap: () {
-                Navigator.push(
-                  context,
-                  HeroDialogRoute(
-                    builder: (context) => PopupCard(
-                      message: state.messages[index],
-                      tag: index,
-                      textEditingController: textEditingController,
-                      messageBloc: messageBloc,
-                    ),
-                  ),
-                );
-              },
             );
           },
         );
@@ -62,3 +47,17 @@ class MessageAnimatedList extends StatelessWidget {
     );
   }
 }
+
+    // onDoubleTap: () {
+    //             Navigator.push(
+    //               context,
+    //               HeroDialogRoute(
+    //                 builder: (context) => PopupCard(
+    //                   message: state.messages[index],
+    //                   tag: index,
+    //                   textEditingController: textEditingController,
+    //                   messageBloc: messageBloc,
+    //                 ),
+    //               ),
+    //             );
+    //           },

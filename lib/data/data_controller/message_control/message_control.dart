@@ -82,8 +82,8 @@ class MessageControl extends ChangeNotifier {
     }).then((value) => log('message send $value'));
   }
 
-  Future sendMessageModel(MessageModel message, String chatId) async {
-    await _firestore.collection('messages').doc(chatId).collection('messages').add(
+  Future<DocumentReference> sendMessageModel(MessageModel message, String chatId) async {
+    return _firestore.collection('messages').doc(chatId).collection('messages').add(
           message.toJson()
             ..update(
               'time',

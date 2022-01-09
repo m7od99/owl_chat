@@ -1,5 +1,6 @@
 // ignore_for_file: cast_nullable_to_non_nullable
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -49,7 +50,8 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin {
+class _ChatPageState extends State<ChatPage>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
@@ -64,6 +66,14 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       duration: const Duration(seconds: 2),
       curve: Curves.easeInOutCubic,
     );
+  }
+
+  Future _onSeen() async {
+    itemPositionsListener.itemPositions.addListener(() {
+      for (final index in itemPositionsListener.itemPositions.value) {
+        widget.messageBloc.add(OnSeen(index: index.index));
+      }
+    });
   }
 
   void _showArrow() {
@@ -82,6 +92,9 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     super.dispose();
+
+    WidgetsBinding.instance!.removeObserver(this);
+
     animationControl.dispose();
     _controller.dispose();
     widget.messageBloc.close();
@@ -89,12 +102,16 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+
     animationControl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 15),
     );
 
     _showArrow();
+
+    _onSeen();
 
     UserState().updateOnChat(widget.chat.id);
 
@@ -114,6 +131,15 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     // Future.delayed(const Duration(seconds: 5), () => UserState().updateOnChat(widget.chat.id));
 
     super.didChangeDependencies();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      Future.delayed(Duration.zero, () => UserState().updateOnChat(widget.chat.id));
+    }
   }
 
   @override

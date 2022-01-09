@@ -46,9 +46,9 @@ class _$MessageEventTearOff {
     );
   }
 
-  OnSeen onSeen({required String id}) {
+  OnSeen onSeen({required int index}) {
     return OnSeen(
-      id: id,
+      index: index,
     );
   }
 
@@ -152,7 +152,7 @@ mixin _$MessageEvent {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -179,7 +179,7 @@ mixin _$MessageEvent {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -204,7 +204,7 @@ mixin _$MessageEvent {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -388,7 +388,7 @@ class _$WriteMessage implements WriteMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -418,7 +418,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -446,7 +446,7 @@ class _$WriteMessage implements WriteMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -657,7 +657,7 @@ class _$OpenChat implements OpenChat {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -687,7 +687,7 @@ class _$OpenChat implements OpenChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -715,7 +715,7 @@ class _$OpenChat implements OpenChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -922,7 +922,7 @@ class _$SendMessage implements SendMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -952,7 +952,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -980,7 +980,7 @@ class _$SendMessage implements SendMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1171,7 +1171,7 @@ class _$OnSend implements OnSend {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -1201,7 +1201,7 @@ class _$OnSend implements OnSend {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1229,7 +1229,7 @@ class _$OnSend implements OnSend {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1356,7 +1356,7 @@ abstract class OnSend implements MessageEvent {
 abstract class $OnSeenCopyWith<$Res> {
   factory $OnSeenCopyWith(OnSeen value, $Res Function(OnSeen) then) =
       _$OnSeenCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({int index});
 }
 
 /// @nodoc
@@ -1370,13 +1370,13 @@ class _$OnSeenCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? index = freezed,
   }) {
     return _then(OnSeen(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1384,14 +1384,14 @@ class _$OnSeenCopyWithImpl<$Res> extends _$MessageEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OnSeen implements OnSeen {
-  const _$OnSeen({required this.id});
+  const _$OnSeen({required this.index});
 
   @override
-  final String id;
+  final int index;
 
   @override
   String toString() {
-    return 'MessageEvent.onSeen(id: $id)';
+    return 'MessageEvent.onSeen(index: $index)';
   }
 
   @override
@@ -1399,12 +1399,12 @@ class _$OnSeen implements OnSeen {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is OnSeen &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.index, index));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(index));
 
   @JsonKey(ignore: true)
   @override
@@ -1419,7 +1419,7 @@ class _$OnSeen implements OnSeen {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -1439,7 +1439,7 @@ class _$OnSeen implements OnSeen {
     required TResult Function(Chat chat) sendGif,
     required TResult Function() closeChat,
   }) {
-    return onSeen(id);
+    return onSeen(index);
   }
 
   @override
@@ -1449,7 +1449,7 @@ class _$OnSeen implements OnSeen {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1467,7 +1467,7 @@ class _$OnSeen implements OnSeen {
     TResult Function(Chat chat)? sendGif,
     TResult Function()? closeChat,
   }) {
-    return onSeen?.call(id);
+    return onSeen?.call(index);
   }
 
   @override
@@ -1477,7 +1477,7 @@ class _$OnSeen implements OnSeen {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1497,7 +1497,7 @@ class _$OnSeen implements OnSeen {
     required TResult orElse(),
   }) {
     if (onSeen != null) {
-      return onSeen(id);
+      return onSeen(index);
     }
     return orElse();
   }
@@ -1593,9 +1593,9 @@ class _$OnSeen implements OnSeen {
 }
 
 abstract class OnSeen implements MessageEvent {
-  const factory OnSeen({required String id}) = _$OnSeen;
+  const factory OnSeen({required int index}) = _$OnSeen;
 
-  String get id;
+  int get index;
   @JsonKey(ignore: true)
   $OnSeenCopyWith<OnSeen> get copyWith => throw _privateConstructorUsedError;
 }
@@ -1646,7 +1646,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -1676,7 +1676,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1704,7 +1704,7 @@ class _$LoadChatRoomMessages implements LoadChatRoomMessages {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1900,7 +1900,7 @@ class _$AddMessage implements AddMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -1930,7 +1930,7 @@ class _$AddMessage implements AddMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -1958,7 +1958,7 @@ class _$AddMessage implements AddMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2151,7 +2151,7 @@ class _$RemoveMessage implements RemoveMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -2181,7 +2181,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2209,7 +2209,7 @@ class _$RemoveMessage implements RemoveMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2404,7 +2404,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -2434,7 +2434,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2462,7 +2462,7 @@ class _$UpdateChatRoomMessages implements UpdateChatRoomMessages {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2665,7 +2665,7 @@ class _$UpdateMessage implements UpdateMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -2695,7 +2695,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2723,7 +2723,7 @@ class _$UpdateMessage implements UpdateMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2926,7 +2926,7 @@ class _$ReplyMessage implements ReplyMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -2956,7 +2956,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -2984,7 +2984,7 @@ class _$ReplyMessage implements ReplyMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3197,7 +3197,7 @@ class _$ForwardMessage implements ForwardMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -3227,7 +3227,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3255,7 +3255,7 @@ class _$ForwardMessage implements ForwardMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3460,7 +3460,7 @@ class _$EditMessage implements EditMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -3490,7 +3490,7 @@ class _$EditMessage implements EditMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3518,7 +3518,7 @@ class _$EditMessage implements EditMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3687,7 +3687,7 @@ class _$ClearMessage implements ClearMessage {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -3717,7 +3717,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3745,7 +3745,7 @@ class _$ClearMessage implements ClearMessage {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3908,7 +3908,7 @@ class _$CancelEdit implements CancelEdit {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -3938,7 +3938,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -3966,7 +3966,7 @@ class _$CancelEdit implements CancelEdit {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4130,7 +4130,7 @@ class _$CancelReply implements CancelReply {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -4160,7 +4160,7 @@ class _$CancelReply implements CancelReply {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4188,7 +4188,7 @@ class _$CancelReply implements CancelReply {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4352,7 +4352,7 @@ class _$CancelForward implements CancelForward {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -4382,7 +4382,7 @@ class _$CancelForward implements CancelForward {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4410,7 +4410,7 @@ class _$CancelForward implements CancelForward {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4608,7 +4608,7 @@ class _$UpdateChatState implements UpdateChatState {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -4638,7 +4638,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4666,7 +4666,7 @@ class _$UpdateChatState implements UpdateChatState {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4867,7 +4867,7 @@ class _$UpdateChat implements UpdateChat {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -4897,7 +4897,7 @@ class _$UpdateChat implements UpdateChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -4925,7 +4925,7 @@ class _$UpdateChat implements UpdateChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -5125,7 +5125,7 @@ class _$SendGif implements SendGif {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -5155,7 +5155,7 @@ class _$SendGif implements SendGif {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -5183,7 +5183,7 @@ class _$SendGif implements SendGif {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -5349,7 +5349,7 @@ class _$CloseChat implements CloseChat {
         openChat,
     required TResult Function(Chat chat) sendMessage,
     required TResult Function(bool isSend) onSend,
-    required TResult Function(String id) onSeen,
+    required TResult Function(int index) onSeen,
     required TResult Function() loadChatRoomMessages,
     required TResult Function(MessageModel message) addMessage,
     required TResult Function(String messageId) removeMessage,
@@ -5379,7 +5379,7 @@ class _$CloseChat implements CloseChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,
@@ -5407,7 +5407,7 @@ class _$CloseChat implements CloseChat {
     TResult Function(String chatId, String sender, String receiver)? openChat,
     TResult Function(Chat chat)? sendMessage,
     TResult Function(bool isSend)? onSend,
-    TResult Function(String id)? onSeen,
+    TResult Function(int index)? onSeen,
     TResult Function()? loadChatRoomMessages,
     TResult Function(MessageModel message)? addMessage,
     TResult Function(String messageId)? removeMessage,

@@ -17,6 +17,7 @@ class FCMNotifications {
     required String body,
     required String toUserId,
     required String chatId,
+    required int messageId,
   }) async {
     final String? token = await _user.getUserToken(toUserId);
     final onChat = await isOnChat(toUserId, chatId);
@@ -40,10 +41,10 @@ class FCMNotifications {
               'priority': 'high',
               'data': {
                 'content': {
-                  'id': 1,
+                  'id': messageId,
                   'title': title,
                   'body': body,
-                  'largeIcon': 'asset://assets/images/user.png',
+                  'largeIcon': UserState().photoUri,
                   'channelKey': 'message_notifications',
                   'category': 'Message',
                   'autoDismissible': true,

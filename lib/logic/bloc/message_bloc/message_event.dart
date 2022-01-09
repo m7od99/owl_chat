@@ -19,7 +19,7 @@ class MessageEvent with _$MessageEvent {
   }) = OnSend;
 
   const factory MessageEvent.onSeen({
-    required String id,
+    required int index,
   }) = OnSeen;
 
   const factory MessageEvent.loadChatRoomMessages() = LoadChatRoomMessages;
