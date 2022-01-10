@@ -5,12 +5,12 @@ class ChatRoomState with _$ChatRoomState {
   const factory ChatRoomState({
     required List<Chat> chats,
     required bool isLoading,
+    required List<MessageBloc> chatRoomData,
   }) = _ChatRoomState;
-
-  factory ChatRoomState.fromJson(Map<String, dynamic> json) => _$ChatRoomStateFromJson(json);
 
   factory ChatRoomState.init() => const ChatRoomState(
         chats: [],
         isLoading: true,
+        chatRoomData: <MessageBloc>[],
       );
 }

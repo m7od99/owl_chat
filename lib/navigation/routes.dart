@@ -1,6 +1,7 @@
 // ignore_for_file: cast_nullable_to_non_nullable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
@@ -98,7 +99,10 @@ class Routes {
     redirect: (state) {},
     pageBuilder: (context, state) {
       return MaterialPage(
-        child: const ChatScreen(),
+        child: BlocProvider.value(
+          value: state.extra as MessageBloc,
+          child: const ChatScreen(),
+        ),
         arguments: state.extra as MessageBloc,
         key: state.pageKey,
       );

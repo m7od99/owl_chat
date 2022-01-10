@@ -48,6 +48,7 @@ Future main() async {
         child: const ProviderControl(),
       ),
     ),
+    //  blocObserver: SimpleBlocObserver(),
     storage: storage,
   );
 }

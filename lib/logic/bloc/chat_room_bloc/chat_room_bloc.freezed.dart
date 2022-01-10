@@ -21,6 +21,10 @@ class _$ChatRoomEventTearOff {
     return const LoadChatRoom();
   }
 
+  LoadChatsData loadChatsData() {
+    return const LoadChatsData();
+  }
+
   LoadAnimation loadAnimation({required bool load}) {
     return LoadAnimation(
       load: load,
@@ -36,18 +40,21 @@ mixin _$ChatRoomEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadChatsRoom,
+    required TResult Function() loadChatsData,
     required TResult Function(bool load) loadAnimation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
     required TResult orElse(),
   }) =>
@@ -55,18 +62,21 @@ mixin _$ChatRoomEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadChatRoom value) loadChatsRoom,
+    required TResult Function(LoadChatsData value) loadChatsData,
     required TResult Function(LoadAnimation value) loadAnimation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
     required TResult orElse(),
   }) =>
@@ -131,6 +141,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadChatsRoom,
+    required TResult Function() loadChatsData,
     required TResult Function(bool load) loadAnimation,
   }) {
     return loadChatsRoom();
@@ -140,6 +151,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
   }) {
     return loadChatsRoom?.call();
@@ -149,6 +161,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
     required TResult orElse(),
   }) {
@@ -162,6 +175,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadChatRoom value) loadChatsRoom,
+    required TResult Function(LoadChatsData value) loadChatsData,
     required TResult Function(LoadAnimation value) loadAnimation,
   }) {
     return loadChatsRoom(this);
@@ -171,6 +185,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
   }) {
     return loadChatsRoom?.call(this);
@@ -180,6 +195,7 @@ class _$LoadChatRoom implements LoadChatRoom {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
     required TResult orElse(),
   }) {
@@ -192,6 +208,117 @@ class _$LoadChatRoom implements LoadChatRoom {
 
 abstract class LoadChatRoom implements ChatRoomEvent {
   const factory LoadChatRoom() = _$LoadChatRoom;
+}
+
+/// @nodoc
+abstract class $LoadChatsDataCopyWith<$Res> {
+  factory $LoadChatsDataCopyWith(
+          LoadChatsData value, $Res Function(LoadChatsData) then) =
+      _$LoadChatsDataCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$LoadChatsDataCopyWithImpl<$Res>
+    extends _$ChatRoomEventCopyWithImpl<$Res>
+    implements $LoadChatsDataCopyWith<$Res> {
+  _$LoadChatsDataCopyWithImpl(
+      LoadChatsData _value, $Res Function(LoadChatsData) _then)
+      : super(_value, (v) => _then(v as LoadChatsData));
+
+  @override
+  LoadChatsData get _value => super._value as LoadChatsData;
+}
+
+/// @nodoc
+
+class _$LoadChatsData implements LoadChatsData {
+  const _$LoadChatsData();
+
+  @override
+  String toString() {
+    return 'ChatRoomEvent.loadChatsData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is LoadChatsData);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadChatsRoom,
+    required TResult Function() loadChatsData,
+    required TResult Function(bool load) loadAnimation,
+  }) {
+    return loadChatsData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
+    TResult Function(bool load)? loadAnimation,
+  }) {
+    return loadChatsData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
+    TResult Function(bool load)? loadAnimation,
+    required TResult orElse(),
+  }) {
+    if (loadChatsData != null) {
+      return loadChatsData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadChatRoom value) loadChatsRoom,
+    required TResult Function(LoadChatsData value) loadChatsData,
+    required TResult Function(LoadAnimation value) loadAnimation,
+  }) {
+    return loadChatsData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
+    TResult Function(LoadAnimation value)? loadAnimation,
+  }) {
+    return loadChatsData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
+    TResult Function(LoadAnimation value)? loadAnimation,
+    required TResult orElse(),
+  }) {
+    if (loadChatsData != null) {
+      return loadChatsData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadChatsData implements ChatRoomEvent {
+  const factory LoadChatsData() = _$LoadChatsData;
 }
 
 /// @nodoc
@@ -260,6 +387,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadChatsRoom,
+    required TResult Function() loadChatsData,
     required TResult Function(bool load) loadAnimation,
   }) {
     return loadAnimation(load);
@@ -269,6 +397,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
   }) {
     return loadAnimation?.call(load);
@@ -278,6 +407,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadChatsRoom,
+    TResult Function()? loadChatsData,
     TResult Function(bool load)? loadAnimation,
     required TResult orElse(),
   }) {
@@ -291,6 +421,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadChatRoom value) loadChatsRoom,
+    required TResult Function(LoadChatsData value) loadChatsData,
     required TResult Function(LoadAnimation value) loadAnimation,
   }) {
     return loadAnimation(this);
@@ -300,6 +431,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
   }) {
     return loadAnimation?.call(this);
@@ -309,6 +441,7 @@ class _$LoadAnimation implements LoadAnimation {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadChatRoom value)? loadChatsRoom,
+    TResult Function(LoadChatsData value)? loadChatsData,
     TResult Function(LoadAnimation value)? loadAnimation,
     required TResult orElse(),
   }) {
@@ -328,23 +461,19 @@ abstract class LoadAnimation implements ChatRoomEvent {
       throw _privateConstructorUsedError;
 }
 
-ChatRoomState _$ChatRoomStateFromJson(Map<String, dynamic> json) {
-  return _ChatRoomState.fromJson(json);
-}
-
 /// @nodoc
 class _$ChatRoomStateTearOff {
   const _$ChatRoomStateTearOff();
 
-  _ChatRoomState call({required List<Chat> chats, required bool isLoading}) {
+  _ChatRoomState call(
+      {required List<Chat> chats,
+      required bool isLoading,
+      required List<MessageBloc> chatRoomData}) {
     return _ChatRoomState(
       chats: chats,
       isLoading: isLoading,
+      chatRoomData: chatRoomData,
     );
-  }
-
-  ChatRoomState fromJson(Map<String, Object?> json) {
-    return ChatRoomState.fromJson(json);
   }
 }
 
@@ -355,8 +484,8 @@ const $ChatRoomState = _$ChatRoomStateTearOff();
 mixin _$ChatRoomState {
   List<Chat> get chats => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  List<MessageBloc> get chatRoomData => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ChatRoomStateCopyWith<ChatRoomState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -367,7 +496,7 @@ abstract class $ChatRoomStateCopyWith<$Res> {
   factory $ChatRoomStateCopyWith(
           ChatRoomState value, $Res Function(ChatRoomState) then) =
       _$ChatRoomStateCopyWithImpl<$Res>;
-  $Res call({List<Chat> chats, bool isLoading});
+  $Res call({List<Chat> chats, bool isLoading, List<MessageBloc> chatRoomData});
 }
 
 /// @nodoc
@@ -383,6 +512,7 @@ class _$ChatRoomStateCopyWithImpl<$Res>
   $Res call({
     Object? chats = freezed,
     Object? isLoading = freezed,
+    Object? chatRoomData = freezed,
   }) {
     return _then(_value.copyWith(
       chats: chats == freezed
@@ -393,6 +523,10 @@ class _$ChatRoomStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      chatRoomData: chatRoomData == freezed
+          ? _value.chatRoomData
+          : chatRoomData // ignore: cast_nullable_to_non_nullable
+              as List<MessageBloc>,
     ));
   }
 }
@@ -404,7 +538,7 @@ abstract class _$ChatRoomStateCopyWith<$Res>
           _ChatRoomState value, $Res Function(_ChatRoomState) then) =
       __$ChatRoomStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Chat> chats, bool isLoading});
+  $Res call({List<Chat> chats, bool isLoading, List<MessageBloc> chatRoomData});
 }
 
 /// @nodoc
@@ -422,6 +556,7 @@ class __$ChatRoomStateCopyWithImpl<$Res>
   $Res call({
     Object? chats = freezed,
     Object? isLoading = freezed,
+    Object? chatRoomData = freezed,
   }) {
     return _then(_ChatRoomState(
       chats: chats == freezed
@@ -432,26 +567,32 @@ class __$ChatRoomStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      chatRoomData: chatRoomData == freezed
+          ? _value.chatRoomData
+          : chatRoomData // ignore: cast_nullable_to_non_nullable
+              as List<MessageBloc>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$_ChatRoomState implements _ChatRoomState {
-  const _$_ChatRoomState({required this.chats, required this.isLoading});
 
-  factory _$_ChatRoomState.fromJson(Map<String, dynamic> json) =>
-      _$$_ChatRoomStateFromJson(json);
+class _$_ChatRoomState implements _ChatRoomState {
+  const _$_ChatRoomState(
+      {required this.chats,
+      required this.isLoading,
+      required this.chatRoomData});
 
   @override
   final List<Chat> chats;
   @override
   final bool isLoading;
+  @override
+  final List<MessageBloc> chatRoomData;
 
   @override
   String toString() {
-    return 'ChatRoomState(chats: $chats, isLoading: $isLoading)';
+    return 'ChatRoomState(chats: $chats, isLoading: $isLoading, chatRoomData: $chatRoomData)';
   }
 
   @override
@@ -460,37 +601,36 @@ class _$_ChatRoomState implements _ChatRoomState {
         (other.runtimeType == runtimeType &&
             other is _ChatRoomState &&
             const DeepCollectionEquality().equals(other.chats, chats) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading));
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
+            const DeepCollectionEquality()
+                .equals(other.chatRoomData, chatRoomData));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(chats),
-      const DeepCollectionEquality().hash(isLoading));
+      const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(chatRoomData));
 
   @JsonKey(ignore: true)
   @override
   _$ChatRoomStateCopyWith<_ChatRoomState> get copyWith =>
       __$ChatRoomStateCopyWithImpl<_ChatRoomState>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ChatRoomStateToJson(this);
-  }
 }
 
 abstract class _ChatRoomState implements ChatRoomState {
   const factory _ChatRoomState(
-      {required List<Chat> chats, required bool isLoading}) = _$_ChatRoomState;
-
-  factory _ChatRoomState.fromJson(Map<String, dynamic> json) =
-      _$_ChatRoomState.fromJson;
+      {required List<Chat> chats,
+      required bool isLoading,
+      required List<MessageBloc> chatRoomData}) = _$_ChatRoomState;
 
   @override
   List<Chat> get chats;
   @override
   bool get isLoading;
+  @override
+  List<MessageBloc> get chatRoomData;
   @override
   @JsonKey(ignore: true)
   _$ChatRoomStateCopyWith<_ChatRoomState> get copyWith =>

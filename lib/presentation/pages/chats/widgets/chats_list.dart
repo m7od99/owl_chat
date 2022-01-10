@@ -9,16 +9,36 @@ import '../../../../data/models/chats/chat.dart';
 import '../../../../logic/event_handler/user_state.dart';
 import 'friend_card.dart';
 
-class ChatsStream extends StatelessWidget {
-  const ChatsStream({
+class ChatsList extends StatefulWidget {
+  const ChatsList({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ChatsList> createState() => _ChatsChatsListState();
+}
+
+class _ChatsChatsListState extends State<ChatsList> {
   String otherId(Chat chat) {
     if (UserState().userId == chat.other.id) {
       return chat.me.id;
     }
     return chat.other.id;
+  }
+
+  @override
+  void didChangeDependencies() {
+    context.watch<ChatRoomBloc>().stream.listen((data) {
+      if (data.chats.length > data.chatRoomData.length) {
+        context.read<ChatRoomBloc>().add(const LoadChatsData());
+      }
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -66,7 +86,8 @@ class ChatsStream extends StatelessWidget {
 
                   _list[index].add(UpdateChat(chat: chats[index]));
 
-                  context.go('/chat/${chats[index].id}', extra: _list[index]);
+//todo throw error after close
+                  context.go('/chat/${chats[index].id}', extra: state.chatRoomData[index]);
                 },
               );
             },

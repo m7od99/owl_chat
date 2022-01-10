@@ -33,6 +33,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
     context.read<b.UserBloc>().add(const b.GetChatsData());
     context.read<ChatRoomBloc>().add(const LoadChatRoom());
+    context.read<ChatRoomBloc>().add(const LoadChatsData());
 
     super.initState();
   }

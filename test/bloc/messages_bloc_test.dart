@@ -12,21 +12,21 @@ void main() {
     messageBlocMock.stream,
   );
 
-  group(
-    'messages bloc test',
-    () {
-      blocTest<MessageBloc, MessageState>(
-        'test open chat',
-        build: () => MessageBloc(),
-        act: (bloc) => bloc.add(
-          const OpenChat(
-            chatId: '1',
-            receiver: '',
-            sender: '',
-          ),
-        ),
-        expect: () {},
-      );
-    },
-  );
+//   group(
+//     'messages bloc test',
+//     () {
+//       blocTest<MessageBloc, MessageState>(
+//         'test open chat',
+//         build: () => MessageBloc(),
+//         act: (bloc) => bloc.add(
+//           const OpenChat(
+//             chatId: '1',
+//             receiver: '',
+//             sender: '',
+//           ),
+//         ),
+//         expect: () {},
+//       );
+//     },
+//   );
 }

@@ -38,6 +38,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
               add(UpdateChatRoomMessages(messages: _order.reversed.toList()));
 
+              print(_order.length);
+
               emit(state.copyWith(loadingMessages: false));
 
               return state;

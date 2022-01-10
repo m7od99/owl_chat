@@ -1,6 +1,5 @@
 // ignore_for_file: cast_nullable_to_non_nullable
 
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,10 +27,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
-    return BlocProvider<MessageBloc>(
-      create: (BuildContext context) => bloc,
-      child: ChatPage(chat: bloc.state.chat, messageBloc: bloc),
-    );
+    return ChatPage(chat: bloc.state.chat, messageBloc: bloc);
     //  user.updateOnChat(chat.id);
   }
 }
@@ -95,9 +91,10 @@ class _ChatPageState extends State<ChatPage>
 
     WidgetsBinding.instance!.removeObserver(this);
 
+    widget.messageBloc.close();
+
     animationControl.dispose();
     _controller.dispose();
-    widget.messageBloc.close();
   }
 
   @override

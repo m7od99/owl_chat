@@ -5,7 +5,7 @@ import 'package:loading_animations/loading_animations.dart';
 import '../../../logic/bloc/app_manger/app_manger_bloc.dart';
 import '../search/search_page.dart';
 import 'slider.dart';
-import 'widgets/chats_stream.dart';
+import 'widgets/chats_list.dart';
 
 class Chats extends StatelessWidget {
   const Chats({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class Chats extends StatelessWidget {
               ],
             ),
           ),
-          body: const ChatsStream(),
+          body: const ChatsList(),
           drawer: const SliderPage(),
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(20),
