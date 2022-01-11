@@ -57,7 +57,7 @@ class _ChatPageState extends State<ChatPage>
   late final AnimationController animationControl;
 
   Future _jumpToEnd() async {
-    itemScrollController.scrollTo(
+    await itemScrollController.scrollTo(
       index: 0,
       duration: const Duration(seconds: 2),
       curve: Curves.easeInOutCubic,
@@ -121,13 +121,6 @@ class _ChatPageState extends State<ChatPage>
     );
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // Future.delayed(const Duration(seconds: 5), () => UserState().updateOnChat(widget.chat.id));
-
-    super.didChangeDependencies();
   }
 
   @override
@@ -210,9 +203,7 @@ class _ChatPageState extends State<ChatPage>
                   color: const Color(0xFF233720),
                   shape: const CircleBorder(),
                   child: IconButton(
-                    onPressed: () async {
-                      await _jumpToEnd();
-                    },
+                    onPressed: _jumpToEnd,
                     icon: const Icon(
                       Icons.expand_more,
                       color: Colors.white,

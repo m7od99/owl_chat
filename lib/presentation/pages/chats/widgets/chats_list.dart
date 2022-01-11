@@ -28,11 +28,6 @@ class _ChatsChatsListState extends State<ChatsList> {
 
   @override
   void didChangeDependencies() {
-    context.watch<ChatRoomBloc>().stream.listen((data) {
-      if (data.chats.length > data.chatRoomData.length) {
-        context.read<ChatRoomBloc>().add(const LoadChatsData());
-      }
-    });
     super.didChangeDependencies();
   }
 
@@ -87,7 +82,7 @@ class _ChatsChatsListState extends State<ChatsList> {
                   _list[index].add(UpdateChat(chat: chats[index]));
 
 //todo throw error after close
-                  context.go('/chat/${chats[index].id}', extra: state.chatRoomData[index]);
+                  context.go('/chat/${chats[index].id}', extra: _list[index]);
                 },
               );
             },
