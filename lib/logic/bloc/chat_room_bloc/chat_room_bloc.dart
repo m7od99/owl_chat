@@ -49,26 +49,7 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
         },
 
         ///
-        loadChatsData: (LoadChatsData value) {
-          final user = UserState();
-
-          final List<MessageBloc> blocs = [];
-
-          for (final chat in state.chats) {
-            blocs.add(
-              MessageBloc()
-                ..add(
-                  OpenChat(
-                    chatId: chat.id,
-                    receiver: user.otherId(chat),
-                    sender: user.userId,
-                  ),
-                )
-                ..add(UpdateChat(chat: chat)),
-            );
-          }
-          emit(state.copyWith(chatRoomData: blocs));
-        },
+        loadChatsData: (LoadChatsData value) {},
 
         ///
       );

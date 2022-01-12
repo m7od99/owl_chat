@@ -9,9 +9,10 @@ import '../../../theme/constant.dart';
 
 class FriendCard extends StatelessWidget {
   const FriendCard({
-    required this.onTap,
+    Key? key,
     required this.chat,
-  });
+    required this.onTap,
+  }) : super(key: key);
 
   final Chat chat;
   final VoidCallback onTap;

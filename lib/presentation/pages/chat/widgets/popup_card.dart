@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 
 import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
 
@@ -65,7 +66,10 @@ class PopupCard extends StatelessWidget {
                             MenuCard(
                               icon: Icons.edit,
                               onTap: () {
-                                context.read<MessageBloc>().add(EditMessage(message: message));
+                                context
+                                    .read<SendMessageFormBloc>()
+                                    .add(SendMessageFormEvent.editMessage(message: message));
+
                                 textEditingController.text = message.text;
 
                                 context.pop();

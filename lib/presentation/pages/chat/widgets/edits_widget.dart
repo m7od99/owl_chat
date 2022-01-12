@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:provider/provider.dart';
 
 class EditMessageCard extends StatelessWidget {
@@ -15,8 +16,7 @@ class EditMessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MessageBloc, MessageState>(
-      bloc: messageBloc,
+    return BlocBuilder<SendMessageFormBloc, SendMessageFormState>(
       builder: (context, state) {
         final message = state.message.text;
         return Material(
@@ -54,7 +54,8 @@ class EditMessageCard extends StatelessWidget {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.clear();
-                    Provider.of<MessageBloc>(context, listen: false).add(const CancelEdit());
+                    Provider.of<SendMessageFormBloc>(context, listen: false)
+                        .add(const SendMessageFormEvent.cancelEdit());
                   },
                 ),
               ],

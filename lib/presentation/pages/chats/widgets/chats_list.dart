@@ -38,8 +38,6 @@ class _ChatsChatsListState extends State<ChatsList> {
 
   @override
   Widget build(BuildContext context) {
-    final UserState user = Provider.of<UserState>(context);
-
     return BlocBuilder<ChatRoomBloc, ChatRoomState>(
       builder: (context, state) {
         if (state.isLoading == true) {
@@ -55,39 +53,26 @@ class _ChatsChatsListState extends State<ChatsList> {
         }
         final chats = state.chats;
 
-        final _list = List<MessageBloc>.generate(
-          chats.length,
-          (index) {
-            return MessageBloc();
-          },
-        );
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.separated(
-            itemCount: chats.length,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            itemBuilder: (BuildContext context, int index) {
-              return FriendCard(
+        return ListView.separated(
+          itemCount: chats.length,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          itemBuilder: (BuildContext context, int index) {
+            return Provider(
+              lazy: true,
+              key: Key(chats[index].id),
+              create: (context) => MessageBloc(chat: state.chats[index]),
+              builder: (context, widget) => FriendCard(
+                key: Key(chats[index].id),
                 chat: chats[index],
                 onTap: () async {
-                  _list[index].add(
-                    OpenChat(
-                      chatId: chats[index].id,
-                      receiver: user.otherId(chats[index]),
-                      sender: user.userId,
-                    ),
-                  );
+                  // context.read<MessageBloc>().add(const MessagesReceived());
 
-                  _list[index].add(UpdateChat(chat: chats[index]));
-
-//todo throw error after close
-                  context.go('/chat/${chats[index].id}', extra: _list[index]);
+                  context.go('/chat/${chats[index].id}', extra: context.read<MessageBloc>());
                 },
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
-          ),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => const Divider(),
         );
       },
     );

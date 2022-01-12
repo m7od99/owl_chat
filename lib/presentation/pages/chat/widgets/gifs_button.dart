@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:giphy_get/giphy_get.dart';
-import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
 import 'giphy.dart';
@@ -9,11 +13,9 @@ class GifsButton extends StatelessWidget {
   const GifsButton({
     Key? key,
     required this.chat,
-    required this.messageBloc,
   }) : super(key: key);
 
   final Chat chat;
-  final MessageBloc messageBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,13 @@ class GifsButton extends StatelessWidget {
         final GiphyGif? gif = await Giphy.pickGif(context);
 
         if (gif != null) {
-          messageBloc.add(WriteMessage(text: gif.images!.original!.webp!));
+          context.read<SendMessageFormBloc>().add(
+                SendMessageFormEvent.updateText(
+                  text: gif.images!.original!.webp!,
+                ),
+              );
 
-          messageBloc.add(SendGif(chat: chat));
+          context.read<SendMessageFormBloc>().add(const SendMessageFormEvent.sendGif());
         }
       },
       icon: const Icon(Icons.spa_outlined),

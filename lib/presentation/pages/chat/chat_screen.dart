@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/edits_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -27,7 +28,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
-    return ChatPage(chat: bloc.state.chat, messageBloc: bloc);
+    return ChatPage(chat: bloc.chat, messageBloc: bloc);
     //  user.updateOnChat(chat.id);
   }
 }
@@ -91,8 +92,6 @@ class _ChatPageState extends State<ChatPage>
 
     WidgetsBinding.instance!.removeObserver(this);
 
-    widget.messageBloc.close();
-
     animationControl.dispose();
     _controller.dispose();
   }
@@ -112,13 +111,7 @@ class _ChatPageState extends State<ChatPage>
 
     UserState().updateOnChat(widget.chat.id);
 
-    widget.messageBloc.add(
-      OpenChat(
-        chatId: widget.chat.id,
-        receiver: UserState().otherId(widget.chat),
-        sender: UserState().userId,
-      ),
-    );
+    widget.messageBloc.add(const MessagesReceived());
 
     super.initState();
   }
@@ -136,86 +129,92 @@ class _ChatPageState extends State<ChatPage>
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
 
-    return BlocBuilder<MessageBloc, MessageState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).splashColor,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_sharp),
-              onPressed: () async {
-                user.updateOnChat('null');
-                context.pop();
-              },
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(user.otherName(widget.chat)),
-                ChatProfilePhoto(
-                  id: user.otherId(widget.chat),
-                  size: 22,
-                ),
-              ],
-            ),
-          ),
-          body: Column(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    final FocusScopeNode currentFocus = FocusScope.of(context);
-
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
-                  child: MessageAnimatedList(
-                    chat: widget.chat,
-                    itemScrollController: itemScrollController,
-                    textEditingController: _controller,
-                    itemPositionsListener: itemPositionsListener,
-                    messageBloc: widget.messageBloc,
+    return BlocProvider<SendMessageFormBloc>(
+      create: (context) => SendMessageFormBloc(chat: widget.chat),
+      child: BlocBuilder<MessageBloc, MessageState>(
+        builder: (context, state) {
+          return BlocBuilder<SendMessageFormBloc, SendMessageFormState>(
+            builder: (context, formState) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Theme.of(context).splashColor,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_sharp),
+                    onPressed: () async {
+                      user.updateOnChat('null');
+                      context.pop();
+                    },
+                  ),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(user.otherName(widget.chat)),
+                      ChatProfilePhoto(
+                        id: user.otherId(widget.chat),
+                        size: 22,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              if (state.isEdit == true)
-                EditMessageCard(
-                  controller: _controller,
-                  messageBloc: widget.messageBloc,
+                body: Column(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          final FocusScopeNode currentFocus = FocusScope.of(context);
+
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
+                        },
+                        child: MessageAnimatedList(
+                          chat: widget.chat,
+                          itemScrollController: itemScrollController,
+                          textEditingController: _controller,
+                          itemPositionsListener: itemPositionsListener,
+                          messageBloc: widget.messageBloc,
+                        ),
+                      ),
+                    ),
+                    if (formState.isEdit == true)
+                      EditMessageCard(
+                        controller: _controller,
+                        messageBloc: widget.messageBloc,
+                      ),
+                    SendMessageField(
+                      chat: widget.chat,
+                      controller: _controller,
+                      itemScrollController: itemScrollController,
+                    ),
+                  ],
                 ),
-              SendMessageField(
-                chat: widget.chat,
-                controller: _controller,
-                itemScrollController: itemScrollController,
-                messageBloc: widget.messageBloc,
-              ),
-            ],
-          ),
-          floatingActionButton: FadeTransition(
-            opacity: animationControl,
-            child: ScaleTransition(
-              scale: animationControl,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 60),
-                child: Material(
-                  clipBehavior: Clip.hardEdge,
-                  color: const Color(0xFF233720),
-                  shape: const CircleBorder(),
-                  child: IconButton(
-                    onPressed: _jumpToEnd,
-                    icon: const Icon(
-                      Icons.expand_more,
-                      color: Colors.white,
-                      size: 30,
+                floatingActionButton: FadeTransition(
+                  opacity: animationControl,
+                  child: ScaleTransition(
+                    scale: animationControl,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 60),
+                      child: Material(
+                        clipBehavior: Clip.hardEdge,
+                        color: const Color(0xFF233720),
+                        shape: const CircleBorder(),
+                        child: IconButton(
+                          onPressed: _jumpToEnd,
+                          icon: const Icon(
+                            Icons.expand_more,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        );
-      },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

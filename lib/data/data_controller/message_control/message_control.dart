@@ -147,6 +147,7 @@ class MessageControl extends ChangeNotifier {
           id: docs.id,
           chatId: chatId,
           isSend: !isLocal,
+          isMe: isMe(message.sender),
         );
       }).toList();
     });

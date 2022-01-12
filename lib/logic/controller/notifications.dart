@@ -148,17 +148,9 @@ class Notifications {
 
       final _user = UserState();
 
-      final MessageBloc bloc = MessageBloc();
+      final MessageBloc bloc = MessageBloc(chat: chat!);
 
-      bloc.add(UpdateChat(chat: chat!));
-
-      bloc.add(
-        OpenChat(
-          chatId: chat.id,
-          receiver: _user.otherId(chat),
-          sender: _user.userId,
-        ),
-      );
+      bloc.add(const MessageEvent.messagesReceived());
 
       await _user.updateOnChat(chat.id);
 

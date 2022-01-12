@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/chat.dart';
-import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:owl_chat/logic/controller/multi_language_format.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
 // ignore: implementation_imports
@@ -16,13 +16,11 @@ class SendMessageField extends StatefulWidget {
     required this.chat,
     required this.controller,
     required this.itemScrollController,
-    required this.messageBloc,
   }) : super(key: key);
 
   final Chat chat;
   final TextEditingController controller;
   final ItemScrollController itemScrollController;
-  final MessageBloc messageBloc;
 
   @override
   _SendMessageFieldState createState() => _SendMessageFieldState();
@@ -86,7 +84,6 @@ class _SendMessageFieldState extends State<SendMessageField> {
               children: [
                 GifsButton(
                   chat: chat,
-                  messageBloc: widget.messageBloc,
                 ),
                 Expanded(
                   child: Row(
@@ -107,9 +104,11 @@ class _SendMessageFieldState extends State<SendMessageField> {
                             focusNode: _focusNode,
                             decoration: _inputDecoration,
                             onChanged: (str) {
-                              context
-                                  .read<MessageBloc>()
-                                  .add(WriteMessage(text: widget.controller.text));
+                              context.read<SendMessageFormBloc>().add(
+                                    SendMessageFormEvent.updateText(
+                                      text: widget.controller.text,
+                                    ),
+                                  );
 
                               //    sendMessage.updateMessage(str);
                             },
@@ -141,9 +140,15 @@ class _SendMessageFieldState extends State<SendMessageField> {
                 const SizedBox(width: 8),
                 IconButton(
                   onPressed: () async {
-                    context.read<MessageBloc>().add(WriteMessage(text: widget.controller.text));
+                    context.read<SendMessageFormBloc>().add(
+                          SendMessageFormEvent.updateText(
+                            text: widget.controller.text,
+                          ),
+                        );
 
-                    context.read<MessageBloc>().add(SendMessage(chat: chat));
+                    context
+                        .read<SendMessageFormBloc>()
+                        .add(const SendMessageFormEvent.sendMessage());
 
                     widget.controller.clear();
 

@@ -27,19 +27,26 @@ class MessageAnimatedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MessageBloc, MessageState>(
       builder: (context, state) {
-        if (state.loadingMessages) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return ScrollablePositionedList.builder(
-          reverse: true,
-          itemScrollController: itemScrollController,
-          itemPositionsListener: itemPositionsListener,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          itemCount: state.messages.length,
-          itemBuilder: (context, index) {
-            return MessageBubbleAnimated(
-              index: index,
-              message: state.messages[index],
+        return state.map(
+          initial: (value) {
+            return const Center(child: CircularProgressIndicator());
+          },
+          loadProgress: (LoadProgress value) {
+            return const Center(child: CircularProgressIndicator());
+          },
+          loaded: (Loaded value) {
+            return ScrollablePositionedList.builder(
+              reverse: true,
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionsListener,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              itemCount: value.messages.length,
+              itemBuilder: (context, index) {
+                return MessageBubbleAnimated(
+                  index: index,
+                  message: value.messages[index],
+                );
+              },
             );
           },
         );
