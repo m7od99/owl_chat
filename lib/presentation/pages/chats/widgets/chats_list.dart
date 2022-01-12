@@ -65,7 +65,7 @@ class _ChatsChatsListState extends State<ChatsList> {
                 key: Key(chats[index].id),
                 chat: chats[index],
                 onTap: () async {
-                  // context.read<MessageBloc>().add(const MessagesReceived());
+                  context.read<MessageBloc>().add(const MessagesReceived());
 
                   context.go('/chat/${chats[index].id}', extra: context.read<MessageBloc>());
                 },
