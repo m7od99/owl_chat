@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:awesome_notifications/android_foreground_service.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -54,6 +55,7 @@ class Notifications {
           channelShowBadge: true,
           channelGroupKey: 'message_notifications',
           playSound: true,
+          onlyAlertOnce: true,
           importance: NotificationImportance.Default,
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
@@ -85,6 +87,7 @@ class Notifications {
       (RemoteMessage message) async {
         log('Got a message whilst in the foreground!');
         log("Message data: ${message.data}");
+
         final notification = message.notification;
 
         late final Map<String, dynamic>? content;
@@ -104,12 +107,15 @@ class Notifications {
               summary: notification.body,
               title: notification.title,
               body: notification.body,
+              roundedLargeIcon: true,
               largeIcon: content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
               category: NotificationCategory.Message,
               autoDismissible: true,
               notificationLayout: NotificationLayout.Messaging,
             ),
           );
+        } else {
+          AwesomeNotifications().createNotificationFromJsonData(message.data);
         }
       },
     );
@@ -132,14 +138,33 @@ class Notifications {
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
     if (initialMessage != null) {
-      AwesomeNotifications().actionStream.listen((_) {
-        handleMessage(initialMessage);
-      });
+      handleMessage(initialMessage);
     }
     // Also handle any interaction when the app is in the background via a
     // Stream listener
+    // FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+  }
 
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+  Future handelOnTap(ReceivedAction receivedNotification) async {
+    final chatId = receivedNotification.payload?['chat'];
+
+    await AwesomeNotifications().cancel(receivedNotification.id!);
+
+    if (chatId != null) {
+      print(chatId);
+      final chat = await ChatsController().getSpecificChat(chatId);
+      if (chat != null) {
+        final MessageBloc bloc = MessageBloc(chat: chat);
+        bloc.add(const MessageEvent.messagesReceived());
+
+        await UserState().updateOnChat(chat.id);
+
+        router.go(
+          '/chat/${chat.id}',
+          extra: bloc,
+        );
+      }
+    }
   }
 
   Future handleMessage(RemoteMessage message) async {
@@ -154,27 +179,12 @@ class Notifications {
 
       await _user.updateOnChat(chat.id);
 
-      router.push(
+      router.go(
         '/chat/${chat.id}',
         extra: bloc,
       );
     }
   }
-
-  // final notAllow = [];
-  // final allowWithoutSound = const [
-  //   NotificationPermission.Alert,
-  //   NotificationPermission.Badge,
-  //   NotificationPermission.Vibration,
-  //   NotificationPermission.Light,
-  // ];
-  // final allowWithSound = const [
-  //   NotificationPermission.Alert,
-  //   NotificationPermission.Sound,
-  //   NotificationPermission.Badge,
-  //   NotificationPermission.Vibration,
-  //   NotificationPermission.Light,
-  // ];
 }
 
 // Declared as global, outside of any class
@@ -183,27 +193,5 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   log("Handling a background message: ${message.messageId}");
 
-  AwesomeNotifications().createNotificationFromJsonData(message.data);
-
-  // Use this method to automatically convert the push data, in case you gonna use our data standard
-
-  // final notification = message.notification;
-
-  // if (notification != null) {
-  //   await AwesomeNotifications().createNotification(
-  //     content: NotificationContent(
-  //       id: message.hashCode,
-  //       showWhen: true,
-  //       channelKey: 'message_notifications',
-  //       groupKey: 'message_notifications',
-  //       summary: notification.body,
-  //       title: notification.title,
-  //       body: notification.body,
-  //       largeIcon: 'asset://assets/images/user.png',
-  //       category: NotificationCategory.Message,
-  //       autoDismissible: true,
-  //       notificationLayout: NotificationLayout.Messaging,
-  //     ),
-  //   );
-  // }
+  await AwesomeNotifications().createNotificationFromJsonData(message.data);
 }

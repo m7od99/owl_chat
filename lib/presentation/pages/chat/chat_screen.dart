@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/edits_widget.dart';
@@ -120,7 +122,7 @@ class _ChatPageState extends State<ChatPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed || state == AppLifecycleState.inactive) {
       Future.delayed(Duration.zero, () => UserState().updateOnChat(widget.chat.id));
     }
   }
@@ -135,6 +137,7 @@ class _ChatPageState extends State<ChatPage>
         builder: (context, state) {
           return BlocBuilder<SendMessageFormBloc, SendMessageFormState>(
             builder: (context, formState) {
+              final chat = widget.chat;
               return Scaffold(
                 appBar: AppBar(
                   backgroundColor: Theme.of(context).splashColor,
@@ -145,16 +148,7 @@ class _ChatPageState extends State<ChatPage>
                       context.pop();
                     },
                   ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(user.otherName(widget.chat)),
-                      ChatProfilePhoto(
-                        id: user.otherId(widget.chat),
-                        size: 22,
-                      ),
-                    ],
-                  ),
+                  title: ChatAppBar(user: user, chat: chat),
                 ),
                 body: Column(
                   children: [
@@ -168,7 +162,7 @@ class _ChatPageState extends State<ChatPage>
                           }
                         },
                         child: MessageAnimatedList(
-                          chat: widget.chat,
+                          chat: chat,
                           itemScrollController: itemScrollController,
                           textEditingController: _controller,
                           itemPositionsListener: itemPositionsListener,
@@ -182,7 +176,7 @@ class _ChatPageState extends State<ChatPage>
                         messageBloc: widget.messageBloc,
                       ),
                     SendMessageField(
-                      chat: widget.chat,
+                      chat: chat,
                       controller: _controller,
                       itemScrollController: itemScrollController,
                     ),
@@ -218,3 +212,67 @@ class _ChatPageState extends State<ChatPage>
     );
   }
 }
+
+class ChatAppBar extends StatelessWidget {
+  const ChatAppBar({
+    Key? key,
+    required this.user,
+    required this.chat,
+  }) : super(key: key);
+
+  final UserState user;
+  final Chat chat;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(user.otherName(chat)),
+            StreamBuilder<OwlUser>(
+              stream: UserControl().getUserChanges(
+                user.otherId(chat),
+              ),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Text(
+                    'last seen',
+                    style: style,
+                  );
+                }
+                if (snapshot.data != null && snapshot.data!.onChat == chat.id) {
+                  return const Text(
+                    'online',
+                    style: style,
+                  );
+                } else if (snapshot.data!.lastSeen != null) {
+                  return Text(
+                    'last seen ${snapshot.data!.lastSeen!}',
+                    style: style,
+                  );
+                } else {
+                  return const Text(
+                    'last seen',
+                    style: style,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+        ChatProfilePhoto(
+          id: user.otherId(chat),
+          size: 22,
+        ),
+      ],
+    );
+  }
+}
+
+const style = TextStyle(
+  fontSize: 12,
+  fontWeight: FontWeight.bold,
+);

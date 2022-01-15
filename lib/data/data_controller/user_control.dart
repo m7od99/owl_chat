@@ -103,6 +103,18 @@ class UserControl extends ChangeNotifier {
     }
   }
 
+  Future<OwlUser?> loadUser() async {
+    final documentSnapshot = await _firestore.collection('users').doc(userId).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return OwlUser.fromMap(data!);
+    }
+  }
+
   Future<String?> getUserOnChat(String id) async {
     final documentSnapshot = await _firestore.collection('users').doc(id).get();
 
@@ -115,12 +127,39 @@ class UserControl extends ChangeNotifier {
     }
   }
 
+  Stream<OwlUser> getUserChanges(String id) {
+    return _firestore
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .map((e) => OwlUser.fromMap(e.data()!));
+  }
+
   Future updatePhoto(String uri) async {
     await _auth.currentUser!.updatePhotoURL(uri);
   }
 
   Future updateUserName(String newName) async {
     await _auth.currentUser!.updateDisplayName(newName);
+  }
+
+  Future updateOnChat(String chatId) async {
+    await _firestore.collection('users').doc(userId).update({
+      'onChat': chatId,
+    });
+  }
+
+  Future updateLaseSeen(String lastSeen) async {
+    await _firestore.collection('users').doc(userId).update({
+      'laseSeen': lastSeen,
+    });
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  Future updateIsOnline(bool isOnline) async {
+    await _firestore.collection('users').doc(userId).update({
+      'isOnline': isOnline,
+    });
   }
 
   Future<List<OwlUser>> getUsersData() async {

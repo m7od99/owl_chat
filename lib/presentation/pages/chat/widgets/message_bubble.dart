@@ -180,51 +180,54 @@ class SendingInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            format(message.time),
-            style: GoogleFonts.notoSans(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(width: 4),
-          if (message.isEdited != null && message.isEdited == true)
-            const Text(
-              'edited',
-              style: TextStyle(
+    return Opacity(
+      opacity: 0.64,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              format(message.time),
+              style: GoogleFonts.notoSans(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          const SizedBox(width: 5),
-          if (message.isMe && message.isSend != null && message.isSend == false)
-            LoadingRotating.square(
-              size: 14,
-              backgroundColor: Colors.white,
-              borderColor: Colors.black,
-            ),
-          if (message.isMe &&
-              message.isSeen != null &&
-              message.isSeen == true &&
-              message.isSend == true)
-            const Icon(
-              LineAwesomeIcons.double_check,
-              size: 15,
-            ),
-          if (message.isMe &&
-              message.isSend != null &&
-              message.isSend == true &&
-              message.isSeen == null)
-            const Icon(
-              Icons.done,
-              size: 15,
-            ),
-        ],
+            const SizedBox(width: 3),
+            if (message.isEdited != null && message.isEdited == true)
+              const Text(
+                'edited',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(width: 3),
+            if (message.isMe && message.isSend != null && message.isSend == false)
+              LoadingRotating.square(
+                size: 14,
+                backgroundColor: Colors.white,
+                borderColor: Colors.black,
+              ),
+            if (message.isMe &&
+                message.isSeen != null &&
+                message.isSeen == true &&
+                message.isSend == true)
+              const Icon(
+                LineAwesomeIcons.double_check,
+                size: 15,
+              ),
+            if (message.isMe &&
+                message.isSend != null &&
+                message.isSend == true &&
+                message.isSeen == null)
+              const Icon(
+                Icons.done,
+                size: 15,
+              ),
+          ],
+        ),
       ),
     );
   }

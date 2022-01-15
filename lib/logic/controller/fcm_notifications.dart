@@ -23,7 +23,7 @@ class FCMNotifications {
     final onChat = await isOnChat(toUserId, chatId);
     final isSame = await isSameToken(token);
 
-    if (token != null && !onChat && !isSame) {
+    if (token != null) {
       try {
         final http.Response res = await http.post(
           Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -33,28 +33,33 @@ class FCMNotifications {
           },
           body: jsonEncode(
             {
-              'notification': <String, dynamic>{
-                'title': title,
-                'body': body,
-                'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-              },
               'priority': 'high',
               'data': {
                 'content': {
                   'id': messageId,
                   'title': title,
+                  'payload': <String, String>{
+                    'type': 'chat',
+                    'chat': chatId,
+                  },
                   'body': body,
-                  'largeIcon': UserState().photoUri,
+                  'largeIcon': UserState().photoUri ?? 'asset://assets/images/user.png',
+                  'summary': body,
                   'channelKey': 'message_notifications',
                   'category': 'Message',
                   'autoDismissible': true,
+                  'roundedLargeIcon': true,
                   'notificationLayout': 'Messaging',
+                  "showWhen": true,
+                  "privacy": "Private"
                 },
                 'click_action': 'FLUTTER_NOTIFICATION_CLICK',
                 'type': 'chat',
                 'chat': chatId,
               },
               'to': token,
+              "mutable_content": true,
+              "content_available": true,
             },
           ),
         );

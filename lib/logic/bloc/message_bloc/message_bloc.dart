@@ -37,13 +37,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           onSeen: (OnSeen value) {
             state.map(
               loaded: (Loaded loaded) {
-                final messages = loaded.messages;
+                // final messages = loaded.messages;
 
-                if (!messages[value.index].isMe && messages[value.index].isSeen == null) {
-                  _control.updateMessage(
-                    messages[value.index].copyWith(isSeen: true),
-                  );
-                }
+                // if (!messages[value.index].isMe && messages[value.index].isSeen == null) {
+                //   _control.updateMessage(
+                //     messages[value.index].copyWith(isSeen: true),
+                //   );
+                // }
               },
 
               //if state is not loaded yet dont do any thing
@@ -55,21 +55,24 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       },
       transformer: sequential(),
     );
-    on<OnSeen>((event, emit) {
-      state.map(
-        initial: (Initial value) {},
-        loaded: (Loaded loaded) {
-          final messages = loaded.messages;
+    on<OnSeen>(
+      (event, emit) {
+        state.map(
+          initial: (Initial value) {},
+          loaded: (Loaded loaded) {
+            final messages = loaded.messages;
 
-          if (!messages[event.index].isMe && messages[event.index].isSeen == null) {
-            _control.updateMessage(
-              messages[event.index].copyWith(isSeen: true),
-            );
-          }
-        },
-        loadProgress: (LoadProgress value) {},
-      );
-    });
+            if (!messages[event.index].isMe && messages[event.index].isSeen == null) {
+              _control.updateMessage(
+                messages[event.index].copyWith(isSeen: true),
+              );
+            }
+          },
+          loadProgress: (LoadProgress value) {},
+        );
+      },
+      transformer: sequential(),
+    );
   }
 
   @override

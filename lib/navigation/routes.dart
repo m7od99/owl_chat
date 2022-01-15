@@ -96,14 +96,18 @@ class Routes {
   static final chat = GoRoute(
     path: 'chat/:id',
     name: ChatScreen.id,
-    redirect: (state) {},
+    redirect: (state) {
+      //  final bloc = state.extra as MessageBloc;
+    },
     pageBuilder: (context, state) {
+      final bloc = state.extra as MessageBloc;
       return MaterialPage(
         child: BlocProvider.value(
-          value: state.extra as MessageBloc,
+          value: bloc,
+          key: Key(bloc.chat.id),
           child: const ChatScreen(),
         ),
-        arguments: state.extra as MessageBloc,
+        arguments: bloc,
         key: state.pageKey,
       );
     },

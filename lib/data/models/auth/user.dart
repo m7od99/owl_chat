@@ -17,6 +17,7 @@ class OwlUser extends Equatable {
     this.photoUri,
     this.tokens,
     this.onChat,
+    this.lastSeen,
   });
 
   String email;
@@ -28,6 +29,7 @@ class OwlUser extends Equatable {
   String? photoUri;
   String? tokens;
   String? onChat;
+  String? lastSeen;
 
   void addFriend(OwlUser user) {
     friends = [];
@@ -37,26 +39,6 @@ class OwlUser extends Equatable {
   void addChat(Chat chat) {
     chats = [];
     chats!.add(chat);
-  }
-
-  OwlUser copyWith({
-    String? email,
-    String? userName,
-    String? id,
-    bool? isOnline,
-    List<OwlUser>? friends,
-    List<Chat>? chats,
-    String? photoUri,
-  }) {
-    return OwlUser(
-      email: email ?? this.email,
-      userName: userName ?? this.userName,
-      id: id ?? this.id,
-      isOnline: isOnline ?? this.isOnline,
-      friends: friends ?? this.friends,
-      chats: chats ?? this.chats,
-      photoUri: photoUri ?? this.photoUri,
-    );
   }
 
   Map<String, dynamic> toMap() {
@@ -70,6 +52,7 @@ class OwlUser extends Equatable {
       'photoUri': photoUri,
       'tokens': tokens,
       'onChat': onChat,
+      'lastSeen': lastSeen,
     };
   }
 
@@ -87,6 +70,7 @@ class OwlUser extends Equatable {
       // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
       photoUri: map['photoUri'] as String?,
       onChat: map['onChat'] as String?,
+      lastSeen: map['lastSeen'] as String?,
       //  tokens: map['tokens'],
     );
   }

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:owl_chat/helper/helper.dart';
 
 import '../../data/data_controller/user_control.dart';
 import '../../data/models/auth/user.dart';
@@ -30,11 +32,12 @@ class UserState extends ChangeNotifier {
 
   Future<void> updateOwlUser() async {
     if (_userControl.isLogin) {
+      //  final loadUser = await _userControl.loadUser();
+
       user.id = _userControl.userId;
       user.userName = userName;
       user.email = email;
       user.photoUri = photoUri;
-      user.isOnline = true;
       user.tokens = await _userControl.getToken();
       await _userControl.updateUser(user);
 
@@ -60,7 +63,24 @@ class UserState extends ChangeNotifier {
   Future updateOnChat(String chatId) async {
     user.onChat = chatId;
     //  notifyListeners();
-    await updateOwlUser();
+    await _userControl.updateOnChat(chatId);
+    log('update on chat');
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  Future updateIsOnline(bool isOnline) async {
+    user.isOnline = isOnline;
+    log('update is Online');
+
+    await _userControl.updateIsOnline(isOnline);
+  }
+
+  Future updateLaseSeen(Timestamp time) async {
+    final lastSeen = Helper.format(time);
+
+    log('update last seen');
+
+    await _userControl.updateLaseSeen(lastSeen);
   }
 
   Future<void> signUp(String email, String password, String userName) async {

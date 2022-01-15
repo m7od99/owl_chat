@@ -1,3 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
@@ -27,7 +30,8 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
 
     notifications.getTokenThenSaveItToDataBase();
 
-    user.updateOwlUser();
+    user.updateIsOnline(true);
+
     notifications.foregroundMessagingHandler();
 
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
@@ -35,12 +39,16 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     context.read<ChatRoomBloc>().add(const LoadChatRoom());
     context.read<ChatRoomBloc>().add(const LoadChatsData());
 
+    // AwesomeNotifications().actionStream.listen(notifications.handelOnTap);
+
     super.initState();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+
+    AwesomeNotifications().actionSink.close();
 
     super.dispose();
   }
@@ -51,6 +59,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
 
     if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
       user.updateOnChat('null');
+      user.updateLaseSeen(Timestamp.now());
+      user.updateIsOnline(false);
+    }
+
+    if (state == AppLifecycleState.inactive || state == AppLifecycleState.resumed) {
+      user.updateIsOnline(true);
     }
   }
 
