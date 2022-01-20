@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:awesome_notifications/android_foreground_service.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:owl_chat/data/data_controller/message_control/remote_message_control.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
@@ -14,7 +15,6 @@ import 'package:owl_chat/navigation/router.dart';
 import '../../data/data_controller/user_control.dart';
 
 class Notifications {
-  final FirebaseMessaging messaging = FirebaseMessaging.instance;
   final UserControl _control = UserControl();
 
   Future selectNotification(String payload) async {}
@@ -22,7 +22,6 @@ class Notifications {
   /// initialize notifications
   ///
   ///
-  ///its also handle the background messages from firebase messaging
   Future startNotifications() async {
     await AwesomeNotifications().initialize(
       null,
@@ -43,7 +42,6 @@ class Notifications {
           channelDescription: 'This channel is used for important notifications.',
           channelShowBadge: true,
           playSound: true,
-          groupAlertBehavior: GroupAlertBehavior.All,
           importance: NotificationImportance.Max,
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
@@ -77,8 +75,8 @@ class Notifications {
       ],
       debug: true,
     );
-
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    await foregroundMessagingHandler();
+    await setupInteractedMessage();
   }
 
   /// handel the foreground message that come from Firebase messaging
@@ -102,6 +100,10 @@ class Notifications {
             content: NotificationContent(
               id: 10,
               showWhen: true,
+              wakeUpScreen: true,
+              payload: {
+                'chat': content?['payload']?['chat'] as String? ?? '',
+              },
               channelKey: 'message_notifications',
               groupKey: 'message_notifications',
               summary: notification.body,
@@ -131,24 +133,13 @@ class Notifications {
   }
 
   Future<void> setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    final RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-
-    // If the message also contains a data property with a "type" of "chat",
-    // navigate to a chat screen
-    if (initialMessage != null) {
-      handleMessage(initialMessage);
-    }
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    // FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+    AwesomeNotifications().actionStream.listen((receivedNotification) async {
+      await _handelMessage(receivedNotification);
+    });
   }
 
-  Future handelOnTap(ReceivedAction receivedNotification) async {
+  Future<void> _handelMessage(ReceivedAction receivedNotification) async {
     final chatId = receivedNotification.payload?['chat'];
-
-    await AwesomeNotifications().cancel(receivedNotification.id!);
 
     if (chatId != null) {
       print(chatId);
@@ -165,6 +156,104 @@ class Notifications {
         );
       }
     }
+  }
+}
+
+// Declared as global, outside of any class
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  log("Handling a background message: ${message.messageId}");
+
+  if (!AwesomeStringUtils.isNullOrEmpty(message.notification?.title,
+          considerWhiteSpaceAsEmpty: true) ||
+      !AwesomeStringUtils.isNullOrEmpty(message.notification?.body,
+          considerWhiteSpaceAsEmpty: true)) {
+    await AwesomeNotifications().createNotificationFromJsonData(message.data);
+  } else {
+    await AwesomeNotifications().createNotificationFromJsonData(message.data);
+  }
+}
+
+class FlutterNotifications {
+  Future init() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    final AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: _selectNotification,
+    );
+
+    final AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Message_Channel',
+      'Message',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidNotificationDetails);
+
+    FirebaseMessaging.onMessage.listen((message) {
+      final notification = message.notification;
+      if (notification != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          platformChannelSpecifics,
+          payload: message.data['chat'] as String? ?? '',
+        );
+      }
+    });
+
+    setupInteractedMessage();
+  }
+
+  void _selectNotification(String? payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+
+      if (payload.isNotEmpty) {
+        final chat = await ChatsController().getSpecificChat(payload);
+        if (chat != null) {
+          final _user = UserState();
+
+          final MessageBloc bloc = MessageBloc(chat: chat);
+
+          bloc.add(const MessageEvent.messagesReceived());
+
+          await _user.updateOnChat(chat.id);
+
+          router.go(
+            '/chat/${chat.id}',
+            extra: bloc,
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      handleMessage(initialMessage);
+    }
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
   }
 
   Future handleMessage(RemoteMessage message) async {
@@ -185,13 +274,4 @@ class Notifications {
       );
     }
   }
-}
-
-// Declared as global, outside of any class
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-
-  log("Handling a background message: ${message.messageId}");
-
-  await AwesomeNotifications().createNotificationFromJsonData(message.data);
 }

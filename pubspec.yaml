@@ -12,7 +12,7 @@ dependencies:
   animations: ^2.0.2
   auto_animated: ^3.0.1
   auto_direction: ^0.0.5
-  awesome_notifications: ^0.6.20
+  awesome_notifications: ^0.6.21
   bloc: ^8.0.2
   bloc_concurrency: ^0.2.0
   bloc_test: ^9.0.2
@@ -21,7 +21,7 @@ dependencies:
   cloud_firestore_odm: ^1.0.0-dev.5
   collection: ^1.15.0
   connectivity_plus: ^2.1.0
-  cropperx: ^0.0.4
+  cropperx: ^1.0.0
   cupertino_icons: ^1.0.2
   custom_pop_up_menu: ^1.2.2
   dartz: ^0.10.1
@@ -30,11 +30,12 @@ dependencies:
   equatable: ^2.0.3
   faker: ^2.0.0
   firebase: ^9.0.1
+  firebase_app_installations: ^0.1.0+5
   firebase_auth: ^3.3.5
   firebase_core: ^1.11.0
   firebase_crashlytics: ^2.4.5
   firebase_messaging: ^11.2.5
-  firebase_remote_config: ^0.11.0+1
+  firebase_remote_config: ^1.0.4
   firebase_storage: ^10.1.0
   flutter:
     sdk: flutter
@@ -49,7 +50,7 @@ dependencies:
   freezed: ^1.0.0
   getwidget: ^2.0.4
   giphy_get: ^2.0.3
-  go_router: ^2.5.7
+  go_router: ^3.0.1
   google_fonts: ^2.1.0
   hive: ^2.0.5
   http: ^0.13.4
@@ -70,7 +71,7 @@ dependencies:
   rounded_loading_button: ^2.0.3
   rxdart: ^0.27.3
   scrollable_positioned_list: ^0.2.3
-  shared_preferences: ^2.0.7
+  shared_preferences: ^2.0.12
   show_up_animation: ^2.0.0
   upgrader: ^3.11.0
   version: ^2.0.0

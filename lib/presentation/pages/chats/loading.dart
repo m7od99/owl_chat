@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
@@ -31,8 +32,6 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     notifications.getTokenThenSaveItToDataBase();
 
     user.updateIsOnline(true);
-
-    notifications.foregroundMessagingHandler();
 
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
     context.read<b.UserBloc>().add(const b.GetChatsData());
@@ -64,7 +63,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     }
 
     if (state == AppLifecycleState.inactive || state == AppLifecycleState.resumed) {
+      user.updateOnChat('chats');
+
       user.updateIsOnline(true);
+    }
+    if (state == AppLifecycleState.resumed) {
+      FlutterLocalNotificationsPlugin().cancelAll();
     }
   }
 

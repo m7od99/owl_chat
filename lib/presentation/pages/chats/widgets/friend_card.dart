@@ -5,7 +5,6 @@ import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
-import '../../../../helper/helper.dart';
 import '../../../../logic/event_handler/user_state.dart' as p;
 import '../../../theme/constant.dart';
 
@@ -33,64 +32,61 @@ class FriendCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<p.UserState>(context);
 
-    return SizedBox(
-      height: 55,
-      child: InkWell(
-        onTap: onTap,
-        child: Stack(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                ChatProfilePhoto(
-                  size: 28,
-                  id: otherId(user.userId),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          name(user.userId),
-                          style: kFriendCardText,
-                        ),
-                        Opacity(
-                          opacity: 0.64,
-                          child: Text(
-                            chat.lastMessage,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
+    return InkWell(
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              ChatProfilePhoto(
+                size: 28,
+                id: otherId(user.userId),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        name(user.userId),
+                        style: kFriendCardText,
+                      ),
+                      Opacity(
+                        opacity: 0.64,
+                        child: Text(
+                          chat.lastMessage,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 16,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                Opacity(
-                  opacity: 0.64,
-                  child: Text(
-                    readTimestamp(chat.time!),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'assets/google_fonts/Tajawal-Black.ttf',
-                    ),
+              ),
+              Opacity(
+                opacity: 0.64,
+                child: Text(
+                  readTimestamp(chat.time!),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'assets/google_fonts/Tajawal-Black.ttf',
                   ),
                 ),
-              ],
-            ),
-            //  CounterNewMessages(counter: 1),
-          ],
-        ),
+              ),
+            ],
+          ),
+          //  CounterNewMessages(counter: 1),
+        ],
       ),
     );
   }
@@ -154,6 +150,59 @@ class CounterNewMessages extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ChatCard extends StatelessWidget {
+  const ChatCard({Key? key, required this.chat, required this.onTap}) : super(key: key);
+
+  final Chat chat;
+  final VoidCallback onTap;
+
+  String name(String myId) {
+    if (chat.me.id == myId) return chat.other.userName;
+    return chat.me.userName;
+  }
+
+  String otherId(String myId) {
+    if (chat.me.id == myId) return chat.other.id;
+    return chat.me.id;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<p.UserState>(context);
+
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 0),
+      onTap: onTap,
+      leading: ChatProfilePhoto(
+        size: 28,
+        id: otherId(user.userId),
+      ),
+      title: Text(name(user.userId)),
+      subtitle: Opacity(
+        opacity: 0.65,
+        child: Text(
+          chat.lastMessage,
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+      ),
+      trailing: Column(
+        children: [
+          Opacity(
+            opacity: 0.64,
+            child: Text(
+              readTimestamp(chat.time!),
+              style: const TextStyle(
+                fontSize: 13,
+                fontFamily: 'assets/google_fonts/Tajawal-Black.ttf',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -101,7 +101,7 @@ class Routes {
     },
     pageBuilder: (context, state) {
       final bloc = state.extra as MessageBloc;
-      return MaterialPage(
+      return CustomTransitionPage(
         child: BlocProvider.value(
           value: bloc,
           key: Key(bloc.chat.id),
@@ -109,6 +109,26 @@ class Routes {
         ),
         arguments: bloc,
         key: state.pageKey,
+        // ignore: require_trailing_commas
+        transitionsBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child,
+        ) =>
+            SlideTransition(
+          position: animation.drive(
+            Tween(
+              begin: const Offset(0.5, 0),
+              end: Offset.zero,
+            ).chain(
+              CurveTween(
+                curve: Curves.easeIn,
+              ),
+            ),
+          ),
+          child: child,
+        ),
       );
     },
   );

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
-import 'package:owl_chat/logic/controller/multi_language_format.dart';
+import 'package:owl_chat/presentation/widgets/multi_language_format.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/gifs_button.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';

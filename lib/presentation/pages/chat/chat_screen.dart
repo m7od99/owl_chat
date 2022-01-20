@@ -144,7 +144,7 @@ class _ChatPageState extends State<ChatPage>
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back_ios_sharp),
                     onPressed: () async {
-                      user.updateOnChat('null');
+                      user.updateOnChat('chats');
                       context.pop();
                     },
                   ),
@@ -243,7 +243,7 @@ class ChatAppBar extends StatelessWidget {
                     style: style,
                   );
                 }
-                if (snapshot.data != null && snapshot.data!.onChat == chat.id) {
+                if (snapshot.data!.onChat == chat.id || snapshot.data!.onChat == 'chats') {
                   return const Text(
                     'online',
                     style: style,

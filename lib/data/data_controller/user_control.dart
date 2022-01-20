@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -99,7 +100,19 @@ class UserControl extends ChangeNotifier {
       final data = documentSnapshot.data();
       //  log(data!['tokens'].runtimeType.toString());
 
-      return data!['tokens'].toString();
+      return data!['tokens'][0].toString();
+    }
+  }
+
+  Future<List<String>?> getUserTokens(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return List.from(data!['tokens'] as Iterable);
     }
   }
 
@@ -151,7 +164,7 @@ class UserControl extends ChangeNotifier {
 
   Future updateLaseSeen(String lastSeen) async {
     await _firestore.collection('users').doc(userId).update({
-      'laseSeen': lastSeen,
+      'lastSeen': lastSeen,
     });
   }
 
