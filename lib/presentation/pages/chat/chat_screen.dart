@@ -248,11 +248,11 @@ class ChatAppBar extends StatelessWidget {
                     'online',
                     style: style,
                   );
-                } else if (snapshot.data!.lastSeen != null) {
-                  return Text(
-                    'last seen ${snapshot.data!.lastSeen!}',
-                    style: style,
-                  );
+                  // } else if (snapshot.data!.lastSeen != null) {
+                  //   return Text(
+                  //     'last seen ${snapshot.data!.lastSeen!}',
+                  //     style: style,
+                  //   );
                 } else {
                   return const Text(
                     'last seen',

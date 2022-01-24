@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:go_router/go_router.dart';
@@ -62,14 +61,6 @@ class SliderPage extends StatelessWidget {
             title: const Text('Language'),
             trailing: const Icon(Icons.language),
             onTap: () {},
-          ),
-          ListTile(
-            title: const Text('Notifications'),
-            trailing: const Icon(Icons.notifications),
-            onTap: () {
-              //    context.goNamed(NotificationsPage.id);
-              AwesomeNotifications().showAlarmPage();
-            },
           ),
           ListTile(
             title: const Text('Settings'),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';

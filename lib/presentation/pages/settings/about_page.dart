@@ -33,7 +33,7 @@ class AboutPage extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  AboutData.about4.version,
+                  AboutData.about5.version,
                   style: const TextStyle(fontSize: 17),
                 ),
               ),

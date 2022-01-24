@@ -16,6 +16,7 @@ dependencies:
   bloc: ^8.0.2
   bloc_concurrency: ^0.2.0
   bloc_test: ^9.0.2
+  built_collection: ^5.1.1
   cached_network_image: ^3.1.0
   cloud_firestore: ^3.1.6
   cloud_firestore_odm: ^1.0.0-dev.5
@@ -44,7 +45,7 @@ dependencies:
   flutter_local_notifications: ^9.2.0
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.0.0
+  flutter_svg: ^1.0.3
   fluttertoast: any
   font_awesome_flutter: ^9.1.0
   freezed: ^1.0.0
@@ -58,6 +59,7 @@ dependencies:
   image_picker: ^0.8.4
   implicitly_animated_reorderable_list: ^0.4.2
   intl: ^0.17.0
+  isolator: ^2.0.2
   json_annotation: ^4.3.0
   line_awesome_flutter: any
   line_awesome_icons: ^1.0.4+2
@@ -92,3 +94,7 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/google_fonts/
+    - assets/
+    - assets/icons/
+
+

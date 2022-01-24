@@ -142,7 +142,7 @@ packages:
     source: hosted
     version: "7.2.3"
   built_collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: built_collection
       url: "https://pub.dartlang.org"
@@ -752,7 +752,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -952,6 +952,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  isolator:
+    dependency: "direct main"
+    description:
+      name: isolator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   js:
     dependency: transitive
     description:
