@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 
 class UpdatePage extends StatelessWidget {
@@ -54,6 +55,10 @@ class UpdatePage extends StatelessWidget {
           ListTile(
             onTap: () {
               context.read<UpdateBloc>().add(AcceptUpdateEvent());
+
+              showDialog(
+                  builder: (BuildContext context) => LoadingBouncingGrid.circle(),
+                  context: context);
             },
             title: const Center(child: Text('Update Now')),
           ),

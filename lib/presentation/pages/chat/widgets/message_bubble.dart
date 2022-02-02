@@ -87,29 +87,33 @@ class MessageBubbleAnimated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: onDoubleTap,
-      child: Hero(
-        transitionOnUserGestures: true,
-        tag: index,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: message.isMe ? 40 : 0,
-            right: message.isMe ? 0 : 40,
-            top: 3,
-            bottom: 3,
-          ),
-          child: Align(
-            alignment: message.isMe ? Alignment.topRight : Alignment.topLeft,
-            child: Column(
-              children: [
-                if (message.isGif != null && message.isGif == true)
-                  NewGifWidget(message: message)
-                else
-                  BubbleAnimated(
-                    message: message,
-                  ),
-              ],
+    return Container(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(),
+      child: GestureDetector(
+        onDoubleTap: onDoubleTap,
+        child: Hero(
+          transitionOnUserGestures: true,
+          tag: index,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: message.isMe ? 40 : 0,
+              right: message.isMe ? 0 : 40,
+              top: 3,
+              bottom: 3,
+            ),
+            child: Align(
+              alignment: message.isMe ? Alignment.topRight : Alignment.topLeft,
+              child: Column(
+                children: [
+                  if (message.isGif != null && message.isGif == true)
+                    NewGifWidget(message: message)
+                  else
+                    BubbleAnimated(
+                      message: message,
+                    ),
+                ],
+              ),
             ),
           ),
         ),
@@ -150,13 +154,11 @@ class BubbleAnimated extends StatelessWidget {
               AutoDirectionality(
                 text: message.text,
                 child: Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                      text: message.text.trim(),
-                      style: GoogleFonts.almarai(
-                        height: 1.15,
-                        fontSize: 18,
-                      ),
+                  child: SelectableText(
+                    message.text.trim(),
+                    style: GoogleFonts.almarai(
+                      fontSize: 18,
+                      height: 1.02,
                     ),
                   ),
                 ),

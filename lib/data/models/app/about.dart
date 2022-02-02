@@ -63,4 +63,12 @@ class AboutData {
       'Ordering messages by the time when message arrive server',
     ],
   );
+
+  static const about6 = About(
+    version: '0.0.7',
+    changeLog: [
+      'Fix Notifications that send when user in chat',
+      'General Fixes',
+    ],
+  );
 }

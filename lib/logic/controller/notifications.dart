@@ -149,10 +149,14 @@ class Notifications {
 
         await UserState().updateOnChat(chat.id);
 
-        router.go(
-          '/chat/${chat.id}',
-          extra: bloc,
-        );
+        if (router.location != '/chat/${chat.id}') {
+          router.go(
+            '/chat/${chat.id}',
+            extra: bloc,
+          );
+        } else {
+          log('you in chat already');
+        }
       }
     }
   }

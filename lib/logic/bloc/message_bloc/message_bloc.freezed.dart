@@ -336,9 +336,11 @@ class _$MessageStateTearOff {
     return const LoadProgress();
   }
 
-  Loaded loaded({required List<MessageModel> messages}) {
+  Loaded loaded(
+      {required List<MessageModel> messages, required int newMessages}) {
     return Loaded(
       messages: messages,
+      newMessages: newMessages,
     );
   }
 }
@@ -352,21 +354,22 @@ mixin _$MessageState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadProgress,
-    required TResult Function(List<MessageModel> messages) loaded,
+    required TResult Function(List<MessageModel> messages, int newMessages)
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -450,7 +453,8 @@ class _$Initial implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadProgress,
-    required TResult Function(List<MessageModel> messages) loaded,
+    required TResult Function(List<MessageModel> messages, int newMessages)
+        loaded,
   }) {
     return initial();
   }
@@ -460,7 +464,7 @@ class _$Initial implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
   }) {
     return initial?.call();
   }
@@ -470,7 +474,7 @@ class _$Initial implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -560,7 +564,8 @@ class _$LoadProgress implements LoadProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadProgress,
-    required TResult Function(List<MessageModel> messages) loaded,
+    required TResult Function(List<MessageModel> messages, int newMessages)
+        loaded,
   }) {
     return loadProgress();
   }
@@ -570,7 +575,7 @@ class _$LoadProgress implements LoadProgress {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
   }) {
     return loadProgress?.call();
   }
@@ -580,7 +585,7 @@ class _$LoadProgress implements LoadProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
     required TResult orElse(),
   }) {
     if (loadProgress != null) {
@@ -632,7 +637,7 @@ abstract class LoadProgress implements MessageState {
 abstract class $LoadedCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
       _$LoadedCopyWithImpl<$Res>;
-  $Res call({List<MessageModel> messages});
+  $Res call({List<MessageModel> messages, int newMessages});
 }
 
 /// @nodoc
@@ -647,12 +652,17 @@ class _$LoadedCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? messages = freezed,
+    Object? newMessages = freezed,
   }) {
     return _then(Loaded(
       messages: messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
+      newMessages: newMessages == freezed
+          ? _value.newMessages
+          : newMessages // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -660,14 +670,16 @@ class _$LoadedCopyWithImpl<$Res> extends _$MessageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded({required this.messages});
+  const _$Loaded({required this.messages, required this.newMessages});
 
   @override
   final List<MessageModel> messages;
+  @override
+  final int newMessages;
 
   @override
   String toString() {
-    return 'MessageState.loaded(messages: $messages)';
+    return 'MessageState.loaded(messages: $messages, newMessages: $newMessages)';
   }
 
   @override
@@ -675,12 +687,16 @@ class _$Loaded implements Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Loaded &&
-            const DeepCollectionEquality().equals(other.messages, messages));
+            const DeepCollectionEquality().equals(other.messages, messages) &&
+            const DeepCollectionEquality()
+                .equals(other.newMessages, newMessages));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(messages));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(messages),
+      const DeepCollectionEquality().hash(newMessages));
 
   @JsonKey(ignore: true)
   @override
@@ -692,9 +708,10 @@ class _$Loaded implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadProgress,
-    required TResult Function(List<MessageModel> messages) loaded,
+    required TResult Function(List<MessageModel> messages, int newMessages)
+        loaded,
   }) {
-    return loaded(messages);
+    return loaded(messages, newMessages);
   }
 
   @override
@@ -702,9 +719,9 @@ class _$Loaded implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
   }) {
-    return loaded?.call(messages);
+    return loaded?.call(messages, newMessages);
   }
 
   @override
@@ -712,11 +729,11 @@ class _$Loaded implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadProgress,
-    TResult Function(List<MessageModel> messages)? loaded,
+    TResult Function(List<MessageModel> messages, int newMessages)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(messages);
+      return loaded(messages, newMessages);
     }
     return orElse();
   }
@@ -757,9 +774,12 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements MessageState {
-  const factory Loaded({required List<MessageModel> messages}) = _$Loaded;
+  const factory Loaded(
+      {required List<MessageModel> messages,
+      required int newMessages}) = _$Loaded;
 
   List<MessageModel> get messages;
+  int get newMessages;
   @JsonKey(ignore: true)
   $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
 }

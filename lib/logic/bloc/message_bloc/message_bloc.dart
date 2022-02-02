@@ -27,7 +27,13 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
                   ..sorted((a, b) => a.time.compareTo(b.time))
                   ..reversed;
 
-                return MessageState.loaded(messages: _order);
+                final index = lastMessageRead(_order);
+
+                // print('new messages: $index , ${_order.first.chatId}');
+
+                // print(_order.length);
+
+                return MessageState.loaded(messages: _order, newMessages: index);
               },
             );
           },
@@ -79,6 +85,19 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   void onEvent(MessageEvent event) {
     // TODO: implement onEvent
     super.onEvent(event);
+  }
+
+  int lastMessageRead(List<MessageModel> messages) {
+    int newMessage = 0;
+
+    for (final message in messages) {
+      if (message.isSeen == null && !message.isMe || message.isSeen == false && !message.isMe) {
+        newMessage += 1;
+      } else {
+        break;
+      }
+    }
+    return newMessage;
   }
 
   final _control = MessageControl();

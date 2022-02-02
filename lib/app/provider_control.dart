@@ -5,6 +5,7 @@ import 'package:owl_chat/logic/bloc/auth/auth_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
+import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/presentation/theme/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +48,8 @@ class ProviderControl extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => user.UserState()),
           // ChangeNotifierProvider(create: (context) => Validator()),
           // ChangeNotifierProvider(create: (context) => SendMessageState()),
-          ChangeNotifierProvider(create: (context) => AppSettings())
+          ChangeNotifierProvider(create: (context) => AppSettings()),
+          ChangeNotifierProvider(create: (context) => router),
         ],
         child: MyApp(),
       ),

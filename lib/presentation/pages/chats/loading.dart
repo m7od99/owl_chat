@@ -2,11 +2,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
-import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
+import 'package:owl_chat/navigation/router.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -38,7 +37,20 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     context.read<ChatRoomBloc>().add(const LoadChatRoom());
     context.read<ChatRoomBloc>().add(const LoadChatsData());
 
-    // AwesomeNotifications().actionStream.listen(notifications.handelOnTap);
+    AwesomeNotifications().displayedStream.listen((data) {
+      print(data);
+      router.addListener(() {
+        final location = router.location;
+
+        final pay = data.payload;
+        final chatId = pay?['chat'];
+
+        if (location == '/chat/$chatId') {
+          AwesomeNotifications().cancel(data.id!);
+          AwesomeNotifications().dismiss(data.id!);
+        }
+      });
+    });
 
     super.initState();
   }
@@ -48,6 +60,8 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance!.removeObserver(this);
 
     AwesomeNotifications().actionSink.close();
+    AwesomeNotifications().displayedSink.close();
+    AwesomeNotifications().createdSink.close();
 
     super.dispose();
   }
@@ -66,9 +80,6 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
       user.updateOnChat('chats');
 
       user.updateIsOnline(true);
-    }
-    if (state == AppLifecycleState.resumed) {
-      FlutterLocalNotificationsPlugin().cancelAll();
     }
   }
 

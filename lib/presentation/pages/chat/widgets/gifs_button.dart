@@ -35,9 +35,9 @@ class GifsButton extends StatelessWidget {
         }
       },
       icon: SvgPicture.asset(
-        'assets/icons/sticker-svgrepo-com.svg',
+        'assets/icons/sticker_face.svg',
         height: 25,
-        color: Colors.blue,
+        color: Colors.white,
         fit: BoxFit.cover,
       ),
     );

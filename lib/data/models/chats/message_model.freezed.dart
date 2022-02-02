@@ -397,7 +397,7 @@ class _$_MessageModel implements _MessageModel {
 
   /// receiver id
   final String receiver;
-  @JsonKey(defaultValue: false)
+  @JsonKey()
   @override
 
   ///

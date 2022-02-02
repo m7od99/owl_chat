@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +87,7 @@ class FriendCard extends StatelessWidget {
               ),
             ],
           ),
-          //  CounterNewMessages(counter: 1),
+          CounterNewMessages(counter: 0),
         ],
       ),
     );
@@ -135,23 +137,27 @@ class CounterNewMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 1,
-      right: 1,
-      child: Container(
-        padding: const EdgeInsets.all(7),
-        decoration: BoxDecoration(
-          color: Colors.indigo[400],
-          shape: BoxShape.circle,
-        ),
-        child: Text(
-          '$counter',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+    return BlocBuilder<MessageBloc, MessageState>(builder: (context, state) {
+      if (state is Loaded) if (state.newMessages > 0)
+        return Positioned(
+          bottom: 1,
+          right: 1,
+          child: Container(
+            padding: const EdgeInsets.all(7),
+            decoration: BoxDecoration(
+              color: Colors.indigo[400],
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              '${state.newMessages}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
+      return Container();
+    });
   }
 }
 

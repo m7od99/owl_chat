@@ -113,7 +113,7 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
             FCMNotifications.instance.send(
               body: 'gif',
               chatId: chat.id,
-              messageId: 1,
+              messageId: chat.id.hashCode,
               title: _user.userName,
               toUserId: chatWith,
             );

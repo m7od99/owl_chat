@@ -89,17 +89,9 @@ class _ChatPageState extends State<ChatPage>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-
-    WidgetsBinding.instance!.removeObserver(this);
-
-    animationControl.dispose();
-    _controller.dispose();
-  }
-
-  @override
   void initState() {
+    super.initState();
+
     WidgetsBinding.instance!.addObserver(this);
 
     animationControl = AnimationController(
@@ -114,8 +106,6 @@ class _ChatPageState extends State<ChatPage>
     UserState().updateOnChat(widget.chat.id);
 
     widget.messageBloc.add(const MessagesReceived());
-
-    super.initState();
   }
 
   @override
@@ -125,6 +115,19 @@ class _ChatPageState extends State<ChatPage>
     if (state == AppLifecycleState.resumed || state == AppLifecycleState.inactive) {
       Future.delayed(Duration.zero, () => UserState().updateOnChat(widget.chat.id));
     }
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+      UserState().updateOnChat('null');
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    WidgetsBinding.instance!.removeObserver(this);
+
+    animationControl.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -243,7 +246,7 @@ class ChatAppBar extends StatelessWidget {
                     style: style,
                   );
                 }
-                if (snapshot.data!.onChat == chat.id || snapshot.data!.onChat == 'chats') {
+                if (snapshot.data!.onChat == chat.id) {
                   return const Text(
                     'online',
                     style: style,

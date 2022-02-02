@@ -239,7 +239,7 @@ class _$_Chat implements _Chat {
   ///
   @AuthorConverter()
   final OwlUser me;
-  @JsonKey(defaultValue: '')
+  @JsonKey()
   @override
 
   ///
@@ -249,12 +249,12 @@ class _$_Chat implements _Chat {
   ///
   @TimestampConverter()
   final Timestamp? time;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
 
   ///
   final int totalMessages;
-  @JsonKey(defaultValue: 0)
+  @JsonKey()
   @override
 
   ///

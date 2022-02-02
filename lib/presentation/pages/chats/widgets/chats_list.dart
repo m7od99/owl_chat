@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
-import 'package:owl_chat/logic/bloc/update_bloc/update_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
@@ -59,19 +58,19 @@ class _ChatsChatsListState extends State<ChatsList> {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
           itemBuilder: (BuildContext context, int index) {
             return Provider(
-              lazy: true,
-              key: Key(chats[index].id),
-              create: (context) => MessageBloc(chat: state.chats[index]),
-              builder: (context, widget) => FriendCard(
+                lazy: true,
                 key: Key(chats[index].id),
-                chat: chats[index],
-                onTap: () async {
+                create: (context) => MessageBloc(chat: state.chats[index]),
+                builder: (context, widget) {
                   context.read<MessageBloc>().add(const MessagesReceived());
-
-                  context.go('/chat/${chats[index].id}', extra: context.read<MessageBloc>());
-                },
-              ),
-            );
+                  return FriendCard(
+                    key: Key(chats[index].id),
+                    chat: chats[index],
+                    onTap: () async {
+                      context.go('/chat/${chats[index].id}', extra: context.read<MessageBloc>());
+                    },
+                  );
+                });
           },
           separatorBuilder: (BuildContext context, int index) => const Divider(),
         );

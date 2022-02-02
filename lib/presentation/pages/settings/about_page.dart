@@ -33,7 +33,7 @@ class AboutPage extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  AboutData.about5.version,
+                  AboutData.about6.version,
                   style: const TextStyle(fontSize: 17),
                 ),
               ),
@@ -47,7 +47,7 @@ class AboutPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
-                    AboutData.about5.changeLog.length,
+                    AboutData.about6.changeLog.length,
                     (index) => Text(
                       '-${AboutData.about5.changeLog[index]} .',
                       style: const TextStyle(fontSize: 17),

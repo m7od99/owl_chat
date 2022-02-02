@@ -8,5 +8,6 @@ class MessageState with _$MessageState {
 
   const factory MessageState.loaded({
     required List<MessageModel> messages,
+    required int newMessages,
   }) = Loaded;
 }
