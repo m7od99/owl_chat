@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
@@ -36,59 +36,61 @@ class FriendCard extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child: Stack(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              ChatProfilePhoto(
-                size: 28,
-                id: otherId(user.userId),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        name(user.userId),
-                        style: kFriendCardText,
-                      ),
-                      Opacity(
-                        opacity: 0.64,
-                        child: Text(
-                          chat.lastMessage,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 16,
+      child: Container(
+        margin: EdgeInsets.all(3),
+        child: Stack(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                ChatProfilePhoto(
+                  size: 28,
+                  id: otherId(user.userId),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          name(user.userId),
+                          style: kFriendCardText,
+                        ),
+                        Opacity(
+                          opacity: 0.64,
+                          child: Text(
+                            chat.lastMessage,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.almarai(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Opacity(
-                opacity: 0.64,
-                child: Text(
-                  readTimestamp(chat.time!),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontFamily: 'assets/google_fonts/Tajawal-Black.ttf',
+                Opacity(
+                  opacity: 0.64,
+                  child: Text(
+                    readTimestamp(chat.time!),
+                    style: GoogleFonts.almarai(
+                      fontSize: 13,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          CounterNewMessages(counter: 0),
-        ],
+              ],
+            ),
+            CounterNewMessages(counter: 0),
+          ],
+        ),
       ),
     );
   }

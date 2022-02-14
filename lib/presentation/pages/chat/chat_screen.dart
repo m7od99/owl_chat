@@ -30,7 +30,10 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
-    return ChatPage(chat: bloc.chat, messageBloc: bloc);
+    return BlocProvider<SendMessageFormBloc>(
+      create: (context) => SendMessageFormBloc(chat: bloc.chat),
+      child: ChatPage(chat: bloc.chat, messageBloc: bloc),
+    );
     //  user.updateOnChat(chat.id);
   }
 }
@@ -50,7 +53,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
@@ -132,88 +135,91 @@ class _ChatPageState extends State<ChatPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final user = Provider.of<UserState>(context);
 
-    return BlocProvider<SendMessageFormBloc>(
-      create: (context) => SendMessageFormBloc(chat: widget.chat),
-      child: BlocBuilder<MessageBloc, MessageState>(
-        builder: (context, state) {
-          return BlocBuilder<SendMessageFormBloc, SendMessageFormState>(
-            builder: (context, formState) {
-              final chat = widget.chat;
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Theme.of(context).splashColor,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_sharp),
-                    onPressed: () async {
-                      user.updateOnChat('chats');
-                      context.pop();
-                    },
-                  ),
-                  title: ChatAppBar(user: user, chat: chat),
+    return BlocBuilder<MessageBloc, MessageState>(
+      builder: (context, state) {
+        return BlocBuilder<SendMessageFormBloc, SendMessageFormState>(
+          builder: (context, formState) {
+            final chat = widget.chat;
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).splashColor,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_sharp),
+                  onPressed: () async {
+                    user.updateOnChat('chats');
+                    context.pop();
+                  },
                 ),
-                body: Column(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          final FocusScopeNode currentFocus = FocusScope.of(context);
+                title: ChatAppBar(user: user, chat: chat),
+              ),
+              body: Column(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        final FocusScopeNode currentFocus = FocusScope.of(context);
 
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                        },
-                        child: MessageAnimatedList(
-                          chat: chat,
-                          itemScrollController: itemScrollController,
-                          textEditingController: _controller,
-                          itemPositionsListener: itemPositionsListener,
-                          messageBloc: widget.messageBloc,
-                        ),
-                      ),
-                    ),
-                    if (formState.isEdit == true)
-                      EditMessageCard(
-                        controller: _controller,
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+                      },
+                      child: MessageAnimatedList(
+                        chat: chat,
+                        itemScrollController: itemScrollController,
+                        textEditingController: _controller,
+                        itemPositionsListener: itemPositionsListener,
                         messageBloc: widget.messageBloc,
                       ),
-                    SendMessageField(
-                      chat: chat,
-                      controller: _controller,
-                      itemScrollController: itemScrollController,
                     ),
-                  ],
-                ),
-                floatingActionButton: FadeTransition(
-                  opacity: animationControl,
-                  child: ScaleTransition(
-                    scale: animationControl,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 60),
-                      child: Material(
-                        clipBehavior: Clip.hardEdge,
-                        color: const Color(0xFF233720),
-                        shape: const CircleBorder(),
-                        child: IconButton(
-                          onPressed: _jumpToEnd,
-                          icon: const Icon(
-                            Icons.expand_more,
-                            color: Colors.white,
-                            size: 30,
-                          ),
+                  ),
+                  if (formState.isEdit == true)
+                    EditMessageCard(
+                      controller: _controller,
+                      messageBloc: widget.messageBloc,
+                    ),
+                  SendMessageField(
+                    chat: chat,
+                    controller: _controller,
+                    itemScrollController: itemScrollController,
+                  ),
+                ],
+              ),
+              floatingActionButton: FadeTransition(
+                opacity: animationControl,
+                child: ScaleTransition(
+                  scale: animationControl,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 60),
+                    child: Material(
+                      elevation: 1,
+                      shadowColor: Color.fromARGB(255, 42, 8, 8),
+                      clipBehavior: Clip.hardEdge,
+                      color: Color.fromARGB(255, 41, 99, 175),
+                      shape: const CircleBorder(),
+                      child: IconButton(
+                        onPressed: _jumpToEnd,
+                        icon: const Icon(
+                          Icons.expand_more,
+                          color: Colors.white,
+                          size: 30,
                         ),
                       ),
                     ),
                   ),
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ChatAppBar extends StatelessWidget {

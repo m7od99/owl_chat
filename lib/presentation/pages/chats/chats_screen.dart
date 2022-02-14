@@ -7,13 +7,19 @@ import '../search/search_page.dart';
 import 'slider.dart';
 import 'widgets/chats_list.dart';
 
-class Chats extends StatelessWidget {
+class Chats extends StatefulWidget {
   const Chats({Key? key}) : super(key: key);
 
   static String id = "/ChatsId";
 
   @override
+  State<Chats> createState() => _ChatsState();
+}
+
+class _ChatsState extends State<Chats> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<AppMangerBloc, AppMangerState>(
       builder: (context, state) {
         return Scaffold(
@@ -65,6 +71,9 @@ class Chats extends StatelessWidget {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class WaitingForNetwork extends StatelessWidget {

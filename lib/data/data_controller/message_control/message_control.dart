@@ -135,6 +135,7 @@ class MessageControl extends ChangeNotifier {
     if (docs.exists) {
       return Chat.fromJson(docs.data()!);
     }
+    return null;
   }
 
   Stream<List<MessageModel>> getMessagesStream(String chatId) {

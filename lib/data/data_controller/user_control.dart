@@ -101,6 +101,7 @@ class UserControl extends ChangeNotifier {
 
       return data!['tokens'][0].toString();
     }
+    return null;
   }
 
   Future<List<String>?> getUserTokens(String id) async {
@@ -111,8 +112,16 @@ class UserControl extends ChangeNotifier {
       final data = documentSnapshot.data();
       //  log(data!['tokens'].runtimeType.toString());
 
-      return List.from(data!['tokens'] as Iterable);
+      if (data!['tokens'] is Iterable) {
+        return List.from(data['tokens'] as Iterable);
+      }
+      if (data['tokens'] is String) {
+        return [
+          data['tokens'] as String,
+        ];
+      }
     }
+    return null;
   }
 
   Future<OwlUser?> loadUser() async {
@@ -125,6 +134,7 @@ class UserControl extends ChangeNotifier {
 
       return OwlUser.fromMap(data!);
     }
+    return null;
   }
 
   Future<String?> getUserOnChat(String id) async {
@@ -137,6 +147,7 @@ class UserControl extends ChangeNotifier {
 
       return data!['onChat'].toString();
     }
+    return null;
   }
 
   Stream<OwlUser> getUserChanges(String id) {

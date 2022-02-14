@@ -71,6 +71,7 @@ class MessageModel with _$MessageModel {
           return MessageType.text;
       }
     }
+    return null;
   }
 
   static String? _typeToJson(MessageType? type) {

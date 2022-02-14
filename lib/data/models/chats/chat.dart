@@ -48,6 +48,7 @@ class TimestampConverter implements JsonConverter<Timestamp?, dynamic> {
         return json;
       }
     }
+    return null;
   }
 
   @override
@@ -55,6 +56,7 @@ class TimestampConverter implements JsonConverter<Timestamp?, dynamic> {
     if (object != null) {
       return object.toDate();
     }
+    return null;
   }
 }
 

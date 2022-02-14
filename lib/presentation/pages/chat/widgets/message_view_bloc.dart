@@ -7,7 +7,7 @@ import '../../../../data/models/chats/chat.dart';
 import '../../../../logic/bloc/message_bloc/message_bloc.dart';
 import 'message_bubble.dart';
 
-class MessageAnimatedList extends StatelessWidget {
+class MessageAnimatedList extends StatefulWidget {
   const MessageAnimatedList({
     Key? key,
     required this.chat,
@@ -24,7 +24,14 @@ class MessageAnimatedList extends StatelessWidget {
   final MessageBloc messageBloc;
 
   @override
+  State<MessageAnimatedList> createState() => _MessageAnimatedListState();
+}
+
+class _MessageAnimatedListState extends State<MessageAnimatedList>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<MessageBloc, MessageState>(
       builder: (context, state) {
         return state.map(
@@ -37,8 +44,8 @@ class MessageAnimatedList extends StatelessWidget {
           loaded: (Loaded value) {
             return ScrollablePositionedList.builder(
               reverse: true,
-              itemScrollController: itemScrollController,
-              itemPositionsListener: itemPositionsListener,
+              itemScrollController: widget.itemScrollController,
+              itemPositionsListener: widget.itemPositionsListener,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               itemCount: value.messages.length,
               itemBuilder: (context, index) {
@@ -53,6 +60,9 @@ class MessageAnimatedList extends StatelessWidget {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
     // onDoubleTap: () {

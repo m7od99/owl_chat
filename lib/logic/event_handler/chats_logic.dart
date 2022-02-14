@@ -67,7 +67,6 @@ class ChatsController {
         photoUri: _user.userUriPhoto,
       ),
       other: otherUser,
-      lastMessage: '',
       id: id,
     );
 

@@ -9,6 +9,8 @@ import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
 import 'package:provider/provider.dart';
 
+import '../../../logic/bloc/message_bloc/message_bloc.dart';
+
 class UserSearchPage extends SearchDelegate<OwlUser> {
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -63,8 +65,10 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           ),
           onTap: () async {
             final chat = await ChatsController().createChatRoom(foundUser);
+
+            final MessageBloc bloc = MessageBloc(chat: chat!);
             // ignore: use_build_context_synchronously
-            context.go('/chat/${chat!.id}', extra: chat);
+            context.go('/chat/${chat.id}', extra: bloc);
           },
         );
       },

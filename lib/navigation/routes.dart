@@ -97,6 +97,8 @@ class Routes {
     path: 'chat/:id',
     name: ChatScreen.id,
     redirect: (state) {
+      return null;
+
       //  final bloc = state.extra as MessageBloc;
     },
     pageBuilder: (context, state) {

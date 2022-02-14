@@ -14,6 +14,7 @@ class SearchLogic {
         return user;
       }
     }
+    return null;
   }
 
   static Future<OwlUser?> getUserByUserName(String userName) async {
@@ -27,6 +28,7 @@ class SearchLogic {
         return user;
       }
     }
+    return null;
   }
 
   static Future<OwlUser?> getUserById(String id) async {
@@ -39,5 +41,6 @@ class SearchLogic {
         return user;
       }
     }
+    return null;
   }
 }

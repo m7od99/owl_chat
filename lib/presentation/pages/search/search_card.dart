@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
 
 class ChatSearchCard extends StatelessWidget {
@@ -40,8 +41,10 @@ class ChatSearchCard extends StatelessWidget {
               final chat = await control.createChatRoom(user);
               log(chat!.id);
 
+              final MessageBloc bloc = MessageBloc(chat: chat);
+
               // ignore: use_build_context_synchronously
-              context.go('/chat/${chat.id}', extra: chat);
+              context.go('/chat/${chat.id}', extra: bloc);
             },
           ),
         ),

@@ -15,12 +15,12 @@ class OwlUserControl {
   }
 
   Future<Owl?> getUserInfo(String userId) async {
-    final user =
-        await _firestore.collection('users').where('id', isEqualTo: userId).get();
+    final user = await _firestore.collection('users').where('id', isEqualTo: userId).get();
 
     if (user.docs.isNotEmpty) {
       return user.docs.map((e) => Owl.fromJson(e.data())).first;
     }
+    return null;
   }
 
   String get id => _user.currentUser!.uid;
