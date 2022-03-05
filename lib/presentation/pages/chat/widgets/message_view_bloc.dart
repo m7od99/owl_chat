@@ -43,6 +43,7 @@ class _MessageAnimatedListState extends State<MessageAnimatedList>
           },
           loaded: (Loaded value) {
             return ScrollablePositionedList.builder(
+              key: Key(widget.chat.id),
               reverse: true,
               itemScrollController: widget.itemScrollController,
               itemPositionsListener: widget.itemPositionsListener,
@@ -59,6 +60,11 @@ class _MessageAnimatedListState extends State<MessageAnimatedList>
         );
       },
     );
+  }
+
+  @override
+  void updateKeepAlive() {
+    super.updateKeepAlive();
   }
 
   @override

@@ -107,7 +107,9 @@ class Routes {
         child: BlocProvider.value(
           value: bloc,
           key: Key(bloc.chat.id),
-          child: const ChatScreen(),
+          child: ChatScreen(
+            key: Key(bloc.chat.id),
+          ),
         ),
         arguments: bloc,
         key: state.pageKey,
@@ -119,13 +121,14 @@ class Routes {
           Widget child,
         ) =>
             SlideTransition(
+          textDirection: TextDirection.ltr,
           position: animation.drive(
             Tween(
               begin: const Offset(1, 0),
               end: Offset.zero,
             ).chain(
               CurveTween(
-                curve: Curves.easeInToLinear,
+                curve: Curves.easeInBack,
               ),
             ),
           ),

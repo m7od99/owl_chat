@@ -83,9 +83,10 @@ class Notifications {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) async {
         log('Got a message whilst in the foreground!');
-        log("Message data: ${message.data}");
+        //    log("Message data: ${message.data}");
 
         final notification = message.notification;
+        print(notification);
 
         late final Map<String, dynamic>? content;
         if (message.data['content'] != null) {
@@ -94,29 +95,35 @@ class Notifications {
           content = null;
         }
 
-        if (notification != null) {
-          await AwesomeNotifications().createNotification(
-            content: NotificationContent(
-              id: 10,
-              showWhen: true,
-              wakeUpScreen: true,
-              payload: {
-                'chat': content?['payload']?['chat'] as String? ?? '',
-              },
-              channelKey: 'message_notifications',
-              groupKey: 'message_notifications',
-              summary: notification.body,
-              title: notification.title,
-              body: notification.body,
-              roundedLargeIcon: true,
-              largeIcon: content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
-              category: NotificationCategory.Message,
-              autoDismissible: true,
-              notificationLayout: NotificationLayout.Messaging,
-            ),
-          );
-        } else {
-          AwesomeNotifications().createNotificationFromJsonData(message.data);
+        final String? chatMessage = content?['payload']['chat'] as String?;
+
+        String location = router.location;
+
+        if ('/chat/$chatMessage' != location) {
+          if (notification != null) {
+            await AwesomeNotifications().createNotification(
+              content: NotificationContent(
+                id: 10,
+                showWhen: true,
+                wakeUpScreen: true,
+                payload: {
+                  'chat': content?['payload']?['chat'] as String? ?? '',
+                },
+                channelKey: 'message_notifications',
+                groupKey: 'message_notifications',
+                summary: notification.body,
+                title: notification.title,
+                body: notification.body,
+                roundedLargeIcon: true,
+                largeIcon: content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
+                category: NotificationCategory.Message,
+                autoDismissible: true,
+                notificationLayout: NotificationLayout.Messaging,
+              ),
+            );
+          } else {
+            AwesomeNotifications().createNotificationFromJsonData(message.data);
+          }
         }
       },
     );

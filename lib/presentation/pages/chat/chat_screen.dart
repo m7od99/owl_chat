@@ -17,25 +17,36 @@ import '../../widgets/profile_photo.dart';
 import 'widgets/message_view_bloc.dart';
 import 'widgets/send_message_field.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   static String id = 'ChatScreen';
-
-  //final Chat chat;
-
   const ChatScreen({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
     return BlocProvider<SendMessageFormBloc>(
       create: (context) => SendMessageFormBloc(chat: bloc.chat),
-      child: ChatPage(chat: bloc.chat, messageBloc: bloc),
+      child: ChatPage(
+        chat: bloc.chat,
+        messageBloc: bloc,
+        key: Key(bloc.chat.id),
+      ),
     );
     //  user.updateOnChat(chat.id);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ChatPage extends StatefulWidget {
@@ -124,13 +135,18 @@ class _ChatPageState extends State<ChatPage>
   }
 
   @override
+  void didUpdateWidget(covariant ChatPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     super.dispose();
 
     WidgetsBinding.instance!.removeObserver(this);
 
     animationControl.dispose();
-    _controller.dispose();
+    //  _controller.dispose();
   }
 
   @override
@@ -167,6 +183,7 @@ class _ChatPageState extends State<ChatPage>
                         }
                       },
                       child: MessageAnimatedList(
+                        key: Key(chat.id),
                         chat: chat,
                         itemScrollController: itemScrollController,
                         textEditingController: _controller,
@@ -177,10 +194,12 @@ class _ChatPageState extends State<ChatPage>
                   ),
                   if (formState.isEdit == true)
                     EditMessageCard(
+                      key: Key(chat.id),
                       controller: _controller,
                       messageBloc: widget.messageBloc,
                     ),
                   SendMessageField(
+                    key: Key(chat.id),
                     chat: chat,
                     controller: _controller,
                     itemScrollController: itemScrollController,

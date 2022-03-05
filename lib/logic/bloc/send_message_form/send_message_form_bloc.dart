@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -88,11 +90,14 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
           /// if new message , text should be not empty
           if (!state.isEdit && state.message.text.isNotEmpty && !state.isGif) {
             _control.sendMessageModel(state.message, chat.id);
+            final _id = chat.id.codeUnits.sum;
+
+            log(_id.toString());
 
             FCMNotifications.instance.send(
               body: state.message.text,
               chatId: chat.id,
-              messageId: 1,
+              messageId: _id,
               title: _user.userName,
               toUserId: chatWith,
             );

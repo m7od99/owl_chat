@@ -97,4 +97,14 @@ flutter:
     - assets/
     - assets/icons/
 
+  fonts:
+    - family: Almarai
+      fonts:
+        - asset: assets/google_fonts/Almarai-Bold.ttf
+        - asset: assets/google_fonts/Almarai-ExtraBold.ttf
+        - asset: assets/google_fonts/Almarai-Light.ttf
+        - asset: assets/google_fonts/Almarai-Regular.ttf
+  
+   
+
 

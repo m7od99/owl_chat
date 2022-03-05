@@ -6,7 +6,6 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:loading_animations/loading_animations.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/message_model.dart';
-import 'package:owl_chat/presentation/pages/chat/widgets/tail.dart';
 import 'package:owl_chat/presentation/widgets/multi_language_format.dart';
 
 String format(DateTime time) {

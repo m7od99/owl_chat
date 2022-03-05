@@ -26,7 +26,7 @@ class SendMessageField extends StatefulWidget {
   _SendMessageFieldState createState() => _SendMessageFieldState();
 }
 
-class _SendMessageFieldState extends State<SendMessageField> {
+class _SendMessageFieldState extends State<SendMessageField> with AutomaticKeepAliveClientMixin {
   bool isRTL = false;
   Category categoryIndex = Category.RECENT;
 
@@ -40,6 +40,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final _selectControl = MaterialTextSelectionControls();
 
     final Chat chat = widget.chat;
@@ -189,4 +190,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

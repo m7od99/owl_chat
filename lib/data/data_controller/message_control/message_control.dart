@@ -6,7 +6,6 @@ import 'package:async/async.dart' show StreamGroup;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
 
 import '../../models/chats/chat.dart';
@@ -136,6 +135,18 @@ class MessageControl extends ChangeNotifier {
       return Chat.fromJson(docs.data()!);
     }
     return null;
+  }
+
+  Future<List<MessageModel>> getMessagesStreamBack(String chatId) async {
+    late Stream<List<MessageModel>> messages;
+    late List<MessageModel> m;
+
+    messages = await compute(getMessagesStream, chatId);
+
+    messages.listen((data) {
+      m = data;
+    });
+    return m;
   }
 
   Stream<List<MessageModel>> getMessagesStream(String chatId) {

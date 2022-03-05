@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animations/loading_animations.dart';
@@ -17,6 +19,12 @@ class Chats extends StatefulWidget {
 }
 
 class _ChatsState extends State<Chats> with AutomaticKeepAliveClientMixin {
+  @override
+  void didUpdateWidget(covariant Chats oldWidget) {
+    log('test');
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
