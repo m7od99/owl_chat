@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/data/models/models.dart';
 import 'package:owl_chat/helper/credentials.dart' as credentials;
 import 'package:owl_chat/logic/event_handler/user_state.dart';
 
@@ -46,7 +47,8 @@ class FCMNotifications {
                         'chat': chatId,
                       },
                       'body': body,
-                      'largeIcon': UserState().photoUri ?? 'asset://assets/images/user.png',
+                      'largeIcon':
+                          UserState().photoUri ?? 'asset://assets/images/user.png',
                       'summary': body,
                       'channelKey': 'message_notifications',
                       'category': 'Message',
@@ -98,5 +100,41 @@ class FCMNotifications {
       return true;
     }
     return false;
+  }
+
+  sendTestNotification(String token) async {
+    try {
+      final http.Response res = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key=${credentials.FCM_SERVER_KEY}',
+        },
+        body: jsonEncode(
+          NotificationsModel(
+            to: token,
+            data: Data(
+              chat: 'RSLekaprfiZY1XMg59sSsP7fPK42RSLekaprfiZY1XMg59sSsP7fPK42',
+              type: 'chat',
+              content: Content(
+                autoDismissible: true,
+                channelKey: 'message_notifications',
+                body: 'test message',
+                title: 'test',
+                payload: Payload(
+                  chat: 'RSLekaprfiZY1XMg59sSsP7fPK42RSLekaprfiZY1XMg59sSsP7fPK42',
+                  type: 'chat',
+                ),
+              ),
+            ),
+          ).toJson(),
+        ),
+      );
+      if (res.statusCode == 200) {
+        log('send it');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

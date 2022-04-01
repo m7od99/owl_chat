@@ -37,7 +37,7 @@ class FriendCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.all(3),
+        margin: EdgeInsets.all(5),
         child: Stack(
           children: [
             Row(

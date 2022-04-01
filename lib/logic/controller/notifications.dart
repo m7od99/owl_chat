@@ -90,7 +90,8 @@ class Notifications {
 
         late final Map<String, dynamic>? content;
         if (message.data['content'] != null) {
-          content = jsonDecode(message.data['content'] as String) as Map<String, dynamic>?;
+          content =
+              jsonDecode(message.data['content'] as String) as Map<String, dynamic>?;
         } else {
           content = null;
         }
@@ -115,7 +116,8 @@ class Notifications {
                 title: notification.title,
                 body: notification.body,
                 roundedLargeIcon: true,
-                largeIcon: content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
+                largeIcon:
+                    content?['largeIcon'] as String? ?? 'asset://assets/images/user.png',
                 category: NotificationCategory.Message,
                 autoDismissible: true,
                 notificationLayout: NotificationLayout.Messaging,
@@ -124,6 +126,8 @@ class Notifications {
           } else {
             AwesomeNotifications().createNotificationFromJsonData(message.data);
           }
+        } else {
+          AwesomeNotifications().createNotificationFromJsonData(message.data);
         }
       },
     );
@@ -201,7 +205,8 @@ class FlutterNotifications {
       onSelectNotification: _selectNotification,
     );
 
-    final AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+    final AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
       'Message_Channel',
       'Message',
       importance: Importance.max,
@@ -268,7 +273,8 @@ class FlutterNotifications {
 
   Future handleMessage(RemoteMessage message) async {
     if (message.data['type'].toString() == 'chat') {
-      final chat = await ChatsController().getSpecificChat(message.data['chat'] as String);
+      final chat =
+          await ChatsController().getSpecificChat(message.data['chat'] as String);
 
       final _user = UserState();
 

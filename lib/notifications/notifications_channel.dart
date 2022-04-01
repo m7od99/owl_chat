@@ -1,7 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
+///
 class NotificationChannelControl {
+  /// A basic Notification channel with default permissions.
   static final NotificationChannel basicNotificationChannel = NotificationChannel(
     channelKey: 'basic_channel',
     channelName: 'Basic notifications',
@@ -13,8 +15,12 @@ class NotificationChannelControl {
     ledColor: Colors.white,
   );
 
-  static void createMessageNotificationChannel(String chatId) {
-    AwesomeNotifications().setChannel(
+  /// Its create Notification channel for specific [Chat].
+  ///
+  /// Required the chat id , its should use it as a Key to access
+  /// channel .
+  static Future<void> createMessageNotificationChannel(String chatId) async {
+    await AwesomeNotifications().setChannel(
       NotificationChannel(
         channelKey: chatId,
         channelName: 'message notifications',
@@ -23,7 +29,7 @@ class NotificationChannelControl {
         channelGroupKey: 'message_notifications',
         playSound: true,
         onlyAlertOnce: true,
-        importance: NotificationImportance.Default,
+        importance: NotificationImportance.Max,
         defaultColor: const Color(0xFF9D50DD),
         ledColor: Colors.white,
       ),

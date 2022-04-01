@@ -18,7 +18,7 @@ dependencies:
   bloc_test: ^9.0.2
   built_collection: ^5.1.1
   cached_network_image: ^3.1.0
-  cloud_firestore: ^3.1.6
+  cloud_firestore: ^3.1.11
   cloud_firestore_odm: ^1.0.0-dev.5
   collection: ^1.15.0
   connectivity_plus: ^2.1.0
@@ -33,15 +33,16 @@ dependencies:
   firebase: ^9.0.1
   firebase_app_installations: ^0.1.0+5
   firebase_auth: ^3.3.5
-  firebase_core: ^1.11.0
+  firebase_core: ^1.14.0
   firebase_crashlytics: ^2.4.5
-  firebase_messaging: ^11.2.5
+  firebase_messaging: ^11.2.12
   firebase_remote_config: ^2.0.0
   firebase_storage: ^10.1.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_form_bloc: ^0.29.3
+  flutter_hooks: ^0.18.2+1
   flutter_local_notifications: ^9.2.0
   flutter_localizations:
     sdk: flutter
@@ -50,8 +51,8 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   freezed: ^1.0.0
   getwidget: ^2.0.4
-  giphy_get: ^3.0.0
-  go_router: ^3.0.1
+  giphy_get: ^3.0.5
+  go_router: ^3.0.4
   google_fonts: ^2.1.0
   hive: ^2.0.5
   http: ^0.13.4
@@ -104,7 +105,3 @@ flutter:
         - asset: assets/google_fonts/Almarai-ExtraBold.ttf
         - asset: assets/google_fonts/Almarai-Light.ttf
         - asset: assets/google_fonts/Almarai-Regular.ttf
-  
-   
-
-
