@@ -125,6 +125,7 @@ class FCMNotifications {
                   chat: 'RSLekaprfiZY1XMg59sSsP7fPK42RSLekaprfiZY1XMg59sSsP7fPK42',
                   type: 'chat',
                 ),
+                id: 1,
               ),
             ),
           ).toJson(),

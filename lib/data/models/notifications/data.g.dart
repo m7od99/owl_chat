@@ -7,11 +7,9 @@ part of 'data.dart';
 // **************************************************************************
 
 _$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
-      content: json['content'] == null
-          ? null
-          : Content.fromJson(json['content'] as Map<String, dynamic>),
-      type: json['type'] as String?,
-      chat: json['chat'] as String?,
+      content: Content.fromJson(json['content'] as Map<String, dynamic>),
+      type: json['type'] as String,
+      chat: json['chat'] as String,
     );
 
 Map<String, dynamic> _$$_DataToJson(_$_Data instance) => <String, dynamic>{

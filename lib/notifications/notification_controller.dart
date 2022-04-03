@@ -1,8 +1,16 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:owl_chat/data/models/chats/chat_notifications_settings.dart';
 import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/notifications/notifications_channel.dart';
+import 'package:owl_chat/helper/credentials.dart' as credentials;
+
+import 'package:http/http.dart' as http;
+
+import '../data/models/models.dart';
+import '../logic/event_handler/user_state.dart';
 
 /// A manager that responsible for the flow of notifications.
 ///
@@ -150,3 +158,131 @@ List<NotificationPermission> permissions = const [
   NotificationPermission.CriticalAlert,
   NotificationPermission.FullScreenIntent,
 ];
+
+/// Using FCM Service to push Notification.
+///
+class PushNotificationService {
+  /// Send notify when user send [MessageModel].
+  ///
+  /// It's should'nt push notification when other user's opened the [ChatRoom].
+  static Future pushMessageNotification(MessageModel message) async {
+    late final String? token;
+    late final NotificationsModel notificationsModel;
+
+    await Future.delayed(const Duration(seconds: 1));
+    // check the other user location before send the notification.
+    final otherUserAlreadyOnChat =
+        await _isOtherUserOnChat(message.receiver, message.chatId!);
+
+    // if true no need to push notification.
+    if (otherUserAlreadyOnChat) return;
+
+    // get the other user token.
+
+    if (!otherUserAlreadyOnChat) {
+      token = await UserState().getUserToken(message.receiver);
+      // create notification model data from the message.
+      if (token != null) {
+        notificationsModel = createMessageNotificationModel(
+          messageModel: message,
+          token: token,
+        );
+        // try push notification. check if the notification sent.
+        return HttpPushNotification.pushNotification(
+          notificationModel: notificationsModel,
+        );
+      }
+    }
+  }
+
+  /// Create [NotificationsModel] from [MessageModel] , to use it to push notification.
+  ///
+  /// token most be not null.
+  static NotificationsModel createMessageNotificationModel({
+    required MessageModel messageModel,
+    required String token,
+  }) {
+    final photoUri = UserState().photoUri ?? 'asset://assets/images/user.png';
+
+    return NotificationsModel(
+      data: Data(
+        chat: messageModel.chatId!,
+        content: Content(
+          id: messageModel.chatId!.codeUnits.first,
+          title: messageModel.sender,
+          body: messageModel.text,
+          summary: messageModel.text,
+          showWhen: true,
+          channelKey: messageModel.chatId!,
+          notificationLayout: 'Messaging',
+          largeIcon: photoUri,
+          roundedLargeIcon: true,
+          autoDismissible: true,
+          payload: Payload(
+            chat: messageModel.chatId,
+            type: 'message',
+          ),
+        ),
+        type: 'message',
+      ),
+      to: token,
+      mutableContent: true,
+      contentAvailable: true,
+      priority: 'high',
+    );
+  }
+
+  ///if the other user already on chat return true.
+  static Future<bool> _isOtherUserOnChat(String otherUserId, String chatId) async {
+    final String? otherUserLocation = await UserState().getOnChat(otherUserId);
+
+    if (otherUserLocation == chatId) {
+      return true;
+    }
+    return false;
+  }
+}
+
+/// It's utility class that create FCM request.
+///
+/// To push notification you need to make sure you use valid token.
+class HttpPushNotification {
+  /// [NotificationsModel] must be not null.
+  ///
+  /// By using Data from FCM service ,To custom the notification.
+  /// more info look at : https://firebase.google.com/docs/cloud-messaging/http-server-ref
+  static Future<bool> pushNotification({
+    required NotificationsModel notificationModel,
+  }) async {
+    late final bool isPush;
+    try {
+      //
+      final response = await http.post(
+        _fcmUri,
+        headers: _header,
+        body: jsonEncode(
+          notificationModel.toJson(),
+        ),
+      );
+      //
+      if (response.statusCode == 200) {
+        isPush = true;
+        log('push successful');
+      } else {
+        isPush = false;
+        log('push notification fell , ${response.statusCode}');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+
+    return isPush;
+  }
+
+  static final _fcmUri = Uri.parse('https://fcm.googleapis.com/fcm/send');
+
+  static final _header = const <String, String>{
+    'Content-Type': 'application/json',
+    'Authorization': 'key=${credentials.FCM_SERVER_KEY}',
+  };
+}

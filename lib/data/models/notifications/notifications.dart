@@ -6,11 +6,18 @@ part 'notifications.freezed.dart';
 part 'notifications.g.dart';
 
 @freezed
+
+/// The notification format that used in push Notification.
+///
+/// [Data] and [to] are must to be not null.
+///
 class NotificationsModel with _$NotificationsModel {
   factory NotificationsModel({
     String? priority,
-    Data? data,
-    String? to,
+    required Data data,
+
+    /// token
+    required String to,
     @JsonKey(name: 'mutable_content') bool? mutableContent,
     @JsonKey(name: 'content_available') bool? contentAvailable,
   }) = _NotificationsModel;

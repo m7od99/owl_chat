@@ -21,7 +21,8 @@ Data _$DataFromJson(Map<String, dynamic> json) {
 class _$DataTearOff {
   const _$DataTearOff();
 
-  _Data call({Content? content, String? type, String? chat}) {
+  _Data call(
+      {required Content content, required String type, required String chat}) {
     return _Data(
       content: content,
       type: type,
@@ -39,9 +40,9 @@ const $Data = _$DataTearOff();
 
 /// @nodoc
 mixin _$Data {
-  Content? get content => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
-  String? get chat => throw _privateConstructorUsedError;
+  Content get content => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get chat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,9 +53,9 @@ mixin _$Data {
 abstract class $DataCopyWith<$Res> {
   factory $DataCopyWith(Data value, $Res Function(Data) then) =
       _$DataCopyWithImpl<$Res>;
-  $Res call({Content? content, String? type, String? chat});
+  $Res call({Content content, String type, String chat});
 
-  $ContentCopyWith<$Res>? get content;
+  $ContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -75,25 +76,21 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as Content?,
+              as Content,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       chat: chat == freezed
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 
   @override
-  $ContentCopyWith<$Res>? get content {
-    if (_value.content == null) {
-      return null;
-    }
-
-    return $ContentCopyWith<$Res>(_value.content!, (value) {
+  $ContentCopyWith<$Res> get content {
+    return $ContentCopyWith<$Res>(_value.content, (value) {
       return _then(_value.copyWith(content: value));
     });
   }
@@ -104,10 +101,10 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
   factory _$DataCopyWith(_Data value, $Res Function(_Data) then) =
       __$DataCopyWithImpl<$Res>;
   @override
-  $Res call({Content? content, String? type, String? chat});
+  $Res call({Content content, String type, String chat});
 
   @override
-  $ContentCopyWith<$Res>? get content;
+  $ContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -129,15 +126,15 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as Content?,
+              as Content,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       chat: chat == freezed
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -145,16 +142,16 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Data implements _Data {
-  _$_Data({this.content, this.type, this.chat});
+  _$_Data({required this.content, required this.type, required this.chat});
 
   factory _$_Data.fromJson(Map<String, dynamic> json) => _$$_DataFromJson(json);
 
   @override
-  final Content? content;
+  final Content content;
   @override
-  final String? type;
+  final String type;
   @override
-  final String? chat;
+  final String chat;
 
   @override
   String toString() {
@@ -190,16 +187,19 @@ class _$_Data implements _Data {
 }
 
 abstract class _Data implements Data {
-  factory _Data({Content? content, String? type, String? chat}) = _$_Data;
+  factory _Data(
+      {required Content content,
+      required String type,
+      required String chat}) = _$_Data;
 
   factory _Data.fromJson(Map<String, dynamic> json) = _$_Data.fromJson;
 
   @override
-  Content? get content;
+  Content get content;
   @override
-  String? get type;
+  String get type;
   @override
-  String? get chat;
+  String get chat;
   @override
   @JsonKey(ignore: true)
   _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;

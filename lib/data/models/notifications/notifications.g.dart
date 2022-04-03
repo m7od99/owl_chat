@@ -10,10 +10,8 @@ _$_NotificationsModel _$$_NotificationsModelFromJson(
         Map<String, dynamic> json) =>
     _$_NotificationsModel(
       priority: json['priority'] as String?,
-      data: json['data'] == null
-          ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
-      to: json['to'] as String?,
+      data: Data.fromJson(json['data'] as Map<String, dynamic>),
+      to: json['to'] as String,
       mutableContent: json['mutable_content'] as bool?,
       contentAvailable: json['content_available'] as bool?,
     );

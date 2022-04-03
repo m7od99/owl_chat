@@ -23,8 +23,8 @@ class _$NotificationsModelTearOff {
 
   _NotificationsModel call(
       {String? priority,
-      Data? data,
-      String? to,
+      required Data data,
+      required String to,
       @JsonKey(name: 'mutable_content') bool? mutableContent,
       @JsonKey(name: 'content_available') bool? contentAvailable}) {
     return _NotificationsModel(
@@ -47,8 +47,10 @@ const $NotificationsModel = _$NotificationsModelTearOff();
 /// @nodoc
 mixin _$NotificationsModel {
   String? get priority => throw _privateConstructorUsedError;
-  Data? get data => throw _privateConstructorUsedError;
-  String? get to => throw _privateConstructorUsedError;
+  Data get data => throw _privateConstructorUsedError;
+
+  /// token
+  String get to => throw _privateConstructorUsedError;
   @JsonKey(name: 'mutable_content')
   bool? get mutableContent => throw _privateConstructorUsedError;
   @JsonKey(name: 'content_available')
@@ -67,12 +69,12 @@ abstract class $NotificationsModelCopyWith<$Res> {
       _$NotificationsModelCopyWithImpl<$Res>;
   $Res call(
       {String? priority,
-      Data? data,
-      String? to,
+      Data data,
+      String to,
       @JsonKey(name: 'mutable_content') bool? mutableContent,
       @JsonKey(name: 'content_available') bool? contentAvailable});
 
-  $DataCopyWith<$Res>? get data;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -100,11 +102,11 @@ class _$NotificationsModelCopyWithImpl<$Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as Data?,
+              as Data,
       to: to == freezed
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       mutableContent: mutableContent == freezed
           ? _value.mutableContent
           : mutableContent // ignore: cast_nullable_to_non_nullable
@@ -117,12 +119,8 @@ class _$NotificationsModelCopyWithImpl<$Res>
   }
 
   @override
-  $DataCopyWith<$Res>? get data {
-    if (_value.data == null) {
-      return null;
-    }
-
-    return $DataCopyWith<$Res>(_value.data!, (value) {
+  $DataCopyWith<$Res> get data {
+    return $DataCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value));
     });
   }
@@ -137,13 +135,13 @@ abstract class _$NotificationsModelCopyWith<$Res>
   @override
   $Res call(
       {String? priority,
-      Data? data,
-      String? to,
+      Data data,
+      String to,
       @JsonKey(name: 'mutable_content') bool? mutableContent,
       @JsonKey(name: 'content_available') bool? contentAvailable});
 
   @override
-  $DataCopyWith<$Res>? get data;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -173,11 +171,11 @@ class __$NotificationsModelCopyWithImpl<$Res>
       data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as Data?,
+              as Data,
       to: to == freezed
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       mutableContent: mutableContent == freezed
           ? _value.mutableContent
           : mutableContent // ignore: cast_nullable_to_non_nullable
@@ -195,8 +193,8 @@ class __$NotificationsModelCopyWithImpl<$Res>
 class _$_NotificationsModel implements _NotificationsModel {
   _$_NotificationsModel(
       {this.priority,
-      this.data,
-      this.to,
+      required this.data,
+      required this.to,
       @JsonKey(name: 'mutable_content') this.mutableContent,
       @JsonKey(name: 'content_available') this.contentAvailable});
 
@@ -206,9 +204,11 @@ class _$_NotificationsModel implements _NotificationsModel {
   @override
   final String? priority;
   @override
-  final Data? data;
+  final Data data;
   @override
-  final String? to;
+
+  /// token
+  final String to;
   @override
   @JsonKey(name: 'mutable_content')
   final bool? mutableContent;
@@ -258,8 +258,8 @@ class _$_NotificationsModel implements _NotificationsModel {
 abstract class _NotificationsModel implements NotificationsModel {
   factory _NotificationsModel(
           {String? priority,
-          Data? data,
-          String? to,
+          required Data data,
+          required String to,
           @JsonKey(name: 'mutable_content') bool? mutableContent,
           @JsonKey(name: 'content_available') bool? contentAvailable}) =
       _$_NotificationsModel;
@@ -270,9 +270,11 @@ abstract class _NotificationsModel implements NotificationsModel {
   @override
   String? get priority;
   @override
-  Data? get data;
+  Data get data;
   @override
-  String? get to;
+
+  /// token
+  String get to;
   @override
   @JsonKey(name: 'mutable_content')
   bool? get mutableContent;

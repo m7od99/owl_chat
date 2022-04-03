@@ -22,13 +22,13 @@ class _$ContentTearOff {
   const _$ContentTearOff();
 
   _Content call(
-      {String? id,
+      {required int id,
       String? title,
       Payload? payload,
       String? body,
       String? largeIcon,
       String? summary,
-      String? channelKey,
+      required String channelKey,
       String? category,
       bool? autoDismissible,
       bool? roundedLargeIcon,
@@ -62,13 +62,13 @@ const $Content = _$ContentTearOff();
 
 /// @nodoc
 mixin _$Content {
-  String? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   Payload? get payload => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
   String? get largeIcon => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
-  String? get channelKey => throw _privateConstructorUsedError;
+  String get channelKey => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   bool? get autoDismissible => throw _privateConstructorUsedError;
   bool? get roundedLargeIcon => throw _privateConstructorUsedError;
@@ -86,13 +86,13 @@ abstract class $ContentCopyWith<$Res> {
   factory $ContentCopyWith(Content value, $Res Function(Content) then) =
       _$ContentCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {int id,
       String? title,
       Payload? payload,
       String? body,
       String? largeIcon,
       String? summary,
-      String? channelKey,
+      String channelKey,
       String? category,
       bool? autoDismissible,
       bool? roundedLargeIcon,
@@ -131,7 +131,7 @@ class _$ContentCopyWithImpl<$Res> implements $ContentCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class _$ContentCopyWithImpl<$Res> implements $ContentCopyWith<$Res> {
       channelKey: channelKey == freezed
           ? _value.channelKey
           : channelKey // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -201,13 +201,13 @@ abstract class _$ContentCopyWith<$Res> implements $ContentCopyWith<$Res> {
       __$ContentCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {int id,
       String? title,
       Payload? payload,
       String? body,
       String? largeIcon,
       String? summary,
-      String? channelKey,
+      String channelKey,
       String? category,
       bool? autoDismissible,
       bool? roundedLargeIcon,
@@ -248,7 +248,7 @@ class __$ContentCopyWithImpl<$Res> extends _$ContentCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -272,7 +272,7 @@ class __$ContentCopyWithImpl<$Res> extends _$ContentCopyWithImpl<$Res>
       channelKey: channelKey == freezed
           ? _value.channelKey
           : channelKey // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -305,13 +305,13 @@ class __$ContentCopyWithImpl<$Res> extends _$ContentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Content implements _Content {
   _$_Content(
-      {this.id,
+      {required this.id,
       this.title,
       this.payload,
       this.body,
       this.largeIcon,
       this.summary,
-      this.channelKey,
+      required this.channelKey,
       this.category,
       this.autoDismissible,
       this.roundedLargeIcon,
@@ -323,7 +323,7 @@ class _$_Content implements _Content {
       _$$_ContentFromJson(json);
 
   @override
-  final String? id;
+  final int id;
   @override
   final String? title;
   @override
@@ -335,7 +335,7 @@ class _$_Content implements _Content {
   @override
   final String? summary;
   @override
-  final String? channelKey;
+  final String channelKey;
   @override
   final String? category;
   @override
@@ -408,13 +408,13 @@ class _$_Content implements _Content {
 
 abstract class _Content implements Content {
   factory _Content(
-      {String? id,
+      {required int id,
       String? title,
       Payload? payload,
       String? body,
       String? largeIcon,
       String? summary,
-      String? channelKey,
+      required String channelKey,
       String? category,
       bool? autoDismissible,
       bool? roundedLargeIcon,
@@ -425,7 +425,7 @@ abstract class _Content implements Content {
   factory _Content.fromJson(Map<String, dynamic> json) = _$_Content.fromJson;
 
   @override
-  String? get id;
+  int get id;
   @override
   String? get title;
   @override
@@ -437,7 +437,7 @@ abstract class _Content implements Content {
   @override
   String? get summary;
   @override
-  String? get channelKey;
+  String get channelKey;
   @override
   String? get category;
   @override

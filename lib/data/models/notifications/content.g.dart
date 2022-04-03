@@ -7,7 +7,7 @@ part of 'content.dart';
 // **************************************************************************
 
 _$_Content _$$_ContentFromJson(Map<String, dynamic> json) => _$_Content(
-      id: json['id'] as String?,
+      id: json['id'] as int,
       title: json['title'] as String?,
       payload: json['payload'] == null
           ? null
@@ -15,7 +15,7 @@ _$_Content _$$_ContentFromJson(Map<String, dynamic> json) => _$_Content(
       body: json['body'] as String?,
       largeIcon: json['largeIcon'] as String?,
       summary: json['summary'] as String?,
-      channelKey: json['channelKey'] as String?,
+      channelKey: json['channelKey'] as String,
       category: json['category'] as String?,
       autoDismissible: json['autoDismissible'] as bool?,
       roundedLargeIcon: json['roundedLargeIcon'] as bool?,
