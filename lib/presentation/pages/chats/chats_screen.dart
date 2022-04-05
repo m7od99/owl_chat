@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animations/loading_animations.dart';
-import 'package:owl_chat/logic/controller/fcm_notifications.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
 
 import '../../../logic/bloc/app_manger/app_manger_bloc.dart';
 import '../../widgets/profile_photo.dart';
@@ -71,10 +69,7 @@ class _ChatsState extends State<Chats> with AutomaticKeepAliveClientMixin {
             padding: const EdgeInsets.all(20),
             child: FloatingActionButton(
               //    backgroundColor: Colors.blueGrey[400],
-              onPressed: () async {
-                final token = await UserState().getToken();
-                FCMNotifications.instance.sendTestNotification(token!);
-              },
+              onPressed: () async {},
               child: ProfilePhoto(size: 25),
             ),
           ),

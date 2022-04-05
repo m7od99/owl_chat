@@ -9,8 +9,8 @@ import 'package:owl_chat/data/data_controller/message_control/message_control.da
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/data/models/chats/message_model.dart';
-import 'package:owl_chat/logic/controller/fcm_notifications.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/notifications/notification_controller.dart';
 
 part 'send_message_form_event.dart';
 part 'send_message_form_state.dart';
@@ -19,7 +19,8 @@ part 'send_message_form_bloc.freezed.dart';
 class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormState> {
   final Chat chat;
 
-  SendMessageFormBloc({required this.chat}) : super(SendMessageFormState.initial(chat: chat)) {
+  SendMessageFormBloc({required this.chat})
+      : super(SendMessageFormState.initial(chat: chat)) {
     ///event handler ,
     on<SendMessageFormEvent>((event, emit) async {
       ///
@@ -94,14 +95,6 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
 
             log(_id.toString());
 
-            FCMNotifications.instance.send(
-              body: state.message.text,
-              chatId: chat.id,
-              messageId: _id,
-              title: _user.userName,
-              toUserId: chatWith,
-            );
-
             _control.updateChatState(
               chat.copyWith(lastMessage: state.message.text, time: Timestamp.now()),
             );
@@ -113,14 +106,6 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
 
             _control.updateChatState(
               chat.copyWith(lastMessage: 'gif', time: Timestamp.now()),
-            );
-
-            FCMNotifications.instance.send(
-              body: 'gif',
-              chatId: chat.id,
-              messageId: chat.id.hashCode,
-              title: _user.userName,
-              toUserId: chatWith,
             );
           }
 

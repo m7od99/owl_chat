@@ -136,6 +136,9 @@ class Routes {
         ),
       );
     },
+    routes: [
+      chatDetailPage,
+    ],
   );
 
   static final chats = GoRoute(
@@ -209,6 +212,15 @@ class Routes {
     name: NotificationsPage.id,
     pageBuilder: (context, state) => MaterialPage(
       child: const NotificationsPage(),
+      key: state.pageKey,
+    ),
+  );
+
+  static final chatDetailPage = GoRoute(
+    path: 'chatDetailPage',
+    name: ChatDetailPage.id,
+    pageBuilder: (context, state) => MaterialPage(
+      child: const ChatDetailPage(),
       key: state.pageKey,
     ),
   );

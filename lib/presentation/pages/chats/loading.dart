@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
 import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
-import 'package:owl_chat/navigation/router.dart';
+import 'package:owl_chat/notifications/notification_controller.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../../../logic/controller/notifications.dart';
 import '../../../logic/event_handler/user_state.dart';
 import 'chats_screen.dart';
 
@@ -20,7 +19,6 @@ class ChatsScreen extends StatefulWidget {
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-Notifications notifications = Notifications();
 final user = UserState();
 
 class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
@@ -28,29 +26,18 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
 
-    notifications.getTokenThenSaveItToDataBase();
-
     user.updateIsOnline(true);
+
+    NotificationController.getTokenThenSaveItToDataBase();
 
     context.read<AppMangerBloc>().add(const OnConnectivityChanged());
     context.read<b.UserBloc>().add(const b.GetChatsData());
     context.read<ChatRoomBloc>().add(const LoadChatRoom());
     context.read<ChatRoomBloc>().add(const LoadChatsData());
 
-    AwesomeNotifications().displayedStream.listen((data) {
-      print(data);
-      router.addListener(() {
-        final location = router.location;
+    final chats = context.read<ChatRoomBloc>().state.chats;
 
-        final pay = data.payload;
-        final chatId = pay?['chat'];
-
-        if (location == '/chat/$chatId') {
-          AwesomeNotifications().cancel(data.id!);
-          AwesomeNotifications().dismiss(data.id!);
-        }
-      });
-    });
+    NotificationController.createChatsRoomChannel(chats);
 
     super.initState();
   }

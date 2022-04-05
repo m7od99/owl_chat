@@ -2,7 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/navigation/router.dart';
 import 'package:owl_chat/notifications/notifications_channel.dart';
 import 'package:owl_chat/helper/credentials.dart' as credentials;
@@ -18,9 +22,23 @@ import '../logic/event_handler/user_state.dart';
 ///
 /// more options for their [Chat] notifications.
 class NotificationController {
-  NotificationController(this.awesomeNotifications);
+  const NotificationController(this.awesomeNotifications);
 
   final AwesomeNotifications awesomeNotifications;
+
+  ///The method thats need to be called first to use this class.
+  Future startNotification() async {
+    return awesomeNotifications.initialize(
+      null,
+      [
+        NotificationChannelControl.basicNotificationChannel,
+      ],
+      channelGroups: [
+        NotificationChannelControl.basicGroupe,
+        NotificationChannelControl.messageGroupe,
+      ],
+    );
+  }
 
   /// Convert user chat settings [ChatNotificationsSettings] to:
   ///
@@ -72,6 +90,14 @@ class NotificationController {
     }
   }
 
+  static Future getTokenThenSaveItToDataBase() async {
+    final token = await UserControl().getToken();
+    log(token.toString());
+    await UserControl().saveTokenToDatabase(token!);
+
+    FirebaseMessaging.instance.onTokenRefresh.listen(UserControl().saveTokenToDatabase);
+  }
+
   ///set the permissions from [ChatNotificationsSettings].
   ///
   ///**Note:** Make sure to create the notification channel before use this method
@@ -91,8 +117,8 @@ class NotificationController {
   ///Close the notifications when user see the [MessageModel]/s
   ///without taping the notifications.
   Future<void> closeSeenMessageNotifications() async {
-    router.addListener(() {
-      awesomeNotifications.displayedStream.listen((message) {
+    awesomeNotifications.displayedStream.listen((message) {
+      router.addListener(() {
         if (message.payload != null && message.payload!['type'] == 'message') {
           final chatId = message.payload!['chatId'];
 
@@ -100,6 +126,7 @@ class NotificationController {
           if (router.location == '/chat/$chatId') {
             if (chatId != null) {
               awesomeNotifications.cancelNotificationsByChannelKey(chatId);
+              awesomeNotifications.cancelAll();
             }
           }
         }
@@ -111,13 +138,13 @@ class NotificationController {
   ///
   ///**Note: You can custom the notifications in push notification said look at:**
   /// https://pub.dev/packages/awesome_notifications
-  Future displayMessageNotifications({
+  Future _displayMessageNotifications({
     required RemoteMessage message,
   }) async {
-    // wait 3 second
-    await Future.delayed(const Duration(seconds: 3));
+    // wait 2 second
+    await Future.delayed(const Duration(seconds: 2));
     // see if the notification type is [MessageModel]
-    if (message.data['type'] == 'message') {
+    if (message.data['type'] == 'chat') {
       // check the user path.
       router.addListener(() {
         if (router.location != '/chat/${message.data['chatId']}') {
@@ -131,7 +158,7 @@ class NotificationController {
   ///
   ///**Note: You can custom the notifications in push notification said look at:**
   /// https://pub.dev/packages/awesome_notifications
-  Future displayAppNotification({
+  Future _displayAppNotification({
     required RemoteMessage message,
   }) async {
     if (message.data['type'] == 'app') {
@@ -142,10 +169,49 @@ class NotificationController {
   /// Create channels for user [ChatRoom]'s , to control display or cancel
   ///
   /// notification for specific chat.
-  Future createChatsRoomChannel(List<String> chatsId) async {
-    for (final chatId in chatsId) {
-      await NotificationChannelControl.createMessageNotificationChannel(chatId);
+  static Future createChatsRoomChannel(List<Chat> chats) async {
+    for (final chat in chats) {
+      await NotificationChannelControl.createMessageNotificationChannel(chat.id);
     }
+  }
+
+  ///Map user when 'tapping' on notification.
+  Future mapActionNotification() async {
+    awesomeNotifications.actionStream.listen((action) async {
+      final payload = action.payload;
+
+      if (payload == null) return;
+
+      //chat case
+      if (payload['type'] == 'chat') {
+        final chatId = payload['chatId'];
+        if (chatId == null) return;
+
+        final chat = await MessageControl().getSpecificChat(chatId);
+
+        if (chat == null) return;
+
+        final bloc = MessageBloc(chat: chat);
+        bloc.add(const MessageEvent.messagesReceived());
+
+        router.go('/chat/$chatId', extra: bloc);
+      }
+
+      //app case
+      if (payload['type'] == 'app') {}
+    });
+  }
+
+  /// Display notification that coming from FCM.
+  Future displayNotification() async {
+    FirebaseMessaging.onMessage.listen((message) async {
+      if (message.data['type'] == 'chat') {
+        await _displayMessageNotifications(message: message);
+      }
+      if (message.data['type'] == 'app') {
+        await _displayAppNotification(message: message);
+      }
+    });
   }
 }
 
@@ -220,10 +286,10 @@ class PushNotificationService {
           autoDismissible: true,
           payload: Payload(
             chat: messageModel.chatId,
-            type: 'message',
+            type: 'chat',
           ),
         ),
-        type: 'message',
+        type: 'chat',
       ),
       to: token,
       mutableContent: true,
@@ -249,7 +315,8 @@ class PushNotificationService {
 class HttpPushNotification {
   /// [NotificationsModel] must be not null.
   ///
-  /// By using Data from FCM service ,To custom the notification.
+  /// By using 'data' from FCM service ,We custom the notification and load more data.
+  ///
   /// more info look at : https://firebase.google.com/docs/cloud-messaging/http-server-ref
   static Future<bool> pushNotification({
     required NotificationsModel notificationModel,
@@ -285,4 +352,13 @@ class HttpPushNotification {
     'Content-Type': 'application/json',
     'Authorization': 'key=${credentials.FCM_SERVER_KEY}',
   };
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  log("Handling a background message: ${message.messageId}");
+
+  // Use this method to automatically convert the push data, in case you gonna use our data standard
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
 }

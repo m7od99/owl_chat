@@ -15,6 +15,18 @@ class NotificationChannelControl {
     ledColor: Colors.white,
   );
 
+  ///
+  static final basicGroupe = NotificationChannelGroup(
+    channelGroupName: 'basic_groupe',
+    channelGroupkey: 'basic_channel_groupe',
+  );
+
+  ///
+  static final messageGroupe = NotificationChannelGroup(
+    channelGroupName: 'message_groupe',
+    channelGroupkey: 'message_channel_groupe',
+  );
+
   /// Its create Notification channel for specific [Chat].
   ///
   /// Required the chat id , its should use it as a Key to access
@@ -26,7 +38,7 @@ class NotificationChannelControl {
         channelName: 'message notifications',
         channelDescription: 'Notification channel for messages',
         channelShowBadge: true,
-        channelGroupKey: 'message_notifications',
+        channelGroupKey: 'message_channel_groupe',
         playSound: true,
         onlyAlertOnce: true,
         importance: NotificationImportance.Max,

@@ -64,7 +64,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+    with
+        SingleTickerProviderStateMixin,
+        WidgetsBindingObserver,
+        AutomaticKeepAliveClientMixin {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
@@ -253,49 +256,54 @@ class ChatAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(user.otherName(chat)),
-            StreamBuilder<OwlUser>(
-              stream: UserControl().getUserChanges(
-                user.otherId(chat),
+    return InkWell(
+      onTap: () {
+        context.go('/chat/${chat.id}/chatDetailPage', extra: context.read<MessageBloc>());
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(user.otherName(chat)),
+              StreamBuilder<OwlUser>(
+                stream: UserControl().getUserChanges(
+                  user.otherId(chat),
+                ),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Text(
+                      'last seen',
+                      style: style,
+                    );
+                  }
+                  if (snapshot.data!.onChat == chat.id) {
+                    return const Text(
+                      'online',
+                      style: style,
+                    );
+                    // } else if (snapshot.data!.lastSeen != null) {
+                    //   return Text(
+                    //     'last seen ${snapshot.data!.lastSeen!}',
+                    //     style: style,
+                    //   );
+                  } else {
+                    return const Text(
+                      'last seen',
+                      style: style,
+                    );
+                  }
+                },
               ),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text(
-                    'last seen',
-                    style: style,
-                  );
-                }
-                if (snapshot.data!.onChat == chat.id) {
-                  return const Text(
-                    'online',
-                    style: style,
-                  );
-                  // } else if (snapshot.data!.lastSeen != null) {
-                  //   return Text(
-                  //     'last seen ${snapshot.data!.lastSeen!}',
-                  //     style: style,
-                  //   );
-                } else {
-                  return const Text(
-                    'last seen',
-                    style: style,
-                  );
-                }
-              },
-            ),
-          ],
-        ),
-        ChatProfilePhoto(
-          id: user.otherId(chat),
-          size: 22,
-        ),
-      ],
+            ],
+          ),
+          ChatProfilePhoto(
+            id: user.otherId(chat),
+            size: 22,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -304,3 +312,39 @@ const style = TextStyle(
   fontSize: 12,
   fontWeight: FontWeight.bold,
 );
+
+class ChatDetailPage extends StatelessWidget {
+  const ChatDetailPage({Key? key}) : super(key: key);
+
+  static String id = 'chatDetailPage';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            stretch: true,
+            forceElevated: true,
+            expandedHeight: 100,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Column(
+                children: [
+                  ChatProfilePhoto(
+                    id: '',
+                    size: 40,
+                  ),
+                ],
+              ),
+              stretchModes: [
+                StretchMode.fadeTitle,
+                StretchMode.blurBackground,
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
