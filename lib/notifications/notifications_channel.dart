@@ -38,7 +38,7 @@ class NotificationChannelControl {
         channelName: 'message notifications',
         channelDescription: 'Notification channel for messages',
         channelShowBadge: true,
-        channelGroupKey: 'message_channel_groupe',
+        channelGroupKey: chatId,
         playSound: true,
         onlyAlertOnce: true,
         importance: NotificationImportance.Max,

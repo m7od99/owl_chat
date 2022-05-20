@@ -23,12 +23,17 @@ class _$ChatTearOff {
 
   _Chat call(
       {required String id,
-      @AuthorConverter() required OwlUser other,
-      @AuthorConverter() required OwlUser me,
+      @AuthorConverter()
+          required OwlUser other,
+      @AuthorConverter()
+          required OwlUser me,
       String lastMessage = '',
-      @TimestampConverter() Timestamp? time,
+      @TimestampConverter()
+          Timestamp? time,
       int totalMessages = 0,
-      int totalNewMessages = 0}) {
+      int totalNewMessages = 0,
+      @SettingsConverter()
+          List<ChatNotificationsSettings> settings = const []}) {
     return _Chat(
       id: id,
       other: other,
@@ -37,6 +42,7 @@ class _$ChatTearOff {
       time: time,
       totalMessages: totalMessages,
       totalNewMessages: totalNewMessages,
+      settings: settings,
     );
   }
 
@@ -74,6 +80,11 @@ mixin _$Chat {
   ///
   int get totalNewMessages => throw _privateConstructorUsedError;
 
+  ///
+  @SettingsConverter()
+  List<ChatNotificationsSettings> get settings =>
+      throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
@@ -90,7 +101,8 @@ abstract class $ChatCopyWith<$Res> {
       String lastMessage,
       @TimestampConverter() Timestamp? time,
       int totalMessages,
-      int totalNewMessages});
+      int totalNewMessages,
+      @SettingsConverter() List<ChatNotificationsSettings> settings});
 }
 
 /// @nodoc
@@ -110,6 +122,7 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
     Object? time = freezed,
     Object? totalMessages = freezed,
     Object? totalNewMessages = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -140,6 +153,10 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
           ? _value.totalNewMessages
           : totalNewMessages // ignore: cast_nullable_to_non_nullable
               as int,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as List<ChatNotificationsSettings>,
     ));
   }
 }
@@ -156,7 +173,8 @@ abstract class _$ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       String lastMessage,
       @TimestampConverter() Timestamp? time,
       int totalMessages,
-      int totalNewMessages});
+      int totalNewMessages,
+      @SettingsConverter() List<ChatNotificationsSettings> settings});
 }
 
 /// @nodoc
@@ -177,6 +195,7 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
     Object? time = freezed,
     Object? totalMessages = freezed,
     Object? totalNewMessages = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_Chat(
       id: id == freezed
@@ -207,6 +226,10 @@ class __$ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
           ? _value.totalNewMessages
           : totalNewMessages // ignore: cast_nullable_to_non_nullable
               as int,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as List<ChatNotificationsSettings>,
     ));
   }
 }
@@ -221,7 +244,8 @@ class _$_Chat implements _Chat {
       this.lastMessage = '',
       @TimestampConverter() this.time,
       this.totalMessages = 0,
-      this.totalNewMessages = 0});
+      this.totalNewMessages = 0,
+      @SettingsConverter() this.settings = const []});
 
   factory _$_Chat.fromJson(Map<String, dynamic> json) => _$$_ChatFromJson(json);
 
@@ -259,10 +283,16 @@ class _$_Chat implements _Chat {
 
   ///
   final int totalNewMessages;
+  @JsonKey()
+  @override
+
+  ///
+  @SettingsConverter()
+  final List<ChatNotificationsSettings> settings;
 
   @override
   String toString() {
-    return 'Chat(id: $id, other: $other, me: $me, lastMessage: $lastMessage, time: $time, totalMessages: $totalMessages, totalNewMessages: $totalNewMessages)';
+    return 'Chat(id: $id, other: $other, me: $me, lastMessage: $lastMessage, time: $time, totalMessages: $totalMessages, totalNewMessages: $totalNewMessages, settings: $settings)';
   }
 
   @override
@@ -279,7 +309,8 @@ class _$_Chat implements _Chat {
             const DeepCollectionEquality()
                 .equals(other.totalMessages, totalMessages) &&
             const DeepCollectionEquality()
-                .equals(other.totalNewMessages, totalNewMessages));
+                .equals(other.totalNewMessages, totalNewMessages) &&
+            const DeepCollectionEquality().equals(other.settings, settings));
   }
 
   @override
@@ -291,7 +322,8 @@ class _$_Chat implements _Chat {
       const DeepCollectionEquality().hash(lastMessage),
       const DeepCollectionEquality().hash(time),
       const DeepCollectionEquality().hash(totalMessages),
-      const DeepCollectionEquality().hash(totalNewMessages));
+      const DeepCollectionEquality().hash(totalNewMessages),
+      const DeepCollectionEquality().hash(settings));
 
   @JsonKey(ignore: true)
   @override
@@ -312,7 +344,8 @@ abstract class _Chat implements Chat {
       String lastMessage,
       @TimestampConverter() Timestamp? time,
       int totalMessages,
-      int totalNewMessages}) = _$_Chat;
+      int totalNewMessages,
+      @SettingsConverter() List<ChatNotificationsSettings> settings}) = _$_Chat;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$_Chat.fromJson;
 
@@ -347,6 +380,11 @@ abstract class _Chat implements Chat {
 
   ///
   int get totalNewMessages;
+  @override
+
+  ///
+  @SettingsConverter()
+  List<ChatNotificationsSettings> get settings;
   @override
   @JsonKey(ignore: true)
   _$ChatCopyWith<_Chat> get copyWith => throw _privateConstructorUsedError;

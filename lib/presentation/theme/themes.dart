@@ -26,7 +26,7 @@ class ThemeProvider extends ChangeNotifier {
 
   bool get isDarkMode {
     if (themeMode == ThemeMode.system) {
-      final brightness = SchedulerBinding.instance!.window.platformBrightness;
+      final brightness = SchedulerBinding.instance.window.platformBrightness;
       return brightness == Brightness.dark;
     } else {
       return themeMode == ThemeMode.dark;
@@ -65,7 +65,7 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData darkThemeData(BuildContext context) {
     return ThemeData.dark().copyWith(
-      useMaterial3: true,
+      //    useMaterial3: true,
       primaryColor: kPrimaryColor,
       scaffoldBackgroundColor: kContentColorLightTheme,
       appBarTheme: appBaDarkTheme(),

@@ -94,7 +94,11 @@ class MessageControl extends ChangeNotifier {
 
   ///create a new chat room
   Future<void> createChat(Chat chat) async {
-    await _firestore.collection('messages').doc(chat.id).set(chat.toJson()).catchError((e) {
+    await _firestore
+        .collection('messages')
+        .doc(chat.id)
+        .set(chat.toJson())
+        .catchError((e) {
       log(e.toString());
     }).then((value) => log('chat room is created'));
   }
@@ -109,14 +113,21 @@ class MessageControl extends ChangeNotifier {
   }
 
   Future addNewChatToUser(String userId, Chat chat) async {
-    await _firestore.collection('users').doc(userId).collection('chats').add(chat.toJson());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('chats')
+        .add(chat.toJson());
   }
 
   ///get user chats
   Stream<QuerySnapshot<Map<String, dynamic>>> getChats(String userId) {
     log('id is ${_firestore.collection('messages').id}');
 
-    return _firestore.collection('messages').orderBy('time', descending: true).snapshots();
+    return _firestore
+        .collection('messages')
+        .orderBy('time', descending: true)
+        .snapshots();
   }
 
   bool isMe(String id) {

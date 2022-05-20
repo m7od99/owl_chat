@@ -24,11 +24,13 @@ class _$ChatNotificationsSettingsTearOff {
 
   _ChatNotificationsSettings call(
       {required String chatId,
+      required String userId,
       bool allow = true,
       bool vibration = true,
       bool sound = true}) {
     return _ChatNotificationsSettings(
       chatId: chatId,
+      userId: userId,
       allow: allow,
       vibration: vibration,
       sound: sound,
@@ -46,6 +48,7 @@ const $ChatNotificationsSettings = _$ChatNotificationsSettingsTearOff();
 /// @nodoc
 mixin _$ChatNotificationsSettings {
   String get chatId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   bool get allow => throw _privateConstructorUsedError;
   bool get vibration => throw _privateConstructorUsedError;
   bool get sound => throw _privateConstructorUsedError;
@@ -61,7 +64,8 @@ abstract class $ChatNotificationsSettingsCopyWith<$Res> {
   factory $ChatNotificationsSettingsCopyWith(ChatNotificationsSettings value,
           $Res Function(ChatNotificationsSettings) then) =
       _$ChatNotificationsSettingsCopyWithImpl<$Res>;
-  $Res call({String chatId, bool allow, bool vibration, bool sound});
+  $Res call(
+      {String chatId, String userId, bool allow, bool vibration, bool sound});
 }
 
 /// @nodoc
@@ -76,6 +80,7 @@ class _$ChatNotificationsSettingsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chatId = freezed,
+    Object? userId = freezed,
     Object? allow = freezed,
     Object? vibration = freezed,
     Object? sound = freezed,
@@ -84,6 +89,10 @@ class _$ChatNotificationsSettingsCopyWithImpl<$Res>
       chatId: chatId == freezed
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       allow: allow == freezed
           ? _value.allow
@@ -108,7 +117,8 @@ abstract class _$ChatNotificationsSettingsCopyWith<$Res>
           $Res Function(_ChatNotificationsSettings) then) =
       __$ChatNotificationsSettingsCopyWithImpl<$Res>;
   @override
-  $Res call({String chatId, bool allow, bool vibration, bool sound});
+  $Res call(
+      {String chatId, String userId, bool allow, bool vibration, bool sound});
 }
 
 /// @nodoc
@@ -126,6 +136,7 @@ class __$ChatNotificationsSettingsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chatId = freezed,
+    Object? userId = freezed,
     Object? allow = freezed,
     Object? vibration = freezed,
     Object? sound = freezed,
@@ -134,6 +145,10 @@ class __$ChatNotificationsSettingsCopyWithImpl<$Res>
       chatId: chatId == freezed
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       allow: allow == freezed
           ? _value.allow
@@ -156,6 +171,7 @@ class __$ChatNotificationsSettingsCopyWithImpl<$Res>
 class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
   const _$_ChatNotificationsSettings(
       {required this.chatId,
+      required this.userId,
       this.allow = true,
       this.vibration = true,
       this.sound = true});
@@ -165,6 +181,8 @@ class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
 
   @override
   final String chatId;
+  @override
+  final String userId;
   @JsonKey()
   @override
   final bool allow;
@@ -177,7 +195,7 @@ class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
 
   @override
   String toString() {
-    return 'ChatNotificationsSettings(chatId: $chatId, allow: $allow, vibration: $vibration, sound: $sound)';
+    return 'ChatNotificationsSettings(chatId: $chatId, userId: $userId, allow: $allow, vibration: $vibration, sound: $sound)';
   }
 
   @override
@@ -186,6 +204,7 @@ class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
         (other.runtimeType == runtimeType &&
             other is _ChatNotificationsSettings &&
             const DeepCollectionEquality().equals(other.chatId, chatId) &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.allow, allow) &&
             const DeepCollectionEquality().equals(other.vibration, vibration) &&
             const DeepCollectionEquality().equals(other.sound, sound));
@@ -195,6 +214,7 @@ class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(chatId),
+      const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(allow),
       const DeepCollectionEquality().hash(vibration),
       const DeepCollectionEquality().hash(sound));
@@ -215,6 +235,7 @@ class _$_ChatNotificationsSettings implements _ChatNotificationsSettings {
 abstract class _ChatNotificationsSettings implements ChatNotificationsSettings {
   const factory _ChatNotificationsSettings(
       {required String chatId,
+      required String userId,
       bool allow,
       bool vibration,
       bool sound}) = _$_ChatNotificationsSettings;
@@ -224,6 +245,8 @@ abstract class _ChatNotificationsSettings implements ChatNotificationsSettings {
 
   @override
   String get chatId;
+  @override
+  String get userId;
   @override
   bool get allow;
   @override

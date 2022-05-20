@@ -1,17 +1,20 @@
 // ignore_for_file: cast_nullable_to_non_nullable
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
-import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/data/models/models.dart';
+import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/edits_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../data/models/chats/chat.dart';
 import '../../../logic/event_handler/user_state.dart';
 import '../../widgets/profile_photo.dart';
 import 'widgets/message_view_bloc.dart';
@@ -92,6 +95,42 @@ class _ChatPageState extends State<ChatPage>
     });
   }
 
+  void _chatSettings() async {
+    final _database = MessageControl();
+    final chat = await _database.getSpecificChat(widget.chat.id);
+    final _userId = UserState().userId;
+
+    if (chat!.settings.isEmpty) {
+      _database.updateChatState(
+        chat.copyWith(
+          settings: [
+            ChatNotificationsSettings(
+              chatId: chat.id,
+              userId: _userId,
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (chat.settings.any((e) => (e.userId == _userId))) {
+      return;
+    } else {
+      _database.updateChatState(
+        chat.copyWith(
+          settings: chat.settings
+            ..add(
+              ChatNotificationsSettings(
+                chatId: chat.id,
+                userId: _userId,
+              ),
+            ),
+        ),
+      );
+    }
+  }
+
   void _showArrow() {
     itemPositionsListener.itemPositions.addListener(() {
       if (itemPositionsListener.itemPositions.value.first.index == 0) {
@@ -109,7 +148,7 @@ class _ChatPageState extends State<ChatPage>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     animationControl = AnimationController(
       vsync: this,
@@ -117,6 +156,8 @@ class _ChatPageState extends State<ChatPage>
     );
 
     _showArrow();
+
+    _chatSettings();
 
     _onSeen();
 
@@ -146,7 +187,7 @@ class _ChatPageState extends State<ChatPage>
   void dispose() {
     super.dispose();
 
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
 
     animationControl.dispose();
     //  _controller.dispose();
@@ -298,9 +339,12 @@ class ChatAppBar extends StatelessWidget {
               ),
             ],
           ),
-          ChatProfilePhoto(
-            id: user.otherId(chat),
-            size: 22,
+          Hero(
+            tag: 'photo',
+            child: ChatProfilePhoto(
+              id: user.otherId(chat),
+              size: 22,
+            ),
           ),
         ],
       ),
@@ -314,37 +358,147 @@ const style = TextStyle(
 );
 
 class ChatDetailPage extends StatelessWidget {
-  const ChatDetailPage({Key? key}) : super(key: key);
+  ChatDetailPage({Key? key}) : super(key: key);
 
   static String id = 'chatDetailPage';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            stretch: true,
-            forceElevated: true,
-            expandedHeight: 100,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Column(
-                children: [
-                  ChatProfilePhoto(
-                    id: '',
-                    size: 40,
+    final chat = context.watch<MessageBloc>().chat;
+    final total = context
+        .read<MessageBloc>()
+        .state
+        .mapOrNull(loaded: (loaded) => loaded.messages.length);
+
+    final gifs = context.read<MessageBloc>().state.mapOrNull(
+        loaded: (loaded) =>
+            loaded.messages.where((message) => message.isGif == true).toList().length);
+    final user = UserState();
+
+    return BlocBuilder<ChatRoomBloc, ChatRoomState>(builder: (
+      context,
+      bloc,
+    ) {
+      final state = ChatDetailState(bloc.chats.firstWhere(
+        (element) => element.id == chat.id,
+      ));
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(user.otherName(chat)),
+          actions: [
+            MuteNotifyIcon(state: state),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10),
+              Hero(
+                tag: 'photo',
+                child: Center(
+                  child: ChatProfilePhoto(
+                    id: user.otherId(chat),
+                    size: 70,
                   ),
-                ],
+                ),
               ),
-              stretchModes: [
-                StretchMode.fadeTitle,
-                StretchMode.blurBackground,
-              ],
-            ),
+              SizedBox(height: 20),
+              Text(
+                'Total Messages:  ${total}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Total Gifs:  ${gifs}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      );
+    });
+  }
+}
+
+class MuteNotifyIcon extends StatelessWidget {
+  const MuteNotifyIcon({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final ChatDetailState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      builder: ((context, child) => GestureDetector(
+            onTap: () {
+              state.toggleMute();
+            },
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 400),
+              switchInCurve: Curves.easeInOutBack,
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+              child: state.mute
+                  ? Icon(
+                      Icons.notifications_off,
+                      size: 35,
+                      key: ValueKey('mute'),
+                    )
+                  : Icon(
+                      Icons.notifications,
+                      size: 35,
+                      key: ValueKey('unMute'),
+                    ),
+            ),
+          )),
+      animation: state,
     );
+  }
+}
+
+class ChatDetailState extends ChangeNotifier {
+  Chat chat;
+
+  late bool mute;
+
+  ChatDetailState(this.chat) {
+    mute = !chat.settings
+        .firstWhere((element) => element.userId == UserState().userId)
+        .allow;
+  }
+
+  void toggleMute() {
+    final userId = UserState().userId;
+    final _database = MessageControl();
+
+    mute = !mute;
+
+    int index = chat.settings.indexWhere((element) => element.userId == userId);
+
+    final settings = chat.settings[index].copyWith(allow: !mute);
+
+    log(settings.allow.toString());
+
+    _database.updateChatState(
+      chat.copyWith(settings: [
+        settings,
+        ...chat.settings..removeAt(index),
+      ]),
+    );
+
+    print(mute);
+
+    notifyListeners();
   }
 }

@@ -87,7 +87,6 @@ class MessageBubbleAnimated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(),
       child: GestureDetector(
         onDoubleTap: onDoubleTap,
@@ -133,7 +132,8 @@ class BubbleAnimated extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
@@ -147,7 +147,8 @@ class BubbleAnimated extends StatelessWidget {
           child: Row(
             textBaseline: TextBaseline.alphabetic,
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment:
+                message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               AutoDirectionality(

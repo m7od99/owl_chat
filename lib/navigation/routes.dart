@@ -120,18 +120,8 @@ class Routes {
           Animation<double> secondaryAnimation,
           Widget child,
         ) =>
-            SlideTransition(
-          textDirection: TextDirection.ltr,
-          position: animation.drive(
-            Tween(
-              begin: const Offset(1, 0),
-              end: Offset.zero,
-            ).chain(
-              CurveTween(
-                curve: Curves.easeInBack,
-              ),
-            ),
-          ),
+            FadeTransition(
+          opacity: animation,
           child: child,
         ),
       );
@@ -219,9 +209,15 @@ class Routes {
   static final chatDetailPage = GoRoute(
     path: 'chatDetailPage',
     name: ChatDetailPage.id,
-    pageBuilder: (context, state) => MaterialPage(
-      child: const ChatDetailPage(),
-      key: state.pageKey,
-    ),
+    pageBuilder: (context, state) {
+      final bloc = state.extra as MessageBloc;
+      return MaterialPage(
+        child: BlocProvider.value(
+          value: bloc,
+          child: ChatDetailPage(),
+        ),
+        key: state.pageKey,
+      );
+    },
   );
 }

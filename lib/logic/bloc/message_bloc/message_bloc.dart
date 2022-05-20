@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
@@ -91,7 +92,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     int newMessage = 0;
 
     for (final message in messages) {
-      if (message.isSeen == null && !message.isMe || message.isSeen == false && !message.isMe) {
+      if (message.isSeen == null && !message.isMe ||
+          message.isSeen == false && !message.isMe) {
         newMessage += 1;
       } else {
         break;

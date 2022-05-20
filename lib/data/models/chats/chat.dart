@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
 
+import 'chats.dart';
+
 part 'chat.freezed.dart';
 part 'chat.g.dart';
 
@@ -30,6 +32,9 @@ class Chat with _$Chat {
 
     ///
     @Default(0) int totalNewMessages,
+
+    ///
+    @SettingsConverter() @Default([]) List<ChatNotificationsSettings> settings,
   }) = _Chat;
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
@@ -67,4 +72,14 @@ class AuthorConverter implements JsonConverter<OwlUser, Map> {
 
   @override
   Map toJson(OwlUser object) => object.toMap().cast<String, dynamic>();
+}
+
+class SettingsConverter implements JsonConverter<ChatNotificationsSettings, Map> {
+  const SettingsConverter();
+  @override
+  ChatNotificationsSettings fromJson(Map json) =>
+      ChatNotificationsSettings.fromJson(json.cast<String, dynamic>());
+
+  @override
+  Map toJson(ChatNotificationsSettings object) => object.toJson().cast<String, dynamic>();
 }

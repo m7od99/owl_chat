@@ -7,6 +7,7 @@ part 'chat_notifications_settings.g.dart';
 class ChatNotificationsSettings with _$ChatNotificationsSettings {
   const factory ChatNotificationsSettings({
     required String chatId,
+    required String userId,
     @Default(true) bool allow,
     @Default(true) bool vibration,
     @Default(true) bool sound,
