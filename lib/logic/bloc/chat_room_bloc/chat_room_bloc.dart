@@ -6,6 +6,7 @@ import 'package:owl_chat/data/data_controller/message_control/message_control.da
 import 'package:owl_chat/data/models/chats/chat.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart';
+import 'package:owl_chat/notifications/notification_controller.dart';
 
 part 'chat_room_event.dart';
 part 'chat_room_state.dart';
@@ -38,6 +39,8 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
                   isLoading: false,
                 ),
               );
+
+              NotificationController.createChatsRoomChannel(_chats);
 
               return state.copyWith(
                 chats: _chats,

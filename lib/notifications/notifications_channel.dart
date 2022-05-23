@@ -15,6 +15,17 @@ class NotificationChannelControl {
     ledColor: Colors.white,
   );
 
+  static final NotificationChannel messageNotificationChannel = NotificationChannel(
+    channelKey: 'message_channel',
+    channelName: 'message notifications',
+    channelDescription: 'Notification channel for message',
+    channelShowBadge: true,
+    playSound: true,
+    importance: NotificationImportance.Default,
+    defaultColor: const Color(0xFF9D50DD),
+    ledColor: Colors.white,
+  );
+
   ///
   static final basicGroupe = NotificationChannelGroup(
     channelGroupName: 'basic_groupe',

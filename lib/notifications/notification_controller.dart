@@ -32,6 +32,7 @@ class NotificationController {
       null,
       [
         NotificationChannelControl.basicNotificationChannel,
+        NotificationChannelControl.messageNotificationChannel,
       ],
       channelGroups: [
         NotificationChannelControl.basicGroupe,
@@ -119,14 +120,13 @@ class NotificationController {
   Future<void> closeSeenMessageNotifications() async {
     awesomeNotifications.displayedStream.listen((message) {
       router.addListener(() {
-        if (message.payload != null && message.payload!['type'] == 'message') {
-          final chatId = message.payload!['chatId'];
+        if (message.payload != null && message.payload!['type'] == 'chat') {
+          final chatId = message.payload!['chat'];
 
           //if user location is the chat room; cancel all notifications
           if (router.location == '/chat/$chatId') {
             if (chatId != null) {
               awesomeNotifications.cancelNotificationsByChannelKey(chatId);
-              awesomeNotifications.cancelAll();
             }
           }
         }
@@ -141,16 +141,28 @@ class NotificationController {
   Future _displayMessageNotifications({
     required RemoteMessage message,
   }) async {
-    // wait 2 second
-    await Future.delayed(const Duration(seconds: 2));
+    // wait 1 second
+    await Future.delayed(const Duration(milliseconds: 500));
     // see if the notification type is [MessageModel]
     if (message.data['type'] == 'chat') {
       // check the user path.
-      router.addListener(() {
-        if (router.location != '/chat/${message.data['chatId']}') {
-          awesomeNotifications.createNotificationFromJsonData(message.data);
-        }
-      });
+
+      final chat = await MessageControl().getSpecificChat(message.data['chat']);
+
+      final settings = chat!.settings.firstWhere(
+        (element) => element.userId == UserState().userId,
+      );
+
+      if (!settings.allow) {
+        log('You mute messages from this chat');
+        return;
+      }
+
+      if (router.location != '/chat/${message.data['chat']}') {
+        awesomeNotifications.createNotificationFromJsonData(message.data);
+      } else {
+        log('user already on chat');
+      }
     }
   }
 
@@ -180,11 +192,14 @@ class NotificationController {
     awesomeNotifications.actionStream.listen((action) async {
       final payload = action.payload;
 
-      if (payload == null) return;
-
+      if (payload == null) {
+        log('payload is null');
+        return;
+      }
+      log(payload.toString());
       //chat case
       if (payload['type'] == 'chat') {
-        final chatId = payload['chatId'];
+        final chatId = payload['chat'];
         if (chatId == null) return;
 
         final chat = await MessageControl().getSpecificChat(chatId);
@@ -194,7 +209,7 @@ class NotificationController {
         final bloc = MessageBloc(chat: chat);
         bloc.add(const MessageEvent.messagesReceived());
 
-        router.go('/chat/$chatId', extra: bloc);
+        router.go('/chat/${chat.id}', extra: bloc);
       }
 
       //app case
@@ -235,30 +250,30 @@ class PushNotificationService {
     late final String? token;
     late final NotificationsModel notificationsModel;
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 500));
+
     // check the other user location before send the notification.
     final otherUserAlreadyOnChat =
         await _isOtherUserOnChat(message.receiver, message.chatId!);
+
+    log(otherUserAlreadyOnChat.toString());
 
     // if true no need to push notification.
     if (otherUserAlreadyOnChat) return;
 
     // get the other user token.
+    token = await UserState().getUserToken(message.receiver);
+    if (token == null) return;
 
-    if (!otherUserAlreadyOnChat) {
-      token = await UserState().getUserToken(message.receiver);
-      // create notification model data from the message.
-      if (token != null) {
-        notificationsModel = createMessageNotificationModel(
-          messageModel: message,
-          token: token,
-        );
-        // try push notification. check if the notification sent.
-        return HttpPushNotification.pushNotification(
-          notificationModel: notificationsModel,
-        );
-      }
-    }
+    // create notification model data from the message.
+    notificationsModel = createMessageNotificationModel(
+      messageModel: message,
+      token: token,
+    );
+    // try push notification. check if the notification sent.
+    return HttpPushNotification.pushNotification(
+      notificationModel: notificationsModel,
+    );
   }
 
   /// Create [NotificationsModel] from [MessageModel] , to use it to push notification.
@@ -268,14 +283,15 @@ class PushNotificationService {
     required MessageModel messageModel,
     required String token,
   }) {
-    final photoUri = UserState().photoUri ?? 'asset://assets/images/user.png';
+    final _user = UserState();
+    final photoUri = _user.photoUri ?? 'asset://assets/images/user.png';
 
     return NotificationsModel(
       data: Data(
         chat: messageModel.chatId!,
         content: Content(
           id: messageModel.chatId!.codeUnits.first,
-          title: messageModel.sender,
+          title: _user.userName,
           body: messageModel.text,
           summary: messageModel.text,
           showWhen: true,

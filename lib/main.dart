@@ -19,21 +19,18 @@ Future main() async {
 
   final notificationControl = NotificationController(AwesomeNotifications());
 
-  await notificationControl.startNotification();
-
-  await notificationControl.displayNotification();
-
   await EasyLocalization.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
+  await notificationControl.startNotification();
+  await notificationControl.displayNotification();
   await notificationControl.closeSeenMessageNotifications();
-
   await notificationControl.mapActionNotification();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   final Directory appDocDir = await getApplicationDocumentsDirectory();
 

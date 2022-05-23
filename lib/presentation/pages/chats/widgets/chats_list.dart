@@ -57,27 +57,31 @@ class _ChatsChatsListState extends State<ChatsList> {
           slivers: [
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Provider(
-                    lazy: true,
-                    key: Key(chats[index].id),
-                    create: (context) => MessageBloc(chat: state.chats[index]),
-                    builder: (context, widget) {
-                      context.read<MessageBloc>().add(const MessagesReceived());
-                      return FriendCard(
+                (context, index) {
+                  return Column(
+                    children: [
+                      if (index != 0) Divider(),
+                      Provider(
+                        lazy: true,
                         key: Key(chats[index].id),
-                        chat: chats[index],
-                        onTap: () async {
-                          context.go(
-                            '/chat/${chats[index].id}',
-                            extra: context.read<MessageBloc>(),
+                        create: (context) => MessageBloc(chat: state.chats[index]),
+                        builder: (context, widget) {
+                          context.read<MessageBloc>().add(const MessagesReceived());
+                          return FriendCard(
+                            key: Key(chats[index].id),
+                            chat: chats[index],
+                            onTap: () async {
+                              context.go(
+                                '/chat/${chats[index].id}',
+                                extra: context.read<MessageBloc>(),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                  ),
-                ),
+                      ),
+                    ],
+                  );
+                },
                 childCount: chats.length,
               ),
             ),

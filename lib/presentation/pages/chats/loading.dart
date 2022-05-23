@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,20 +34,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
     context.read<ChatRoomBloc>().add(const LoadChatRoom());
     context.read<ChatRoomBloc>().add(const LoadChatsData());
 
-    final chats = context.read<ChatRoomBloc>().state.chats;
-
-    NotificationController.createChatsRoomChannel(chats);
-
     super.initState();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-
-    AwesomeNotifications().actionSink.close();
-    AwesomeNotifications().displayedSink.close();
-    AwesomeNotifications().createdSink.close();
 
     super.dispose();
   }
