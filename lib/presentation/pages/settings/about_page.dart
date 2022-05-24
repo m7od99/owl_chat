@@ -33,7 +33,7 @@ class AboutPage extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  AboutData.about6.version,
+                  AboutData.about7.version,
                   style: const TextStyle(fontSize: 17),
                 ),
               ),
@@ -47,10 +47,13 @@ class AboutPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
-                    AboutData.about6.changeLog.length,
-                    (index) => Text(
-                      '-${AboutData.about5.changeLog[index]} .',
-                      style: const TextStyle(fontSize: 17),
+                    AboutData.about7.changeLog.length,
+                    (index) => Padding(
+                      padding: const EdgeInsets.all(7),
+                      child: Text(
+                        '-${AboutData.about7.changeLog[index]} .',
+                        style: const TextStyle(fontSize: 17),
+                      ),
                     ),
                   ),
                 ),
@@ -63,12 +66,12 @@ class AboutPage extends StatelessWidget {
                   },
                   child: const Text(
                     'Check For New Update',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),
               const SizedBox(height: 50),
-              const Center(child: Text('Owl Chat is App made by ...')),
+              const Center(child: Text('Owl Chat made by ...')),
             ],
           ),
         ),

@@ -27,7 +27,6 @@ class MessageRepository extends MessageControlContract<MessageModel> {
 
   @override
   Future deleteMessage(MessageModel message) {
-    // TODO: implement deleteMessage
     throw UnimplementedError();
   }
 
@@ -71,8 +70,7 @@ class MessageRepository extends MessageControlContract<MessageModel> {
   }
 
   @override
-  // TODO: implement type
-  SourceType get type => throw UnimplementedError();
+  SourceType get type => SourceType.local;
 
   @override
   Future updateMessage(MessageModel message) async {

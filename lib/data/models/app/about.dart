@@ -71,4 +71,13 @@ class AboutData {
       'General Fixes',
     ],
   );
+
+  static const about7 = About(
+    version: '0.0.8',
+    changeLog: [
+      'Now you can mute Notification from specific chat',
+      'Remove animation transition when open the chat',
+      'Now you can see the number of new messages in chat card',
+    ],
+  );
 }

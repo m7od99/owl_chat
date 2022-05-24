@@ -84,7 +84,6 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
 
   @override
   void onEvent(MessageEvent event) {
-    // TODO: implement onEvent
     super.onEvent(event);
   }
 

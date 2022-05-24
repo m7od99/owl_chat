@@ -19,6 +19,8 @@ import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/theme_sw.dart';
 import 'package:owl_chat/presentation/pages/settings/update_page.dart';
 
+import '../presentation/pages/chatdetail/chat_detail.dart';
+
 // ignore: avoid_classes_with_only_static_members
 class Routes {
   static final home = GoRoute(

@@ -13,7 +13,6 @@ class FirebaseMessageControl extends MessageControlContract<MessageModel> {
 
   @override
   Future deleteMessage(MessageModel message) {
-    // TODO: implement deleteMessage
     throw UnimplementedError();
   }
 

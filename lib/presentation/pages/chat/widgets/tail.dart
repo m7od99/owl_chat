@@ -40,8 +40,8 @@ class MessagePaint extends CustomPainter {
           ..lineTo(roundedBorder, 0)
           ..quadraticBezierTo(0, 0, 0, roundedBorder)
           ..lineTo(0, size.height - triangleHeight - roundedBorder)
-          ..quadraticBezierTo(
-              0, size.height - triangleHeight, roundedBorder, size.height - triangleHeight)
+          ..quadraticBezierTo(0, size.height - triangleHeight, roundedBorder,
+              size.height - triangleHeight)
           ..lineTo(size.width - triangleWidth, size.height - triangleHeight)
           ..lineTo(size.width, size.height)
           ..lineTo(size.width, roundedBorder)
@@ -82,14 +82,16 @@ class CustomChatBubble extends CustomPainter {
       if (isOwn) {
         path = Path()
           ..moveTo(size.width - 6, size.height - 4)
-          ..quadraticBezierTo(size.width + 5, size.height, size.width + 16, size.height - 4)
-          ..quadraticBezierTo(size.width + 5, size.height - 5, size.width, size.height - 17);
+          ..quadraticBezierTo(
+              size.width + 5, size.height, size.width + 16, size.height - 4)
+          ..quadraticBezierTo(
+              size.width + 5, size.height - 5, size.width, size.height - 17);
       }
       return path;
     }
 
-    final RRect bubbleBody =
-        RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.width, size.height), Radius.circular(16));
+    final RRect bubbleBody = RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.width, size.height), Radius.circular(16));
     final Path bubbleTail = paintBubbleTail();
 
     canvas.drawRRect(bubbleBody, paint);
@@ -98,7 +100,6 @@ class CustomChatBubble extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
     return true;
   }
 }

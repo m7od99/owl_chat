@@ -48,11 +48,9 @@ class FriendCard extends StatelessWidget {
                   size: 28,
                   id: otherId(user.userId),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Expanded(
-                  child: Padding(
+                  child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +60,7 @@ class FriendCard extends StatelessWidget {
                           name(user.userId),
                           style: kFriendCardText,
                         ),
+                        const SizedBox(height: 8),
                         Opacity(
                           opacity: 0.64,
                           child: Text(
@@ -145,9 +144,9 @@ class CounterNewMessages extends StatelessWidget {
           bottom: 1,
           right: 1,
           child: Container(
-            padding: const EdgeInsets.all(7),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.indigo[400],
+              color: Color(0xFFe53170),
               shape: BoxShape.circle,
             ),
             child: Text(
