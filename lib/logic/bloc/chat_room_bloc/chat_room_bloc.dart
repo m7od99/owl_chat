@@ -33,13 +33,6 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
                 return e.id.contains(UserState().userId);
               }).toList();
 
-              emit(
-                state.copyWith(
-                  chats: _chats,
-                  isLoading: false,
-                ),
-              );
-
               NotificationController.createChatsRoomChannel(_chats);
 
               return state.copyWith(

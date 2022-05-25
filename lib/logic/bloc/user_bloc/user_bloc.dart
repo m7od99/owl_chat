@@ -66,7 +66,8 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
             state.copyWith(
               user: state.user.copyWith(
                 userSettings: state.user.userSettings.copyWith(
-                  notificationsSetting: state.user.userSettings.notificationsSetting.copyWith(
+                  notificationsSetting:
+                      state.user.userSettings.notificationsSetting.copyWith(
                     allowNotifications:
                         !state.user.userSettings.notificationsSetting.allowNotifications,
                   ),
@@ -82,9 +83,10 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
             state.copyWith(
               user: state.user.copyWith(
                 userSettings: state.user.userSettings.copyWith(
-                  notificationsSetting: state.user.userSettings.notificationsSetting.copyWith(
-                    displayNotificationsOnForeground: !state
-                        .user.userSettings.notificationsSetting.displayNotificationsOnForeground,
+                  notificationsSetting:
+                      state.user.userSettings.notificationsSetting.copyWith(
+                    displayNotificationsOnForeground: !state.user.userSettings
+                        .notificationsSetting.displayNotificationsOnForeground,
                   ),
                 ),
               ),
@@ -98,7 +100,8 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
             state.copyWith(
               user: state.user.copyWith(
                 userSettings: state.user.userSettings.copyWith(
-                  notificationsSetting: state.user.userSettings.notificationsSetting.copyWith(
+                  notificationsSetting:
+                      state.user.userSettings.notificationsSetting.copyWith(
                     sound: !state.user.userSettings.notificationsSetting.sound,
                   ),
                 ),
@@ -112,7 +115,10 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
           if (!state.user.chatsData.any((e) => e.id == value.user.id)) {
             emit(
               state.copyWith(
-                user: state.user.copyWith(chatsData: state.user.chatsData..add(value.user)),
+                user: state.user.copyWith(chatsData: [
+                  ...state.user.chatsData,
+                  value.user,
+                ]),
               ),
             );
           } else {
@@ -121,11 +127,10 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
             if (state.user.chatsData[user].photoUri != value.user.photoUri) {
               emit(
                 state.copyWith(
-                  user: state.user.copyWith(
-                    chatsData: state.user.chatsData
-                      ..removeAt(user)
-                      ..add(value.user),
-                  ),
+                  user: state.user.copyWith(chatsData: [
+                    value.user,
+                    ...state.user.chatsData..removeAt(user),
+                  ]),
                 ),
               );
             }
@@ -137,7 +142,8 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
           if (state.user.chatsData.any((e) => e.id == value.userId)) {
             emit(
               state.copyWith(
-                otherUserInfo: state.user.chatsData.firstWhere((e) => e.id == value.userId),
+                otherUserInfo:
+                    state.user.chatsData.firstWhere((e) => e.id == value.userId),
               ),
             );
           } else {

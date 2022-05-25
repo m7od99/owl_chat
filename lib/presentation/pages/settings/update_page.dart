@@ -47,7 +47,7 @@ class UpdatePage extends StatelessWidget {
       return Column(
         children: [
           Text(
-            'there is a new update to version ${state.update.newVersions}',
+            'There is a new update version ${state.update.newVersions}',
             style: const TextStyle(fontSize: 18),
           ),
           const Text('more information ...'),
@@ -57,7 +57,7 @@ class UpdatePage extends StatelessWidget {
               context.read<UpdateBloc>().add(AcceptUpdateEvent());
 
               showDialog(
-                  builder: (BuildContext context) => LoadingBouncingGrid.circle(),
+                  builder: (BuildContext context) => LoadingFlipping.circle(),
                   context: context);
             },
             title: const Center(child: Text('Update Now')),

@@ -114,19 +114,19 @@ class _ChatPageState extends State<ChatPage>
 
     if (chat.settings.any((e) => (e.userId == _userId))) {
       return;
-    } else {
-      _database.updateChatState(
-        chat.copyWith(
-          settings: chat.settings
-            ..add(
-              ChatNotificationsSettings(
-                chatId: chat.id,
-                userId: _userId,
-              ),
-            ),
-        ),
-      );
     }
+
+    _database.updateChatState(
+      chat.copyWith(
+        settings: chat.settings
+          ..add(
+            ChatNotificationsSettings(
+              chatId: chat.id,
+              userId: _userId,
+            ),
+          ),
+      ),
+    );
   }
 
   void _showArrow() {

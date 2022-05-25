@@ -88,6 +88,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
               if (_control.isLogin) {
                 add(const TapToSignUpPage());
+                router.go('/');
               }
             }
             loadSign.reset();

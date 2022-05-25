@@ -48,11 +48,19 @@ class UserControl extends ChangeNotifier {
   }
 
   Future addFriend(String userId, OwlUser otherUser) async {
-    await _firestore.collection('users').doc(userId).collection('friends').add(otherUser.toMap());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('friends')
+        .add(otherUser.toMap());
   }
 
   Future<void> updateUser(OwlUser user) async {
-    await _firestore.collection('users').doc(user.id).update(user.toMap()).catchError((e) {
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .update(user.toMap())
+        .catchError((e) {
       log(e.toString());
     }).then((value) => log('updated'));
   }
@@ -69,7 +77,11 @@ class UserControl extends ChangeNotifier {
   }
 
   Future getUserByEmail(String email) async {
-    return _firestore.collection('users').where('email', isEqualTo: userId).get().catchError((e) {
+    return _firestore
+        .collection('users')
+        .where('email', isEqualTo: userId)
+        .get()
+        .catchError((e) {
       log(e.toString());
     });
   }
@@ -186,13 +198,13 @@ class UserControl extends ChangeNotifier {
   }
 
   Future<List<OwlUser>> getUsersData() async {
-    final dynamic data = await getUsers();
+    final data = await getUsers();
     final docs = data.docs;
 
     final List<OwlUser> users = [];
     for (final user in docs) {
       final data = user.data();
-      users.add(OwlUser.fromMap(data as Map<String, dynamic>));
+      users.add(OwlUser.fromMap(data));
     }
 
     return users;
