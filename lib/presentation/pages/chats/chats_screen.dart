@@ -30,7 +30,6 @@ class _ChatsState extends State<Chats> with AutomaticKeepAliveClientMixin {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).splashColor,
             automaticallyImplyLeading: false,
             leading: Builder(
               builder: (context) {

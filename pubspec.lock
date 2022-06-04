@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  any_link_preview:
+    dependency: "direct main"
+    description:
+      name: any_link_preview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.8"
   archive:
     dependency: transitive
     description:
@@ -434,7 +441,7 @@ packages:
       name: emoji_picker_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.1"
   equatable:
     dependency: "direct main"
     description:
@@ -589,6 +596,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  firebase_performance:
+    dependency: "direct main"
+    description:
+      name: firebase_performance
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.0+13"
+  firebase_performance_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_performance_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+7"
+  firebase_performance_web:
+    dependency: transitive
+    description:
+      name: firebase_performance_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+13"
   firebase_remote_config:
     dependency: "direct main"
     description:
@@ -664,13 +692,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_form_bloc:
-    dependency: "direct main"
-    description:
-      name: flutter_form_bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.30.1"
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -678,27 +699,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.4"
-  flutter_keyboard_visibility:
-    dependency: transitive
+  flutter_linkify:
+    dependency: "direct main"
     description:
-      name: flutter_keyboard_visibility
+      name: flutter_linkify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
-  flutter_keyboard_visibility_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  flutter_keyboard_visibility_web:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
+    version: "5.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -784,13 +791,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "10.1.0"
-  form_bloc:
-    dependency: transitive
-    description:
-      name: form_bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.30.0"
   freezed:
     dependency: "direct main"
     description:
@@ -818,7 +818,7 @@ packages:
       name: getwidget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.1.0"
   giphy_get:
     dependency: "direct main"
     description:
@@ -1022,6 +1022,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  linkify:
+    dependency: transitive
+    description:
+      name: linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   lint:
     dependency: "direct dev"
     description:
@@ -1517,6 +1524,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  string_validator:
+    dependency: transitive
+    description:
+      name: string_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   synchronized:
     dependency: transitive
     description:
@@ -1588,7 +1602,7 @@ packages:
     source: hosted
     version: "4.2.0"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
       url: "https://pub.dartlang.org"

@@ -193,6 +193,13 @@ class MessageControl extends ChangeNotifier {
     return false;
   }
 
+  updateLastMessage(String chatId, String lastMessage, Timestamp time) async {
+    await _firestore.collection('messages').doc(chatId).update({
+      'lastMessage': lastMessage,
+      'time': time,
+    });
+  }
+
   Stream<List<Chat>> getUserChatsRoom() {
     return _firestore
         .collection('messages')

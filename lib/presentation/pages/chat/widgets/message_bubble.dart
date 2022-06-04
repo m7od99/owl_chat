@@ -1,3 +1,4 @@
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:loading_animations/loading_animations.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/presentation/widgets/multi_language_format.dart';
+import 'package:linkify/linkify.dart';
 
 String format(DateTime time) {
   return DateFormat('hh:mm a').format(time);
@@ -95,8 +97,8 @@ class MessageBubbleAnimated extends StatelessWidget {
           tag: index,
           child: Padding(
             padding: EdgeInsets.only(
-              left: message.isMe ? 40 : 0,
-              right: message.isMe ? 0 : 40,
+              left: message.isMe ? 50 : 0,
+              right: message.isMe ? 0 : 50,
               top: 3,
               bottom: 3,
             ),
@@ -128,46 +130,43 @@ class BubbleAnimated extends StatelessWidget {
 
   final MessageModel message;
 
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment:
-          message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: message.isMe ? const Color(0xff0A6873) : const Color(0xFF044A59),
-            borderRadius: message.isMe ? meBorder : otherBorder,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
-          ),
-          child: Row(
-            textBaseline: TextBaseline.alphabetic,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment:
-                message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AutoDirectionality(
-                text: message.text,
-                child: Flexible(
-                  child: SelectableText(
-                    message.text.trim(),
-                    style: GoogleFonts.almarai(
-                      fontSize: 18,
-                      height: 1.02,
+    return Container(
+      decoration: BoxDecoration(
+        color: message.isMe ? const Color(0xff0A6873) : const Color(0xFF044A59),
+        borderRadius: message.isMe ? meBorder : otherBorder,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 6,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment:
+            message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Container(
+            child: Row(
+              textBaseline: TextBaseline.alphabetic,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment:
+                  message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AutoDirectionality(
+                  text: message.text,
+                  child: Flexible(
+                    child: LinkMessage(
+                      messageModel: message,
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        SendingInfo(message: message),
-      ],
+          SendingInfo(message: message),
+        ],
+      ),
     );
   }
 }
@@ -184,53 +183,81 @@ class SendingInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: 0.64,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              format(message.time),
-              style: GoogleFonts.notoSans(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            format(message.time),
+            style: GoogleFonts.notoSans(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.01,
+            ),
+          ),
+          const SizedBox(width: 3),
+          if (message.isEdited != null && message.isEdited == true)
+            const Text(
+              'edited',
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(width: 3),
-            if (message.isEdited != null && message.isEdited == true)
-              const Text(
-                'edited',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            const SizedBox(width: 3),
-            if (message.isMe && message.isSend != null && message.isSend == false)
-              LoadingRotating.square(
-                size: 14,
-                backgroundColor: Colors.white,
-                borderColor: Colors.black,
-              ),
-            if (message.isMe &&
-                message.isSeen != null &&
-                message.isSeen == true &&
-                message.isSend == true)
-              const Icon(
-                LineAwesomeIcons.double_check,
-                size: 15,
-              ),
-            if (message.isMe &&
-                message.isSend != null &&
-                message.isSend == true &&
-                message.isSeen == null)
-              const Icon(
-                Icons.done,
-                size: 15,
-              ),
-          ],
-        ),
+          const SizedBox(width: 3),
+          if (message.isMe && message.isSend != null && message.isSend == false)
+            LoadingRotating.square(
+              size: 14,
+              backgroundColor: Colors.white,
+              borderColor: Colors.black,
+            ),
+          if (message.isMe &&
+              message.isSeen != null &&
+              message.isSeen == true &&
+              message.isSend == true)
+            const Icon(
+              LineAwesomeIcons.double_check,
+              size: 15,
+            ),
+          if (message.isMe &&
+              message.isSend != null &&
+              message.isSend == true &&
+              message.isSeen == null)
+            const Icon(
+              Icons.done,
+              size: 15,
+            ),
+        ],
       ),
     );
+  }
+}
+
+class LinkMessage extends StatelessWidget {
+  const LinkMessage({Key? key, required this.messageModel}) : super(key: key);
+
+  final MessageModel messageModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final elements = linkify(messageModel.text);
+
+    return Text.rich(TextSpan(
+      children: elements.map<InlineSpan>((element) {
+        if (element is LinkableElement) {
+          return WidgetSpan(
+              child: AnyLinkPreview(
+            link: element.url,
+          ));
+        }
+        return TextSpan(
+          text: element.text.trim(),
+          style: GoogleFonts.almarai(
+            fontSize: 18,
+            height: 1.10,
+            color: Colors.white,
+          ),
+        );
+      }).toList(),
+    ));
   }
 }

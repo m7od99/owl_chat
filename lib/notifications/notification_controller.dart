@@ -250,7 +250,7 @@ class PushNotificationService {
     late final String? token;
     late final NotificationsModel notificationsModel;
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
 
     // check the other user location before send the notification.
     final otherUserAlreadyOnChat =

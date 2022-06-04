@@ -13,9 +13,9 @@ import 'package:firebase_app_installations_web/firebase_app_installations_web.da
 import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_messaging_web/firebase_messaging_web.dart';
+import 'package:firebase_performance_web/firebase_performance_web.dart';
 import 'package:firebase_remote_config_web/firebase_remote_config_web.dart';
 import 'package:firebase_storage_web/firebase_storage_web.dart';
-import 'package:flutter_keyboard_visibility_web/flutter_keyboard_visibility_web.dart';
 import 'package:flutter_native_splash/flutter_native_splash_web.dart';
 import 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
@@ -34,9 +34,9 @@ void registerPlugins(Registrar registrar) {
   FirebaseAuthWeb.registerWith(registrar);
   FirebaseCoreWeb.registerWith(registrar);
   FirebaseMessagingWeb.registerWith(registrar);
+  FirebasePerformanceWeb.registerWith(registrar);
   FirebaseRemoteConfigWeb.registerWith(registrar);
   FirebaseStorageWeb.registerWith(registrar);
-  FlutterKeyboardVisibilityPlugin.registerWith(registrar);
   FlutterNativeSplashWeb.registerWith(registrar);
   FluttertoastWebPlugin.registerWith(registrar);
   ImagePickerPlugin.registerWith(registrar);

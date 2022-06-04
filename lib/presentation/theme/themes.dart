@@ -43,7 +43,6 @@ class ThemeProvider extends ChangeNotifier {
     return ThemeData.light().copyWith(
       backgroundColor: kBackgroundColor,
       primaryColor: kPrimaryColor,
-      useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: appBarLightTheme(),
       iconTheme: const IconThemeData(color: kContentColorLightTheme),

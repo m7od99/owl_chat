@@ -53,39 +53,42 @@ class _ChatsChatsListState extends State<ChatsList> {
         }
         final chats = state.chats;
 
-        return CustomScrollView(
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Column(
-                    children: [
-                      if (index != 0) Divider(),
-                      Provider(
-                        lazy: true,
-                        key: Key(chats[index].id),
-                        create: (context) => MessageBloc(chat: state.chats[index]),
-                        builder: (context, widget) {
-                          context.read<MessageBloc>().add(const MessagesReceived());
-                          return FriendCard(
-                            key: Key(chats[index].id),
-                            chat: chats[index],
-                            onTap: () async {
-                              context.go(
-                                '/chat/${chats[index].id}',
-                                extra: context.read<MessageBloc>(),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-                childCount: chats.length,
+        return Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return Column(
+                      children: [
+                        if (index != 0) Divider(height: 5),
+                        Provider(
+                          lazy: true,
+                          key: Key(chats[index].id),
+                          create: (context) => MessageBloc(chat: state.chats[index]),
+                          builder: (context, widget) {
+                            context.read<MessageBloc>().add(const MessagesReceived());
+                            return FriendCard(
+                              key: Key(chats[index].id),
+                              chat: chats[index],
+                              onTap: () async {
+                                context.go(
+                                  '/chat/${chats[index].id}',
+                                  extra: context.read<MessageBloc>(),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                  childCount: chats.length,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

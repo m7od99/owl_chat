@@ -26,8 +26,8 @@ class SendMessageField extends StatefulWidget {
   _SendMessageFieldState createState() => _SendMessageFieldState();
 }
 
-class _SendMessageFieldState extends State<SendMessageField> with AutomaticKeepAliveClientMixin {
-  bool isRTL = false;
+class _SendMessageFieldState extends State<SendMessageField>
+    with AutomaticKeepAliveClientMixin {
   Category categoryIndex = Category.RECENT;
 
   final _focusNode = FocusNode();
@@ -47,146 +47,151 @@ class _SendMessageFieldState extends State<SendMessageField> with AutomaticKeepA
 
     final InputDecoration _inputDecoration = InputDecoration(
       hintText: 'type message ...',
-      filled: true,
+
+      //    filled: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       border: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderSide: BorderSide(
+          style: BorderStyle.none,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      fillColor: Colors.black38,
-      isDense: true,
-      suffix: GestureDetector(
-        child: const Icon(
-          Icons.sentiment_satisfied_rounded,
+        borderSide: BorderSide(
+          color: Colors.white,
         ),
-        onTap: () {
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      suffixIcon: IconButton(
+        iconSize: 25,
+        color:
+            Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+        icon: Icon(Icons.emoji_emotions_rounded),
+        onPressed: () {
           setState(() {
             emojiShowing = !emojiShowing;
             _focusNode.unfocus();
           });
         },
       ),
+      //    fillColor: Colors.black38,
+      isDense: true,
     );
 
-    return Material(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Column(
-          //    mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Column(
+        //    mainAxisAlignment: MainAxisAlignment.center,
 
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                GifsButton(
-                  chat: chat,
-                ),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: AutoDirectionality(
-                          text: widget.controller.text,
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            showCursor: true,
-                            cursorHeight: 12,
-                            selectionControls: _selectControl,
-                            minLines: 1,
-                            maxLines: 10,
-                            enabled: true,
-                            controller: widget.controller,
-                            focusNode: _focusNode,
-                            decoration: _inputDecoration,
-                            onChanged: (str) {
-                              context.read<SendMessageFormBloc>().add(
-                                    SendMessageFormEvent.updateText(
-                                      text: widget.controller.text,
-                                    ),
-                                  );
+        children: [
+          const Divider(
+            height: 8,
+            thickness: 2,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GifsButton(
+                chat: chat,
+              ),
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: AutoDirectionality(
+                        text: widget.controller.text,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
+                          selectionControls: _selectControl,
+                          minLines: 1,
+                          maxLines: 10,
+                          enabled: true,
+                          controller: widget.controller,
+                          focusNode: _focusNode,
+                          decoration: _inputDecoration,
+                          onChanged: (str) {
+                            context.read<SendMessageFormBloc>().add(
+                                  SendMessageFormEvent.updateText(
+                                    text: widget.controller.text,
+                                  ),
+                                );
 
-                              //    sendMessage.updateMessage(str);
-                            },
-                            keyboardType: TextInputType.multiline,
-                            toolbarOptions: const ToolbarOptions(
-                              copy: true,
-                              cut: true,
-                              selectAll: true,
-                              paste: true,
-                            ),
-                            textCapitalization: TextCapitalization.sentences,
-                            onTap: () {
-                              setState(() {
-                                if (emojiShowing) emojiShowing = !emojiShowing;
-                              });
-                            },
-                            style: GoogleFonts.actor(
-                              height: 1.05,
-                              fontSize: 18,
-                              color: Colors.white,
-                              textBaseline: TextBaseline.alphabetic,
-                            ),
+                            //    sendMessage.updateMessage(str);
+                          },
+                          keyboardType: TextInputType.multiline,
+                          toolbarOptions: const ToolbarOptions(
+                            copy: true,
+                            cut: true,
+                            selectAll: true,
+                            paste: true,
+                          ),
+                          textCapitalization: TextCapitalization.sentences,
+                          onTap: () {
+                            setState(() {
+                              if (emojiShowing) emojiShowing = !emojiShowing;
+                            });
+                          },
+                          style: GoogleFonts.actor(
+                            height: 1.05,
+                            fontSize: 18,
+                            textBaseline: TextBaseline.alphabetic,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () async {
-                    context.read<SendMessageFormBloc>().add(
-                          SendMessageFormEvent.updateText(
-                            text: widget.controller.text,
-                          ),
-                        );
-
-                    context
-                        .read<SendMessageFormBloc>()
-                        .add(const SendMessageFormEvent.sendMessage());
-
-                    widget.controller.clear();
-
-                    widget.itemScrollController.scrollTo(
-                      index: 0,
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeInBack,
-                    );
-                  },
-                  iconSize: 25,
-                  color: Colors.blue,
-                  icon: const Icon(
-                    Icons.send,
-                  ),
-                ),
-              ],
-            ),
-            Offstage(
-              offstage: !emojiShowing,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: SizedBox(
-                  height: 250,
-                  child: EmojiPicker(
-                    onEmojiSelected: (Category category, Emoji emoji) {
-                      widget.controller.text += emoji.emoji;
-                    },
-                    config: const Config(
-                      emojiSizeMax: 25,
-                      columns: 9,
                     ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                onPressed: () async {
+                  context.read<SendMessageFormBloc>().add(
+                        SendMessageFormEvent.updateText(
+                          text: widget.controller.text,
+                        ),
+                      );
+
+                  context
+                      .read<SendMessageFormBloc>()
+                      .add(const SendMessageFormEvent.sendMessage());
+
+                  widget.controller.clear();
+
+                  widget.itemScrollController.scrollTo(
+                    index: 0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInBack,
+                  );
+                },
+                iconSize: 25,
+                //  color: Theme.of(context).primaryColor,
+                icon: const Icon(
+                  Icons.send,
+                ),
+              ),
+            ],
+          ),
+          Offstage(
+            offstage: !emojiShowing,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: SizedBox(
+                height: 250,
+                child: EmojiPicker(
+                  onEmojiSelected: (Category category, Emoji emoji) {
+                    widget.controller.text += emoji.emoji;
+                  },
+                  config: const Config(
+                    emojiSizeMax: 25,
+                    columns: 9,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

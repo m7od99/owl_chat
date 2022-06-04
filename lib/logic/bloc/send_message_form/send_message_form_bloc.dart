@@ -90,13 +90,7 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
           if (!state.isEdit && state.message.text.isNotEmpty && !state.isGif) {
             _control.sendMessageModel(state.message, chat.id);
 
-            final _chat = await _control.getSpecificChat(chat.id);
-
-            chat = _chat!;
-
-            _control.updateChatState(
-              chat.copyWith(lastMessage: state.message.text, time: Timestamp.now()),
-            );
+            _control.updateLastMessage(chat.id, state.message.text, Timestamp.now());
 
             await PushNotificationService.pushMessageNotification(state.message);
           }
@@ -105,9 +99,7 @@ class SendMessageFormBloc extends Bloc<SendMessageFormEvent, SendMessageFormStat
           if (state.isGif) {
             await _control.sendMessageModel(state.message, chat.id);
 
-            _control.updateChatState(
-              chat.copyWith(lastMessage: 'gif', time: Timestamp.now()),
-            );
+            _control.updateLastMessage(chat.id, 'gif', Timestamp.now());
           }
 
           ///

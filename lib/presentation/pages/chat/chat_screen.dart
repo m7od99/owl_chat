@@ -205,7 +205,6 @@ class _ChatPageState extends State<ChatPage>
             final chat = widget.chat;
             return Scaffold(
               appBar: AppBar(
-                backgroundColor: Theme.of(context).splashColor,
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_ios_sharp),
                   onPressed: () async {
@@ -324,14 +323,16 @@ class ChatAppBar extends StatelessWidget {
                       'online',
                       style: style,
                     );
-                    // } else if (snapshot.data!.lastSeen != null) {
-                    //   return Text(
-                    //     'last seen ${snapshot.data!.lastSeen!}',
-                    //     style: style,
-                    //   );
-                  } else {
+                  }
+                  // else if (snapshot.data!.lastSeen != null) {
+                  //   return Text(
+                  //     'last seen ${snapshot.data!.lastSeen!}',
+                  //     style: style,
+                  //   );
+                  // }
+                  else {
                     return const Text(
-                      'last seen',
+                      'last seen recently',
                       style: style,
                     );
                   }

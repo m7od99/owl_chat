@@ -36,8 +36,9 @@ class GifsButton extends StatelessWidget {
       },
       icon: SvgPicture.asset(
         'assets/icons/sticker_face.svg',
-        height: 25,
-        color: Colors.white,
+        height: 30,
+        color:
+            Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
         fit: BoxFit.cover,
       ),
     );
