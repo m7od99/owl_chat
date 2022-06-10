@@ -1,6 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
+import '../data/models/models.dart';
+import '../logic/event_handler/user_state.dart';
+
 ///
 class NotificationChannelControl {
   /// A basic Notification channel with default permissions.
@@ -42,14 +45,14 @@ class NotificationChannelControl {
   ///
   /// Required the chat id , its should use it as a Key to access
   /// channel .
-  static Future<void> createMessageNotificationChannel(String chatId) async {
+  static Future<void> createMessageNotificationChannel(Chat chat) async {
     await AwesomeNotifications().setChannel(
       NotificationChannel(
-        channelKey: chatId,
-        channelName: 'message notifications',
+        channelKey: chat.id,
+        channelName: UserState().otherName(chat),
         channelDescription: 'Notification channel for messages',
         channelShowBadge: true,
-        channelGroupKey: chatId,
+        channelGroupKey: chat.id,
         playSound: true,
         onlyAlertOnce: true,
         importance: NotificationImportance.Max,

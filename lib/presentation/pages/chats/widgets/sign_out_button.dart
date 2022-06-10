@@ -24,8 +24,8 @@ class LogoutButton extends StatelessWidget {
             context.go('/login');
           },
           child: Material(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.indigo[600],
+            borderRadius: BorderRadius.circular(25),
+            color: Color(0xFFe53170),
             elevation: 1,
             shadowColor: Colors.indigo[300],
             child: const Padding(
@@ -34,7 +34,7 @@ class LogoutButton extends StatelessWidget {
                 'Logout',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),

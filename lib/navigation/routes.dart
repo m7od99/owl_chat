@@ -19,7 +19,7 @@ import 'package:owl_chat/presentation/pages/settings/settings_screen.dart';
 import 'package:owl_chat/presentation/pages/settings/theme_sw.dart';
 import 'package:owl_chat/presentation/pages/settings/update_page.dart';
 
-import '../presentation/pages/chatdetail/chat_detail.dart';
+import '../presentation/pages/chat_detail/chat_detail.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Routes {
@@ -100,8 +100,6 @@ class Routes {
     name: ChatScreen.id,
     redirect: (state) {
       return null;
-
-      //  final bloc = state.extra as MessageBloc;
     },
     pageBuilder: (context, state) {
       final bloc = state.extra as MessageBloc;

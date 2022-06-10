@@ -67,8 +67,10 @@ dependencies:
   line_awesome_flutter: any
   line_awesome_icons: ^1.0.4+2
   line_icons: ^2.0.1
+  loading_animation_widget: ^1.2.0+1
   loading_animations: ^2.2.0
   material_floating_search_bar: ^0.3.4
+  octo_image: ^1.0.2
   package_info: ^2.0.2
   path_provider: ^2.0.8
   provider: ^6.0.0

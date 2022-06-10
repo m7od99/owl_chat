@@ -193,7 +193,8 @@ class MessageControl extends ChangeNotifier {
     return false;
   }
 
-  updateLastMessage(String chatId, String lastMessage, Timestamp time) async {
+  Future<void> updateLastMessage(
+      String chatId, String lastMessage, Timestamp time) async {
     await _firestore.collection('messages').doc(chatId).update({
       'lastMessage': lastMessage,
       'time': time,

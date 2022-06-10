@@ -1,5 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/chat.dart';
@@ -51,22 +53,14 @@ class _SendMessageFieldState extends State<SendMessageField>
       //    filled: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       border: const OutlineInputBorder(
-        borderSide: BorderSide(
-          style: BorderStyle.none,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide.none,
       ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.white,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-      ),
+      focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none),
       suffixIcon: IconButton(
         iconSize: 25,
         color:
             Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-        icon: Icon(Icons.emoji_emotions_rounded),
+        icon: Icon(FontAwesomeIcons.faceSmile),
         onPressed: () {
           setState(() {
             emojiShowing = !emojiShowing;
@@ -80,13 +74,14 @@ class _SendMessageFieldState extends State<SendMessageField>
 
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
+      //  margin: EdgeInsets.all(4),
       child: Column(
         //    mainAxisAlignment: MainAxisAlignment.center,
 
         children: [
           const Divider(
             height: 8,
-            thickness: 2,
+            thickness: 1,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -144,7 +139,7 @@ class _SendMessageFieldState extends State<SendMessageField>
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 6),
               IconButton(
                 onPressed: () async {
                   context.read<SendMessageFormBloc>().add(
@@ -161,14 +156,15 @@ class _SendMessageFieldState extends State<SendMessageField>
 
                   widget.itemScrollController.scrollTo(
                     index: 0,
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInBack,
                   );
                 },
                 iconSize: 25,
                 //  color: Theme.of(context).primaryColor,
                 icon: const Icon(
-                  Icons.send,
+                  CupertinoIcons.arrow_up_circle,
+                  size: 32,
                 ),
               ),
             ],

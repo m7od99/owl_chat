@@ -14,14 +14,12 @@ class MessageAnimatedList extends StatefulWidget {
     required this.itemScrollController,
     required this.textEditingController,
     required this.itemPositionsListener,
-    required this.messageBloc,
   }) : super(key: key);
 
   final Chat chat;
   final ItemScrollController itemScrollController;
   final TextEditingController textEditingController;
   final ItemPositionsListener itemPositionsListener;
-  final MessageBloc messageBloc;
 
   @override
   State<MessageAnimatedList> createState() => _MessageAnimatedListState();

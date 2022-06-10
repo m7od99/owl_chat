@@ -13,7 +13,11 @@ class UpdateControl {
 
   /// get the app version stats with latest apk uri
   Future<Update?> getUpdateStatus() {
-    return _firestore.collection('update').doc('qgbGVG3A0S24q8s8r0wi').get().then((value) {
+    return _firestore
+        .collection('update')
+        .doc('qgbGVG3A0S24q8s8r0wi')
+        .get()
+        .then((value) {
       if (value.exists) {
         final data = value.data();
         log(data.toString());
@@ -23,7 +27,7 @@ class UpdateControl {
     });
   }
 
-  Stream<Update?> getUpdateData() async* {
+  Stream<Update> getUpdateData() async* {
     yield* _firestore
         .collection('update')
         .doc('qgbGVG3A0S24q8s8r0wi')
@@ -32,7 +36,9 @@ class UpdateControl {
   }
 
   Future saveUpdateInfoToDataBase(About about) async {
-    await _firestore.collection('update/qgbGVG3A0S24q8s8r0wi/${about.version}').add(about.toJson());
+    await _firestore
+        .collection('update/qgbGVG3A0S24q8s8r0wi/${about.version}')
+        .add(about.toJson());
   }
 
   Stream<About?> getUpdateInfoFromDataBase() async* {

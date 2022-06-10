@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
 import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
@@ -77,6 +78,86 @@ class _ChatProfilePhotoState extends State<ChatProfilePhoto> {
         return CircleAvatar(
           backgroundImage: const AssetImage('assets/images/user.png'),
           radius: widget.size,
+        );
+      },
+    );
+  }
+}
+
+class ChatDetailPhoto extends StatelessWidget {
+  const ChatDetailPhoto(
+      {Key? key, required this.id, required this.hight, required this.width})
+      : super(key: key);
+
+  final double hight;
+  final double width;
+
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        late OwlUser? user = null;
+
+        if (state.user.chatsData.any((e) => e.id == id)) {
+          user = state.user.chatsData.firstWhere((e) => e.id == id);
+        }
+
+        if (user != null && user.photoUri != null) {
+          return CachedNetworkImage(
+            imageUrl: user.photoUri!,
+            placeholder: (context, o) => CircleAvatar(
+              radius: hight,
+            ),
+            width: width,
+            height: hight,
+          );
+        }
+        return Container(
+          height: hight,
+          width: width,
+          color: Colors.white,
+        );
+      },
+    );
+  }
+}
+
+class ChatPhoto extends StatelessWidget {
+  const ChatPhoto({
+    Key? key,
+    required this.userId,
+    required this.height,
+    required this.width,
+    this.circle = false,
+  }) : super(key: key);
+
+  final String userId;
+
+  final double height;
+  final double width;
+
+  final bool? circle;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<OwlUser>(
+      stream: UserControl().getUserChanges(userId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final user = snapshot.data!;
+
+          if (user.photoUri != null) {
+            return CachedNetworkImage(
+              imageUrl: user.photoUri!,
+            );
+          }
+        }
+
+        return Container(
+          height: height,
+          width: width,
         );
       },
     );

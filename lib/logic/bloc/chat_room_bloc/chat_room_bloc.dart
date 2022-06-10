@@ -52,5 +52,10 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
     });
   }
 
+  @override
+  void onTransition(Transition<ChatRoomEvent, ChatRoomState> transition) {
+    super.onTransition(transition);
+  }
+
   final _control = MessageControl();
 }

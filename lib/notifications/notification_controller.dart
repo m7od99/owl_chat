@@ -183,7 +183,7 @@ class NotificationController {
   /// notification for specific chat.
   static Future createChatsRoomChannel(List<Chat> chats) async {
     for (final chat in chats) {
-      await NotificationChannelControl.createMessageNotificationChannel(chat.id);
+      await NotificationChannelControl.createMessageNotificationChannel(chat);
     }
   }
 

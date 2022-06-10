@@ -21,13 +21,13 @@ class SettingsScreen extends StatelessWidget {
               //   trailing: Text('${settings.chatFontSize.toInt()}'),
               // ),
               ListTile(
-                tileColor: Colors.black26,
-                title: const Text('Notifications'),
-                trailing: const Icon(Icons.notifications),
+                tileColor: Colors.grey,
+                title: const Text('Notifications Settings'),
+                leading: const Icon(Icons.notifications),
                 onTap: () {
-                  //    context.goNamed(NotificationsPage.id);
-                  AwesomeNotifications().showAlarmPage();
+                  AwesomeNotifications().showNotificationConfigPage();
                 },
+                trailing: Icon(Icons.arrow_forward_ios),
               ),
             ],
           ),

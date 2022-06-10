@@ -71,7 +71,7 @@ class _ChatsChatsListState extends State<ChatsList> {
                             context.read<MessageBloc>().add(const MessagesReceived());
                             return FriendCard(
                               key: Key(chats[index].id),
-                              chat: chats[index],
+                              chat: state.chats[index],
                               onTap: () async {
                                 context.go(
                                   '/chat/${chats[index].id}',

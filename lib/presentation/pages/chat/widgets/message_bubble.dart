@@ -4,28 +4,31 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:loading_animations/loading_animations.dart';
 // ignore: depend_on_referenced_packages
 import 'package:owl_chat/data/models/chats/message_model.dart';
 import 'package:owl_chat/presentation/widgets/multi_language_format.dart';
 import 'package:linkify/linkify.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 String format(DateTime time) {
   return DateFormat('hh:mm a').format(time);
 }
 
+const radius = Radius.circular(20);
+
 const BorderRadius meBorder = BorderRadius.only(
-  topLeft: Radius.circular(12),
-  topRight: Radius.circular(12),
-  bottomLeft: Radius.circular(12),
+  topLeft: radius,
+  topRight: radius,
+  bottomLeft: radius,
 //  bottomRight: Radius.circular(-15),
 );
 
 const BorderRadius otherBorder = BorderRadius.only(
-  topRight: Radius.circular(12),
-  topLeft: Radius.circular(12),
+  topRight: radius,
+  topLeft: radius,
 
-  bottomRight: Radius.circular(12),
+  bottomRight: radius,
 //  bottomLeft: Radius.circular(25),
 );
 
@@ -51,7 +54,8 @@ class NewGifWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: CachedNetworkImage(
               imageUrl: message.text,
-              placeholder: (context, url) => const CircularProgressIndicator(),
+              progressIndicatorBuilder: (context, url, down) =>
+                  const CircularProgressIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
@@ -60,11 +64,8 @@ class NewGifWidget extends StatelessWidget {
             right: 1,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-              child: Text(
-                format(message.time),
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+              child: SendingInfo(
+                message: message,
               ),
             ),
           ),
@@ -73,6 +74,9 @@ class NewGifWidget extends StatelessWidget {
     );
   }
 }
+
+const myColor = Color(0xff575366);
+const chatWithColor = Color(0xFF32292F);
 
 class MessageBubbleAnimated extends StatelessWidget {
   const MessageBubbleAnimated({
@@ -133,24 +137,20 @@ class BubbleAnimated extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: message.isMe ? const Color(0xff0A6873) : const Color(0xFF044A59),
+        color: message.isMe ? myColor : chatWithColor,
         borderRadius: message.isMe ? meBorder : otherBorder,
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
         vertical: 6,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment:
-            message.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      child: Wrap(
+        spacing: 1.5,
+        crossAxisAlignment: WrapCrossAlignment.end,
+        alignment: message.isMe ? WrapAlignment.end : WrapAlignment.start,
         children: [
           Container(
             child: Row(
-              textBaseline: TextBaseline.alphabetic,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment:
-                  message.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 AutoDirectionality(
@@ -192,31 +192,28 @@ class SendingInfo extends StatelessWidget {
               fontSize: 11,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.01,
+              color: Colors.white,
             ),
           ),
-          const SizedBox(width: 3),
+          //  const SizedBox(width: 2),
           if (message.isEdited != null && message.isEdited == true)
-            const Text(
-              'edited',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 1),
+              child: const Text(
+                'edited',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
-          const SizedBox(width: 3),
+          const SizedBox(width: 2),
           if (message.isMe && message.isSend != null && message.isSend == false)
-            LoadingRotating.square(
-              size: 14,
-              backgroundColor: Colors.white,
-              borderColor: Colors.black,
-            ),
-          if (message.isMe &&
-              message.isSeen != null &&
-              message.isSeen == true &&
-              message.isSend == true)
-            const Icon(
-              LineAwesomeIcons.double_check,
+            LoadingAnimationWidget.discreteCircle(
               size: 15,
+              color: Colors.white,
+              secondRingColor: Colors.black,
             ),
           if (message.isMe &&
               message.isSend != null &&
@@ -224,6 +221,16 @@ class SendingInfo extends StatelessWidget {
               message.isSeen == null)
             const Icon(
               Icons.done,
+              size: 15,
+              color: Colors.white,
+            ),
+          if (message.isMe &&
+              message.isSeen != null &&
+              message.isSeen == true &&
+              message.isSend == true)
+            const Icon(
+              LineAwesomeIcons.double_check,
+              color: Colors.white,
               size: 15,
             ),
         ],
@@ -241,12 +248,32 @@ class LinkMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final elements = linkify(messageModel.text);
 
-    return Text.rich(TextSpan(
+    return SelectableText.rich(TextSpan(
       children: elements.map<InlineSpan>((element) {
         if (element is LinkableElement) {
           return WidgetSpan(
-              child: AnyLinkPreview(
-            link: element.url,
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SelectableText(
+                element.text,
+                onTap: () async {
+                  if (await canLaunchUrlString(element.url)) {
+                    await launchUrlString(element.url);
+                  }
+                },
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 3),
+              AnyLinkPreview(
+                displayDirection: UIDirection.uiDirectionHorizontal,
+                link: element.url,
+              ),
+            ],
           ));
         }
         return TextSpan(

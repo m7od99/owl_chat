@@ -76,7 +76,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future updateLaseSeen(Timestamp time) async {
-    final lastSeen = Helper.format(time);
+    final lastSeen = Helper.readTimestamp(time);
 
     log('update last seen');
 

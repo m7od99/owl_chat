@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/data_controller/message_control/message_control.dart';
 import 'package:owl_chat/data/data_controller/user_control.dart';
 import 'package:owl_chat/data/models/models.dart';
+import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
 import 'package:owl_chat/presentation/pages/chat/widgets/edits_widget.dart';
@@ -35,14 +36,18 @@ class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMi
 
     final MessageBloc bloc = ModalRoute.of(context)!.settings.arguments as MessageBloc;
 
-    return BlocProvider<SendMessageFormBloc>(
-      create: (context) => SendMessageFormBloc(chat: bloc.chat),
-      child: ChatPage(
-        chat: bloc.chat,
-        messageBloc: bloc,
-        key: Key(bloc.chat.id),
-      ),
-    );
+    return BlocBuilder<ChatRoomBloc, ChatRoomState>(builder: (context, chats) {
+      final chat = chats.chats.firstWhere((element) => element.id == bloc.chat.id);
+
+      return BlocProvider<SendMessageFormBloc>(
+        create: (context) => SendMessageFormBloc(chat: chat),
+        child: ChatPage(
+          chat: chat,
+          messageBloc: bloc,
+          key: Key(bloc.chat.id),
+        ),
+      );
+    });
     //  user.updateOnChat(chat.id);
   }
 
@@ -80,7 +85,7 @@ class _ChatPageState extends State<ChatPage>
   Future _jumpToEnd() async {
     await itemScrollController.scrollTo(
       index: 0,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
       curve: Curves.easeInOutCubic,
     );
   }
@@ -213,12 +218,13 @@ class _ChatPageState extends State<ChatPage>
                   },
                 ),
                 title: ChatAppBar(user: user, chat: chat),
+                actions: [],
               ),
               body: Column(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
+                      onDoubleTap: () {
                         final FocusScopeNode currentFocus = FocusScope.of(context);
 
                         if (!currentFocus.hasPrimaryFocus) {
@@ -231,7 +237,6 @@ class _ChatPageState extends State<ChatPage>
                         itemScrollController: itemScrollController,
                         textEditingController: _controller,
                         itemPositionsListener: itemPositionsListener,
-                        messageBloc: widget.messageBloc,
                       ),
                     ),
                   ),

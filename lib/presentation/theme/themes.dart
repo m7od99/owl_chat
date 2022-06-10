@@ -15,7 +15,6 @@ AppBarTheme appBaDarkTheme() {
 AppBarTheme appBarLightTheme() {
   return const AppBarTheme(
     centerTitle: false,
-    color: Colors.white,
     elevation: 0,
     iconTheme: IconThemeData(color: Colors.black),
   );
@@ -43,7 +42,7 @@ class ThemeProvider extends ChangeNotifier {
     return ThemeData.light().copyWith(
       backgroundColor: kBackgroundColor,
       primaryColor: kPrimaryColor,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Color.fromARGB(255, 225, 227, 212),
       appBarTheme: appBarLightTheme(),
       iconTheme: const IconThemeData(color: kContentColorLightTheme),
       textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)

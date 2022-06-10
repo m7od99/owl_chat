@@ -61,7 +61,7 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
     final control = UpdateControl();
 
     _streamSubscription = control.getUpdateData().listen((update) {
-      add(LoadUpdateData(update: update!));
+      add(LoadUpdateData(update: update));
     });
 
     final runVersion = await PackageInfo.fromPlatform();

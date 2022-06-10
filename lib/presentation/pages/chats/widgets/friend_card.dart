@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:owl_chat/helper/helper.dart';
 import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
 import 'package:owl_chat/presentation/widgets/profile_photo.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +79,7 @@ class FriendCard extends StatelessWidget {
                 Opacity(
                   opacity: 0.64,
                   child: Text(
-                    readTimestamp(chat.time!),
+                    Helper.readTimestamp(chat.time!),
                     style: GoogleFonts.almarai(
                       fontSize: 13,
                     ),
@@ -94,39 +93,6 @@ class FriendCard extends StatelessWidget {
       ),
     );
   }
-}
-
-String readTimestamp(Timestamp timestamp) {
-  final now = DateTime.now();
-  final format = DateFormat('hh:mm a');
-  final diffYearFormat = DateFormat('dd/MM/yyyy');
-  final diffFormat = DateFormat('dd/MM');
-
-  final DateTime date = timestamp.toDate();
-
-  final diff = now.difference(date);
-  var time = '';
-
-  if (diff.inSeconds <= 0 ||
-      diff.inSeconds > 0 && diff.inMinutes == 0 ||
-      diff.inMinutes > 0 && diff.inHours == 0 ||
-      diff.inHours > 0 && diff.inDays == 0) {
-    time = format.format(date);
-  } else {
-    if (diff.inDays == 1) {
-      time = '${diff.inDays} day ago';
-    } else if (diff.inDays <= 6) {
-      time = '${diff.inDays} days ago';
-    } else {
-      if (now.year - date.year >= 1) {
-        time = diffYearFormat.format(date);
-      } else {
-        time = diffFormat.format(date);
-      }
-    }
-  }
-
-  return time;
 }
 
 class CounterNewMessages extends StatelessWidget {
@@ -203,7 +169,7 @@ class ChatCard extends StatelessWidget {
           Opacity(
             opacity: 0.64,
             child: Text(
-              readTimestamp(chat.time!),
+              Helper.readTimestamp(chat.time!),
               style: const TextStyle(
                 fontSize: 13,
                 fontFamily: 'assets/google_fonts/Tajawal-Black.ttf',

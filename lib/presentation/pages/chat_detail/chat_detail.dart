@@ -32,6 +32,12 @@ class ChatDetailPage extends StatelessWidget {
       context,
       bloc,
     ) {
+      final chat2 = bloc.chats.firstWhere(
+        (element) => element.id == chat.id,
+      );
+      if (chat2 == chat) {
+        log('its same');
+      }
       final state = ChatDetailState(bloc.chats.firstWhere(
         (element) => element.id == chat.id,
       ));
@@ -42,41 +48,60 @@ class ChatDetailPage extends StatelessWidget {
             MuteNotifyIcon(state: state),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              Hero(
-                tag: 'photo',
-                child: Center(
-                  child: ChatProfilePhoto(
-                    id: user.otherId(chat),
-                    size: 70,
-                  ),
-                ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: 'photo',
+              child: ChatDetailPhoto(
+                id: user.otherId(chat),
+                width: MediaQuery.of(context).size.width,
+                hight: 400,
               ),
-              SizedBox(height: 20),
-              Text(
-                'Total Messages:  ${total}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CardInfo(score: total, title: 'Total Messages:'),
+                  CardInfo(score: gifs, title: 'Total Gifs:')
+                ],
               ),
-              Text(
-                'Total Gifs:  ${gifs}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });
+  }
+}
+
+class CardInfo extends StatelessWidget {
+  const CardInfo({
+    Key? key,
+    required this.score,
+    required this.title,
+  }) : super(key: key);
+
+  final int? score;
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          '$title  ${score}',
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -144,10 +169,12 @@ class ChatDetailState extends ChangeNotifier {
     log(settings.allow.toString());
 
     _database.updateChatState(
-      chat.copyWith(settings: [
-        settings,
-        ...chat.settings..removeAt(index),
-      ]),
+      chat.copyWith(
+        settings: [
+          ...chat.settings..removeAt(index),
+          settings,
+        ],
+      ),
     );
 
     print(mute);
