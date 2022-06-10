@@ -1,55 +1,85 @@
-import 'dart:convert';
-import 'dart:core';
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
 
-class Chat {
-  final String id;
-  OwlUser? me;
-  OwlUser? other;
-  String lastMessage;
-  String name;
-  String photoUri;
-  Timestamp time;
+import 'chats.dart';
 
-  Chat({
-    required this.id,
-    required this.lastMessage,
-    required this.name,
-    required this.photoUri,
-    required this.time,
-    required this.other,
-    required this.me,
-  });
+part 'chat.freezed.dart';
+part 'chat.g.dart';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'me': me?.toMap(),
-      'other': other?.toMap(),
-      'lastMessage': lastMessage,
-      'name': name,
-      'photoUri': photoUri,
-      'time': time,
-    };
+@freezed
+class Chat with _$Chat {
+  const factory Chat({
+    ///
+    required String id,
+
+    ///
+    @AuthorConverter() required OwlUser other,
+
+    ///
+    @AuthorConverter() required OwlUser me,
+
+    ///
+    @Default('') String lastMessage,
+
+    ///
+    @TimestampConverter() Timestamp? time,
+
+    ///
+    @Default(0) int totalMessages,
+
+    ///
+    @Default(0) int totalNewMessages,
+
+    ///
+    @SettingsConverter() @Default([]) List<ChatNotificationsSettings> settings,
+  }) = _Chat;
+
+  factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
+}
+
+class TimestampConverter implements JsonConverter<Timestamp?, dynamic> {
+  const TimestampConverter();
+
+  @override
+  Timestamp? fromJson(dynamic json) {
+    if (json != null) {
+      if (json is DateTime) {
+        return Timestamp.fromDate(json);
+      }
+      if (json is Timestamp) {
+        return json;
+      }
+    }
+    return null;
   }
 
-  factory Chat.fromMap(Map<String, dynamic> map) {
-    return Chat(
-      id: map['id'] as String,
-      me: OwlUser.fromMap(map['me'] as Map<String, dynamic>),
-      other: OwlUser.fromMap(map['other'] as Map<String, dynamic>),
-      lastMessage: map['lastMessage'] as String,
-      name: map['name'] as String,
-      photoUri: map['photoUri'] as String,
-      time: map['time'] as Timestamp,
-    );
+  @override
+  DateTime? toJson(Timestamp? object) {
+    if (object != null) {
+      return object.toDate();
+    }
+    return null;
   }
+}
 
-  String toJson() => json.encode(toMap());
+class AuthorConverter implements JsonConverter<OwlUser, Map> {
+  const AuthorConverter();
+  @override
+  OwlUser fromJson(Map json) => OwlUser.fromMap(json.cast<String, dynamic>());
 
-  factory Chat.fromJson(String source) =>
-      Chat.fromMap(json.decode(source) as Map<String, dynamic>);
+  @override
+  Map toJson(OwlUser object) => object.toMap().cast<String, dynamic>();
+}
+
+class SettingsConverter implements JsonConverter<ChatNotificationsSettings, Map> {
+  const SettingsConverter();
+  @override
+  ChatNotificationsSettings fromJson(Map json) =>
+      ChatNotificationsSettings.fromJson(json.cast<String, dynamic>());
+
+  @override
+  Map toJson(ChatNotificationsSettings object) => object.toJson().cast<String, dynamic>();
 }

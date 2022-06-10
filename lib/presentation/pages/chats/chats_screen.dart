@@ -1,70 +1,99 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animations/loading_animations.dart';
 
-import '../../../logic/event_handler/user_state.dart';
+import '../../../logic/bloc/app_manger/app_manger_bloc.dart';
+import '../../widgets/profile_photo.dart';
 import '../search/search_page.dart';
 import 'slider.dart';
-import 'widgets/chats_stream.dart';
+import 'widgets/chats_list.dart';
 
 class Chats extends StatefulWidget {
+  const Chats({Key? key}) : super(key: key);
+
+  static String id = "/ChatsId";
+
   @override
-  _ChatsState createState() => _ChatsState();
+  State<Chats> createState() => _ChatsState();
 }
 
-class _ChatsState extends State<Chats> {
+class _ChatsState extends State<Chats> with AutomaticKeepAliveClientMixin {
+  @override
+  void didUpdateWidget(covariant Chats oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).splashColor,
-        automaticallyImplyLeading: false,
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
+    super.build(context);
+    return BlocBuilder<AppMangerBloc, AppMangerState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
               },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Chats'),
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: UserSearchPage());
-                //    Navigator.pushNa  med(context, SearchByName.id);
-              },
-            )
-          ],
-        ),
-      ),
-      body: ChatsStream(user: user),
-      drawer: const SliderPage(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(20),
-        child: FloatingActionButton(
-          backgroundColor: Colors.blueGrey[400],
-          onPressed: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => const Search(),
-            //   ),
-            // );
-          },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (state.internetConnect == false) const WaitingForNetwork(),
+                if (state.internetConnect == true) const Text('Chats'),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: UserSearchPage(),
+                    );
+                  },
+                )
+              ],
+            ),
           ),
+          body: const ChatsList(),
+          drawer: const SliderPage(),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.all(20),
+            child: FloatingActionButton(
+              //    backgroundColor: Colors.blueGrey[400],
+              onPressed: () async {},
+              child: ProfilePhoto(size: 25),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class WaitingForNetwork extends StatelessWidget {
+  const WaitingForNetwork({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('waiting for network'),
+        const SizedBox(width: 13),
+        LoadingBouncingLine.circle(
+          backgroundColor: Colors.white,
+          size: 30,
         ),
-      ),
+      ],
     );
   }
 }

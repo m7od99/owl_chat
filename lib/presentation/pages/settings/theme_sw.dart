@@ -18,7 +18,6 @@ class _ThemePageState extends State<ThemePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).splashColor,
         title: const Text('Theme'),
       ),
       body: Padding(
@@ -33,8 +32,7 @@ class _ThemePageState extends State<ThemePage> {
             Switch.adaptive(
               value: themeProvider.isDarkMode,
               onChanged: (value) {
-                final provider =
-                    Provider.of<ThemeProvider>(context, listen: false);
+                final provider = Provider.of<ThemeProvider>(context, listen: false);
                 provider.toggleTheme(value);
               },
             ),

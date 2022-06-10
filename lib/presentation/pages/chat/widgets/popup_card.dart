@@ -1,62 +1,100 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/chats/message.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:owl_chat/data/models/chats/message_model.dart';
+import 'package:owl_chat/logic/bloc/message_bloc/message_bloc.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
+
+import 'package:owl_chat/presentation/pages/chat/widgets/message_bubble.dart';
 
 class PopupCard extends StatelessWidget {
-  final Message message;
+  final MessageModel message;
   final int tag;
+  final TextEditingController textEditingController;
+  final MessageBloc messageBloc;
+
   const PopupCard({
     Key? key,
     required this.message,
     required this.tag,
+    required this.textEditingController,
+    required this.messageBloc,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 68),
-        child: Hero(
-          tag: tag,
-          child: Material(
-            borderRadius: BorderRadius.circular(25),
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: SizedBox(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Material(
-                        child: Text(message.text),
+    return Hero(
+      transitionOnUserGestures: true,
+      tag: tag,
+      child: BlocBuilder<MessageBloc, MessageState>(
+        bloc: messageBloc,
+        builder: (context, state) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 68),
+              child: Material(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: SizedBox(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (message.isGif != null && message.isGif == true)
+                            NewGifWidget(message: message)
+                          else
+                            BubbleAnimated(message: message),
+                          MenuCard(
+                            icon: Icons.restore,
+                            onTap: () {
+                              context.pop();
+                            },
+                            title: 'reply',
+                          ),
+                          const Divider(),
+                          MenuCard(
+                            icon: Icons.copy,
+                            onTap: () {
+                              context.pop();
+                            },
+                            title: 'copy',
+                          ),
+                          const Divider(),
+                          if (message.isMe && !isGif(message))
+                            MenuCard(
+                              icon: Icons.edit,
+                              onTap: () {
+                                context
+                                    .read<SendMessageFormBloc>()
+                                    .add(SendMessageFormEvent.editMessage(message: message));
+
+                                textEditingController.text = message.text;
+
+                                context.pop();
+                              },
+                              title: 'edit',
+                            ),
+                        ],
                       ),
                     ),
-                    MenuCard(
-                      icon: Icons.restore,
-                      onTap: () {},
-                      title: 'reply',
-                    ),
-                    const Divider(),
-                    MenuCard(
-                      icon: Icons.copy,
-                      onTap: () {},
-                      title: 'copy',
-                    ),
-                    const Divider(),
-                    MenuCard(
-                      icon: Icons.edit,
-                      onTap: () {},
-                      title: 'edit',
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
+}
+
+bool isGif(MessageModel message) {
+  if (message.isGif != null && message.isGif == true) {
+    return true;
+  }
+  return false;
 }
 
 class MenuCard extends StatelessWidget {

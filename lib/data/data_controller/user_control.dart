@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/data/models/chats/chat.dart';
 
 class UserControl extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
@@ -65,13 +66,14 @@ class UserControl extends ChangeNotifier {
   }
 
   Future getUserInfo(String userId) async {
-    return _firestore
-        .collection('users')
-        .where('id', isEqualTo: userId)
-        .get()
-        .catchError((e) {
-      log(e.toString());
-    });
+    final doc = await _firestore.collection('users').where('id', isEqualTo: userId).get();
+
+    if (doc.docs.isNotEmpty) {
+      final data = doc.docs;
+      return data.map((snap) {
+        OwlUser.fromMap(snap.data());
+      });
+    }
   }
 
   Future getUserByEmail(String email) async {
@@ -109,8 +111,63 @@ class UserControl extends ChangeNotifier {
       final data = documentSnapshot.data();
       //  log(data!['tokens'].runtimeType.toString());
 
-      return data!['tokens'].toString();
+      return data!['tokens'][0].toString();
     }
+    return null;
+  }
+
+  Future<List<String>?> getUserTokens(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      if (data!['tokens'] is Iterable) {
+        return List.from(data['tokens'] as Iterable);
+      }
+      if (data['tokens'] is String) {
+        return [
+          data['tokens'] as String,
+        ];
+      }
+    }
+    return null;
+  }
+
+  Future<OwlUser?> loadUser() async {
+    final documentSnapshot = await _firestore.collection('users').doc(userId).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return OwlUser.fromMap(data!);
+    }
+    return null;
+  }
+
+  Future<String?> getUserOnChat(String id) async {
+    final documentSnapshot = await _firestore.collection('users').doc(id).get();
+
+    if (documentSnapshot.exists) {
+      //  log('Document exists on the database');
+      final data = documentSnapshot.data();
+      //  log(data!['tokens'].runtimeType.toString());
+
+      return data!['onChat'].toString();
+    }
+    return null;
+  }
+
+  Stream<OwlUser> getUserChanges(String id) {
+    return _firestore
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .map((e) => OwlUser.fromMap(e.data()!));
   }
 
   Future updatePhoto(String uri) async {
@@ -121,10 +178,51 @@ class UserControl extends ChangeNotifier {
     await _auth.currentUser!.updateDisplayName(newName);
   }
 
+  Future updateOnChat(String chatId) async {
+    await _firestore.collection('users').doc(userId).update({
+      'onChat': chatId,
+    });
+  }
+
+  Future updateLaseSeen(String lastSeen) async {
+    await _firestore.collection('users').doc(userId).update({
+      'lastSeen': lastSeen,
+    });
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  Future updateIsOnline(bool isOnline) async {
+    await _firestore.collection('users').doc(userId).update({
+      'isOnline': isOnline,
+    });
+  }
+
+  Future<List<OwlUser>> getUsersData() async {
+    final data = await getUsers();
+    final docs = data.docs;
+
+    final List<OwlUser> users = [];
+    for (final user in docs) {
+      final data = user.data();
+      users.add(OwlUser.fromMap(data));
+    }
+
+    return users;
+  }
+
   // return info about user
   String get email => _auth.currentUser!.email!;
   bool get isLogin => _hasUser();
   String get userName => _auth.currentUser!.displayName!;
   String get userId => _auth.currentUser!.uid;
   String? get userUriPhoto => _auth.currentUser!.photoURL;
+
+  String otherId(Chat chat) {
+    if (chat.other.id == userId && chat.me.id == userId) {
+      return userId;
+    } else if (chat.other.id != userId) {
+      return chat.other.id;
+    }
+    return chat.me.id;
+  }
 }

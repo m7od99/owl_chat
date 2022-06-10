@@ -54,3 +54,4 @@ app.*.map.json
 
 google-services.json
 lib/generated_plugin_registrant.dart
+lib/firebase_options.dart

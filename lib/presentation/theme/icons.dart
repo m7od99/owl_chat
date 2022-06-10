@@ -4,5 +4,4 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 const chatsHome = Icon(FontAwesomeIcons.comments);
 const addChat = Icon(FontAwesomeIcons.userPlus);
-const emojis = Icon(FontAwesomeIcons.smile);
 const edit = Icon(LineAwesomeIcons.edit);

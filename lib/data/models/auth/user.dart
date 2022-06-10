@@ -1,8 +1,25 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
+
+import 'package:equatable/equatable.dart';
 
 import 'package:owl_chat/data/models/chats/chat.dart';
 
-class OwlUser {
+class OwlUser extends Equatable {
+  OwlUser({
+    required this.email,
+    required this.userName,
+    required this.id,
+    this.isOnline,
+    this.friends,
+    this.chats,
+    this.photoUri,
+    this.tokens,
+    this.onChat,
+    this.lastSeen,
+  });
+
   String email;
   String userName;
   String id;
@@ -12,6 +29,7 @@ class OwlUser {
   String? photoUri;
   String? tokens;
   String? onChat;
+  String? lastSeen;
 
   void addFriend(OwlUser user) {
     friends = [];
@@ -23,38 +41,6 @@ class OwlUser {
     chats!.add(chat);
   }
 
-  OwlUser({
-    required this.email,
-    required this.userName,
-    required this.id,
-    this.isOnline,
-    this.friends,
-    this.chats,
-    this.photoUri,
-    this.tokens,
-    this.onChat,
-  });
-
-  OwlUser copyWith({
-    String? email,
-    String? userName,
-    String? id,
-    bool? isOnline,
-    List<OwlUser>? friends,
-    List<Chat>? chats,
-    String? photoUri,
-  }) {
-    return OwlUser(
-      email: email ?? this.email,
-      userName: userName ?? this.userName,
-      id: id ?? this.id,
-      isOnline: isOnline ?? this.isOnline,
-      friends: friends ?? this.friends,
-      chats: chats ?? this.chats,
-      photoUri: photoUri ?? this.photoUri,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'email': email,
@@ -62,10 +48,11 @@ class OwlUser {
       'id': id,
       'isOnline': isOnline,
       'friends': friends?.map((x) => x.toMap()).toList(),
-      'chats': chats?.map((x) => x.toMap()).toList(),
+      'chats': chats?.map((x) => x.toJson()).toList(),
       'photoUri': photoUri,
       'tokens': tokens,
       'onChat': onChat,
+      'lastSeen': lastSeen,
     };
   }
 
@@ -83,10 +70,23 @@ class OwlUser {
       // chats: List<Chat>.from(map['chats']?.map((x) => Chat.fromMap(x))),
       photoUri: map['photoUri'] as String?,
       onChat: map['onChat'] as String?,
+      lastSeen: map['lastSeen'] as String?,
       //  tokens: map['tokens'],
     );
   }
 
   factory OwlUser.fromJson(String source) =>
       OwlUser.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  List<Object> get props {
+    return [
+      email,
+      userName,
+      id,
+    ];
+  }
+
+  @override
+  bool get stringify => true;
 }

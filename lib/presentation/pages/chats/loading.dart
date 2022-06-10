@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:owl_chat/logic/bloc/app_manger/app_manger_bloc.dart';
+import 'package:owl_chat/logic/bloc/chat_room_bloc/chat_room_bloc.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart' as b;
+import 'package:owl_chat/notifications/notification_controller.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
-import '../../../logic/controller/notifications.dart';
 import '../../../logic/event_handler/user_state.dart';
-import '../../../update/check_update.dart';
 import 'chats_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -14,27 +18,28 @@ class ChatsScreen extends StatefulWidget {
   _ChatsScreenState createState() => _ChatsScreenState();
 }
 
-Notifications notifications = Notifications();
-CheckUpdate update = CheckUpdate();
 final user = UserState();
 
 class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
-    update.isNewUpdate();
-    notifications.getTokenThenSaveItToDataBase();
-    user.updateOwlUser();
-    user.getUserToken(user.userId);
-    notifications.foregroundMessagingHandler();
-    notifications.setupInteractedMessage();
+    WidgetsBinding.instance.addObserver(this);
+
+    user.updateIsOnline(true);
+
+    NotificationController.getTokenThenSaveItToDataBase();
+
+    context.read<AppMangerBloc>().add(const OnConnectivityChanged());
+    context.read<b.UserBloc>().add(const b.GetChatsData());
+    context.read<ChatRoomBloc>().add(const LoadChatRoom());
+    context.read<ChatRoomBloc>().add(const LoadChatsData());
 
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
   }
@@ -45,44 +50,19 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
 
     if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
       user.updateOnChat('null');
+      user.updateLaseSeen(Timestamp.now());
+      user.updateIsOnline(false);
+    }
+
+    if (state == AppLifecycleState.inactive || state == AppLifecycleState.resumed) {
+      user.updateOnChat('chats');
+
+      user.updateIsOnline(true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        showDialog(
-          builder: (context) => AlertDialog(
-            title: const Text('Do you want exits from app?'),
-            actions: [
-              GestureDetector(
-                child: const Text(
-                  'Yes',
-                  style: TextStyle(fontSize: 16),
-                ),
-                onTap: () {
-                  SystemNavigator.pop();
-                },
-              ),
-              GestureDetector(
-                child: const Text(
-                  'No',
-                  style: TextStyle(fontSize: 16),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-          context: context,
-        );
-        return true;
-      },
-      child: Scaffold(
-        body: Chats(),
-      ),
-    );
+    return const Chats();
   }
 }

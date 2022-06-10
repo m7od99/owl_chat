@@ -1,12 +1,14 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cropperx/cropperx.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:owl_chat/logic/controller/upload_image.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../../logic/event_handler/user_state.dart';
 
@@ -76,17 +78,18 @@ class SetNewPhotoButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future _handelSetNewPhotoTap() async {
-    Get.bottomSheet(
-      const BottomCard(
-        child: SetNewPhotoMenu(),
-      ),
-      useRootNavigator: true,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future _handelSetNewPhotoTap() async {
+      showModalBottomSheet(
+        backgroundColor: const Color(0XFF0d0d18),
+        builder: (BuildContext context) => const BottomCard(
+          child: SetNewPhotoMenu(),
+        ),
+        context: context,
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -144,8 +147,13 @@ class _SetNewPhotoMenuState extends State<SetNewPhotoMenu> {
             //  if (response.file != null) {}
 
             if (_photo != null) {
-              Get.to(
-                () => ConfirmPhoto(photo: _photo),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ConfirmPhoto(
+                    photo: _photo,
+                  ),
+                ),
               );
             }
           },
@@ -174,8 +182,8 @@ class ConfirmPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RoundedLoadingButtonController controller = RoundedLoadingButtonController();
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -203,12 +211,10 @@ class ConfirmPhoto extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 45),
-                IconButton(
-                  icon: const Icon(
-                    Icons.done,
-                    size: 35,
-                  ),
+                RoundedLoadingButton(
+                  width: 50,
                   onPressed: () async {
+                    controller.start();
                     final imageBytes = await Cropper.crop(
                       cropperKey: _cropperKey,
                     );
@@ -218,9 +224,14 @@ class ConfirmPhoto extends StatelessWidget {
                     if (imageBytes != null) {
                       await uploader.uploadPhotoByBytes(imageBytes);
                     }
-
-                    Get.back();
+                    controller.stop();
+                    Navigator.pop(context);
                   },
+                  controller: controller,
+                  child: const Icon(
+                    Icons.done,
+                    size: 35,
+                  ),
                 ),
               ],
             )

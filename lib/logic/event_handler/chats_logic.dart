@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../data/data_controller/message_control.dart';
+import '../../data/data_controller/message_control/message_control.dart';
 import '../../data/data_controller/user_control.dart';
 import '../../data/models/auth/user.dart';
 import '../../data/models/chats/chat.dart';
@@ -11,12 +11,15 @@ class ChatsController {
 
   ///create uniq id for chat room
   String createChatId(String otherUserId) {
-    if (_user.userId.substring(0, 1).codeUnitAt(0) >
-        otherUserId.substring(0, 1).codeUnitAt(0)) {
+    if (_user.userId.substring(0, 1).codeUnitAt(0) > otherUserId.substring(0, 1).codeUnitAt(0)) {
       return "$otherUserId${_user.userId}";
     } else {
       return "${_user.userId}$otherUserId";
     }
+  }
+
+  Future<Chat?> getSpecificChat(String chatId) async {
+    return _control.getSpecificChat(chatId);
   }
 
   Iterable<QueryDocumentSnapshot<Object?>> getMyChats(List<QueryDocumentSnapshot> snap) {
@@ -40,7 +43,7 @@ class ChatsController {
     final List<Chat> chats = [];
     for (final chat in data) {
       final dynamic doc = chat.data();
-      chats.add(Chat.fromMap(doc as Map<String, dynamic>));
+      chats.add(Chat.fromJson(doc as Map<String, dynamic>));
     }
 
     return chats;
@@ -57,23 +60,17 @@ class ChatsController {
 
     final chat = Chat(
       time: Timestamp.now(),
-      name: otherUser.userName,
       me: OwlUser(
         email: _user.email,
         userName: _user.userName,
         id: _user.userId,
+        photoUri: _user.userUriPhoto,
       ),
       other: otherUser,
-      photoUri: '',
-      lastMessage: '',
       id: id,
     );
 
     await _control.createChat(chat);
-    // await _control.addNewChatToUser(_user.userId, chat);
-    // print('add chat to user is done');
-    // await _user.addFriend(_user.userId, otherUser);
-    // print('add friend to user is done');
 
     return chat;
   }

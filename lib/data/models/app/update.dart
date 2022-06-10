@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class Update {
-  String currentVersions;
-  String newVersions;
-  String uri;
+  final String currentVersions;
+  final String newVersions;
+  final String uri;
 
-  Update({
+  const Update({
     required this.currentVersions,
     required this.newVersions,
     required this.uri,

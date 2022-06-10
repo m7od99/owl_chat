@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -32,7 +33,9 @@ class Storage {
   Future<void> uploadPhotoByBytes(Uint8List photo) async {
     final FirebaseStorage storage = FirebaseStorage.instance;
     try {
-      final data = await storage.ref('images/${photo.length}').putData(photo);
+      final data = await storage
+          .ref('images/${_user.userId} ${math.Random().nextInt(999999999)}')
+          .putData(photo);
 
       await _updateUserPhoto(data);
     } on FirebaseException catch (e) {

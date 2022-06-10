@@ -1,9 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:giphy_get/giphy_get.dart';
-import 'package:provider/provider.dart';
+import 'package:owl_chat/logic/bloc/send_message_form/send_message_form_bloc.dart';
+// ignore: implementation_imports
+import 'package:provider/src/provider.dart';
 
 import '../../../../data/models/chats/chat.dart';
-import '../../../../logic/event_handler/send_message_state.dart';
 import 'giphy.dart';
 
 class GifsButton extends StatelessWidget {
@@ -16,21 +20,27 @@ class GifsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendMessage = Provider.of<SendMessageState>(context);
-
     return IconButton(
       onPressed: () async {
         final GiphyGif? gif = await Giphy.pickGif(context);
 
         if (gif != null) {
-          sendMessage.updateMessage(gif.images!.original!.webp!);
-          sendMessage.sendGif(chatId: chat.id, receiverId: chat.other!.id);
-          sendMessage.updateChatStateGif(chat);
+          context.read<SendMessageFormBloc>().add(
+                SendMessageFormEvent.updateText(
+                  text: gif.images!.original!.webp!,
+                ),
+              );
+
+          context.read<SendMessageFormBloc>().add(const SendMessageFormEvent.sendGif());
         }
       },
-      icon: const Icon(Icons.spa_outlined),
-      color: Colors.blue,
-      iconSize: 25,
+      icon: SvgPicture.asset(
+        'assets/icons/gif.svg',
+        height: 35,
+        color:
+            Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

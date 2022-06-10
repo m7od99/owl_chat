@@ -29,7 +29,7 @@ class CheckUpdate {
   Future upgrade(String uri) async {
     await RUpgrade.upgrade(
       uri,
-      fileName: 'app-release.apk',
+      //fileName: 'app-release.apk',
     );
   }
 }

@@ -1,13 +1,15 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:owl_chat/data/models/auth/user.dart';
+import 'package:owl_chat/logic/bloc/user_bloc/user_bloc.dart';
 import 'package:owl_chat/logic/controller/search.dart';
 import 'package:owl_chat/logic/event_handler/chats_logic.dart';
-import 'package:owl_chat/logic/event_handler/user_state.dart';
-import 'package:owl_chat/presentation/pages/chat/chat_screen.dart';
+import 'package:owl_chat/logic/event_handler/user_state.dart' as p;
 import 'package:provider/provider.dart';
+
+import '../../../logic/bloc/message_bloc/message_bloc.dart';
 
 class UserSearchPage extends SearchDelegate<OwlUser> {
   @override
@@ -52,6 +54,7 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           );
         }
         final foundUser = snapshot.data! as OwlUser;
+        context.read<UserBloc>().add(AddNewChatData(user: foundUser));
         return ListTile(
           title: Text(
             foundUser.userName,
@@ -62,7 +65,10 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
           ),
           onTap: () async {
             final chat = await ChatsController().createChatRoom(foundUser);
-            Get.to(const ChatScreen(), arguments: chat);
+
+            final MessageBloc bloc = MessageBloc(chat: chat!);
+            // ignore: use_build_context_synchronously
+            context.go('/chat/${chat.id}', extra: bloc);
           },
         );
       },
@@ -71,7 +77,7 @@ class UserSearchPage extends SearchDelegate<OwlUser> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final user = Provider.of<UserState>(context);
+    final user = Provider.of<p.UserState>(context);
     return SafeArea(
       child: FutureBuilder<List<OwlUser>>(
         builder: (context, snap) {
